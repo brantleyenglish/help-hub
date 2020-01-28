@@ -1,4 +1,64 @@
-type User {
-  id: ID! @id
-  name: String!
+type Agency {
+  id: ID! @unique
+  website: String
+  email: String! @unique
+  services: [Service]
+  location: String
+  phone: String
+  hours: String
+  photoUrl: String
+  serviceArea: [String]
+}
+
+type Service {
+  id: ID! @unique
+  appointmentOnly: boolean
+  title: String!
+  description: String
+  hours: String
+  categories: [Category]
+  contactName: String
+  contactPhone: String
+  contactEmail: String
+  additionalInfo: String
+  agency: Agency
+  serviceArea: [String]
+}
+
+type Client {
+  id: ID! @unique
+  firstName: String!
+  lastName: String!
+  middleInitial: String!
+  dob: DateTime!
+  county: String
+  phone: String
+  email: String
+  gender: String
+  additionalInfo: String
+  ethnicity: String
+  releaseOfInfo: boolean
+  notes: [Note]
+  assistance: [Assistance]
+  files: [File]
+}
+
+type Note {
+  id: ID! @unique
+}
+
+type Assistance {
+  id: ID! @unique
+}
+
+type File {
+  id: ID! @unique
+}
+
+type Category {
+  id: ID! @unique
+}
+
+type Message {
+  id: ID! @unique
 }
