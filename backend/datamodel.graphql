@@ -1,3 +1,27 @@
+enum WestTNCounty {
+  BENTON
+  CARROLL
+  CHESTER
+  CROCKETT
+  DECATUR
+  DYER
+  FAYETTE
+  GIBSON
+  HARDEMAN
+  HARDIN
+  HAYWOOD
+  HENDERSON
+  HENRY
+  LAKE
+  LAUDERDALE
+  MADISON
+  MCNAIRY
+  OBION
+  SHELBY
+  TIPTON
+  WEAKLEY
+}
+
 type Agency {
   id: ID! @unique
   website: String
@@ -7,12 +31,12 @@ type Agency {
   phone: String
   hours: String
   photoUrl: String
-  serviceArea: [String]
+  serviceArea: [WestTNCounty]
 }
 
 type Service {
   id: ID! @unique
-  appointmentOnly: boolean
+  appointmentOnly: Boolean
   title: String!
   description: String
   hours: String
@@ -21,8 +45,8 @@ type Service {
   contactPhone: String
   contactEmail: String
   additionalInfo: String
-  agency: Agency
-  serviceArea: [String]
+  agency: Agency!
+  serviceArea: [WestTNCounty]
 }
 
 type Client {
@@ -37,28 +61,53 @@ type Client {
   gender: String
   additionalInfo: String
   ethnicity: String
-  releaseOfInfo: boolean
+  releaseOfInfo: Boolean
   notes: [Note]
   assistance: [Assistance]
   files: [File]
+  updatedAt: DateTime
+  createdAt: DateTime
 }
 
 type Note {
   id: ID! @unique
+  agency: Agency!
+  updatedAt: DateTime
+  createdAt: DateTime
+  isUrgent: Boolean
+  message: String!
 }
 
 type Assistance {
   id: ID! @unique
+  agency: Agency
+  date: DateTime
+  service: Service
+  note: String
+  updatedAt: DateTime
+  createdAt: DateTime
 }
 
 type File {
   id: ID! @unique
+  thumbnailUrl: String
+  fileUrl: String
+  agency: Agency
+  updatedAt: DateTime
+  createdAt: DateTime
 }
 
 type Category {
   id: ID! @unique
+  name: String!
+  iconUrl: String
 }
 
 type Message {
   id: ID! @unique
+  message: String
+  category: [Category]
+  agency: Agency
+  updatedAt: DateTime
+  createdAt: DateTime
 }
