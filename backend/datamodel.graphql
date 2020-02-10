@@ -23,34 +23,42 @@ enum WestTNCounty {
 }
 
 type Agency {
-  id: ID! @unique
+  id: ID! @id
   website: String
   email: String! @unique
-  services: [Service]
   location: String
   phone: String
   hours: String
   photoUrl: String
-  serviceArea: [WestTNCounty]
+  serviceArea: [WestTNCounty] @scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  services: [Service] @relation(name: "AgencyToService")
+  notes: [Note] @relation(name: "AgencyToNote")
+  assistance: [Assistance] @relation(name: "AgencyToAssistance")
+  messages: [Message] @relation(name: "AgencyToAMessage")
 }
 
 type Service {
-  id: ID! @unique
-  appointmentOnly: Boolean
+  id: ID! @id
   title: String!
   description: String
   hours: String
-  categories: [Category]
+  categories: [Category] @relation(name: "CategoryToService")
   contactName: String
   contactPhone: String
   contactEmail: String
   additionalInfo: String
-  agency: Agency!
-  serviceArea: [WestTNCounty]
+  serviceArea: [WestTNCounty] @scalarList(strategy: RELATION)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  appointmentOnly: Boolean! @default(value: false)
+  agency: Agency! @relation(name: "AgencyToService")
+  assistance: [Assistance] @relation(name: "ServiceToAssistance")
 }
 
 type Client {
-  id: ID! @unique
+  id: ID! @id
   firstName: String!
   lastName: String!
   middleInitial: String!
@@ -61,53 +69,60 @@ type Client {
   gender: String
   additionalInfo: String
   ethnicity: String
-  releaseOfInfo: Boolean
-  notes: [Note]
-  assistance: [Assistance]
-  files: [File]
-  updatedAt: DateTime
-  createdAt: DateTime
+  releaseOfInfo: Boolean! @default(value: false)
+  notes: [Note] @relation(name: "ClientToNote")
+  assistance: [Assistance] @relation(name: "ClientToAssistance")
+  files: [File] @relation(name: "ClientToFile")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Note {
-  id: ID! @unique
-  agency: Agency!
-  updatedAt: DateTime
-  createdAt: DateTime
-  isUrgent: Boolean
+  id: ID! @id
+  agency: Agency! @relation(name: "AgencyToNote")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  isUrgent: Boolean! @default(value: false)
   message: String!
+  client: Client @relation(name: "ClientToNote")
 }
 
 type Assistance {
-  id: ID! @unique
-  agency: Agency
+  id: ID! @id
+  agency: Agency @relation(name: "AgencyToAssistance")
   date: DateTime
-  service: Service
+  service: Service @relation(name: "ServiceToAssistance")
+  client: Client @relation(name: "ClientToAssistance")
   note: String
-  updatedAt: DateTime
-  createdAt: DateTime
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type File {
-  id: ID! @unique
+  id: ID! @id
   thumbnailUrl: String
+  client: Client @relation(name: "ClientToFile")
   fileUrl: String
   agency: Agency
-  updatedAt: DateTime
-  createdAt: DateTime
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Category {
-  id: ID! @unique
+  id: ID! @id
   name: String!
+  services: [Service] @relation(name: "CategoryToService")
+  messages: [Message] @relation(name: "CategoryToMessage")
   iconUrl: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Message {
-  id: ID! @unique
+  id: ID! @id
   message: String
-  category: [Category]
-  agency: Agency
-  updatedAt: DateTime
-  createdAt: DateTime
+  category: [Category] @relation(name: "CategoryToMessage")
+  agency: Agency @relation(name: "AgencyToAMessage")
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
