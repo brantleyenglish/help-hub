@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -24,12 +26,127 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+  <title>Help Hub | Home</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+
+  <!--Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"> <img src="images/helphub.png" alt=""> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a class="nav-link" href="#">Agencies</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Log in</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!--end navigation -->
+
+  <!--Search Header -->
+  <section id="search-header" class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="header-message col-lg-8">
+          <h1>Welcome to Help Hub</h1>
+          <h3>Search agencies, services, and keywords below.</h3>
+          <br>
+          <form>
+            <div class="mx-sm-3 mb-2">
+              <label for="search" class="sr-only">Search</label>
+              <input type="text" class="form-control" id="search"
+                placeholder="Example: United Way, food bank, addiction">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Find Help</button>
+          </form>
+        </div>
+        <div class="col-lg-2"></div>
+      </div><!-- end row -->
+    </div><!-- end container -->
+  </section><!-- end search header -->
+
+  <!-- Main Content Section -->
+  <section id="categories">
+    <div class="container">
+      <div class="row">
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-heartbeat"></i></a>
+          <h2 class="categories-txt">Health</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-bed"></i></a>
+          <h2 class="categories-txt">Household</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-utensils"></i></a>
+          <h2 class="categories-txt">Food</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-piggy-bank"></i></a>
+          <h2 class="categories-txt">Housing</h2>
+        </div>
+      </div><!-- end row -->
+      <div class="row">
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-book"></i></a>
+          <h2 class="categories-txt">Education</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-balance-scale"></i></a>
+          <h2 class="categories-txt">Disability</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-book"></i></a>
+          <h2 class="categories-txt">Abuse</h2>
+        </div>
+        <div class="categories-wrap col-lg-3">
+          <a href="#"><i class="categories-icon fas fa-exclamation-triangle"></i></a>
+          <h2 class="categories-txt">Other</h2>
+        </div>
+      </div><!-- end row -->
+    </div><!-- end container -->
+  </section><!-- end categories section -->
+
+
+  <section id="call" class="jumbotron">
+    <div class="container">
+      <div class="row">
+        <div class="header-message col-lg-12">
+          <h1>Can't find what you need?</h1>
+          <button type="submit" class="btn btn-primary mb-2 d-inline">CALL 2-1-1</button>
+        </div>
+      </div><!-- end row -->
+    </div><!-- end container -->
+  </section><!-- end call section -->
+
+  <section id="about">
+    <div class="container">
+      <div class="row about-section">
+        <img class="col-lg-5 unitedway-logo" src="images/unitedway-logo.png" alt="">
+        <div class="col-lg-7">
+          <h2>About Help Hub</h2>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae quae esse sit commodi illo natus! Eius,
+            totam
+            perferendis! Odio nulla maiores accusamus quis, eveniet autem beatae quod repudiandae at expedita. Lorem,
+            ipsum dolor sit amet consectetur adipisicing elit. Voluptate, libero vero atque nulla porro impedit animi
+            reiciendis tenetur non, velit, quis doloremque quas facere nam corrupti ipsum explicabo tempore quisquam.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -39,5 +156,15 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
