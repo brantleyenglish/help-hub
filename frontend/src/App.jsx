@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import GlobalStyles from "./components/styled/GlobalStyles";
+
 import Agency from "./views/Agency";
 import AgencyList from "./views/AgencyList";
 import Client from "./views/Client";
@@ -14,6 +16,7 @@ import Signup from "./views/Signup";
 const App = () => {
   return (
     <Router>
+      <GlobalStyles />
       <Switch>
         <Route path="/clients/:clientId" component={Client} />
         <Route path="/clients" component={ClientList} />
