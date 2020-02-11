@@ -1,5 +1,17 @@
 import React from "react";
 import Navigation from "../components/Navigation";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const FlexWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  a {
+    padding: 1rem;
+  }
+`;
 
 const Home = () => {
   return (
@@ -10,7 +22,7 @@ const Home = () => {
           <div className="row about-section">
             <img
               className="col-lg-5 unitedway-logo"
-              src="images/unitedway-logo.png"
+              src="/images/helphub.png"
               alt=""
             />
             <div className="col-lg-7">
@@ -58,20 +70,64 @@ const Home = () => {
         </div>
       </section>
       <section id="categories">
-        <div className="container">
-          <div className="row">
-            <div className="categories-wrap col-lg-3">
-              {/* <a href="#"><i className="categories-icon fas fa-heartbeat"></i></a> */}
-              <h2 className="categories-txt">Health</h2>
-            </div>
-          </div>
-          <div className="row">
+        {/* <div className="container">
+          <div className="row"> */}
+        <FlexWrapper>
+          {/* <a href="#"><i className="categories-icon fas fa-heartbeat"></i></a> */}
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+          <Link to="/category">
+            <h2 className="categories-txt">Health</h2>
+          </Link>
+        </FlexWrapper>
+        {/* </div> */}
+        {/* <div className="row">
             <div className="categories-wrap col-lg-3">
               {/* <a href="#"><i className="categories-icon fas fa-book"></i></a> */}
-              <h2 className="categories-txt">Education</h2>
+        {/* <h2 className="categories-txt">Education</h2>
             </div>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </section>
       <section id="call" className="jumbotron">
         <div className="container">
