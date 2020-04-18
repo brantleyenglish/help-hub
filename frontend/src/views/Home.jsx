@@ -1,6 +1,4 @@
 import React from "react";
-<<<<<<< HEAD
-=======
 import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -14,7 +12,6 @@ const FlexWrapper = styled.div`
     padding: 1rem;
   }
 `;
->>>>>>> ddfe63f17f026be9fcb65bede89265ac6c1ef779
 
 const Home = () => {
   return (
