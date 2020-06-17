@@ -1,7 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import GlobalStyles from "./components/styled/GlobalStyles";
+import "./styles.css";
 
 import Agency from "./views/Agency";
 import AgencyList from "./views/AgencyList";
