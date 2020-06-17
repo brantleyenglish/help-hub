@@ -1,18 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import "styles.css";
 
-import Foot from "/components/global/Foot";
-import Nav from "/components/global/Nav";
+import "./styles.css";
 
-import HomePage from "/views/home";
-import SErv from "/views/servicespg";
-import Agenciespg from "/views/agenciesprofile";
-import LogIN from "/views/login";
-import AgenciesLoggedOut from "/views/mainAgencies";
-import ClientPg from "/views/client";
-import ClientHome from "/views/clientHome";
+import Foot from "./components/global/footer";
+import Nav from "./components/global/nav";
+
+import HomePage from "./views/Home";
+import SErv from "./views/ServiceList";
+import Agenciespg from "./views/Agency";
+import LogIN from "./views/Login";
+import AgenciesLoggedOut from "./views/AgencyList";
+import ClientPg from "./views/Client";
+import ClientHome from "./views/ClientList";
 
 class App extends React.Component {
 

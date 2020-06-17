@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import "./styles.css";
-
 import Agency from "./views/Agency";
 import AgencyList from "./views/AgencyList";
 import Client from "./views/Client";
