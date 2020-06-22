@@ -3,30 +3,28 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { Link } from "react-router-dom";
-import { signup } from "../utils/auth";
+import { login } from "../utils/auth";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Please enter your name"),
   email: Yup.string().email().required("This email address is not valid"),
   password: Yup.string()
-    .required()
-    .min(6, "Password must be at least 6 characters")
+    .required("Password must be at least 5 characters")
+    .min(5, "Password must be at least 5 characters")
     .max(20, "Password must be 20 characters or less"),
 });
 
-const SignUp = () => {
+const Login = () => {
   const [error, setError] = React.useState("");
   return (
     <Formik
       initialValues={{
-        name: "",
         email: "",
         password: "",
       }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
         try {
-          await signup({ email: values.email, password: values.password });
+          await login({ email: values.email, password: values.password });
         } catch (e) {
           setError(e);
         }
@@ -34,8 +32,8 @@ const SignUp = () => {
       }}
     >
       <Form>
-        <h1>Sign Up to</h1>
-        <p>Fill in the form below to create an account.</p>
+        <h1>Login!</h1>
+        <p>Fill in the form below to login.</p>
         <label htmlFor="Name">First Name</label>
         <Field name="name" type="text" />
         <ErrorMessage name="name" />
@@ -48,11 +46,11 @@ const SignUp = () => {
         <button type="submit">Submit</button>
         {error && <p>{error.message}</p>}
         <p>
-          Already have an account? <Link to="/login">Login</Link>
+          Need a new account? <Link to="/signup">Sign Up</Link>
         </p>
       </Form>
     </Formik>
   );
 };
 
-export default SignUp;
+export default Login;
