@@ -3,10 +3,10 @@ import Agency from "../components/agencyLoggedIn/agencyInfo";
 import Messages from "../components/agencyLoggedIn/messages";
 import ServiceMod from "../components/agencyLoggedIn/services";
 import Header from "../components/agencyLoggedIn/serviceHeader";
-import TimelineMod from "/components/client/clientprofile/timeline/timelinemod";
+import TimelineMod from "../components/clientProfile/clientAssistanceModal";
 import LoggedInHeader from "../components/agencyLoggedIn/serviceHeaderLoggedIn.js";
 
-class Agenciespg extends React.Component {
+class AgencyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -192,4 +192,4 @@ class Agenciespg extends React.Component {
   }
 }
 
-export default Agenciespg;
+export default AgencyProfile;

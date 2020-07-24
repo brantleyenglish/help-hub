@@ -14,7 +14,7 @@ class ClientList extends React.Component {
         <ClientSearch />
         <div className="anotherclientdiv">
           {this.state.clientprofile.map(clientprofile => (
-            <Link to="/pages/client">
+            <Link to="/views/ClientProfile">
               <ClientProf key={clientprofile.id} />
             </Link>
           ))}

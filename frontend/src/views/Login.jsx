@@ -1,11 +1,9 @@
 import React from "react";
-import LoginInput from "/components/loginpage/logininput";
-import SignUp from "/components/loginpage/signup";
-import ForgotPS from "/components/loginpage/forgotpass";
+import LoginInput from "../components/loginPage/loginForm";
+import SignUp from "../components/loginPage/signin";
+import ForgotPS from "../components/loginPage/forgotPassword";
 
-
-
-class LogIn extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -44,4 +42,4 @@ class LogIn extends React.Component {
   }
 }
 
-export default LogIn;
+export default Login;

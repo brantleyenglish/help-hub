@@ -5,20 +5,15 @@ class Nav extends React.Component {
 
     render() {
         return (
-            <div className="navity">
+            <div className="nav">
                 <a id="logo" href="/">
                     <img src={logo} alt="placeholder" style={{ width: 130 }} />
                 </a>
-
                 <span>
-                    <a href="/pages/servicespg">Services</a>
-
-                    <a href="/pages/mainAgencies"> Agencies </a>
-
-                    <a href="/pages/clientHome" >Client </a>
-
-                    <a href="/pages/login"> Log In </a>
-
+                    <a href="/views/ServiceList">Services</a>
+                    <a href="/views/AgencyList"> Agencies </a>
+                    <a href="/views/ClientList" >Clients </a>
+                    <a href="/views/Login"> Log In </a>
                 </span>
             </div>
         );

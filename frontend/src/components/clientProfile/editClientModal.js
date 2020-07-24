@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Modal from "/components/global/mod.js";
+import Modal from "../global/mod";
 import PropTypes from "prop-types";
 import { faEdit as fasFaEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

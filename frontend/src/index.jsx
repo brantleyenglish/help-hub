@@ -4,16 +4,16 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./styles.css";
 
-import Foot from "./components/global/footer";
+import Footer from "./components/global/footer";
 import Nav from "./components/global/nav";
 
 import HomePage from "./views/Home";
-import SErv from "./views/ServiceList";
-import Agenciespg from "./views/Agency";
-import LogIN from "./views/Login";
+import ServiceList from "./views/ServiceList";
+import AgencyProfile from "./views/AgencyProfile";
+import Login from "./views/Login";
 import AgenciesLoggedOut from "./views/AgencyList";
-import ClientPg from "./views/Client";
-import ClientHome from "./views/ClientList";
+import ClientProfile from "./views/ClientProfile";
+import ClientList from "./views/ClientList";
 
 class App extends React.Component {
 
@@ -23,20 +23,20 @@ class App extends React.Component {
                 <Nav />
                 <div className="container">
                     <div className="LoggedInviews">
-                        <Route exact={true} path="/views/client" component={ClientPg} />
-                        <Route exact={true} path="/views/agencies" component={Agenciespg} />
+                        <Route exact={true} path="/views/ClientList" component={ClientList} />
+                        <Route exact={true} path="/views/ClientProfile" component={ClientProfile} />
+                        <Route exact={true} path="/views/AgencyProfile" component={AgencyProfile} />
                     </div>
                     <Route exact={true} path="/" component={HomePage} />
-                    <Route exact={true} path="/views/servicespg" component={SErv} />
+                    <Route exact={true} path="/views/ServiceList" component={ServiceList} />
                     <Route
                         exact={true}
-                        path="/views/mainAgencies"
+                        path="/views/AgencyList"
                         component={AgenciesLoggedOut}
                     />
-                    <Route exact={true} path="/views/clientHome" component={ClientHome} />
-                    <Route exact={true} path="/views/login" component={LogIN} />
+                    <Route exact={true} path="/views/Login" component={Login} />
                 </div>
-                <Foot />
+                <Footer />
             </div>
         );
     }

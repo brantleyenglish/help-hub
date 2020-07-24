@@ -14,30 +14,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Categories extends React.Component {
     render() {
         return (
-            <div className="cat">
-                <div className="cat1">
-                    <span className="catcont">
+            <div className="home-categories">
+                <div className="cat-row-1">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faHeartbeat} />
                         </a>
                         <p>Health</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faTshirt} />
                         </a>
                         <p>Household</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faUtensils} />
                         </a>
                         <p>Food</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faHome} />
                         </a>
@@ -45,29 +45,29 @@ class Categories extends React.Component {
                     </span>
                 </div>
 
-                <div className="cat2">
-                    <span className="catcont">
+                <div className="cat-row-2">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faBookReader} />
                         </a>
                         <p>Education</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faWheelchair} />
                         </a>
                         <p>Disability</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faHandsHelping} />
                         </a>
                         <p>Abuse</p>
                     </span>
 
-                    <span className="catcont">
+                    <span className="category-container">
                         <a>
                             <FontAwesomeIcon icon={faQuestion} />
                         </a>

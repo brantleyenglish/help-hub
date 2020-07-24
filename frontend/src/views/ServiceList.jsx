@@ -1,6 +1,6 @@
 import React from "react";
-import ServHeader from "/components/servpage/servheader";
-import ServProf from "/components/servpage/servprof";
+import ServHeader from "../components/serviceList/serviceSearch";
+import ServProf from "../components/serviceList/serviceCard";
 import { Link } from "react-router-dom";
 
 class ServiceList extends React.Component {
@@ -13,7 +13,7 @@ class ServiceList extends React.Component {
       <div>
         <ServHeader />
         {this.state.services.map(services => (
-          <Link to="/pages/agencies">
+          <Link to="/views/AgencyProfile">
             <ServProf key={services.id} />
           </Link>
         ))}

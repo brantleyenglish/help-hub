@@ -1,6 +1,6 @@
 import React from "react";
-import AHeader from "../components/agencyLoggedOut/agencyHeader";
-import AgencyMod from "../components/agencyLoggedOut/agencyModal";
+import AgencySearch from "../components/agencyList/agencySearch";
+import AgencyCard from "../components/agencyList/agencyCard";
 import { Link } from "react-router-dom";
 
 class AgencyList extends React.Component {
@@ -10,12 +10,12 @@ class AgencyList extends React.Component {
 
   render() {
     return (
-      <div className="loggedOut">
-        <AHeader />
+      <div>
+        <AgencySearch />
         <div className="bckgrnd">
           {this.state.agencies.map(agencies => (
-            <Link to="/pages/agencies">
-              <AgencyMod key={agencies.id} />
+            <Link to="/views/AgencyProfile">
+              <AgencyCard key={agencies.id} />
             </Link>
           ))}
         </div>

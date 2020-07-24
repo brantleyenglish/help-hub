@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "/components/global/notEditMod.js";
+import Modal from "../global/notEditMod";
 import PropTypes from "prop-types";
 
 class ClientAddButtons extends React.Component {

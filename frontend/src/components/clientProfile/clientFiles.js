@@ -1,8 +1,8 @@
 import React from "react";
 import { faFolderPlus as fasFaFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FileMod from "/components/client/clientprofile/files/filemod";
-import Modal from "/components/global/notEditMod.js";
+import FileMod from "./clientFileModal";
+import Modal from "../global/notEditMod";
 import PropTypes from "prop-types";
 
 class Files extends React.Component {

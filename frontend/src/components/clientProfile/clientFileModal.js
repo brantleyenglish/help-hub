@@ -6,7 +6,7 @@ import {
 import { faEdit as fasFaEdit } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt as farFaTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Modal from "/components/global/mod.js";
+import Modal from "../global/mod";
 import PropTypes from "prop-types";
 
 class FileMod extends React.Component {

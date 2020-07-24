@@ -1,6 +1,6 @@
 import React from "react";
-import TimelineMod from "/components/client/clientprofile/timeline/timelinemod";
-import ClientAddButtons from "/components/client/clientprofile/timeline/ClientAddButtons";
+import TimelineMod from "./clientAssistanceModal";
+import ClientAddButtons from "./clientAddButtons";
 
 class Timeline extends React.Component {
     constructor(props) {

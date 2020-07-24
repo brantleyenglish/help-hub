@@ -1,18 +1,16 @@
 import React from "react";
-
-const untGoose =
-    "https://vignette.wikia.nocookie.net/untitled-goose-game/images/e/ee/51hnmg4o53o2.png/revision/latest?cb=20191108143703https://vignette.wikia.nocookie.net/untitled-goose-game/images/e/ee/51hnmg4o53o2.png/revision/latest?cb=20191108143703";
+import UnitedWayLogo from "../../images/unitedway_logo.png"
 
 class About extends React.Component {
     render() {
         return (
-            <div className="About">
-                <img src={untGoose} alt="untGoose" />
-                <div className="container">
-                    <h1> About Us </h1>
-                    <p>
-                        Vias enim quae sunt ad aliquid unitum populus in civitatem. Sunt acquirendi hoc site ut semita ab arce quae ope agatur, innovation tu scis. Ut auxilium alumni cum saturavi eos de ludum, nos sunt et grati estote. Magis descriptionem, magis descriptio, pulmenti culina curis actiones aliarum religionum probabile. Habemus ad latus paginae anseris aequabis, et vivens ut habeant ad cito mutare. Sed usque sunt anseres ad removendum est, ut et nos et nostra vestigium, quod est genus, ut dicerent, quod factum est. Ego quoque in turnovers in domo mea, cum fraga et pie crusta. Et amicae in fundo esset, sed adhuc bonum. Salve, ad Latinam legere possunt esse una persona, tu solus es.
-          </p>
+            <div className="about">
+                <img src={UnitedWayLogo} alt="United Way Logo" />
+                <div>
+                    <h1>ABOUT US</h1>
+                    <p>As the central hub within the nonprofit sector in West Tennessee, we unite people in ways that improve each person’s access to health, education, and financial stability. </p>
+                    <p>With a 75-year history of service to West Tennessee, we are leading our communities toward sustainable change.  We connect people in need to the resources that can help them, and we unite people who want to help with the opportunity to do so.</p>
+                    <p>We focus on empowering our communities by partnering with local agencies who are actively meeting the needs of our communities.  United Way brings together the best people in each community to determine the most critical needs that require collective - not individual - action.</p>
                 </div>
             </div>
         );

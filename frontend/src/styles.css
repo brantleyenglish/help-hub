@@ -18,15 +18,215 @@ a {
   text-decoration: none;
   color: #999999;
 }
-
 a:hover {
   color: rgb(95, 95, 95);
+}
+.header h2 {
+  font-weight: 500;
+}
+
+/* -----------------------
+      HOME PAGE
+----------------------- */
+/* CATEGORIES */
+.home-categories {
+  background-color: #fefefe;
+  padding-top: 5vw;
+  padding-bottom: 5vw;
+}
+.home-categories a {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 60px;
+  width: 90px;
+  height: 90px;
+  padding: 10px;
+  text-align: center;
+  margin: 35px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.home-categories a:hover{
+  background-color: #942e29;
+}
+.home-categories .category-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.category-container p {
+  text-transform: uppercase;
+  margin: 0;
+  color: #b23633;
+  font-weight: 700;
+}
+
+/* ABOUT */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2vw;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  background-color: #fefefe;
+  padding: 10px 100px;
+  color: #999999;
+}
+.about h1 {
+  color: #b23633;
+  font-weight: 1000;
+}
+.about p {
+  font-family: "Roboto";
+  font-weight: 500;
+}
+/* CALL */
+.call {
+  display: flex;
+  background-color: #f2f2f2;
+  padding: 10px;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  color: #999999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.call button {
+  padding: 0.5vw 2vw 0.5vw 2vw;
+  margin: 1vw;
+  margin-left: 2vw;
+  border-radius: 1vw;
+  background-color: #b23633;
+  border: none;
+  color: #fefefe;
+  cursor: pointer;
+}
+.call button:hover {
+  background-color: #942e29;
+}
+
+.agencynameServ {
+  display: flex;
+  flex-direction: column;
+}
+
+/* -----------------------
+      SEARCH STYLES
+----------------------- */
+.home-search,
+.service-search,
+.agency-search,
+.client-search {
+  padding: 40px 0px 40px 0px;
+  text-align: center;
+  background-color: #fefefe;
+  background-image: url(images/header.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.home-search h1,
+.service-search h1,
+.agency-search h1,
+.client-search h1 {
+  color: #fefefe;
+  font-size: 45px;
+  text-transform: uppercase;
+}
+.home-search h2{
+  color: #fefefe;
+  font-size: 25px;
+}
+.search-container {
+  display: inline-flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  color: #999999;
+  margin-left: 6px;
+  font-size: 10px;
+}
+input.searchbar {
+  border: none;
+  border-radius: 15px;
+  width: 350px;
+  height: 15px;
+  margin-right: 10px;
+  padding: 7px;
+  padding-left: 20px;
+}
+.searchbar:focus {
+  outline: none;
+}
+button.search-button {
+  color: white;
+  background-color: #999999;
+  width: 85px;
+  border: none;
+  border-radius: 15px;
+  padding: 7px;
+  outline: none;
+}
+.search-button:hover {
+  background-color: #333333;
+  cursor: pointer;
+}
+/*SEARCH CATEGORIES*/
+.service-search a,
+.agency-search a {
+  display: flex;
+  color: #b23633;
+  background-color: #fefefe;
+  font-size: 15px;
+  width: 9px;
+  height: 9px;
+  padding: 10px;
+  text-align: center;
+  margin: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.service-search a:hover,
+.agency-search a:hover {
+  background-color: #999999;
+}
+.service-search p,
+.agency-search p {
+  text-transform: uppercase;
+  margin: 8px;
+  color: #fefefe;
+  font-weight: 700;
+  font-size: 8px;
+}
+.cat-row-1,
+.cat-row-2,
+/* .cat3,   */
+.search-categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* -----------------------
       NAVBAR
 ----------------------- */
-div.navity a {
+.nav {
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.nav a {
   margin-left: 25px;
   margin-right: 25px;
   padding-top: 1vw;
@@ -38,24 +238,74 @@ div.navity a {
   text-transform: uppercase;
   border-bottom: 2px #b23633 solid;
 }
-.navity a:hover {
+.nav a:hover {
   color: #333333;
 }
-.navity #logo {
+.nav #logo {
   border: none;
 }
-
-div.navity {
-  background-color: #f2f2f2;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-}
-
-div.navity span {
+.nav span {
   position: absolute;
   right: 0;
 }
+
+/* -----------------------
+      AGENCY LIST
+----------------------- */
+
+.bckgrnd {
+  background-color: #fefefe;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.agency-card {
+  background-color: #f2f2f2;
+  border-radius: 15px;
+  width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+}
+.agency-card a {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 17px;
+  width: 11px;
+  height: 11px;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.agency-card img {
+  max-width: 80px;
+  padding: 10px;
+  float: left;
+}
+.agency-card h1 {
+  text-align: left;
+  color: #b23633;
+}
+.agency-card h1:hover {
+  color: #942e29;
+}
+.agency-card p {
+  color: #333333;
+}
+
+.category-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 4px white solid;
+}
+
 
 /* -----------------------
       AGENCY PROFILE
@@ -299,213 +549,6 @@ div.COntact a:not(.emailLink) {
   align-items: center;
 }
 
-div.servHeader h1,
-div.AgencyHeader h1,
-div.clientsearch h1 {
-  color: #fefefe;
-  font-size: 45px;
-  text-transform: uppercase;
-}
-
-div.servHeader p,
-div.AgencyHeader p {
-  text-transform: uppercase;
-  margin: 8px;
-  color: #fefefe;
-  font-weight: 700;
-  font-size: 8px;
-}
-
-div.servHeader a,
-div.AgencyHeader a {
-  display: flex;
-  color: #b23633;
-  background-color: #fefefe;
-  font-size: 15px;
-  width: 9px;
-  height: 9px;
-  padding: 10px;
-  text-align: center;
-  margin: 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.servHeader a:hover,
-div.AgencyHeader a:hover {
-  background-color: #999999;
-}
-
-/* -----------------------
-      HOME PAGE
------------------------ */
-
-.search h2 {
-  font-weight: 500;
-}
-
-.searchContainer {
-  display: inline-flex;
-  align-items: center;
-}
-
-.searchIcon {
-  position: absolute;
-  color: #999999;
-  margin-left: 6px;
-  font-size: 10px;
-}
-
-input.searchbar {
-  border: none;
-  border-radius: 15px;
-  width: 350px;
-  height: 15px;
-  margin-right: 10px;
-  padding: 3px;
-}
-
-.searchbar:focus {
-  outline: none;
-}
-
-button.searchButton {
-  color: white;
-  background-color: #999999;
-  width: 85px;
-  border: none;
-  border-radius: 15px;
-  padding: 3px;
-  outline: none;
-}
-
-.searchButton:hover {
-  background-color: #333333;
-  cursor: pointer;
-}
-
-div.search {
-  padding: 70px 0;
-  text-align: center;
-  color: #fefefe;
-}
-
-div.cat a {
-  display: flex;
-  color: #fefefe;
-  background-color: #b23633;
-  font-size: 60px;
-  width: 90px;
-  height: 90px;
-  padding: 10px;
-  text-align: center;
-  margin: 35px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.cat a:hover {
-  background-color: #942e29;
-}
-div.cat1,
-div.cat2,
-div.cat3 {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-div.cat {
-  background-color: #fefefe;
-  padding-top: 5vw;
-  padding-bottom: 5vw;
-}
-.cat .catcont {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.catcont p {
-  text-transform: uppercase;
-  margin: 0;
-  color: #b23633;
-  font-weight: 700;
-}
-
-div.About {
-  display: inline-flex;
-  margin: 2vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  background-color: #fefefe;
-  padding: 10px 100px;
-  text-align: center;
-  color: #999999;
-}
-.About .container {
-  display: flex;
-  flex-wrap: wrap;
-}
-.About .container h1 {
-  margin-left: 5vw;
-  margin-bottom: 0;
-  color: #b23633;
-}
-.About img {
-  padding: 1vw;
-  width: 7vw;
-  height: auto;
-  background-color: #999999;
-}
-.About .container p {
-  text-align: left;
-  margin-left: 5vw;
-  margin-top: 0;
-  font-family: "Roboto";
-  font-weight: 700;
-}
-
-div.call {
-  display: flex;
-  background-color: #f2f2f2;
-  padding: 10px;
-  padding-top: 3vw;
-  padding-bottom: 3vw;
-  color: #999999;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.call button {
-  padding: 0.5vw 2vw 0.5vw 2vw;
-  margin: 1vw;
-  margin-left: 2vw;
-  border-radius: 1vw;
-  background-color: #b23633;
-  border: none;
-  color: #fefefe;
-  cursor: pointer;
-}
-.call button:hover {
-  background-color: #942e29;
-}
-
-div.servHeader {
-  padding: 10px;
-  text-align: center;
-}
-
-div.agencynameServ {
-  display: flex;
-  flex-direction: column;
-}
-
 /* -----------------------
       LOGIN PAGE
 ----------------------- */
@@ -569,69 +612,6 @@ div.ForgotPassMod input {
   border: black 1px solid;
 }
 
-/* -----------------------
-      AGENCY LOGGED OUT
------------------------ */
-
-div.AgencyHeader {
-  background-color: #fefefe;
-  padding: 10px;
-  text-align: center;
-}
-
-div.bckgrnd {
-  background-color: #fefefe;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-div.agencyMod {
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  width: 300px;
-  margin: 10px;
-}
-
-div.box div.cat3 {
-  border-top: 3px white solid;
-}
-
-div.box a {
-  display: flex;
-  color: #fefefe;
-  background-color: #b23633;
-  font-size: 17px;
-  width: 11px;
-  height: 11px;
-  padding: 10px;
-  margin: 15px;
-  border-radius: 3px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-div.box {
-  padding: 10px 15px;
-}
-
-div.box img {
-  max-width: 80px;
-  padding: 5px;
-  margin: 0 6px;
-}
-
-div.box h1 {
-  text-align: left;
-  color: #b23633;
-}
-
-div.box h1:hover {
-  color: #942e29;
-}
 
 /* -----------------------
       CLIENT PAGE
@@ -913,16 +893,6 @@ div.filebody a.fileIcon {
 
 div.filebody a.fileIcon:hover {
   color: #666666;
-}
-
-div.clientsearch {
-  padding: 10px;
-  text-align: center;
-}
-
-div.clientsearch h1 {
-  font-size: 45px;
-  font-weight: 700;
 }
 
 div.bigClientDiv {

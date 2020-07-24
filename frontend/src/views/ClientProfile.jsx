@@ -1,8 +1,8 @@
 import React from "react";
 import ClientHd from "../components/clientProfile/clientHeader";
-import SmallHead from "/components/client/clientprofile/smallhead";
+import SmallHead from "../components/clientProfile/timelineToggle";
 
-class Client extends React.Component {
+class ClientProfile extends React.Component {
   render() {
     return (
       <div className="ClientPage">
@@ -13,4 +13,4 @@ class Client extends React.Component {
   }
 }
 
-export default Client;
+export default ClientProfile;
