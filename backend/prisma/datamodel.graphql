@@ -26,6 +26,7 @@ type Agency {
   id: ID! @id
   website: String
   email: String! @unique
+  password: String!
   location: String
   phone: String
   hours: String
