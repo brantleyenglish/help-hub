@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { Link } from "react-router-dom";
-import { signup } from "../utils/auth";
+import { signup } from "../firebase/auth";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Please enter your name"),

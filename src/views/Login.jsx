@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { Link } from "react-router-dom";
-import { login } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("This email address is not valid"),
@@ -14,6 +14,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const { loginUser } = useAuth();
   const [error, setError] = React.useState("");
   return (
     <Formik
@@ -23,20 +24,17 @@ const Login = () => {
       }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
-        try {
-          await login({ email: values.email, password: values.password });
-        } catch (e) {
-          setError(e);
-        }
+        await loginUser({
+          email: values.email,
+          password: values.password,
+          setError,
+        });
         console.log(values);
       }}
     >
       <Form>
         <h1>Login!</h1>
         <p>Fill in the form below to login.</p>
-        <label htmlFor="Name">First Name</label>
-        <Field name="name" type="text" />
-        <ErrorMessage name="name" />
         <label htmlFor="email">Email Address</label>
         <Field name="email" type="email" />
         <ErrorMessage name="email" />
