@@ -50,7 +50,7 @@ const Home = () => {
               <br />
               <form>
                 <div className="mx-sm-3 mb-2">
-                  <label for="search" className="sr-only">
+                  <label htmlFor="search" className="sr-only">
                     Search
                   </label>
                   <input

@@ -3,7 +3,7 @@ import { auth } from "../firebase/config";
 import { login, logout } from "../firebase/auth";
 
 type UserType = {
-  id: string;
+  uid: string;
   agencyId: string;
 };
 
@@ -24,6 +24,10 @@ AuthContext.displayName = "AuthContext";
 
 export const AuthProvider: React.FC<any> = (props) => {
   const [user, setUser] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    console.log({ user });
+  }, [user]);
 
   React.useEffect(() => {
     const onAuthStateChange = auth().onAuthStateChanged((user) => {
