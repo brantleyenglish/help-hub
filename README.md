@@ -1,7 +1,8 @@
-# help-hub
+### `yarn start`
 
-### Digital Ocean SSH
+### `yarn build`
 
-ssh root@157.245.80.78
+## Firebase
 
-https://www.howtographql.com/react-apollo/1-getting-started/
+`firebase init`
+`firebase deploy`
