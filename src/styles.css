@@ -1,0 +1,964 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:500,700,900&display=swap");
+
+/* -----------------------
+      GLOBAL STYLES
+----------------------- */
+
+body,
+html {
+  margin: 0;
+  font-family: "Roboto";
+  font-weight: 500;
+}
+a,
+button {
+  outline: none;
+}
+a {
+  text-decoration: none;
+  color: #999999;
+}
+a:hover {
+  color: rgb(95, 95, 95);
+}
+.header h2 {
+  font-weight: 500;
+}
+
+/* -----------------------
+      HOME PAGE
+----------------------- */
+/* CATEGORIES */
+.home-categories {
+  background-color: #fefefe;
+  padding-top: 5vw;
+  padding-bottom: 5vw;
+}
+.home-categories a {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 60px;
+  width: 90px;
+  height: 90px;
+  padding: 10px;
+  text-align: center;
+  margin: 35px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.home-categories a:hover{
+  background-color: #942e29;
+}
+.home-categories .category-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.category-container p {
+  text-transform: uppercase;
+  margin: 0;
+  color: #b23633;
+  font-weight: 700;
+}
+
+/* ABOUT */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2vw;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  background-color: #fefefe;
+  padding: 10px 100px;
+  color: #999999;
+}
+.about h1 {
+  color: #b23633;
+  font-weight: 1000;
+}
+.about p {
+  font-family: "Roboto";
+  font-weight: 500;
+}
+/* CALL */
+.call {
+  display: flex;
+  background-color: #f2f2f2;
+  padding: 10px;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
+  color: #999999;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.call button {
+  padding: 0.5vw 2vw 0.5vw 2vw;
+  margin: 1vw;
+  margin-left: 2vw;
+  border-radius: 1vw;
+  background-color: #b23633;
+  border: none;
+  color: #fefefe;
+  cursor: pointer;
+}
+.call button:hover {
+  background-color: #942e29;
+}
+
+.agencynameServ {
+  display: flex;
+  flex-direction: column;
+}
+
+/* -----------------------
+      SEARCH STYLES
+----------------------- */
+.home-search,
+.service-search,
+.agency-search,
+.client-search {
+  padding: 40px 0px 40px 0px;
+  text-align: center;
+  background-color: #fefefe;
+  background-image: url(images/header.png);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.home-search h1,
+.service-search h1,
+.agency-search h1,
+.client-search h1 {
+  color: #fefefe;
+  font-size: 45px;
+  text-transform: uppercase;
+}
+.home-search h2{
+  color: #fefefe;
+  font-size: 25px;
+}
+.search-container {
+  display: inline-flex;
+  align-items: center;
+}
+.search-icon {
+  position: absolute;
+  color: #999999;
+  margin-left: 6px;
+  font-size: 10px;
+}
+input.searchbar {
+  border: none;
+  border-radius: 15px;
+  width: 350px;
+  height: 15px;
+  margin-right: 10px;
+  padding: 7px;
+  padding-left: 20px;
+}
+.searchbar:focus {
+  outline: none;
+}
+button.search-button {
+  color: white;
+  background-color: #999999;
+  width: 85px;
+  border: none;
+  border-radius: 15px;
+  padding: 7px;
+  outline: none;
+}
+.search-button:hover {
+  background-color: #333333;
+  cursor: pointer;
+}
+/*SEARCH CATEGORIES*/
+.service-search a,
+.agency-search a {
+  display: flex;
+  color: #b23633;
+  background-color: #fefefe;
+  font-size: 15px;
+  width: 9px;
+  height: 9px;
+  padding: 10px;
+  text-align: center;
+  margin: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.service-search a:hover,
+.agency-search a:hover {
+  background-color: #999999;
+}
+.service-search p,
+.agency-search p {
+  text-transform: uppercase;
+  margin: 8px;
+  color: #fefefe;
+  font-weight: 700;
+  font-size: 8px;
+}
+.cat-row-1,
+.cat-row-2,
+/* .cat3,   */
+.search-categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* -----------------------
+      NAVBAR
+----------------------- */
+.nav {
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+.nav a {
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-top: 1vw;
+  padding-bottom: 0.3vw;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  font-size: 15px;
+  color: #999999;
+  text-transform: uppercase;
+  border-bottom: 2px #b23633 solid;
+}
+.nav a:hover {
+  color: #333333;
+}
+.nav #logo {
+  border: none;
+}
+.nav span {
+  position: absolute;
+  right: 0;
+}
+
+/* -----------------------
+      AGENCY LIST
+----------------------- */
+
+.bckgrnd {
+  background-color: #fefefe;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.agency-card {
+  background-color: #f2f2f2;
+  border-radius: 15px;
+  width: 300px;
+  margin: 10px;
+  padding: 10px 20px;
+}
+.agency-card a {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 17px;
+  width: 11px;
+  height: 11px;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.agency-card img {
+  max-width: 80px;
+  padding: 10px;
+  float: left;
+}
+.agency-card h1 {
+  text-align: left;
+  color: #b23633;
+}
+.agency-card h1:hover {
+  color: #942e29;
+}
+.agency-card p {
+  color: #333333;
+}
+
+.category-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 4px white solid;
+}
+
+
+/* -----------------------
+      AGENCY PROFILE
+----------------------- */
+div.AgEnCy {
+  padding: 10px 16%;
+  display: flex;
+}
+
+div.lefty,
+div.righty {
+  background-color: #f2f2f2;
+  margin: 15px 0px;
+}
+
+.lefty img {
+  width: 125px;
+  height: 125px;
+  border-radius: 100%;
+  padding-right: 30px;
+}
+
+.lefty img,
+.lefty h1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.AgEnCy h1 {
+  color: #b23633;
+}
+
+div.AgEnCy p {
+  color: #999999;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+div.AgEnCy h2 {
+  color: #b23633;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding: 0 2px;
+  margin: 0 2px;
+}
+
+div.righty {
+  padding: 10px;
+  padding-top: 20px;
+  width: 60%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.lefty {
+  padding: 10px;
+  width: 50%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Agenciespg #loginbtn {
+  position: absolute;
+  color: white;
+  background-color: #999999;
+  padding: 5px;
+  border: 1px white solid;
+  border-radius: 10px;
+  margin: 1vw;
+  cursor: pointer;
+  float: left;
+}
+
+div.serv {
+  background-color: #fefefe;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+div.serviceProfile {
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+}
+
+div.serviceProfile div.name {
+  float: right;
+  padding: 30px 20px;
+}
+
+div.agencynameServ {
+  float: left;
+  padding: 0 20px;
+  margin: 0 20px;
+  margin-bottom: 50px;
+}
+
+div.agencynameServ h1 {
+  font-size: 20px;
+  color: #b23633;
+  margin: 15px 0;
+}
+
+.serviceContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.serviceContainer .service {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: max-content;
+  margin-bottom: 25px;
+}
+
+div.name {
+  background-color: #f2f2f2;
+  border: solid #fefefe 2px;
+  max-width: 700px;
+  border-radius: 1vw 0 0 1vw;
+  padding: 1vw;
+}
+
+div.name h2,
+div.name p,
+div.name li {
+  display: block;
+  text-align: left;
+  padding: 10px 0;
+  font-size: 18px;
+  color: #999999;
+  cursor: pointer;
+}
+
+.name h2:hover {
+  text-decoration: underline;
+  color: #942e29;
+}
+
+div.COntact {
+  background-color: #f2f2f2;
+  border: solid #fefefe 2px;
+  max-width: 300px;
+  border-radius: 0 1vw 1vw 0;
+}
+
+.COntact ul {
+  padding-right: 40px;
+  padding: 10px 20px;
+}
+
+.bigServDiv .COntact ul {
+  padding-right: 40px;
+  padding: 30px 20px;
+}
+
+div.COntact li {
+  display: block;
+  text-align: left;
+  padding: 10px 0;
+  font-size: 18px;
+  color: #999999;
+}
+
+div.COntact a:not(.emailLink) {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 17px;
+  width: 11px;
+  height: 11px;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.COntact ul li .editButton {
+  float: right;
+}
+
+.loggedInHeader {
+  display: flex;
+  max-width: max-content;
+}
+.loggedInHeader span {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2vw;
+}
+.loggedInHeader a {
+  padding: 1vw 5vw;
+  font-size: 1.5vw;
+  border-left: solid 0.15vw black;
+  border-right: solid 0.15vw black;
+  cursor: pointer;
+  color: #fefefe;
+  background-color: #b23633;
+  text-transform: uppercase;
+  font-weight: 700;
+  z-index: 2;
+  text-align: center;
+}
+.loggedInHeader a:hover {
+  background-color: #942e29;
+}
+
+.loggedInHeader span #downIcon {
+  color: #b23633;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -3%;
+  transform: rotate(90deg);
+  font-size: 2vw;
+}
+
+.timeline {
+  display: flex;
+}
+
+.timeline .iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* -----------------------
+      LOGIN PAGE
+----------------------- */
+
+div.LoginInput {
+  background-color: #942e29;
+  padding: 10px;
+  text-align: center;
+  color: #fefefe;
+}
+
+div.loginpg h1 {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 40px;
+}
+
+div.loginpg h2 {
+  font-size: 20px;
+}
+
+div.loginpg h2,
+div.loginpg input {
+  display: inline-block;
+}
+
+div.loginpg input {
+  background-color: #fefefe;
+  border: none;
+  margin: 10px;
+  border-radius: 15px;
+  padding: 3px;
+}
+
+div.loginpg button {
+  margin: 10px;
+  color: white;
+  background-color: #999999;
+  width: 85px;
+  border: none;
+  border-radius: 15px;
+  padding: 3px;
+  outline: none;
+  font-size: 12px;
+}
+
+div.loginpg a {
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+div.SignupInput {
+  background-color: #942e29;
+  padding: 10px;
+  text-align: center;
+  color: #fefefe;
+}
+
+div.ForgotPassMod input {
+  border: black 1px solid;
+}
+
+
+/* -----------------------
+      CLIENT PAGE
+----------------------- */
+
+div.clientHd {
+  padding: 10px 16%;
+  display: flex;
+}
+
+div.clientLeft,
+div.clientRight {
+  background-color: #f2f2f2;
+  margin: 15px 0px;
+}
+
+div.clientHd h1 {
+  color: #b23633;
+}
+
+div.clientHd p {
+  color: #999999;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+div.clientHd h2 {
+  color: #b23633;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  padding: 0 2px;
+  margin: 0 2px;
+}
+
+div.clientLeft {
+  padding: 10px;
+  padding-top: 20px;
+  width: 60%;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+div.clientLeft a {
+  cursor: pointer;
+  color: #666666;
+  padding-left: 5px;
+}
+
+div.clientRight {
+  padding: 10px;
+  width: 50%;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+a.edit {
+  color: #b23633;
+  font-size: 25px;
+  padding: 10px;
+  position: relative;
+  left: 85%;
+}
+
+a.edit:hover {
+  color: #942e29;
+}
+
+div.smallHead {
+  display: flex;
+  width: 100%;
+}
+
+div.timebtn {
+  width: 50%;
+  text-align: center;
+  background-color: #b23633;
+  border: 1px black solid;
+  cursor: pointer;
+  color: white;
+}
+div.timebtn:hover {
+  background-color: #942e29;
+}
+
+div.timebtn:focus {
+  background-color: #942e29;
+}
+div.timebtn h2 img {
+  transform: scaleX(-1);
+}
+
+div.filebtn {
+  width: 50%;
+  text-align: center;
+  background-color: #b23633;
+  border: 1px black solid;
+  cursor: pointer;
+  color: white;
+}
+div.filebtn:hover {
+  background-color: #942e29;
+}
+
+div.filebtn:focus {
+  background-color: #942e29;
+}
+
+div.timelineMod {
+  background-color: #f2f2f2;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 10px 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+a.assistanceIcon {
+  color: #b23633;
+  font-size: 100px;
+  border-right: #fefefe 3px solid;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  margin: 0 5px;
+}
+
+div.timelineMod h1,
+.timelineMod h2,
+.timelineMod h3 {
+  color: #b23633;
+}
+
+div.timelineMod p {
+  color: #999999;
+  padding-left: 5px;
+}
+
+div.timelineMod h2,
+div.timelineMod h3 {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+div.timeLeft {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+}
+
+div.timeline {
+  background-color: #fefefe;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+
+div.bigTime {
+  padding: 10px 15%;
+  display: flex;
+  flex-direction: column;
+}
+
+div.timeline button {
+  background-color: #999999;
+  border: none;
+  border-radius: 10px;
+  padding: 7px;
+  margin: 10px;
+  color: white;
+  width: 100px;
+}
+
+div.bigFile {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+div.files:not(filebody) {
+  background-color: #fefefe;
+  padding: 10px 17%;
+  margin: 0;
+}
+
+div.fileMod {
+  height: 280px;
+  margin: 20px 35px;
+  padding: 15px 20px;
+  width: 350px;
+  display: inline-block;
+  border-radius: 15px;
+  background-color: #f2f2f2;
+}
+
+div.fileMod h1,
+a.fileCorner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5px;
+  margin: 0px;
+}
+
+div.fileMod h1 {
+  border-bottom: #fefefe 3px solid;
+}
+
+div.fileMod h1:hover {
+  color: #942e29;
+}
+
+div.fileMod h1,
+.fileMod h2 {
+  color: #b23633;
+}
+
+div.fileMod p {
+  color: #999999;
+  padding-left: 5px;
+}
+
+div.fileMod h2,
+.fileMod p {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 0 10px;
+  padding-bottom: 0px;
+  padding-top: 5px;
+  justify-content: center;
+  font-size: 20px;
+  margin: 5px 0px;
+}
+
+a.fileCorner {
+  font-size: 100px;
+  color: #fefefe;
+  text-align: left;
+  padding-right: 30px;
+}
+
+div.trashy {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+div.trashy a {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 15px;
+  width: 9px;
+  height: 9px;
+  padding: 10px;
+  text-align: center;
+  margin: 10px 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+div.filebody {
+  text-align: right;
+  padding: 5px 0px;
+}
+
+div.filebody a.fileIcon {
+  font-size: 40px;
+  color: #999999;
+}
+
+div.filebody a.fileIcon:hover {
+  color: #666666;
+}
+
+div.bigClientDiv {
+  background-color: #fefefe;
+  padding: 10px;
+}
+
+div.anotherclientdiv {
+  display: flex;
+  padding: 20px 17%;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+div.clientholder {
+  background-color: #f2f2f2;
+  border-radius: 15px;
+  height: 150px;
+  padding: 10px 25px;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-basis: 650px;
+}
+
+.clientholder h1:hover {
+  color: #942e29;
+}
+
+.clientholder h1 {
+  font-size: 25px;
+  text-transform: uppercase;
+}
+
+.clientholder h1,
+.clientholder h2 {
+  color: #b23633;
+  margin: 2px 5px;
+  padding: 0px 5px;
+}
+
+.clientholder h2 {
+  font-size: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin: 2px 0px;
+}
+
+.clientholder p {
+  color: #999999;
+  padding: 0 5px;
+  margin: 2px 0px;
+}
+
+.clientholder div.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.clientholder div.left {
+  display: flex;
+  flex-direction: column;
+  padding-right: 30px;
+}
+
+/* Client Page end*/

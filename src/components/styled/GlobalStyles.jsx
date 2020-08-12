@@ -96,23 +96,6 @@ text-align: center;
 }
 
 /* ----------------------------------
-        SERIVCE SECTION STYLES
----------------------------------- */
-.categories-icon {
-    display: flex;
-    font-size: 70px;
-    padding: 50px;
-    text-align: center;
-  }
-  
-  .categories-wrap {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-  }
-
-/* ----------------------------------
         ABOUT SECTION STYLES
 ---------------------------------- */
 .about-section {
