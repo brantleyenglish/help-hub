@@ -3,25 +3,26 @@ import AgencySearch from "../components/agencyList/agencySearch";
 import AgencyCard from "../components/agencyList/agencyCard";
 import { Link } from "react-router-dom";
 
-class AgencyList extends React.Component {
-  state = {
-    agencies: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-  };
+import { useAgency } from "../context/AgencyContext";
 
-  render() {
-    return (
-      <div>
-        <AgencySearch />
-        <div className="bckgrnd">
-          {this.state.agencies.map(agencies => (
-            <Link to="/views/AgencyProfile">
-              <AgencyCard key={agencies.id} />
+const AgencyList = () => {
+  const { agencies } = useAgency();
+
+  console.log({ agencies });
+
+  return (
+    <div>
+      <AgencySearch />
+      <div className="bckgrnd">
+        {agencies &&
+          agencies.map((agency) => (
+            <Link to="/views/AgencyProfile" key={agency?.id}>
+              <AgencyCard agency={agency} />
             </Link>
           ))}
-        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default AgencyList;

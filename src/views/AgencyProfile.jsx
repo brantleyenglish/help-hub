@@ -6,190 +6,200 @@ import Header from "../components/agencyLoggedIn/serviceHeader";
 import TimelineMod from "../components/clientProfile/clientAssistanceModal";
 import LoggedInHeader from "../components/agencyLoggedIn/serviceHeaderLoggedIn.js";
 
-class AgencyProfile extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: false,
-      clicked: false,
-      services: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      timeline: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      messages: [{ id: 1 }, { id: 2 }, { id: 3 }]
-    };
-    this.logIn = this.logIn.bind(this);
-  }
+import { getAgency } from "../firebase/agencies";
 
-  logIn() {
-    this.setState(state => ({
-      isLoggedIn: !state.isLoggedIn
-    }));
+import { useAgency } from "../context/AgencyContext";
 
-    this.setState(function (prevState) {
-      return { clicked: !prevState.clicked };
-    });
-  }
+const AgencyProfile = ({ match }) => {
+  const { agencyId } = match.params;
+  const { agency } = useAgency();
 
-  messages() {
-    this.setState(state => ({
-      messages: true
-    }));
-  }
+  const [agencyProfile, setAgencyProfile] = React.useState(null);
 
-  render() {
-    var messages = window.location.href.indexOf("#messages");
-    var timeline = window.location.href.indexOf("#timeline");
-    var services = window.location.href.indexOf("#services");
+  const getAgencyProfile = async () => {
+    const agencyData = await getAgency({ agencyId });
+    setAgencyProfile(agencyData);
+  };
 
-    if (services > 1) {
-      return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
+  React.useEffect(() => {
+    getAgencyProfile();
+  }, []);
 
-          {/* Login Button */}
-          <button id="loginbtn" onClick={this.logIn}>
-            {this.state.clicked ? "Logout" : "Login"}
-          </button>
+  React.useEffect(() => {
+    console.log({ agencyProfile });
+  }, [agencyProfile]);
 
-          {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  return <></>;
 
-            {/* Header */}
-            <Header
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  // logIn() {
+  //   this.setState(state => ({
+  //     isLoggedIn: !state.isLoggedIn
+  //   }));
 
-            {/* Services */}
-            <div className="serviceContainer">
-              {this.state.services.map(services => (
-                <ServiceMod
-                  key={services.id}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
+  //   this.setState(function (prevState) {
+  //     return { clicked: !prevState.clicked };
+  //   });
+  // }
 
-    if (timeline > 1) {
-      return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
+  // messages() {
+  //   this.setState(state => ({
+  //     messages: true
+  //   }));
+  // }
 
-          {/* Login Button */}
-          <button id="loginbtn" onClick={this.logIn}>
-            {this.state.clicked ? "Logout" : "Login"}
-          </button>
+  // var messages = window.location.href.indexOf("#messages");
+  // var timeline = window.location.href.indexOf("#timeline");
+  // var services = window.location.href.indexOf("#services");
 
-          {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  // if (services > 1) {
+  //   return (
+  //     <div className="Agenciespg">
+  //       {/* Agency Profile */}
+  //       <Agency />
 
-            {/* Header */}
-            <Header
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  //       {/* Login Button */}
+  //       <button id="loginbtn" onClick={this.logIn}>
+  //         {this.state.clicked ? "Logout" : "Login"}
+  //       </button>
 
-            {/* Timeline */}
-            <div className="timelineContainer">
-              {this.state.timeline.map(timeline => (
-                <TimelineMod
-                  key={timeline.id}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
+  //       {/* Logged In Header */}
+  //       <div className="serv">
+  //         <LoggedInHeader
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
 
-    if (messages > 1) {
-      return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
+  //         {/* Header */}
+  //         <Header
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
 
-          {/* Login Button */}
-          <button id="loginbtn" onClick={this.logIn}>
-            {this.state.clicked ? "Logout" : "Login"}
-          </button>
+  //         {/* Services */}
+  //         <div className="serviceContainer">
+  //           {this.state.services.map(services => (
+  //             <ServiceMod
+  //               key={services.id}
+  //               isLoggedIn={this.state.isLoggedIn}
+  //             />
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-          {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  // if (timeline > 1) {
+  //   return (
+  //     <div className="Agenciespg">
+  //       {/* Agency Profile */}
+  //       <Agency />
 
-            {/* Header */}
-            <Header
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  //       {/* Login Button */}
+  //       <button id="loginbtn" onClick={this.logIn}>
+  //         {this.state.clicked ? "Logout" : "Login"}
+  //       </button>
 
-            {/* Timeline */}
-            <div className="timelineContainer">
-              {this.state.messages.map(messages => (
-                <Messages
-                  key={messages.id}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
+  //       {/* Logged In Header */}
+  //       <div className="serv">
+  //         <LoggedInHeader
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
 
-          {/* Login Button */}
-          <button id="loginbtn" onClick={this.logIn}>
-            {this.state.clicked ? "Logout" : "Login"}
-          </button>
+  //         {/* Header */}
+  //         <Header
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
 
-          {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  //         {/* Timeline */}
+  //         <div className="timelineContainer">
+  //           {this.state.timeline.map(timeline => (
+  //             <TimelineMod
+  //               key={timeline.id}
+  //               isLoggedIn={this.state.isLoggedIn}
+  //             />
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-            {/* Header */}
-            <Header
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
+  // if (messages > 1) {
+  //   return (
+  //     <div className="Agenciespg">
+  //       {/* Agency Profile */}
+  //       <Agency />
 
-            {/* Services */}
-            <div className="serviceContainer">
-              {this.state.services.map(services => (
-                <ServiceMod
-                  key={services.id}
-                  isLoggedIn={this.state.isLoggedIn}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
-  }
-}
+  //       {/* Login Button */}
+  //       <button id="loginbtn" onClick={this.logIn}>
+  //         {this.state.clicked ? "Logout" : "Login"}
+  //       </button>
+
+  //       {/* Logged In Header */}
+  //       <div className="serv">
+  //         <LoggedInHeader
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
+
+  //         {/* Header */}
+  //         <Header
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
+
+  //         {/* Timeline */}
+  //         <div className="timelineContainer">
+  //           {this.state.messages.map(messages => (
+  //             <Messages
+  //               key={messages.id}
+  //               isLoggedIn={this.state.isLoggedIn}
+  //             />
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // } else {
+  //   return (
+  //     <div className="Agenciespg">
+  //       {/* Agency Profile */}
+  //       <Agency />
+
+  //       {/* Login Button */}
+  //       <button id="loginbtn" onClick={this.logIn}>
+  //         {this.state.clicked ? "Logout" : "Login"}
+  //       </button>
+
+  //       {/* Logged In Header */}
+  //       <div className="serv">
+  //         <LoggedInHeader
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
+
+  //         {/* Header */}
+  //         <Header
+  //           isLoggedIn={this.state.isLoggedIn}
+  //           show={this.state.isLoggedIn}
+  //         />
+
+  //         {/* Services */}
+  //         <div className="serviceContainer">
+  //           {this.state.services.map(services => (
+  //             <ServiceMod
+  //               key={services.id}
+  //               isLoggedIn={this.state.isLoggedIn}
+  //             />
+  //           ))}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+};
 
 export default AgencyProfile;

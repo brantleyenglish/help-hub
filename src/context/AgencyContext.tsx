@@ -19,10 +19,12 @@ export const AgencyProvider: React.FC<any> = (props) => {
 
   const getAgencyData = async () => {
     const agencyData = await getAgency({ agencyId: user?.uid });
-    const agenciesData = await getAllAgencies();
     setAgency(agencyData);
+  };
+
+  const getAllAgencyData = async () => {
+    const agenciesData = await getAllAgencies();
     setAgencies(agenciesData);
-    console.log({ agencyData });
   };
 
   React.useEffect(() => {
@@ -31,7 +33,15 @@ export const AgencyProvider: React.FC<any> = (props) => {
     }
   }, [user]);
 
+  React.useEffect(() => {
+    getAllAgencyData();
+  }, []);
+
   const value = { agency, agencies };
+
+  React.useEffect(() => {
+    console.log({ agencies });
+  }, [agencies]);
 
   return <AgencyContext.Provider value={value} {...props} />;
 };
