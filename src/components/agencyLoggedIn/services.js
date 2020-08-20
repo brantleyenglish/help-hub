@@ -10,7 +10,7 @@ class ServiceMod extends React.Component {
     render() {
         return (
             <div className="service">
-                <div className="name">
+                <div className="service-col-1">
                     <ul>
                         <a
                             style={{
@@ -33,7 +33,7 @@ class ServiceMod extends React.Component {
                     </ul>
                 </div>
 
-                <div className="COntact">
+                <div className="service-col-2">
                     <ul>
                         <li style={{ fontSize: 20 }}>
                             CONTACT INFO:

@@ -110,11 +110,6 @@ a:hover {
   background-color: #942e29;
 }
 
-.agencynameServ {
-  display: flex;
-  flex-direction: column;
-}
-
 /* -----------------------
       SEARCH STYLES
 ----------------------- */
@@ -200,7 +195,7 @@ button.search-button {
   background-color: #999999;
 }
 .service-search p,
-.agency-search p {
+.eency-search p {
   text-transform: uppercase;
   margin: 8px;
   color: #fefefe;
@@ -210,6 +205,7 @@ button.search-button {
 .cat-row-1,
 .cat-row-2,
 /* .cat3,   */
+.sm-cat,
 .search-categories {
   display: flex;
   flex-direction: row;
@@ -297,7 +293,6 @@ button.search-button {
 .agency-card p {
   color: #333333;
 }
-
 .category-tags {
   display: flex;
   flex-direction: row;
@@ -306,39 +301,45 @@ button.search-button {
   border-top: 4px white solid;
 }
 
-
 /* -----------------------
       AGENCY PROFILE
 ----------------------- */
+#loginbtn {
+  position: absolute;
+  color: white;
+  background-color: #999999;
+  padding: 5px;
+  border: 1px white solid;
+  border-radius: 10px;
+  margin: 1vw;
+  cursor: pointer;
+  float: left;
+}
+
 div.AgEnCy {
   padding: 10px 16%;
   display: flex;
 }
-
 div.lefty,
 div.righty {
   background-color: #f2f2f2;
   margin: 15px 0px;
 }
-
 .lefty img {
   width: 125px;
   height: 125px;
   border-radius: 100%;
   padding-right: 30px;
 }
-
 .lefty img,
 .lefty h1 {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
 div.AgEnCy h1 {
   color: #b23633;
 }
-
 div.AgEnCy p {
   color: #999999;
   font-size: 20px;
@@ -376,19 +377,7 @@ div.lefty {
   justify-content: center;
 }
 
-.Agenciespg #loginbtn {
-  position: absolute;
-  color: white;
-  background-color: #999999;
-  padding: 5px;
-  border: 1px white solid;
-  border-radius: 10px;
-  margin: 1vw;
-  cursor: pointer;
-  float: left;
-}
-
-div.serv {
+.toggle-container {
   background-color: #fefefe;
   padding: 20px;
   display: flex;
@@ -396,39 +385,13 @@ div.serv {
   flex-direction: column;
 }
 
-div.serviceProfile {
-  background-color: #fefefe;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 20px;
-}
-
-div.serviceProfile div.name {
-  float: right;
-  padding: 30px 20px;
-}
-
-div.agencynameServ {
-  float: left;
-  padding: 0 20px;
-  margin: 0 20px;
-  margin-bottom: 50px;
-}
-
-div.agencynameServ h1 {
-  font-size: 20px;
-  color: #b23633;
-  margin: 15px 0;
-}
-
-.serviceContainer {
+.service-container {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.serviceContainer .service {
+.service-container .service {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -436,48 +399,76 @@ div.agencynameServ h1 {
   margin-bottom: 25px;
 }
 
-div.name {
+
+/* -----------------------
+      SERVICE CARD
+----------------------- */
+.service-list {
+  background-color: #fefefe;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px;
+}
+
+.service-card-icon {
+  display: flex;
+  flex-direction: column;
+  float: left;
+  padding: 0 20px;
+  margin: 0 20px;
+}
+
+.service-card-icon h1 {
+  font-size: 20px;
+  color: #b23633;
+  margin: 15px 0;
+}
+
+.service-card-icon img{
+  float: "left";
+  width: 120px;
+  border-radius: 100px;
+}
+
+.service-col-1 {
   background-color: #f2f2f2;
-  border: solid #fefefe 2px;
+  border-right: solid #fefefe 4px;
   max-width: 700px;
   border-radius: 1vw 0 0 1vw;
   padding: 1vw;
 }
 
-div.name h2,
-div.name p,
-div.name li {
+.service-col-1 h2{
+  font-size: 20px;
+  color: #B23633;
+}
+
+.service-col-1 p{
   display: block;
   text-align: left;
   padding: 10px 0;
   font-size: 18px;
-  color: #999999;
   cursor: pointer;
 }
 
-.name h2:hover {
+.service-col-1 h2:hover {
   text-decoration: underline;
   color: #942e29;
 }
 
-div.COntact {
+.service-col-2 {
   background-color: #f2f2f2;
-  border: solid #fefefe 2px;
   max-width: 300px;
   border-radius: 0 1vw 1vw 0;
 }
 
-.COntact ul {
+.service-col-2 ul {
   padding-right: 40px;
   padding: 10px 20px;
 }
 
-.bigServDiv .COntact ul {
-  padding-right: 40px;
-  padding: 30px 20px;
-}
-
-div.COntact li {
+.service-col-2 li {
   display: block;
   text-align: left;
   padding: 10px 0;
@@ -485,7 +476,7 @@ div.COntact li {
   color: #999999;
 }
 
-div.COntact a:not(.emailLink) {
+.service-col-2 a:not(.emailLink) {
   display: flex;
   color: #fefefe;
   background-color: #b23633;
@@ -500,10 +491,19 @@ div.COntact a:not(.emailLink) {
   cursor: pointer;
 }
 
-.COntact ul li .editButton {
+.service-col-2 ul li .editButton {
   float: right;
 }
 
+.service-pg .service-col-2 ul {
+  padding-right: 40px;
+  padding: 30px 20px;
+}
+/*---*/
+
+/* -----------------------
+      LOGGED IN STYLES
+----------------------- */
 .loggedInHeader {
   display: flex;
   max-width: max-content;
@@ -550,7 +550,7 @@ div.COntact a:not(.emailLink) {
 }
 
 /* -----------------------
-      LOGIN PAGE
+        LOGIN PAGE
 ----------------------- */
 
 div.LoginInput {

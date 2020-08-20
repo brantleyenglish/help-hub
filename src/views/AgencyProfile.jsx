@@ -1,10 +1,9 @@
 import React from "react";
-import Agency from "../components/agencyLoggedIn/agencyInfo";
+import AgencyInfo from "../components/agencyLoggedIn/agencyInfo";
 import Messages from "../components/agencyLoggedIn/messages";
 import ServiceMod from "../components/agencyLoggedIn/services";
-import Header from "../components/agencyLoggedIn/serviceHeader";
 import TimelineMod from "../components/clientProfile/clientAssistanceModal";
-import LoggedInHeader from "../components/agencyLoggedIn/serviceHeaderLoggedIn.js";
+import TimelineToggle from "../components/agencyLoggedIn/timelineToggle.js";
 
 import { getAgency } from "../firebase/agencies";
 

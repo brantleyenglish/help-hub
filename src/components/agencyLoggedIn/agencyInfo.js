@@ -10,7 +10,7 @@ const img =
     "https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/5436/goose-clipart-medium.png";
 export const hours = "Monday-Friday  8am-8pm";
 
-class Agency extends React.Component {
+class AgencyInfo extends React.Component {
     render() {
         return (
             <div
@@ -22,10 +22,8 @@ class Agency extends React.Component {
                     backgroundRepeat: "no-repeat"
                 }}>
                 <div className="lefty">
-                    <h1 id="agencyName">
-                        <img src={helphubPlaceholder} alt="agencylogo" />
-            Agency Name
-          </h1>
+                    <img src={helphubPlaceholder} alt="agencylogo" />
+                    <h1 id="agencyName">Agency Name</h1>
                     <h2>
                         <FontAwesomeIcon icon={fasFaPhoneAlt} />
                         <p> 555-555-555</p>
@@ -62,4 +60,4 @@ class Agency extends React.Component {
     }
 }
 
-export default Agency;
+export default AgencyInfo;
