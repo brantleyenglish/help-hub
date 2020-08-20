@@ -2,7 +2,7 @@ import React from "react";
 import { faPlay as fasFaPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class LoggedInHeader extends React.Component {
+class TimelineToggle extends React.Component {
     forceUpdateHandler() {
         window.location.reload();
     }
@@ -72,4 +72,4 @@ class LoggedInHeader extends React.Component {
     }
 }
 
-export default LoggedInHeader;
+export default TimelineToggle;

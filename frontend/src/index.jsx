@@ -1,29 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
-import "./styles.css";
-import { ApolloProvider } from "react-apollo";
-import { ApolloClient } from "apollo-client";
-import { createHttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-
-const httpLink = createHttpLink({
-    uri: "http://localhost:4000",
-});
-
-const client = new ApolloClient({
-    link: httpLink,
-    cache: new InMemoryCache(),
-});
-
-ReactDOM.render(
-    <ApolloProvider client={client}>
-        <App />
-    </ApolloProvider>,
-    document.getElementById("root")
-);
-
 import Footer from "./components/global/footer";
 import Nav from "./components/global/nav";
 
@@ -34,6 +11,8 @@ import Login from "./views/Login";
 import AgenciesLoggedOut from "./views/AgencyList";
 import ClientProfile from "./views/ClientProfile";
 import ClientList from "./views/ClientList";
+
+import "./styles.css";
 
 class App extends React.Component {
 

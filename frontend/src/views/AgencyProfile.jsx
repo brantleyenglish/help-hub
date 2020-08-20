@@ -1,10 +1,9 @@
 import React from "react";
-import Agency from "../components/agencyLoggedIn/agencyInfo";
+import AgencyInfo from "../components/agencyLoggedIn/agencyInfo";
 import Messages from "../components/agencyLoggedIn/messages";
 import ServiceMod from "../components/agencyLoggedIn/services";
-import Header from "../components/agencyLoggedIn/serviceHeader";
 import TimelineMod from "../components/clientProfile/clientAssistanceModal";
-import LoggedInHeader from "../components/agencyLoggedIn/serviceHeaderLoggedIn.js";
+import TimelineToggle from "../components/agencyLoggedIn/timelineToggle.js";
 
 class AgencyProfile extends React.Component {
   constructor(props) {
@@ -40,32 +39,23 @@ class AgencyProfile extends React.Component {
     var timeline = window.location.href.indexOf("#timeline");
     var services = window.location.href.indexOf("#services");
 
+    {/*Services Tab*/ }
     if (services > 1) {
       return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
-
+        <div>
+          <AgencyInfo />
           {/* Login Button */}
           <button id="loginbtn" onClick={this.logIn}>
             {this.state.clicked ? "Logout" : "Login"}
           </button>
-
-          {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
+          {/* Timeline Toggle */}
+          <div className="toggle-container">
+            <TimelineToggle
               isLoggedIn={this.state.isLoggedIn}
               show={this.state.isLoggedIn}
             />
-
-            {/* Header */}
-            <Header
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
-
             {/* Services */}
-            <div className="serviceContainer">
+            <div className="service-container">
               {this.state.services.map(services => (
                 <ServiceMod
                   key={services.id}
@@ -78,11 +68,12 @@ class AgencyProfile extends React.Component {
       );
     }
 
+    {/*Timeline Tab*/ }
     if (timeline > 1) {
       return (
-        <div className="Agenciespg">
+        <div>
           {/* Agency Profile */}
-          <Agency />
+          <AgencyInfo />
 
           {/* Login Button */}
           <button id="loginbtn" onClick={this.logIn}>
@@ -90,14 +81,8 @@ class AgencyProfile extends React.Component {
           </button>
 
           {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
-
-            {/* Header */}
-            <Header
+          <div className="toggle-container">
+            <TimelineToggle
               isLoggedIn={this.state.isLoggedIn}
               show={this.state.isLoggedIn}
             />
@@ -116,11 +101,12 @@ class AgencyProfile extends React.Component {
       );
     }
 
+    {/*Messages Tab*/ }
     if (messages > 1) {
       return (
-        <div className="Agenciespg">
+        <div>
           {/* Agency Profile */}
-          <Agency />
+          <AgencyInfo />
 
           {/* Login Button */}
           <button id="loginbtn" onClick={this.logIn}>
@@ -128,14 +114,8 @@ class AgencyProfile extends React.Component {
           </button>
 
           {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
-
-            {/* Header */}
-            <Header
+          <div className="toggle-container">
+            <TimelineToggle
               isLoggedIn={this.state.isLoggedIn}
               show={this.state.isLoggedIn}
             />
@@ -152,32 +132,26 @@ class AgencyProfile extends React.Component {
           </div>
         </div>
       );
+
+      {/*Timeline Tab*/ }
     } else {
       return (
-        <div className="Agenciespg">
-          {/* Agency Profile */}
-          <Agency />
-
+        <div>
+          <AgencyInfo />
           {/* Login Button */}
           <button id="loginbtn" onClick={this.logIn}>
             {this.state.clicked ? "Logout" : "Login"}
           </button>
 
           {/* Logged In Header */}
-          <div className="serv">
-            <LoggedInHeader
-              isLoggedIn={this.state.isLoggedIn}
-              show={this.state.isLoggedIn}
-            />
-
-            {/* Header */}
-            <Header
+          <div className="toggle-container">
+            <TimelineToggle
               isLoggedIn={this.state.isLoggedIn}
               show={this.state.isLoggedIn}
             />
 
             {/* Services */}
-            <div className="serviceContainer">
+            <div className="service-container">
               {this.state.services.map(services => (
                 <ServiceMod
                   key={services.id}
