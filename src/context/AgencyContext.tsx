@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getAgency } from "../firebase/agencies";
+import { getAgency, getAllAgencies } from "../firebase/agencies";
 
 import { useAuth } from "./AuthContext";
 
@@ -15,8 +15,13 @@ export const AgencyProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
   const [agency, setAgency] = React.useState<any>(null);
 
+  const [agencies, setAgencies] = React.useState<any>(null);
+
   const getAgencyData = async () => {
     const agencyData = await getAgency({ agencyId: user?.uid });
+    const agenciesData = await getAllAgencies();
+    setAgency(agencyData);
+    setAgencies(agenciesData);
     console.log({ agencyData });
   };
 
@@ -26,7 +31,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
     }
   }, [user]);
 
-  const value = { agency };
+  const value = { agency, agencies };
 
   return <AgencyContext.Provider value={value} {...props} />;
 };
