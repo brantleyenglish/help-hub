@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getAgency, getAllAgencies } from "../firebase/agencies";
+import { getAgency, getAllAgencies, createAgency } from "../firebase/agencies";
 
 import { useAuth } from "./AuthContext";
 
@@ -19,7 +19,12 @@ export const AgencyProvider: React.FC<any> = (props) => {
 
   const getAgencyData = async () => {
     const agencyData = await getAgency({ agencyId: user?.uid });
-    setAgency(agencyData);
+    if (agencyData === "DoesNotExisit") {
+      const newAgencyData = await createAgency({ agencyId: user?.uid });
+      setAgency(newAgencyData);
+    } else {
+      setAgency(agencyData);
+    }
   };
 
   const getAllAgencyData = async () => {

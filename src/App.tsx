@@ -12,6 +12,7 @@ import Login from "./views/Login";
 import AgencyList from "./views/AgencyList";
 import ClientProfile from "./views/ClientProfile";
 import ClientList from "./views/ClientList";
+import Signup from "./views/Signup";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -32,6 +33,7 @@ const App: React.FC<any> = () => {
         />
         <Route exact={true} path="/agencies" component={AgencyList} />
         <Route exact={true} path="/login" component={Login} />
+        <Route exact={true} path="/signup" component={Signup} />
         <Route exact={true} path="/" component={HomePage} />
       </Switch>
       <Footer />

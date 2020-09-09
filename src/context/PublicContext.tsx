@@ -20,6 +20,7 @@ export const PublicProvider: React.FC<any> = (props) => {
       allServices: await getAllServices(),
       categories: await getSettings("categories"),
       counties: await getSettings("counties"),
+      signupPassword: await getSettings("signupPassword"),
     });
   };
 

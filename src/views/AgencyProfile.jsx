@@ -25,7 +25,7 @@ const AgencyProfile = ({ match }) => {
   }, []);
 
   React.useEffect(() => {
-    console.log({ agencyProfile });
+    console.log({ agencyProfile, agency });
   }, [agencyProfile]);
 
   return <></>;

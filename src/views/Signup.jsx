@@ -5,40 +5,56 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import { signup } from "../firebase/auth";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Please enter your name"),
-  email: Yup.string().email().required("This email address is not valid"),
-  password: Yup.string()
-    .required()
-    .min(6, "Password must be at least 6 characters")
-    .max(20, "Password must be 20 characters or less"),
-});
+import { usePublicData } from "../context/PublicContext";
+import { useAuth } from "../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
+  const history = useHistory();
   const [error, setError] = React.useState("");
+  const { signupPassword } = usePublicData();
+  const { user } = useAuth();
+
+  React.useEffect(() => {
+    if (user?.uid && history) {
+      history.push(`/agencies/${user?.uid}`);
+    }
+  }, [user, history]);
+
+  const signupValidationSchema = Yup.object().shape({
+    email: Yup.string().email().required("This email address is not valid"),
+    passcode: Yup.string().matches(signupPassword, {
+      message:
+        "This passcode does not match. Please contact United Way West TN.",
+    }),
+    password: Yup.string()
+      .required()
+      .min(6, "Password must be at least 6 characters")
+      .max(20, "Password must be 20 characters or less"),
+  });
+
   return (
     <Formik
       initialValues={{
-        name: "",
         email: "",
         password: "",
+        passcode: "",
       }}
-      validationSchema={validationSchema}
+      validationSchema={signupValidationSchema}
       onSubmit={async (values) => {
         try {
           await signup({ email: values.email, password: values.password });
         } catch (e) {
-          setError(e);
+          setError(e?.message);
         }
-        console.log(values);
       }}
     >
       <Form>
         <h1>Sign Up to</h1>
         <p>Fill in the form below to create an account.</p>
-        <label htmlFor="Name">First Name</label>
-        <Field name="name" type="text" />
-        <ErrorMessage name="name" />
+        <label htmlFor="passcode">United Way Passcode</label>
+        <Field name="passcode" id="passcode" />
+        <ErrorMessage name="passcode" />
         <label htmlFor="email">Email Address</label>
         <Field name="email" type="email" />
         <ErrorMessage name="email" />
@@ -46,7 +62,7 @@ const SignUp = () => {
         <Field name="password" type="text" />
         <ErrorMessage name="password" />
         <button type="submit">Submit</button>
-        {error && <p>{error.message}</p>}
+        {error && <p>{error}</p>}
         <p>
           Already have an account? <Link to="/login">Login</Link>
         </p>
