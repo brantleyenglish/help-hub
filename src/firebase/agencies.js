@@ -18,7 +18,7 @@ export const getAgency = async ({ agencyId }) => {
     const doc = await db.collection("agencies").doc(agencyId);
     const agency = await doc.get();
 
-    if (agency.exisits) {
+    if (agency.exists) {
       return agency.data();
     } else {
       return "DoesNotExisit";
@@ -35,12 +35,30 @@ export const createAgency = async ({ agencyId }) => {
       id: agencyId,
     });
     const agency = await docRef.get();
-    if (agency.exisits) {
+    if (agency.exists) {
       return agency.data();
     } else {
       return "DoesNotExisit";
     }
   } catch (e) {
     console.log("Error getAgency:", e);
+  }
+};
+
+export const updateAgency = async ({ agency, data }) => {
+  try {
+    const docRef = db.collection("agencies").doc(agency?.id);
+    await docRef.set({
+      ...agency,
+      ...data,
+    });
+    const agencyData = await docRef.get();
+    if (agencyData.exists) {
+      return agencyData.data();
+    } else {
+      return "DoesNotExisit";
+    }
+  } catch (e) {
+    console.log("Error updateAgency:", e);
   }
 };

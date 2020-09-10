@@ -1,10 +1,20 @@
 import React from "react";
 
-import { getAgency, getAllAgencies, createAgency } from "../firebase/agencies";
+import {
+  getAgency,
+  getAllAgencies,
+  createAgency,
+  updateAgency,
+} from "../firebase/agencies";
 
 import { useAuth } from "./AuthContext";
 
 export type AgencyContextType = {};
+
+type UpdateAgencyInfo = {
+  agencyId: string;
+  newData: any;
+};
 
 export const AgencyContext = React.createContext<Partial<AgencyContextType>>(
   {}
@@ -32,6 +42,18 @@ export const AgencyProvider: React.FC<any> = (props) => {
     setAgencies(agenciesData);
   };
 
+  const updateAgencyInfo = async ({ agencyId, newData }: UpdateAgencyInfo) => {
+    if (user && user?.uid && agencyId && user?.uid === agencyId) {
+      const agencyData = await getAgency({ agencyId: user?.uid });
+      if (agencyData !== "DoesNotExisit") {
+        await updateAgency({
+          agency: agencyData,
+          data: newData,
+        });
+      }
+    }
+  };
+
   React.useEffect(() => {
     if (user?.uid) {
       getAgencyData();
@@ -42,11 +64,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
     getAllAgencyData();
   }, []);
 
-  const value = { agency, agencies };
-
-  React.useEffect(() => {
-    console.log({ agencies });
-  }, [agencies]);
+  const value = { agency, agencies, updateAgencyInfo };
 
   return <AgencyContext.Provider value={value} {...props} />;
 };

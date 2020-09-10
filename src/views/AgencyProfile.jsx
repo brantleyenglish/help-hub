@@ -9,11 +9,31 @@ import { getAgency } from "../firebase/agencies";
 
 import { useAgency } from "../context/AgencyContext";
 
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+import { Link } from "react-router-dom";
+import { signup } from "../firebase/auth";
+
 const AgencyProfile = ({ match }) => {
   const { agencyId } = match.params;
-  const { agency } = useAgency();
+  const { agency, updateAgencyInfo } = useAgency();
 
   const [agencyProfile, setAgencyProfile] = React.useState(null);
+
+  const [error, setError] = React.useState("");
+
+  const agencySchema = Yup.object().shape({
+    contactFirstName: Yup.string().required("Contact name required"),
+    contactLastName: Yup.string().required("Contact name required"),
+    city: Yup.string().required("City required"),
+    description: Yup.string().required("Agency description required"),
+    name: Yup.string().required("Agency name can not be empty"),
+    phone: Yup.string().required("This email address is not valid"),
+    streetAddress: Yup.string().required("This email address is not valid"),
+    website: Yup.string().required("This email address is not valid"),
+    zip: Yup.string().required("This email address is not valid"),
+  });
 
   const getAgencyProfile = async () => {
     const agencyData = await getAgency({ agencyId });
@@ -28,7 +48,72 @@ const AgencyProfile = ({ match }) => {
     console.log({ agencyProfile, agency });
   }, [agencyProfile]);
 
-  return <></>;
+  return (
+    <Formik
+      initialValues={{
+        contactFirstName: "",
+        contactLastName: "",
+        city: "",
+        description: "",
+        name: "",
+        phone: "",
+        streetAddress: "",
+        website: "",
+        zip: "",
+      }}
+      validationSchema={agencySchema}
+      onSubmit={async (values) => {
+        await updateAgencyInfo({
+          agencyId: agencyProfile?.id,
+          newData: values,
+        });
+        console.log("made it");
+      }}
+    >
+      <Form>
+        <h1>{agency?.name}</h1>
+        <p>Update agency contact info!</p>
+        <label htmlFor="name">Agency Name</label>
+        <Field name="name" id="name" />
+        <ErrorMessage name="name" />
+
+        <label htmlFor="contactFirstName">Contact First name</label>
+        <Field name="contactFirstName" id="contactFirstName" />
+        <ErrorMessage name="contactFirstName" />
+
+        <label htmlFor="contactLastName">Contact Last name</label>
+        <Field name="contactLastName" id="contactLastName" />
+        <ErrorMessage name="contactLastName" />
+
+        <label htmlFor="city">City</label>
+        <Field name="city" id="city" />
+        <ErrorMessage name="city" />
+
+        <label htmlFor="description">Description</label>
+        <Field name="description" id="description" />
+        <ErrorMessage name="description" />
+
+        <label htmlFor="phone">Phone #</label>
+        <Field name="phone" id="phone" />
+        <ErrorMessage name="phone" />
+
+        <label htmlFor="streetAddress">Street Address</label>
+        <Field name="streetAddress" id="streetAddress" />
+        <ErrorMessage name="streetAddress" />
+
+        <label htmlFor="website">Website</label>
+        <Field name="website" id="website" />
+        <ErrorMessage name="website" />
+
+        <label htmlFor="zip">Zip Code</label>
+        <Field name="zip" id="zip" />
+        <ErrorMessage name="zip" />
+
+        <button type="submit">Submit</button>
+        {error && <p>{error}</p>}
+      </Form>
+    </Formik>
+  );
 
   // logIn() {
   //   this.setState(state => ({

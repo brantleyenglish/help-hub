@@ -8,8 +8,6 @@ import { useAgency } from "../context/AgencyContext";
 const AgencyList = () => {
   const { agencies } = useAgency();
 
-  console.log({ agencies });
-
   return (
     <div>
       <AgencySearch />
