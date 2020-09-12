@@ -14,7 +14,7 @@ const AgencyList = () => {
       <div className="bckgrnd">
         {agencies &&
           agencies.map((agency) => (
-            <Link to="/views/AgencyProfile" key={agency?.id}>
+            <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
               <AgencyCard agency={agency} />
             </Link>
           ))}
