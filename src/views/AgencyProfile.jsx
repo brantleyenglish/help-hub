@@ -4,6 +4,7 @@ import Messages from "../components/agencyLoggedIn/messages";
 import ServiceMod from "../components/agencyLoggedIn/services";
 import TimelineMod from "../components/clientProfile/clientAssistanceModal";
 import TimelineToggle from "../components/agencyLoggedIn/timelineToggle.js";
+import Agency from "../views/Agency";
 
 import styled from "styled-components";
 
@@ -17,12 +18,61 @@ import * as Yup from "yup";
 
 import { Link } from "react-router-dom";
 import { signup } from "../firebase/auth";
+import { theme } from "../components/Theme";
+
+const AgencyProfileWrapper = styled.div`
+  width: 100%;
+  flex-direction: column;
+  background: ${theme.colors.white};
+`;
+
+const AgencyCardWrapper = styled.div`
+  background: ${theme.colors.grayLight};
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 2px;
+  max-width: 650px;
+  margin: auto;
+  border-radius: 30px;
+  padding: 40px;
+`;
+
+const StyledFormikFieldWraper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  /* width: 250px; */
+  margin: 10px 0;
+  color: ${theme.colors.gray};
+  label {
+    /* width: 100%; */
+  }
+  input {
+    /* width: 100%; */
+  }
+`;
+
+const FormFieldsWrapper = styled.div`
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledFormikField = ({ name, label }) => {
+  return (
+    <StyledFormikFieldWraper>
+      <label htmlFor={name}>{label}</label>
+      <Field name={name} id={name} />
+      <ErrorMessage name={name} />
+    </StyledFormikFieldWraper>
+  );
+};
 
 const AgencyProfile = ({ match }) => {
   const { agencyId } = match.params;
   const { agency, updateAgencyInfo } = useAgency();
-
-  const { user } = useAuth();
 
   const [agencyProfile, setAgencyProfile] = React.useState(null);
 
@@ -49,209 +99,66 @@ const AgencyProfile = ({ match }) => {
     getAgencyProfile();
   }, []);
 
-  React.useEffect(() => {
-    console.log({ agencyProfile, agency });
-  }, [agencyProfile]);
-
-  if (user?.uid === agencyId) {
-    return (
-      <Formik
-        initialValues={{
-          contactFirstName: "",
-          contactLastName: "",
-          city: "",
-          description: "",
-          name: "",
-          phone: "",
-          streetAddress: "",
-          website: "",
-          zip: "",
-        }}
-        validationSchema={agencySchema}
-        onSubmit={async (values) => {
-          await updateAgencyInfo({
-            agencyId: agencyProfile?.id,
-            newData: values,
-          });
-          console.log("made it");
-        }}
-      >
-        <Form>
-          <h1>{agency?.name}</h1>
-          <p>Update agency contact info!</p>
-          <label htmlFor="name">Agency Name</label>
-          <Field name="name" id="name" />
-          <ErrorMessage name="name" />
-
-          <label htmlFor="contactFirstName">Contact First name</label>
-          <Field name="contactFirstName" id="contactFirstName" />
-          <ErrorMessage name="contactFirstName" />
-
-          <label htmlFor="contactLastName">Contact Last name</label>
-          <Field name="contactLastName" id="contactLastName" />
-          <ErrorMessage name="contactLastName" />
-
-          <label htmlFor="city">City</label>
-          <Field name="city" id="city" />
-          <ErrorMessage name="city" />
-
-          <label htmlFor="description">Description</label>
-          <Field name="description" id="description" />
-          <ErrorMessage name="description" />
-
-          <label htmlFor="phone">Phone #</label>
-          <Field name="phone" id="phone" />
-          <ErrorMessage name="phone" />
-
-          <label htmlFor="streetAddress">Street Address</label>
-          <Field name="streetAddress" id="streetAddress" />
-          <ErrorMessage name="streetAddress" />
-
-          <label htmlFor="website">Website</label>
-          <Field name="website" id="website" />
-          <ErrorMessage name="website" />
-
-          <label htmlFor="zip">Zip Code</label>
-          <Field name="zip" id="zip" />
-          <ErrorMessage name="zip" />
-
-          <button type="submit">Submit</button>
-          {error && <p>{error}</p>}
-        </Form>
-      </Formik>
-    );
-  }
-
   return (
-    <div className="Agenciespg">
-      {/* Agency Profile */}
-      <Agency />
+    <AgencyProfileWrapper>
+      {agencyProfile && (
+        <Formik
+          initialValues={{
+            contactFirstName: agencyProfile?.contactFirstName || "",
+            contactLastName: agencyProfile?.contactLastName || "",
+            city: agencyProfile?.city || "",
+            description: agencyProfile?.description || "",
+            name: agencyProfile?.name || "",
+            phone: agencyProfile?.phone || "",
+            streetAddress: agencyProfile?.streetAddress || "",
+            website: agencyProfile?.website || "",
+            zip: agencyProfile?.zip || "",
+          }}
+          validationSchema={agencySchema}
+          onSubmit={async (values) => {
+            await updateAgencyInfo({
+              agencyId: agencyProfile?.id,
+              newData: values,
+            });
+            console.log("made it");
+          }}
+        >
+          <AgencyCardWrapper>
+            <Form>
+              <h1>{agency?.name}</h1>
+              <p>Update agency contact info!</p>
+              <FormFieldsWrapper>
+                <StyledFormikField name="name" label="Agency Name" />
+                <StyledFormikField
+                  name="contactFirstName"
+                  label="Contact First name"
+                />
+                <StyledFormikField
+                  name="contactLastName"
+                  label="Contact Last name"
+                />
+                <StyledFormikField
+                  name="contactFirstName"
+                  label="Contact First name"
+                />
+                <StyledFormikField name="city" label="City" />
+                <StyledFormikField name="description" label="Description" />
+                <StyledFormikField name="phone" label="Phone #" />
+                <StyledFormikField
+                  name="streetAddress"
+                  label="Street Address"
+                />
+                <StyledFormikField name="website" label="Website" />
+                <StyledFormikField name="zip" label="Zip Code" />
+              </FormFieldsWrapper>
 
-      {/* Login Button */}
-      <button id="loginbtn" onClick={this.logIn}>
-        {this.state.clicked ? "Logout" : "Login"}
-      </button>
-
-      {/* Logged In Header */}
-      <div className="serv">
-        <LoggedInHeader
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Header */}
-        <Header
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Services */}
-        <div className="serviceContainer">
-          {this.state.services.map((services) => (
-            <ServiceMod key={services.id} isLoggedIn={this.state.isLoggedIn} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="Agenciespg">
-      {/* Agency Profile */}
-      <Agency />
-
-      {/* Login Button */}
-      <button id="loginbtn" onClick={this.logIn}>
-        {this.state.clicked ? "Logout" : "Login"}
-      </button>
-
-      {/* Logged In Header */}
-      <div className="serv">
-        <LoggedInHeader
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Header */}
-        <Header
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Timeline */}
-        <div className="timelineContainer">
-          {this.state.timeline.map((timeline) => (
-            <TimelineMod key={timeline.id} isLoggedIn={this.state.isLoggedIn} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="Agenciespg">
-      {/* Agency Profile */}
-      <Agency />
-
-      {/* Login Button */}
-      <button id="loginbtn" onClick={this.logIn}>
-        {this.state.clicked ? "Logout" : "Login"}
-      </button>
-
-      {/* Logged In Header */}
-      <div className="serv">
-        <LoggedInHeader
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Header */}
-        <Header
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Timeline */}
-        <div className="timelineContainer">
-          {this.state.messages.map((messages) => (
-            <Messages key={messages.id} isLoggedIn={this.state.isLoggedIn} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="Agenciespg">
-      {/* Agency Profile */}
-      <Agency />
-
-      {/* Login Button */}
-      <button id="loginbtn" onClick={this.logIn}>
-        {this.state.clicked ? "Logout" : "Login"}
-      </button>
-
-      {/* Logged In Header */}
-      <div className="serv">
-        <LoggedInHeader
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Header */}
-        <Header
-          isLoggedIn={this.state.isLoggedIn}
-          show={this.state.isLoggedIn}
-        />
-
-        {/* Services */}
-        <div className="serviceContainer">
-          {this.state.services.map((services) => (
-            <ServiceMod key={services.id} isLoggedIn={this.state.isLoggedIn} />
-          ))}
-        </div>
-      </div>
-    </div>
+              <button type="submit">Submit</button>
+              {error && <p>{error}</p>}
+            </Form>
+          </AgencyCardWrapper>
+        </Formik>
+      )}
+    </AgencyProfileWrapper>
   );
 };
 
