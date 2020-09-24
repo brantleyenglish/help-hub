@@ -4,16 +4,83 @@ import Messages from "../components/agencyLoggedIn/messages";
 import ServiceMod from "../components/agencyLoggedIn/services";
 import TimelineMod from "../components/clientProfile/clientAssistanceModal";
 import TimelineToggle from "../components/agencyLoggedIn/timelineToggle.js";
+import Agency from "../views/Agency";
+
+import styled from "styled-components";
 
 import { getAgency } from "../firebase/agencies";
 
 import { useAgency } from "../context/AgencyContext";
+import { useAuth } from "../context/AuthContext";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import { Link } from "react-router-dom";
 import { signup } from "../firebase/auth";
+import { theme } from "../components/Theme";
+
+const AgencyProfileWrapper = styled.div`
+  width: 100%;
+  flex-direction: column;
+  background: ${theme.colors.white};
+`;
+
+const AgencyCardWrapper = styled.div`
+  background: ${theme.colors.grayLight};
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 2px;
+  max-width: 650px;
+  margin: auto;
+  border-radius: 30px;
+  padding: 40px;
+`;
+
+const StyledFormikFieldWraper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  /* width: 250px; */
+  margin: 10px 0;
+  color: ${theme.colors.gray};
+  label {
+    /* width: 100%; */
+  }
+  input {
+    /* width: 100%; */
+  }
+`;
+
+const FormFieldsWrapper = styled.div`
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+
+  img {
+    object-fit: cover;
+    border-radius: 999px;
+    width: 100px;
+    height: 100px;
+    margin-right: 30px;
+  }
+`;
+
+const StyledFormikField = ({ name, label }) => {
+  return (
+    <StyledFormikFieldWraper>
+      <label htmlFor={name}>{label}</label>
+      <Field name={name} id={name} />
+      <ErrorMessage name={name} />
+    </StyledFormikFieldWraper>
+  );
+};
 
 const AgencyProfile = ({ match }) => {
   const { agencyId } = match.params;
@@ -44,246 +111,72 @@ const AgencyProfile = ({ match }) => {
     getAgencyProfile();
   }, []);
 
-  React.useEffect(() => {
-    console.log({ agencyProfile, agency });
-  }, [agencyProfile]);
-
   return (
-    <Formik
-      initialValues={{
-        contactFirstName: "",
-        contactLastName: "",
-        city: "",
-        description: "",
-        name: "",
-        phone: "",
-        streetAddress: "",
-        website: "",
-        zip: "",
-      }}
-      validationSchema={agencySchema}
-      onSubmit={async (values) => {
-        await updateAgencyInfo({
-          agencyId: agencyProfile?.id,
-          newData: values,
-        });
-        console.log("made it");
-      }}
-    >
-      <Form>
-        <h1>{agency?.name}</h1>
-        <p>Update agency contact info!</p>
-        <label htmlFor="name">Agency Name</label>
-        <Field name="name" id="name" />
-        <ErrorMessage name="name" />
+    <AgencyProfileWrapper>
+      {agencyProfile && (
+        <Formik
+          initialValues={{
+            contactFirstName: agencyProfile?.contactFirstName || "",
+            contactLastName: agencyProfile?.contactLastName || "",
+            city: agencyProfile?.city || "",
+            description: agencyProfile?.description || "",
+            name: agencyProfile?.name || "",
+            phone: agencyProfile?.phone || "",
+            streetAddress: agencyProfile?.streetAddress || "",
+            website: agencyProfile?.website || "",
+            zip: agencyProfile?.zip || "",
+          }}
+          validationSchema={agencySchema}
+          onSubmit={async (values) => {
+            await updateAgencyInfo({
+              agencyId: agencyProfile?.id,
+              newData: values,
+            });
+            console.log("made it");
+          }}
+        >
+          <AgencyCardWrapper>
+            <Form>
+              <TitleWrapper>
+                <img src="/images/helphub-pattern-red.png" />
+                <div>
+                  <h1>{agencyProfile?.name}</h1>
+                  <p>Update agency contact info!</p>
+                </div>
+              </TitleWrapper>
+              <FormFieldsWrapper>
+                <StyledFormikField name="name" label="Agency Name" />
+                <StyledFormikField
+                  name="contactFirstName"
+                  label="Contact First name"
+                />
+                <StyledFormikField
+                  name="contactLastName"
+                  label="Contact Last name"
+                />
+                <StyledFormikField
+                  name="contactFirstName"
+                  label="Contact First name"
+                />
+                <StyledFormikField name="city" label="City" />
+                <StyledFormikField name="description" label="Description" />
+                <StyledFormikField name="phone" label="Phone #" />
+                <StyledFormikField
+                  name="streetAddress"
+                  label="Street Address"
+                />
+                <StyledFormikField name="website" label="Website" />
+                <StyledFormikField name="zip" label="Zip Code" />
+              </FormFieldsWrapper>
 
-        <label htmlFor="contactFirstName">Contact First name</label>
-        <Field name="contactFirstName" id="contactFirstName" />
-        <ErrorMessage name="contactFirstName" />
-
-        <label htmlFor="contactLastName">Contact Last name</label>
-        <Field name="contactLastName" id="contactLastName" />
-        <ErrorMessage name="contactLastName" />
-
-        <label htmlFor="city">City</label>
-        <Field name="city" id="city" />
-        <ErrorMessage name="city" />
-
-        <label htmlFor="description">Description</label>
-        <Field name="description" id="description" />
-        <ErrorMessage name="description" />
-
-        <label htmlFor="phone">Phone #</label>
-        <Field name="phone" id="phone" />
-        <ErrorMessage name="phone" />
-
-        <label htmlFor="streetAddress">Street Address</label>
-        <Field name="streetAddress" id="streetAddress" />
-        <ErrorMessage name="streetAddress" />
-
-        <label htmlFor="website">Website</label>
-        <Field name="website" id="website" />
-        <ErrorMessage name="website" />
-
-        <label htmlFor="zip">Zip Code</label>
-        <Field name="zip" id="zip" />
-        <ErrorMessage name="zip" />
-
-        <button type="submit">Submit</button>
-        {error && <p>{error}</p>}
-      </Form>
-    </Formik>
+              <button type="submit">Submit</button>
+              {error && <p>{error}</p>}
+            </Form>
+          </AgencyCardWrapper>
+        </Formik>
+      )}
+    </AgencyProfileWrapper>
   );
-
-  // logIn() {
-  //   this.setState(state => ({
-  //     isLoggedIn: !state.isLoggedIn
-  //   }));
-
-  //   this.setState(function (prevState) {
-  //     return { clicked: !prevState.clicked };
-  //   });
-  // }
-
-  // messages() {
-  //   this.setState(state => ({
-  //     messages: true
-  //   }));
-  // }
-
-  // var messages = window.location.href.indexOf("#messages");
-  // var timeline = window.location.href.indexOf("#timeline");
-  // var services = window.location.href.indexOf("#services");
-
-  // if (services > 1) {
-  //   return (
-  //     <div className="Agenciespg">
-  //       {/* Agency Profile */}
-  //       <Agency />
-
-  //       {/* Login Button */}
-  //       <button id="loginbtn" onClick={this.logIn}>
-  //         {this.state.clicked ? "Logout" : "Login"}
-  //       </button>
-
-  //       {/* Logged In Header */}
-  //       <div className="serv">
-  //         <LoggedInHeader
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Header */}
-  //         <Header
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Services */}
-  //         <div className="serviceContainer">
-  //           {this.state.services.map(services => (
-  //             <ServiceMod
-  //               key={services.id}
-  //               isLoggedIn={this.state.isLoggedIn}
-  //             />
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // if (timeline > 1) {
-  //   return (
-  //     <div className="Agenciespg">
-  //       {/* Agency Profile */}
-  //       <Agency />
-
-  //       {/* Login Button */}
-  //       <button id="loginbtn" onClick={this.logIn}>
-  //         {this.state.clicked ? "Logout" : "Login"}
-  //       </button>
-
-  //       {/* Logged In Header */}
-  //       <div className="serv">
-  //         <LoggedInHeader
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Header */}
-  //         <Header
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Timeline */}
-  //         <div className="timelineContainer">
-  //           {this.state.timeline.map(timeline => (
-  //             <TimelineMod
-  //               key={timeline.id}
-  //               isLoggedIn={this.state.isLoggedIn}
-  //             />
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // if (messages > 1) {
-  //   return (
-  //     <div className="Agenciespg">
-  //       {/* Agency Profile */}
-  //       <Agency />
-
-  //       {/* Login Button */}
-  //       <button id="loginbtn" onClick={this.logIn}>
-  //         {this.state.clicked ? "Logout" : "Login"}
-  //       </button>
-
-  //       {/* Logged In Header */}
-  //       <div className="serv">
-  //         <LoggedInHeader
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Header */}
-  //         <Header
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Timeline */}
-  //         <div className="timelineContainer">
-  //           {this.state.messages.map(messages => (
-  //             <Messages
-  //               key={messages.id}
-  //               isLoggedIn={this.state.isLoggedIn}
-  //             />
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // } else {
-  //   return (
-  //     <div className="Agenciespg">
-  //       {/* Agency Profile */}
-  //       <Agency />
-
-  //       {/* Login Button */}
-  //       <button id="loginbtn" onClick={this.logIn}>
-  //         {this.state.clicked ? "Logout" : "Login"}
-  //       </button>
-
-  //       {/* Logged In Header */}
-  //       <div className="serv">
-  //         <LoggedInHeader
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Header */}
-  //         <Header
-  //           isLoggedIn={this.state.isLoggedIn}
-  //           show={this.state.isLoggedIn}
-  //         />
-
-  //         {/* Services */}
-  //         <div className="serviceContainer">
-  //           {this.state.services.map(services => (
-  //             <ServiceMod
-  //               key={services.id}
-  //               isLoggedIn={this.state.isLoggedIn}
-  //             />
-  //           ))}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 };
 
 export default AgencyProfile;
