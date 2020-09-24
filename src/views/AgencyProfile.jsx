@@ -62,10 +62,13 @@ const FormFieldsWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   display: flex;
-  border-radius: 999px;
-  object-fit: fill;
+
   img {
+    object-fit: cover;
+    border-radius: 999px;
     width: 100px;
+    height: 100px;
+    margin-right: 30px;
   }
 `;
 
