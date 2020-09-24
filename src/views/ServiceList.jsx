@@ -3,23 +3,22 @@ import ServHeader from "../components/serviceList/serviceSearch";
 import ServProf from "../components/serviceList/serviceCard";
 import { Link } from "react-router-dom";
 
-class ServiceList extends React.Component {
-  state = {
-    services: [{ id: 1 }, { id: 2 }, { id: 3 }]
-  };
+import { usePublicData } from "../context/PublicContext";
+const ServiceList = () => {
+  const { allServices } = usePublicData();
 
-  render() {
-    return (
-      <div>
-        <ServHeader />
-        {this.state.services.map(services => (
-          <Link to="/views/AgencyProfile">
-            <ServProf key={services.id} />
+  console.log({ allServices });
+  return (
+    <div>
+      <ServHeader />
+      {allServices &&
+        allServices.map((service) => (
+          <Link to={`/services/${service?.id}`}>
+            <ServProf key={service.id} />
           </Link>
         ))}
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ServiceList;
