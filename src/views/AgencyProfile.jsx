@@ -60,6 +60,15 @@ const FormFieldsWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const TitleWrapper = styled.div`
+  display: flex;
+  border-radius: 999px;
+  object-fit: fill;
+  img {
+    width: 100px;
+  }
+`;
+
 const StyledFormikField = ({ name, label }) => {
   return (
     <StyledFormikFieldWraper>
@@ -125,8 +134,13 @@ const AgencyProfile = ({ match }) => {
         >
           <AgencyCardWrapper>
             <Form>
-              <h1>{agency?.name}</h1>
-              <p>Update agency contact info!</p>
+              <TitleWrapper>
+                <img src="/images/helphub-pattern-red.png" />
+                <div>
+                  <h1>{agency?.name}</h1>
+                  <p>Update agency contact info!</p>
+                </div>
+              </TitleWrapper>
               <FormFieldsWrapper>
                 <StyledFormikField name="name" label="Agency Name" />
                 <StyledFormikField
