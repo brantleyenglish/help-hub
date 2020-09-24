@@ -140,7 +140,7 @@ const AgencyProfile = ({ match }) => {
               <TitleWrapper>
                 <img src="/images/helphub-pattern-red.png" />
                 <div>
-                  <h1>{agency?.name}</h1>
+                  <h1>{agencyProfile?.name}</h1>
                   <p>Update agency contact info!</p>
                 </div>
               </TitleWrapper>
