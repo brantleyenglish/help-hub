@@ -13,8 +13,8 @@ const ServiceList = () => {
       <ServHeader />
       {allServices &&
         allServices.map((service) => (
-          <Link to={`/services/${service?.id}`}>
-            <ServProf key={service.id} />
+          <Link to={`/services/${service?.id}`} key={service.id}>
+            <ServProf service={service} />
           </Link>
         ))}
     </div>
