@@ -1,24 +1,10 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import AgencyInfo from "../components/agencyLoggedIn/agencyInfo";
-import Messages from "../components/agencyLoggedIn/messages";
-import ServiceMod from "../components/agencyLoggedIn/services";
-import TimelineMod from "../components/clientProfile/clientAssistanceModal";
-import TimelineToggle from "../components/agencyLoggedIn/timelineToggle.js";
-import Agency from "../views/Agency";
-
 import styled from "styled-components";
-
-import { getAgency } from "../firebase/agencies";
-
-import { useAgency } from "../context/AgencyContext";
-import { useAuth } from "../context/AuthContext";
-
-import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-import { Link } from "react-router-dom";
-import { signup } from "../firebase/auth";
 import { theme } from "../components/Theme";
+import { useAgency } from "../context/AgencyContext";
+import { getAgency } from "../firebase/agencies";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;

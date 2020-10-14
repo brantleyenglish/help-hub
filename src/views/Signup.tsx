@@ -1,13 +1,10 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Link, useHistory } from "react-router-dom";
 import * as Yup from "yup";
-
-import { Link } from "react-router-dom";
-import { signup } from "../firebase/auth";
-
-import { usePublicData } from "../context/PublicContext";
 import { useAuth } from "../context/AuthContext";
-import { useHistory } from "react-router-dom";
+import { usePublicData } from "../context/PublicContext";
+import { signup } from "../firebase/auth";
 
 const SignUp = () => {
   const history = useHistory();

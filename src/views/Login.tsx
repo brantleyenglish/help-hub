@@ -1,21 +1,20 @@
 import React from "react";
 import LoginInput from "../components/loginPage/loginForm";
 import SignUp from "../components/loginPage/signin";
-import ForgotPS from "../components/loginPage/forgotPassword";
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      nav: false
+      nav: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
   }
   handleLogin() {
     this.setState({
-      nav: true
+      nav: true,
     });
-    console.log('working', this.state.nav);
+    console.log("working", this.state.nav);
   }
 
   render() {
