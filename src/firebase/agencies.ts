@@ -1,7 +1,7 @@
 import { db } from "./config";
-import {AgencyType, AgencyListType} from '../../DataTypes';
+import { AgencyType, AgencyListType } from '../../DataTypes';
 
-type AgencyIdType = {agencyId: string};
+type AgencyIdType = { agencyId: string };
 
 type UpdateAgencyType = {
   agency: AgencyType;
