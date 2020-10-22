@@ -18,3 +18,18 @@
     agency: AgencyType;
     updateAgencyInfo: () => Promise<void>
   };
+
+  export type ClientType = {
+    additionalNotes: string;
+    address: string;
+    county: string;
+    dob: string;
+    email: string;
+    ethnicity: string;
+    gender: string;
+    name: string;
+    phone: string;
+  };
+  
+  export type ClientListType = ClientType[];
+  
