@@ -1,9 +1,9 @@
 import React from "react";
-import ServHeader from "../components/serviceList/serviceSearch";
-import ServProf from "../components/serviceList/serviceCard";
 import { Link } from "react-router-dom";
-
+import ServProf from "../components/serviceList/serviceCard";
+import ServHeader from "../components/serviceList/serviceSearch";
 import { usePublicData } from "../context/PublicContext";
+
 const ServiceList = () => {
   const { allServices } = usePublicData();
 
@@ -12,7 +12,7 @@ const ServiceList = () => {
     <div>
       <ServHeader />
       {allServices &&
-        allServices.map((service) => (
+        allServices.map((service: any) => (
           <Link to={`/services/${service?.id}`} key={service.id}>
             <ServProf service={service} />
           </Link>

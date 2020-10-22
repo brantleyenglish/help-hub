@@ -128,10 +128,12 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           }}
           validationSchema={agencySchema}
           onSubmit={async (values) => {
-            await updateAgencyInfo({
-              agencyId: agencyProfile?.id,
-              newData: values,
-            });
+            if (updateAgencyInfo) {
+              await updateAgencyInfo({
+                agencyId: agencyProfile?.id,
+                newData: { id: agencyProfile?.id, ...values },
+              });
+            }
             console.log("made it");
           }}
         >

@@ -1,7 +1,26 @@
 import { auth } from "./config";
 import { setCookie, getCookie } from "../utils/cookie";
 
-export const signup = async ({ email, password }) => {
+type SignupType = {
+  email: string;
+  password: string;
+}
+
+type LoginType = {
+  email: string;
+  password: string;
+  setError: (value: string) => Promise<void>;
+}
+
+type UpdateUserEmail = {
+  email: string;
+}
+
+type DisplayNameType = {
+  displayName: string;
+}
+
+export const signup = async ({ email, password }: SignupType) => {
   try {
     await auth().createUserWithEmailAndPassword(email, password);
   } catch (e) {
@@ -9,7 +28,7 @@ export const signup = async ({ email, password }) => {
   }
 };
 
-export const login = ({ email, password, setError }) => {
+export const login = ({ email, password, setError }: LoginType) => {
   try {
     const hashedPass = btoa(password);
     setCookie("pass", hashedPass, 3);
@@ -28,10 +47,10 @@ export const logout = () => {
   }
 };
 
-export const updateUserEmail = async ({ email }) => {
+export const updateUserEmail = async ({ email }: UpdateUserEmail) => {
   const user = auth().currentUser;
-  const pass = atob(getCookie("pass"));
-  if (user) {
+  const pass = atob(await getCookie("pass"));
+  if (user?.email) {
     try {
       const credential = await auth.EmailAuthProvider.credential(
         user.email,
@@ -45,7 +64,7 @@ export const updateUserEmail = async ({ email }) => {
   }
 };
 
-export const updateUsername = async ({ displayName }) => {
+export const updateUsername = async ({ displayName }: DisplayNameType) => {
   const user = auth().currentUser;
   if (user) {
     try {
@@ -58,5 +77,8 @@ export const updateUsername = async ({ displayName }) => {
 
 export const sendResetPasswordEmail = async () => {
   const user = auth().currentUser;
-  await auth().sendPasswordResetEmail(user.email);
+  if (user?.email) {
+    await auth().sendPasswordResetEmail(user?.email);
+
+  }
 };

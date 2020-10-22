@@ -31,7 +31,7 @@ const Home = () => {
       <div className="home-categories">
         <div className="cat-row-1">
           {categories &&
-            categories.map((category) => (
+            categories.map((category: any) => (
               <span className="category-container">
                 <StyledSVG src={category.icon} alt={category.label} />
                 <p>{category.label}</p>

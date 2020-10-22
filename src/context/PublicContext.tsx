@@ -1,10 +1,13 @@
 import React from "react";
-
 import { getAllAgencies } from "../firebase/agencies";
-import { getAllServices } from "../firebase/services";
 import { getSettings } from "../firebase/misc";
+import { getAllServices } from "../firebase/services";
 
-export type PublicContextType = {};
+export type PublicContextType = {
+  categories: any;
+  allServices: any;
+  signupPassword: any;
+};
 
 export const PublicContext = React.createContext<Partial<PublicContextType>>(
   {}

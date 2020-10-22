@@ -16,10 +16,10 @@ export type AgencyListType = AgencyType[];
 export type AgencyContextType = {
   agencies: AgencyListType;
   agency: AgencyType;
-  updateAgencyInfo: () => Promise<void>
+  updateAgencyInfo: ({newData, agencyId}: {newData:AgencyType, agencyId: string }) => Promise<void>
 };
 
-type ClientType = {
+export type ClientType = {
   additionalNotes: string;
   address: string;
   county: string;
@@ -31,9 +31,15 @@ type ClientType = {
   phone: string;
 }
 
-type ClientListType = ClientType[];
+export type ClientListType = ClientType[];
 
 export type ClientContextType = {
   clients: ClientListType;
   client: ClientType;
 };
+
+export type ServiceType = {
+    string: string;
+}
+
+export type ServiceListType = ServiceType[];
