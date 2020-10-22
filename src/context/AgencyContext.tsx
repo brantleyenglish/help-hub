@@ -10,8 +10,16 @@ import {
 import { useAuth } from "./AuthContext";
 
 type AgencyType = {
-  name: string;
+  city: string;
+  contactFirstName: string;
+  contactLastName: string;
+  description: string;
   id: string;
+  name: string;
+  phone: string;
+  streetAddress: string;
+  website: string;
+  zip: string;
 }
 
 type AgencyListType = AgencyType[];
