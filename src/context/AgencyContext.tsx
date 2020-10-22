@@ -9,7 +9,18 @@ import {
 
 import { useAuth } from "./AuthContext";
 
-export type AgencyContextType = {};
+type AgencyType = {
+  name: string;
+  id: string;
+}
+
+type AgencyListType = AgencyType[];
+
+export type AgencyContextType = {
+  agencies: AgencyListType;
+  agency: AgencyType;
+  updateAgencyInfo: () => Promise<void>
+};
 
 type UpdateAgencyInfo = {
   agencyId: string;
