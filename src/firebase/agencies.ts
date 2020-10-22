@@ -1,7 +1,7 @@
 import { db } from "./config";
-import {AgencyType, AgencyListType} from '../../DataTypes';
+import { AgencyType, AgencyListType } from '../../DataTypes';
 
-type AgencyIdType = {agencyId: string};
+type AgencyIdType = { agencyId: string };
 type UpdateAgencyType = {
   agencyId: string;
   data: any;
@@ -28,7 +28,7 @@ export const getAgency = async ({ agencyId }: AgencyIdType) => {
     if (agency.exists) {
       return agency.data() as AgencyType;
     } else {
-      return "DoesNotExisit";
+      return "DoesNotExist";
     }
   } catch (e) {
     console.log("Error getAgency:", e);
@@ -48,7 +48,7 @@ export const createAgency = async ({ agencyId }: AgencyIdType) => {
       return "DoesNotExisit";
     }
   } catch (e) {
-    console.log("Error getAgency:", e);
+    console.log("Error createAgency:", e);
   }
 };
 
