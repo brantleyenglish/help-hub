@@ -1,39 +1,12 @@
 import React from "react";
-
+import { AgencyContextType, AgencyListType, AgencyType } from "../../DataTypes";
 import {
+  createAgency,
   getAgency,
   getAllAgencies,
-  createAgency,
   updateAgency,
 } from "../firebase/agencies";
-
 import { useAuth } from "./AuthContext";
-
-type AgencyType = {
-  city: string;
-  contactFirstName: string;
-  contactLastName: string;
-  description: string;
-  id: string;
-  name: string;
-  phone: string;
-  streetAddress: string;
-  website: string;
-  zip: string;
-}
-
-type AgencyListType = AgencyType[];
-
-export type AgencyContextType = {
-  agencies: AgencyListType;
-  agency: AgencyType;
-  updateAgencyInfo: () => Promise<void>
-};
-
-type UpdateAgencyInfo = {
-  agencyId: string;
-  newData: any;
-};
 
 export const AgencyContext = React.createContext<Partial<AgencyContextType>>(
   {}
@@ -42,9 +15,9 @@ AgencyContext.displayName = "AgencyContext";
 
 export const AgencyProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
-  const [agency, setAgency] = React.useState<any>(null);
+  const [agency, setAgency] = React.useState<AgencyType>(null);
 
-  const [agencies, setAgencies] = React.useState<any>(null);
+  const [agencies, setAgencies] = React.useState<AgencyListType>(null);
 
   const getAgencyData = async () => {
     const agencyData = await getAgency({ agencyId: user?.uid });

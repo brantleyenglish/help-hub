@@ -1,4 +1,11 @@
 import { db } from "./config";
+import {AgencyType, AgencyListType} from '../../DataTypes';
+
+type AgencyIdType = {agencyId: string};
+type UpdateAgencyType = {
+  agencyId: string;
+  data: any;
+};
 
 export const getAllAgencies = async () => {
   try {
@@ -7,19 +14,19 @@ export const getAllAgencies = async () => {
     docs.forEach((agency) => {
       agencies.push(agency.data());
     });
-    return agencies;
+    return agencies as AgencyListType;
   } catch (e) {
     console.log("Error getAllAgencies:", e);
   }
 };
 
-export const getAgency = async ({ agencyId }) => {
+export const getAgency = async ({ agencyId }: AgencyIdType) => {
   try {
     const doc = await db.collection("agencies").doc(agencyId);
     const agency = await doc.get();
 
     if (agency.exists) {
-      return agency.data();
+      return agency.data() as AgencyType;
     } else {
       return "DoesNotExisit";
     }
@@ -28,7 +35,7 @@ export const getAgency = async ({ agencyId }) => {
   }
 };
 
-export const createAgency = async ({ agencyId }) => {
+export const createAgency = async ({ agencyId }: AgencyIdType) => {
   try {
     const docRef = db.collection("agencies").doc(agencyId);
     await docRef.set({
@@ -45,7 +52,9 @@ export const createAgency = async ({ agencyId }) => {
   }
 };
 
-export const updateAgency = async ({ agency, data }) => {
+
+
+export const updateAgency = async ({ agency, data }: UpdateAgencyType) => {
   try {
     const docRef = db.collection("agencies").doc(agency?.id);
     await docRef.set({

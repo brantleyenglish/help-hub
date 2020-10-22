@@ -58,7 +58,12 @@ const TitleWrapper = styled.div`
   }
 `;
 
-const StyledFormikField = ({ name, label }) => {
+type StyledFormikFieldType = {
+  name: string;
+  label: string;
+};
+
+const StyledFormikField = ({ name, label }: StyledFormikFieldType) => {
   return (
     <StyledFormikFieldWraper>
       <label htmlFor={name}>{label}</label>
@@ -68,7 +73,11 @@ const StyledFormikField = ({ name, label }) => {
   );
 };
 
-const AgencyProfile = ({ match }) => {
+type AgencyProfileType = {
+  match: any;
+};
+
+const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
   const { agency, updateAgencyInfo } = useAgency();
 
@@ -90,7 +99,9 @@ const AgencyProfile = ({ match }) => {
 
   const getAgencyProfile = async () => {
     const agencyData = await getAgency({ agencyId });
-    setAgencyProfile(agencyData);
+    if (agencyData && agencyData !== "DoesNotExisit") {
+      setAgencyProfile(agencyData);
+    }
   };
 
   React.useEffect(() => {
