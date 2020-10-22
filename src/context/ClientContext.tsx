@@ -7,16 +7,15 @@ import {
 import { useAuth } from "./AuthContext";
 
 type ClientType = {
-    city: string;
-    contactFirstName: string;
-    contactLastName: string;
-    description: string;
-    id: string;
+    additionalNotes: string;
+    address: string;
+    county: string;
+    dob: string;
+    email: string;
+    ethnicity: string;
+    gender: string;
     name: string;
     phone: string;
-    streetAddress: string;
-    website: string;
-    zip: string;
 }
 
 type ClientListType = ClientType[];
