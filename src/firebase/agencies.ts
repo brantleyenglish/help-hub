@@ -2,21 +2,25 @@ import { db } from "./config";
 import { AgencyType, AgencyListType } from '../../DataTypes';
 
 type AgencyIdType = { agencyId: string };
+
 type UpdateAgencyType = {
-  agencyId: string;
+  agency: AgencyType;
   data: any;
 };
 
 export const getAllAgencies = async () => {
   try {
     const docs = await db.collection("agencies").get();
-    const agencies = [];
+    const agencies: any = [];
     docs.forEach((agency) => {
-      agencies.push(agency.data());
+      if (agency.data()) {
+        agencies.push(agency.data());
+      }
     });
     return agencies as AgencyListType;
   } catch (e) {
     console.log("Error getAllAgencies:", e);
+    return 'Error'
   }
 };
 
@@ -32,6 +36,7 @@ export const getAgency = async ({ agencyId }: AgencyIdType) => {
     }
   } catch (e) {
     console.log("Error getAgency:", e);
+    return "Error";
   }
 };
 
@@ -43,12 +48,13 @@ export const createAgency = async ({ agencyId }: AgencyIdType) => {
     });
     const agency = await docRef.get();
     if (agency.exists) {
-      return agency.data();
+      return agency.data() as AgencyType;
     } else {
-      return "DoesNotExisit";
+      return "DoesNotExist";
     }
   } catch (e) {
-    console.log("Error createAgency:", e);
+    console.log("Error getAgency:", e);
+    return "Error";
   }
 };
 
@@ -63,11 +69,12 @@ export const updateAgency = async ({ agency, data }: UpdateAgencyType) => {
     });
     const agencyData = await docRef.get();
     if (agencyData.exists) {
-      return agencyData.data();
+      return agencyData.data() as AgencyType;
     } else {
-      return "DoesNotExisit";
+      return "DoesNotExist";
     }
   } catch (e) {
     console.log("Error updateAgency:", e);
+    return "Error";
   }
 };

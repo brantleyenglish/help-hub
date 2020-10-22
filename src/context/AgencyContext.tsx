@@ -8,6 +8,11 @@ import {
 } from "../firebase/agencies";
 import { useAuth } from "./AuthContext";
 
+type UpdateAgencyInfo = {
+  agencyId: string;
+  newData: AgencyType;
+};
+
 export const AgencyContext = React.createContext<Partial<AgencyContextType>>(
   {}
 );
@@ -15,29 +20,39 @@ AgencyContext.displayName = "AgencyContext";
 
 export const AgencyProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
-  const [agency, setAgency] = React.useState<AgencyType>(null);
+  const [agency, setAgency] = React.useState<AgencyType | null>(null);
 
-  const [agencies, setAgencies] = React.useState<AgencyListType>(null);
+  const [agencies, setAgencies] = React.useState<AgencyListType | null>(null);
 
-  const getAgencyData = async () => {
-    const agencyData = await getAgency({ agencyId: user?.uid });
-    if (agencyData === "DoesNotExisit") {
-      const newAgencyData = await createAgency({ agencyId: user?.uid });
-      setAgency(newAgencyData);
-    } else {
-      setAgency(agencyData);
+  const getAgencyData = React.useCallback(async () => {
+    if (user?.uid) {
+      const agencyData = await getAgency({ agencyId: user?.uid });
+      if (agencyData === "DoesNotExist") {
+        const newAgencyData = await createAgency({ agencyId: user?.uid });
+        if (newAgencyData !== "DoesNotExist" && newAgencyData !== "Error") {
+          setAgency(newAgencyData);
+        }
+      } else if (agencyData !== "Error") {
+        setAgency(agencyData);
+      }
     }
-  };
+  }, [user]);
+
+  React.useEffect(() => {
+    getAgencyData();
+  }, [getAgencyData]);
 
   const getAllAgencyData = async () => {
     const agenciesData = await getAllAgencies();
-    setAgencies(agenciesData);
+    if (agenciesData !== "Error") {
+      setAgencies(agenciesData);
+    }
   };
 
   const updateAgencyInfo = async ({ agencyId, newData }: UpdateAgencyInfo) => {
     if (user && user?.uid && agencyId && user?.uid === agencyId) {
       const agencyData = await getAgency({ agencyId: user?.uid });
-      if (agencyData !== "DoesNotExisit") {
+      if (agencyData !== "DoesNotExist" && agencyData !== "Error") {
         await updateAgency({
           agency: agencyData,
           data: newData,
@@ -45,12 +60,6 @@ export const AgencyProvider: React.FC<any> = (props) => {
       }
     }
   };
-
-  React.useEffect(() => {
-    if (user?.uid) {
-      getAgencyData();
-    }
-  }, [user]);
 
   React.useEffect(() => {
     getAllAgencyData();

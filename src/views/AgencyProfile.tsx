@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+import { AgencyType } from "../../DataTypes";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
@@ -81,7 +82,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
   const { agency, updateAgencyInfo } = useAgency();
 
-  const [agencyProfile, setAgencyProfile] = React.useState(null);
+  const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
+    null
+  );
 
   const [error, setError] = React.useState("");
 
@@ -99,7 +102,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const getAgencyProfile = async () => {
     const agencyData = await getAgency({ agencyId });
-    if (agencyData && agencyData !== "DoesNotExisit") {
+    if (agencyData && agencyData !== "DoesNotExist" && agencyData !== "Error") {
       setAgencyProfile(agencyData);
     }
   };
