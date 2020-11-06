@@ -1,3 +1,5 @@
+import { faPencil, faTimes } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
@@ -13,15 +15,39 @@ const AgencyProfileWrapper = styled.div`
   background: ${theme.colors.white};
 `;
 
+const AgencyBackground = styled.div`
+  width: 100%;
+  background: ${theme.colors.red};
+  padding: 80px 0;
+`;
+
 const AgencyCardWrapper = styled.div`
-  /* background: ${theme.colors.grayLight}; */
+  max-width: 650px;
+  background: ${theme.colors.white};
   flex-direction: row;
   flex-wrap: wrap;
   border-radius: 2px;
-  max-width: 650px;
   margin: auto;
   border-radius: 30px;
   padding: 40px;
+`;
+
+const EditButton = styled.button`
+  background: ${theme?.colors?.red};
+  outline: none;
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:hover {
+    background: ${theme?.colors?.redDark};
+  }
 `;
 
 const StyledFormikFieldWraper = styled.div`
@@ -49,13 +75,14 @@ const FormFieldsWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   display: flex;
-
+  align-items: center;
+  position: relative;
   img {
     object-fit: cover;
     border-radius: 999px;
     width: 100px;
     height: 100px;
-    margin-right: 30px;
+    margin-right: 50px;
   }
 `;
 
@@ -120,6 +147,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     null
   );
 
+  const [editMode, setEditMode] = React.useState<boolean>(false);
+
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>("services");
 
   const [error, setError] = React.useState("");
@@ -173,44 +202,64 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             console.log("made it");
           }}
         >
-          <AgencyCardWrapper>
-            <Form>
-              <TitleWrapper>
-                <img src="/images/helphub-pattern-red.png" />
-                <div>
-                  <h1>{agencyProfile?.name}</h1>
-                  <p>Update agency contact info!</p>
-                </div>
-              </TitleWrapper>
-              <FormFieldsWrapper>
-                <StyledFormikField name="name" label="Agency Name" />
-                <StyledFormikField
-                  name="contactFirstName"
-                  label="Contact First name"
-                />
-                <StyledFormikField
-                  name="contactLastName"
-                  label="Contact Last name"
-                />
-                <StyledFormikField
-                  name="contactFirstName"
-                  label="Contact First name"
-                />
-                <StyledFormikField name="city" label="City" />
-                <StyledFormikField name="description" label="Description" />
-                <StyledFormikField name="phone" label="Phone #" />
-                <StyledFormikField
-                  name="streetAddress"
-                  label="Street Address"
-                />
-                <StyledFormikField name="website" label="Website" />
-                <StyledFormikField name="zip" label="Zip Code" />
-              </FormFieldsWrapper>
+          <AgencyBackground>
+            <AgencyCardWrapper>
+              <Form>
+                <TitleWrapper>
+                  <img src="/images/helphub-pattern-red.png" />
 
-              <button type="submit">Submit</button>
-              {error && <p>{error}</p>}
-            </Form>
-          </AgencyCardWrapper>
+                  <h1>{agencyProfile?.name}</h1>
+                  <EditButton onClick={() => setEditMode(!editMode)}>
+                    {editMode ? (
+                      <FontAwesomeIcon
+                        icon={faTimes}
+                        color={theme?.colors?.white}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faPencil}
+                        color={theme?.colors?.white}
+                      />
+                    )}
+                  </EditButton>
+                </TitleWrapper>
+                {editMode ? (
+                  <FormFieldsWrapper>
+                    <StyledFormikField name="name" label="Agency Name" />
+                    <StyledFormikField name="description" label="Description" />
+                    <StyledFormikField
+                      name="contactFirstName"
+                      label="Contact First name"
+                    />
+                    <StyledFormikField
+                      name="contactLastName"
+                      label="Contact Last name"
+                    />
+                    <StyledFormikField name="city" label="City" />
+                    <StyledFormikField
+                      name="streetAddress"
+                      label="Street Address"
+                    />
+                    <StyledFormikField name="phone" label="Phone #" />
+                    <StyledFormikField name="website" label="Website" />
+                    <StyledFormikField name="zip" label="Zip Code" />
+                    {error && <p>{error}</p>}
+                    <button type="submit">Submit</button>
+                  </FormFieldsWrapper>
+                ) : (
+                  <FormFieldsWrapper>
+                    <p>{agencyProfile?.description}</p>
+                    <p>{agencyProfile?.phone}</p>
+                    <p>{agencyProfile?.website}</p>
+                    <p>{agencyProfile?.hours}</p>
+                    <p>{agencyProfile?.counties?.join(", ")}</p>
+                    <p>{agencyProfile?.streetAddress}</p>
+                    <p>{`${agencyProfile?.city}, TN ${agencyProfile?.zip}`}</p>
+                  </FormFieldsWrapper>
+                )}
+              </Form>
+            </AgencyCardWrapper>
+          </AgencyBackground>
         </Formik>
       )}
       <ContentWrapper>
