@@ -15,7 +15,7 @@ const AgencyProfileWrapper = styled.div`
 `;
 
 const AgencyCardWrapper = styled.div`
-  background: ${theme.colors.grayLight};
+  /* background: ${theme.colors.grayLight}; */
   flex-direction: row;
   flex-wrap: wrap;
   border-radius: 2px;
@@ -60,6 +60,38 @@ const TitleWrapper = styled.div`
   }
 `;
 
+const NavigationWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const NavigationButton = styled.button<{ isActive: boolean }>`
+  padding: 3px 20px;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(p: any) =>
+    p.isActive ? theme.colors.redDark : theme.colors.red};
+  outline: none;
+  border: none;
+  color: ${theme.colors.white};
+  font-style: bold;
+  margin: 0 5px;
+  &:hover {
+    background: ${theme.colors.redDark};
+    cursor: pointer;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  max-width: 650px;
+  margin: auto;
+  padding: 40px;
+`;
+
 type StyledFormikFieldType = {
   name: string;
   label: string;
@@ -79,6 +111,8 @@ type AgencyProfileType = {
   match: any;
 };
 
+type ActiveTabType = "services" | "messages" | "timeline" | "notes";
+
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
   const { agency, updateAgencyInfo } = useAgency();
@@ -86,6 +120,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
     null
   );
+
+  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("services");
 
   const [error, setError] = React.useState("");
 
