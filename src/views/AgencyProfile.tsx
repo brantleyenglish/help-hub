@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { AgencyType } from "../../DataTypes";
+import ServiceCard from "../components/serviceList/serviceCard";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
@@ -114,71 +115,77 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   return (
     <AgencyProfileWrapper>
       {agencyProfile && (
-        <Formik
-          initialValues={{
-            contactFirstName: agencyProfile?.contactFirstName || "",
-            contactLastName: agencyProfile?.contactLastName || "",
-            city: agencyProfile?.city || "",
-            description: agencyProfile?.description || "",
-            name: agencyProfile?.name || "",
-            phone: agencyProfile?.phone || "",
-            streetAddress: agencyProfile?.streetAddress || "",
-            website: agencyProfile?.website || "",
-            zip: agencyProfile?.zip || "",
-          }}
-          validationSchema={agencySchema}
-          onSubmit={async (values) => {
-            if (updateAgencyInfo) {
-              await updateAgencyInfo({
-                agencyId: agencyProfile?.id,
-                newData: { id: agencyProfile?.id, ...values },
-              });
-            }
-            console.log("made it");
-          }}
-        >
-          <AgencyCardWrapper>
-            <Form>
-              <TitleWrapper>
-                <img src="/images/helphub-pattern-red.png" />
-                <div>
-                  <h1>{agencyProfile?.name}</h1>
-                  <p>Update agency contact info!</p>
-                </div>
-              </TitleWrapper>
-              <FormFieldsWrapper>
-                <StyledFormikField name="name" label="Agency Name" />
-                <StyledFormikField
-                  name="contactFirstName"
-                  label="Contact First name"
-                />
-                <StyledFormikField
-                  name="contactLastName"
-                  label="Contact Last name"
-                />
-                <StyledFormikField
-                  name="contactFirstName"
-                  label="Contact First name"
-                />
-                <StyledFormikField name="city" label="City" />
-                <StyledFormikField name="description" label="Description" />
-                <StyledFormikField name="phone" label="Phone #" />
-                <StyledFormikField
-                  name="streetAddress"
-                  label="Street Address"
-                />
-                <StyledFormikField name="website" label="Website" />
-                <StyledFormikField name="zip" label="Zip Code" />
-              </FormFieldsWrapper>
+        <>
+          <Formik
+            initialValues={{
+              contactFirstName: agencyProfile?.contactFirstName || "",
+              contactLastName: agencyProfile?.contactLastName || "",
+              city: agencyProfile?.city || "",
+              description: agencyProfile?.description || "",
+              name: agencyProfile?.name || "",
+              phone: agencyProfile?.phone || "",
+              streetAddress: agencyProfile?.streetAddress || "",
+              website: agencyProfile?.website || "",
+              zip: agencyProfile?.zip || "",
+            }}
+            validationSchema={agencySchema}
+            onSubmit={async (values) => {
+              if (updateAgencyInfo) {
+                await updateAgencyInfo({
+                  agencyId: agencyProfile?.id,
+                  newData: { id: agencyProfile?.id, ...values },
+                });
+              }
+              console.log("made it");
+            }}
+          >
+            <AgencyCardWrapper>
+              <Form>
+                <TitleWrapper>
+                  <img src="/images/helphub-pattern-red.png" />
+                  <div>
+                    <h1>{agencyProfile?.name}</h1>
+                    <p>Update agency contact info!</p>
+                  </div>
+                </TitleWrapper>
+                <FormFieldsWrapper>
+                  <StyledFormikField name="name" label="Agency Name" />
+                  <StyledFormikField
+                    name="contactFirstName"
+                    label="Contact First name"
+                  />
+                  <StyledFormikField
+                    name="contactLastName"
+                    label="Contact Last name"
+                  />
+                  <StyledFormikField
+                    name="contactFirstName"
+                    label="Contact First name"
+                  />
+                  <StyledFormikField name="city" label="City" />
+                  <StyledFormikField name="description" label="Description" />
+                  <StyledFormikField name="phone" label="Phone #" />
+                  <StyledFormikField
+                    name="streetAddress"
+                    label="Street Address"
+                  />
+                  <StyledFormikField name="website" label="Website" />
+                  <StyledFormikField name="zip" label="Zip Code" />
+                </FormFieldsWrapper>
 
-              <button type="submit">Submit</button>
-              {error && <p>{error}</p>}
-            </Form>
-          </AgencyCardWrapper>
-        </Formik>
-      )}
-    </AgencyProfileWrapper>
+                <button type="submit">Submit</button>
+                {error && <p>{error}</p>}
+              </Form>
+            </AgencyCardWrapper>
+          </Formik>
+          <ServiceCard />
+        </>
+      )
+      }
+
+    </AgencyProfileWrapper >
   );
 };
+
 
 export default AgencyProfile;
