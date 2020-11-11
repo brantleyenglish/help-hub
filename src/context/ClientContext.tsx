@@ -6,7 +6,8 @@ export const ClientContext = React.createContext<Partial<ClientContextType>>(
 );
 ClientContext.displayName = "ClientContext";
 
-// export const AgencyProvider: React.FC<any> = (props) => {
+// TO DO: Adapt this for Authorization to see Clients
+// export const ClientProvider: React.FC<any> = (props) => {
 //     const { user } = useAuth();
 //     const [agency, setAgency] = React.useState<AgencyType>(null);
 
@@ -22,42 +23,43 @@ ClientContext.displayName = "ClientContext";
 //         }
 //     };
 
-//     const getAllAgencyData = async () => {
-//         const agenciesData = await getAllAgencies();
-//         setAgencies(agenciesData);
-//     };
+const getAllClientData = async () => {
+  const clientsData = await getAllClients();
+  setClients(clientsData);
+};
 
-//     const updateAgencyInfo = async ({ agencyId, newData }: UpdateAgencyInfo) => {
-//         if (user && user?.uid && agencyId && user?.uid === agencyId) {
-//             const agencyData = await getAgency({ agencyId: user?.uid });
-//             if (agencyData !== "DoesNotExisit") {
-//                 await updateAgency({
-//                     agency: agencyData,
+// TO DO: Update this for editing privledges
+//     const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
+//         if (user && user?.uid && clientId && user?.uid === clientId) {
+//             const clientData = await getClient({ clientId: user?.uid });
+//             if (clientData !== "DoesNotExisit") {
+//                 await updateClient({
+//                     client: clientData,
 //                     data: newData,
 //                 });
 //             }
 //         }
 //     };
 
-//     React.useEffect(() => {
-//         if (user?.uid) {
-//             getAgencyData();
-//         }
-//     }, [user]);
+React.useEffect(() => {
+  if (user?.uid) {
+    getClientData();
+  }
+}, [user]);
 
-//     React.useEffect(() => {
-//         getAllAgencyData();
-//     }, []);
+React.useEffect(() => {
+  getAllClientData();
+}, []);
 
-//     const value = { agency, agencies, updateAgencyInfo };
+const value = { client, clients, updateClientInfo };
 
-//     return <AgencyContext.Provider value={value} {...props} />;
-// };
+return <ClientContext.Provider value={value} {...props} />;
+};
 
-// export const useAgency = () => {
-//   const context = React.useContext<Partial<AgencyContextType>>(AgencyContext);
-//   if (context === undefined) {
-//     throw new Error("useAuth must be used within a AuthProvider");
-//   }
-//   return context;
-// };
+export const useClient = () => {
+  const context = React.useContext<Partial<ClientContextType>>(ClientContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within a AuthProvider");
+  }
+  return context;
+};
