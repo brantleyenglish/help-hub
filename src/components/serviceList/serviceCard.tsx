@@ -34,7 +34,7 @@ type ServiceType = {
 }
 
 type ServiceCardType = {
-  service: ServiceType;
+  service?: ServiceType;
 }
 
 const ServiceCard = ({ service }: ServiceCardType) => {
@@ -46,8 +46,8 @@ const ServiceCard = ({ service }: ServiceCardType) => {
           <div className="service-card-icon">
             <img src={helphubPlaceholder} alt="#" />
           </div>
-          <h2>{service.name}</h2>
-          <p>{service.description}</p>
+          <h2>{service?.name}</h2>
+          <p>{service?.description}</p>
         </div>
         <div className="service-col-2">
           <ul>
@@ -59,17 +59,17 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                 icon={faPhone}
                 style={{ color: "#B23633", paddingRight: 5 }}
               />{" "}
-              {service.phoneNumber}
+              {service?.phoneNumber}
             </li>
             <li>
               <FontAwesomeIcon
                 icon={faMapMarkerAlt}
                 style={{ color: "#B23633", paddingRight: 5 }}
               />{" "}
-              {service.streetAddress}
+              {service?.streetAddress}
             </li>
             <div className="sm-cat">
-              {categories
+              {/* {categories
                 ?.filter((category) =>
                   service?.categories?.includes(category?.name)
                 )
@@ -80,7 +80,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                     </a>
                     <p>{category.label}</p>
                   </span>
-                ))}
+                ))} */}
             </div>
           </ul>
         </div>

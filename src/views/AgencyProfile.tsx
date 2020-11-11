@@ -7,6 +7,8 @@ import ServiceCard from "../components/serviceList/serviceCard";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
+import { usePublicData } from "../context/PublicContext";
+
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -144,6 +146,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     }
   };
 
+  const { allServices } = usePublicData();
+
   React.useEffect(() => {
     getAgencyProfile();
   }, []);
@@ -214,7 +218,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               </Form>
             </AgencyCardWrapper>
           </Formik>
-          <ServiceCard />
+
+          {allServices &&
+            allServices.map((service: any) => (
+              <ServiceCard service={service} />
+            ))}
         </>
       )
       }
