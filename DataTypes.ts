@@ -9,6 +9,8 @@ export type AgencyType = {
   streetAddress: string;
   website: string;
   zip: string;
+  hours: string;
+  counties?: string[];
 };
 
 export type AgencyListType = AgencyType[];
