@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ServProf from "../components/serviceList/serviceCard";
-import ServHeader from "../components/serviceList/serviceSearch";
+import ServiceCard from "../components/ServiceList/ServiceCard";
+import ServHeader from "../components/ServiceList/ServiceSearch";
 import { usePublicData } from "../context/PublicContext";
 
 const ServiceList = () => {
@@ -14,7 +14,7 @@ const ServiceList = () => {
       {allServices &&
         allServices.map((service: any) => (
           <Link to={`/services/${service?.id}`} key={service.id}>
-            <ServProf service={service} />
+            <ServiceCard service={service} />
           </Link>
         ))}
     </div>

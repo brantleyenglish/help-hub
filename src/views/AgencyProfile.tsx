@@ -8,9 +8,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
+import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { AgencyType } from "../../DataTypes";
+import ServiceCard from "../components/ServiceList/ServiceCard";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
@@ -155,6 +157,7 @@ type ActiveTabType = "services" | "messages" | "timeline" | "notes";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
+  const { allServices } = usePublicData();
   const { agency, updateAgencyInfo } = useAgency();
 
   const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
@@ -310,7 +313,13 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             <p>NOTES</p>
           </NavigationButton>
         </NavigationWrapper>
-        {activeTab === "services" && <p>Is service</p>}
+        {activeTab === "services" && (
+          <>
+            {allServices?.map((service: any) => (
+              <ServiceCard service={service} />
+            ))}
+          </>
+        )}
         {activeTab === "messages" && <p>Is messages</p>}
         {activeTab === "timeline" && <p>Is timeline</p>}
         {activeTab === "notes" && <p>Is notes</p>}

@@ -1,24 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import ClientSearch from "../components/clientList/clientSearch";
 import ClientProf from "../components/clientList/clientCard";
 import { Link } from "react-router-dom";
 
-class ClientList extends React.Component {
-  state = {
-    clientprofile: [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]
-  };
 
+
+class ClientList extends React.Component {
   render() {
     return (
-      <div className="clientHome">
+      <div className="ClientPage">
         <ClientSearch />
-        <div className="anotherclientdiv">
-          {this.state.clientprofile.map(clientprofile => (
-            <Link to="/views/ClientProfile">
-              <ClientProf key={clientprofile.id} />
-            </Link>
-          ))}
-        </div>
+        <ClientProf />
       </div>
     );
   }
