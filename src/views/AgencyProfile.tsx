@@ -134,6 +134,8 @@ const ContentWrapper = styled.div`
   padding: 40px;
 `;
 
+const MessageCard = styled.div``;
+
 type StyledFormikFieldType = {
   name: string;
   label: string;
@@ -157,8 +159,8 @@ type ActiveTabType = "services" | "messages" | "timeline" | "notes";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
-  const { allServices } = usePublicData();
-  const { agency, updateAgencyInfo } = useAgency();
+  const { allServices, allPublicMessages } = usePublicData();
+  const { agency, updateAgencyInfo, agencyMessages } = useAgency();
 
   const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
     null
@@ -316,13 +318,25 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "services" && (
           <>
             {allServices?.map((service: any) => (
-              <ServiceCard service={service} />
+              <ServiceCard service={service} key={service?.id} />
             ))}
           </>
         )}
-        {activeTab === "messages" && <p>Is messages</p>}
+        {activeTab === "messages" && (
+          <>
+            {allPublicMessages?.map((message: any) => (
+              <MessageCard key={message?.id}>{message?.message}</MessageCard>
+            ))}
+          </>
+        )}
         {activeTab === "timeline" && <p>Is timeline</p>}
-        {activeTab === "notes" && <p>Is notes</p>}
+        {activeTab === "notes" && (
+          <>
+            {agencyMessages?.map((message: any) => (
+              <MessageCard key={message?.id}>{message?.message}</MessageCard>
+            ))}
+          </>
+        )}
       </ContentWrapper>
     </AgencyProfileWrapper>
   );
