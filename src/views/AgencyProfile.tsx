@@ -1,4 +1,10 @@
-import { faPencil, faTimes } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faBrowser,
+  faClock,
+  faPencil,
+  faPhone,
+  faTimes,
+} from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
@@ -68,6 +74,14 @@ const StyledFormikFieldWraper = styled.div`
 const FormFieldsWrapper = styled.div`
   width: 100%;
   flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const FormContentWrapper = styled.div`
+  width: 100%;
+  flex-direction: column;
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
@@ -247,15 +261,22 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <button type="submit">Submit</button>
                   </FormFieldsWrapper>
                 ) : (
-                  <FormFieldsWrapper>
+                  <FormContentWrapper>
                     <p>{agencyProfile?.description}</p>
-                    <p>{agencyProfile?.phone}</p>
-                    <p>{agencyProfile?.website}</p>
-                    <p>{agencyProfile?.hours}</p>
+                    <p>
+                      <FontAwesomeIcon icon={faPhone} /> {agencyProfile?.phone}
+                    </p>
+                    <p>
+                      <FontAwesomeIcon icon={faBrowser} />{" "}
+                      {agencyProfile?.website}
+                    </p>
+                    <p>
+                      <FontAwesomeIcon icon={faClock} /> {agencyProfile?.hours}
+                    </p>
                     <p>{agencyProfile?.counties?.join(", ")}</p>
                     <p>{agencyProfile?.streetAddress}</p>
                     <p>{`${agencyProfile?.city}, TN ${agencyProfile?.zip}`}</p>
-                  </FormFieldsWrapper>
+                  </FormContentWrapper>
                 )}
               </Form>
             </AgencyCardWrapper>
