@@ -1,5 +1,6 @@
 import React from "react";
 import { getAllAgencies } from "../firebase/agencies";
+import { getPublicMessages } from "../firebase/messages";
 import { getSettings } from "../firebase/misc";
 import { getAllServices } from "../firebase/services";
 
@@ -7,6 +8,7 @@ export type PublicContextType = {
   categories: any;
   allServices: any;
   signupPassword: any;
+  allPublicMessages: any;
 };
 
 export const PublicContext = React.createContext<Partial<PublicContextType>>(
@@ -21,6 +23,7 @@ export const PublicProvider: React.FC<any> = (props) => {
     setPublicData({
       allAgencies: await getAllAgencies(),
       allServices: await getAllServices(),
+      allPublicMessages: await getPublicMessages(),
       categories: await getSettings("categories"),
       counties: await getSettings("counties"),
       signupPassword: await getSettings("signupPassword"),

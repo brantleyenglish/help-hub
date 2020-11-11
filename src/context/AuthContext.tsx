@@ -1,6 +1,6 @@
 import React from "react";
-import { auth } from "../firebase/config";
 import { login, logout } from "../firebase/auth";
+import { auth } from "../firebase/config";
 
 type UserType = {
   uid: string;
@@ -10,7 +10,6 @@ type UserType = {
 type UserLoginType = {
   email: string;
   password: string;
-  setError: any;
 };
 
 export type AuthContextType = {
@@ -38,8 +37,8 @@ export const AuthProvider: React.FC<any> = (props) => {
     return onAuthStateChange;
   }, []);
 
-  const loginUser = async ({ password, email, setError }: UserLoginType) => {
-    const loginUserData = await login({ email, password, setError });
+  const loginUser = async ({ password, email }: UserLoginType) => {
+    const loginUserData = await login({ email, password });
     setUser({ uid: loginUserData?.user?.uid });
   };
 

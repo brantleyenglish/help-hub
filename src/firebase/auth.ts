@@ -9,7 +9,7 @@ type SignupType = {
 type LoginType = {
   email: string;
   password: string;
-  setError: (value: string) => Promise<void>;
+  // setError: (value: string) => Promise<void>;
 }
 
 type UpdateUserEmail = {
@@ -28,13 +28,13 @@ export const signup = async ({ email, password }: SignupType) => {
   }
 };
 
-export const login = ({ email, password, setError }: LoginType) => {
+export const login = ({ email, password }: LoginType) => {
   try {
     const hashedPass = btoa(password);
     setCookie("pass", hashedPass, 3);
     return auth().signInWithEmailAndPassword(email, password);
   } catch (e) {
-    setError(e.message);
+    // setError(e.message);
     console.log(`Error on login: ${e.message}`);
   }
 };

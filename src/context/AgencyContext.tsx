@@ -1,11 +1,17 @@
 import React from "react";
-import { AgencyContextType, AgencyListType, AgencyType } from "../../DataTypes";
+import {
+  AgencyContextType,
+  AgencyListType,
+  AgencyType,
+  MessageListType,
+} from "../../DataTypes";
 import {
   createAgency,
   getAgency,
   getAllAgencies,
   updateAgency,
 } from "../firebase/agencies";
+import { getAgencyMessages } from "../firebase/messages";
 import { useAuth } from "./AuthContext";
 
 type UpdateAgencyInfo = {
@@ -23,6 +29,11 @@ export const AgencyProvider: React.FC<any> = (props) => {
   const [agency, setAgency] = React.useState<AgencyType | null>(null);
 
   const [agencies, setAgencies] = React.useState<AgencyListType | null>(null);
+
+  const [
+    agencyMessages,
+    setAgencyMessages,
+  ] = React.useState<MessageListType | null>(null);
 
   const getAgencyData = React.useCallback(async () => {
     if (user?.uid) {
@@ -65,7 +76,23 @@ export const AgencyProvider: React.FC<any> = (props) => {
     getAllAgencyData();
   }, []);
 
-  const value = { agency, agencies, updateAgencyInfo };
+  const getAgencyMessagesCallback = React.useCallback(async () => {
+    if (agency?.id) {
+      const agencyMessageData = await getAgencyMessages({
+        agencyId: agency?.id,
+      });
+      console.log({ agencyMessageData });
+      if (agencyMessageData !== "Error") {
+        setAgencyMessages(agencyMessageData);
+      }
+    }
+  }, [agency]);
+
+  React.useEffect(() => {
+    getAgencyMessagesCallback();
+  }, [getAgencyMessagesCallback]);
+
+  const value = { agency, agencies, updateAgencyInfo, agencyMessages };
 
   return <AgencyContext.Provider value={value} {...props} />;
 };
