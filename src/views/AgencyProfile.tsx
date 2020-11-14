@@ -228,19 +228,21 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <img src="/images/helphub-pattern-red.png" />
 
                   <h1>{agencyProfile?.name}</h1>
-                  <EditButton onClick={() => setEditMode(!editMode)}>
-                    {editMode ? (
-                      <FontAwesomeIcon
-                        icon={faTimes}
-                        color={theme?.colors?.white}
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faPencil}
-                        color={theme?.colors?.white}
-                      />
-                    )}
-                  </EditButton>
+                  {agency?.id === agencyId && (
+                    <EditButton onClick={() => setEditMode(!editMode)}>
+                      {editMode ? (
+                        <FontAwesomeIcon
+                          icon={faTimes}
+                          color={theme?.colors?.white}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faPencil}
+                          color={theme?.colors?.white}
+                        />
+                      )}
+                    </EditButton>
+                  )}
                 </TitleWrapper>
                 {editMode ? (
                   <FormFieldsWrapper>
@@ -289,32 +291,34 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         </Formik>
       )}
       <ContentWrapper>
-        <NavigationWrapper>
-          <NavigationButton
-            isActive={activeTab === "services"}
-            onClick={() => setActiveTab("services")}
-          >
-            <p>SERVICES</p>
-          </NavigationButton>
-          <NavigationButton
-            isActive={activeTab === "messages"}
-            onClick={() => setActiveTab("messages")}
-          >
-            <p>MESSAGES</p>
-          </NavigationButton>
-          <NavigationButton
-            isActive={activeTab === "timeline"}
-            onClick={() => setActiveTab("timeline")}
-          >
-            <p>TIMELINE</p>
-          </NavigationButton>
-          <NavigationButton
-            isActive={activeTab === "notes"}
-            onClick={() => setActiveTab("notes")}
-          >
-            <p>NOTES</p>
-          </NavigationButton>
-        </NavigationWrapper>
+        {agency?.id === agencyId && (
+          <NavigationWrapper>
+            <NavigationButton
+              isActive={activeTab === "services"}
+              onClick={() => setActiveTab("services")}
+            >
+              <p>SERVICES</p>
+            </NavigationButton>
+            <NavigationButton
+              isActive={activeTab === "messages"}
+              onClick={() => setActiveTab("messages")}
+            >
+              <p>MESSAGES</p>
+            </NavigationButton>
+            <NavigationButton
+              isActive={activeTab === "timeline"}
+              onClick={() => setActiveTab("timeline")}
+            >
+              <p>TIMELINE</p>
+            </NavigationButton>
+            <NavigationButton
+              isActive={activeTab === "notes"}
+              onClick={() => setActiveTab("notes")}
+            >
+              <p>NOTES</p>
+            </NavigationButton>
+          </NavigationWrapper>
+        )}
         {activeTab === "services" && (
           <>
             {allServices?.map((service: any) => (
