@@ -1,10 +1,10 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { ErrorMessage, Field, Form, Formik, yupToFormErrors } from "formik";
 import styled from "styled-components";
+import * as Yup from "yup";
+import { ClientType } from "../../DataTypes";
 import { theme } from "../components/Theme";
-import ClientHd from "../components/clientProfile/clientHeader";
-import SmallHead from "../components/clientProfile/timelineToggle";
-
+import { useClient } from "../context/ClientContext";
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -115,7 +115,6 @@ const ContentWrapper = styled.div`
   padding: 40px;
 `;
 
-
 type StyledFormikFieldType = {
   name: string;
   label: string;
@@ -165,19 +164,19 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   });
 
   // TO DO: Create Client Context
-  const getClientProfile = async () => {
-    const clientData = await getClient({ clientId });
-    if (clientData && clientData !== "DoesNotExist" && clientData !== "Error") {
-      setClientProfile(clientData);
-    }
-  };
+  // const getClientProfile = async () => {
+  //   const clientData = await getClient({ clientId });
+  //   if (clientData && clientData !== "DoesNotExist" && clientData !== "Error") {
+  //     setClientProfile(clientData);
+  //   }
+  // };
 
-  // TO DO: Make equivilant for Timeline info and File info
-  // const { allServices } = usePublicData();
+  // // TO DO: Make equivilant for Timeline info and File info
+  // // const { allServices } = usePublicData();
 
-  React.useEffect(() => {
-    getClientProfile();
-  }, []);
+  // React.useEffect(() => {
+  //   getClientProfile();
+  // }, []);
 
   return (
     <ClientProfileWrapper>
@@ -198,7 +197,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             }}
             validationSchema={clientSchema}
             onSubmit={async (values) => {
-              if (updateClientInfo) {
+              if (updateClientInfo && clientProfile?.id) {
                 await updateClientInfo({
                   clientId: clientProfile?.id,
                   newData: { id: clientProfile?.id, ...values },
@@ -226,12 +225,12 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     label="Client Last Name"
                   />
                   <StyledFormikField name="dob" label="Date of Birth" />
-                  <StyledFormikField name="additionalNotes" label="Additional Notes" />
-                  <StyledFormikField name="phone" label="Phone #" />
                   <StyledFormikField
-                    name="address"
-                    label="Street Address"
+                    name="additionalNotes"
+                    label="Additional Notes"
                   />
+                  <StyledFormikField name="phone" label="Phone #" />
+                  <StyledFormikField name="address" label="Street Address" />
                   <StyledFormikField name="county" label="County" />
                   <StyledFormikField name="email" label="Email" />
                   <StyledFormikField name="ethnicity" label="Ethnicity" />
@@ -249,12 +248,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               <ServiceCard service={service} />
             ))} */}
         </>
-      )
-      }
-
-    </ClientProfileWrapper >
+      )}
+    </ClientProfileWrapper>
   );
 };
-
 
 export default ClientProfile;
