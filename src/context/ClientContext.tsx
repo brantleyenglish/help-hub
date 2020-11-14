@@ -1,5 +1,7 @@
 import React from "react";
-import { ClientContextType } from "../../DataTypes";
+import { ClientContextType, ClientListType } from "../../DataTypes";
+import { getAllClients } from "../firebase/clients";
+import { useAuth } from "./AuthContext";
 
 export const ClientContext = React.createContext<Partial<ClientContextType>>(
   {}
@@ -7,53 +9,43 @@ export const ClientContext = React.createContext<Partial<ClientContextType>>(
 ClientContext.displayName = "ClientContext";
 
 // TO DO: Adapt this for Authorization to see Clients
-// export const ClientProvider: React.FC<any> = (props) => {
-//     const { user } = useAuth();
-//     const [agency, setAgency] = React.useState<AgencyType>(null);
+export const ClientProvider: React.FC<any> = (props) => {
+  const { user } = useAuth();
+  const [clients, setClients] = React.useState<ClientListType | null>(null);
 
-//     const [agencies, setAgencies] = React.useState<AgencyListType>(null);
+  const getAllClientData = React.useCallback(async () => {
+    if (user?.uid) {
+      const clientsData = await getAllClients();
+      if (clientsData) {
+        setClients(clientsData);
+      }
+    }
+  }, [user]);
 
-//     const getAgencyData = async () => {
-//         const agencyData = await getAgency({ agencyId: user?.uid });
-//         if (agencyData === "DoesNotExisit") {
-//             const newAgencyData = await createAgency({ agencyId: user?.uid });
-//             setAgency(newAgencyData);
-//         } else {
-//             setAgency(agencyData);
-//         }
-//     };
+  const updateClientInfo = React.useCallback(async ({ clientId, newData }) => {
+    console.log({ clientId, newData });
+  }, []);
 
-const getAllClientData = async () => {
-  const clientsData = await getAllClients();
-  setClients(clientsData);
-};
+  // TO DO: Update this for editing privledges
+  //     const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
+  //         if (user && user?.uid && clientId && user?.uid === clientId) {
+  //             const clientData = await getClient({ clientId: user?.uid });
+  //             if (clientData !== "DoesNotExisit") {
+  //                 await updateClient({
+  //                     client: clientData,
+  //                     data: newData,
+  //                 });
+  //             }
+  //         }
+  //     };
 
-// TO DO: Update this for editing privledges
-//     const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
-//         if (user && user?.uid && clientId && user?.uid === clientId) {
-//             const clientData = await getClient({ clientId: user?.uid });
-//             if (clientData !== "DoesNotExisit") {
-//                 await updateClient({
-//                     client: clientData,
-//                     data: newData,
-//                 });
-//             }
-//         }
-//     };
+  React.useEffect(() => {
+    getAllClientData();
+  }, [getAllClientData]);
 
-React.useEffect(() => {
-  if (user?.uid) {
-    getClientData();
-  }
-}, [user]);
+  const value = { clients, updateClientInfo };
 
-React.useEffect(() => {
-  getAllClientData();
-}, []);
-
-const value = { client, clients, updateClientInfo };
-
-return <ClientContext.Provider value={value} {...props} />;
+  return <ClientContext.Provider value={value} {...props} />;
 };
 
 export const useClient = () => {
