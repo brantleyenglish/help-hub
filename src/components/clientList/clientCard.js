@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class ClientProf extends React.Component {
+class ClientCard extends React.Component {
     render() {
         return (
             <div className="bigClientDiv">
@@ -53,4 +53,4 @@ class ClientProf extends React.Component {
     }
 }
 
-export default ClientProf;
+export default ClientCard;

@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UnitedWayLogo from "../images/unitedway_logo.png";
+import HelpHubHeader from "../images/header.png";
+
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -13,10 +15,10 @@ const StyledSVG = styled.img`
   height: 60px;
 `;
 const SearchWrapper = styled.div`
-padding: 40px 0px 40px 0px;
+padding: 4em 0px 6em 0px;
 text-align: center;
 background-color: ${theme.colors.white};
-background-image: url(images/header.png);
+background-image: url(${HelpHubHeader});
 background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
@@ -24,11 +26,13 @@ background-repeat: no-repeat;
 const SearchTitle = styled.h1`
 color: ${theme.colors.white};
 font-size: 45px;
+margin-bottom: 0px;
 text-transform: uppercase;
 `;
 const SearchSubtitle = styled.h2`
 color: ${theme.colors.white};
 font-size: 25px;
+margin-top: 10px;
 `;
 const SearchBarWrapper = styled.span`
 display: inline-flex;
