@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import ClientSearch from "../components/clientList/clientSearch";
-import ClientCard from "../components/clientList/clientCard";
+import React from "react";
 import { Link } from "react-router-dom";
+import ClientCard from "../components/clientList/clientCard";
+import ClientSearch from "../components/clientList/clientSearch";
+import { useClient } from "../context/ClientContext";
 
+const ClientList = () => {
+  const { clients } = useClient();
 
-
-class ClientList extends React.Component {
-  render() {
-    return (
-      <div className="ClientPage">
-        <ClientSearch />
-        <Link to={`/clients/${client?.id}`} key={client?.id}>
-          <ClientCard />
-        </Link>
-      </div>
-    );
-  }
-}
+  console.log({ clients });
+  return (
+    <div className="ClientPage">
+      <ClientSearch />
+      {clients &&
+        clients.map((client) => (
+          <Link to={`/clients/${client?.id}`} key={client?.id}>
+            <ClientCard agency={client} />
+          </Link>
+        ))}
+    </div>
+  );
+};
 
 export default ClientList;

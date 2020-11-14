@@ -218,7 +218,6 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 newData: { id: agencyProfile?.id, ...values },
               });
             }
-            console.log("made it");
           }}
         >
           <AgencyBackground>

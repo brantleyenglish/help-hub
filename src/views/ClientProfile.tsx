@@ -203,7 +203,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                   newData: { id: clientProfile?.id, ...values },
                 });
               }
-              console.log("made it");
             }}
           >
             <ClientCardWrapper>

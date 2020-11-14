@@ -1,14 +1,16 @@
 import React from "react";
-
-import { PublicProvider } from "./PublicContext";
-import { AuthProvider } from "./AuthContext";
 import { AgencyProvider } from "./AgencyContext";
+import { AuthProvider } from "./AuthContext";
+import { ClientProvider } from "./ClientContext";
+import { PublicProvider } from "./PublicContext";
 
 const ContextProviders: React.FC<any> = ({ children }) => {
   return (
     <PublicProvider>
       <AuthProvider>
-        <AgencyProvider>{children}</AgencyProvider>
+        <ClientProvider>
+          <AgencyProvider>{children}</AgencyProvider>
+        </ClientProvider>
       </AuthProvider>
     </PublicProvider>
   );

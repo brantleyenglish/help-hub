@@ -81,7 +81,6 @@ export const AgencyProvider: React.FC<any> = (props) => {
       const agencyMessageData = await getAgencyMessages({
         agencyId: agency?.id,
       });
-      console.log({ agencyMessageData });
       if (agencyMessageData !== "Error") {
         setAgencyMessages(agencyMessageData);
       }
