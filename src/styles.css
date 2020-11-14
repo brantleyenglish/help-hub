@@ -113,7 +113,7 @@ a:hover {
 /* -----------------------
       SEARCH STYLES
 ----------------------- */
-.home-search,
+/* .home-search, */
 .service-search,
 .agency-search,
 .client-search {
@@ -125,7 +125,7 @@ a:hover {
   background-position: center center;
   background-repeat: no-repeat;
 }
-.home-search h1,
+/* .home-search h1, */
 .service-search h1,
 .agency-search h1,
 .client-search h1 {
@@ -133,14 +133,15 @@ a:hover {
   font-size: 45px;
   text-transform: uppercase;
 }
-.home-search h2{
+/* .home-search h2{
   color: #fefefe;
   font-size: 25px;
-}
-.search-container {
+} */
+
+/* .search-container {
   display: inline-flex;
   align-items: center;
-}
+} */
 .search-icon {
   position: absolute;
   color: #999999;
