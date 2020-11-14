@@ -2,6 +2,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
+import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UnitedWayLogo from "../images/unitedway_logo.png";
 
@@ -10,6 +11,16 @@ const StyledSVG = styled.img`
     brightness(106%) contrast(100%);
   height: 60px;
 `;
+
+// const SearchWrapper = styled.div`
+// padding: 40px 0px 40px 0px;
+// text-align: center;
+// background-color: #fefefe;
+// background-image: url(images/header.png);
+// background-size: cover;
+// background-position: center center;
+// background-repeat: no-repeat;
+// `;
 
 const Home = () => {
   const { categories } = usePublicData();
