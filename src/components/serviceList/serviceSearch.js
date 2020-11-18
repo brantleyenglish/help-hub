@@ -12,6 +12,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import header from "../../images/header.png";
+import SearchBar from "../global/searchbar";
 
 class ServiceSearch extends React.Component {
     state = {
@@ -25,11 +26,7 @@ class ServiceSearch extends React.Component {
         return (
             <div className="service-search">
                 <h1> Services </h1>
-                <span className="search-container">
-                    <FontAwesomeIcon icon={faSearch} className="search-icon" />
-                    <input className="searchbar" placeholder="Search for Services" />
-                </span>
-                <button className="search-button">GO</button>
+                <SearchBar></SearchBar>
 
                 <div className="catbuttons">
                     <div className="search-categories">

@@ -8,6 +8,8 @@ export const theme = {
     red: "#B23633",
     redDark: "#942E29",
     white: "#FFFFFF",
+    blue: "#0e4680",
+    lightBlue: "#6291c0",
   },
   fonts: {
     regular: "Roboto-Regular",

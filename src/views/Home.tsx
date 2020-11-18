@@ -1,8 +1,8 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import Search from "src/components/home/search";
 import styled from "styled-components";
+import SearchBar from "../components/global/searchbar";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UnitedWayLogo from "../images/unitedway_logo.png";
@@ -17,85 +17,151 @@ const StyledSVG = styled.img`
 const SearchWrapper = styled.div`
 padding: 4em 0px 6em 0px;
 text-align: center;
-background-color: ${theme.colors.white};
-background-image: url(${HelpHubHeader});
+color: ${theme.colors.white};
+background-color: ${theme.colors.blue};
+// background-image: url(${HelpHubHeader});
 background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
+& h1{
+  font-size: 45px;
+  margin-bottom: 0px;
+  text-transform: uppercase;
+};
+& h2{
+  font-size: 25px;
+  margin-top: 10px;
+};
 `;
-const SearchTitle = styled.h1`
-color: ${theme.colors.white};
-font-size: 45px;
-margin-bottom: 0px;
-text-transform: uppercase;
-`;
-const SearchSubtitle = styled.h2`
-color: ${theme.colors.white};
-font-size: 25px;
-margin-top: 10px;
-`;
-const SearchBarWrapper = styled.span`
-display: inline-flex;
+const CallWrapper = styled.div`  
+display: flex;
+background-color: ${theme.colors.grayLight};
+padding: 10px;
+padding-top: 3vw;
+padding-bottom: 3vw;
+color: ${theme.colors.gray};
+justify-content: center;
 align-items: center;
+text-align: center;
+& button{
+  padding: 0.5vw 2vw 0.5vw 2vw;
+  margin: 1vw;
+  margin-left: 2vw;
+  border-radius: 1vw;
+  background-color: ${theme.colors.lightBlue};
+  border: none;
+  color: ${theme.colors.white};
+  cursor: pointer;
+};
+& button:hover{
+  background-color: ${theme.colors.blue};
+};`;
+const BigCatWrapper = styled.div`
+background-color: ${theme.colors.white};
+padding-top: 5vw;
+padding-bottom: 5vw;
+& a{
+  display: flex;
+  color: ${theme.colors.blue};
+  background-color: ${theme.colors.lightBlue};
+  font-size: 60px;
+  width: 90px;
+  height: 90px;
+  padding: 10px;
+  text-align: center;
+  margin: 35px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+};
+& a:hover {
+  background-color: ${theme.colors.blue};
+};
 `;
+const CatSpanWrapper = styled.span`
+display: flex;
+flex-direction: column;
+text-align: center;
+& p{
+  text-transform: uppercase;
+  margin: 0;
+  color: ${theme.colors.blue};
+  font-weight: 700;
+};
+`;
+const AboutWrapper = styled.div`
+display: flex;
+  flex-wrap: wrap;
+  margin: 2vw;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  background-color: ${theme.colors.white};
+  padding: 10px 100px;
+  color: ${theme.colors.gray};
+& h1{
+  color: ${theme.colors.blue};
+  font-weight: 1000;
+};
+& p{
+  font-family: "Roboto";
+  font-weight: 500;
+};
+`;
+
 
 const Home = () => {
   const { categories } = usePublicData();
 
   return (
-    <div>
+    <>
       <SearchWrapper>
-        <SearchTitle> Find Help, Get Help.</SearchTitle>
-        <SearchSubtitle>Search dozens of agencies and their services.</SearchSubtitle>
-        <SearchBarWrapper>
-          <FontAwesomeIcon icon={faSearch} className="search-icon" />
-          <input
-            className="searchbar"
-            placeholder="Search for Services or Agencies"
-          />
-        </SearchBarWrapper>
-        <button className="search-button">GO</button>
+        <h1> Find Help, Get Help.</h1>
+        <h2>Search dozens of agencies and their services.</h2>
+        <SearchBar></SearchBar>
       </SearchWrapper>
-      <div className="home-categories">
+
+      <BigCatWrapper>
         <div className="cat-row-1">
           {categories &&
             categories.map((category: any) => (
-              <span className="category-container">
-                <StyledSVG src={category.icon} alt={category.label} />
+              <CatSpanWrapper>
+                <a>
+                  <StyledSVG src={category.icon} alt={category.label} /></a>
                 <p>{category.label}</p>
-              </span>
+              </CatSpanWrapper>
             ))}
         </div>
-      </div>
-      <div className="call">
+      </BigCatWrapper>
+
+      <CallWrapper>
         <h1> Can't find what you need?</h1>
         <button>CALL 211</button>
-      </div>
-      <div className="about">
-        <img src={UnitedWayLogo} alt="United Way Logo" />
-        <div>
-          <h1>ABOUT US</h1>
-          <p>
-            As the central hub within the nonprofit sector in West Tennessee, we
-            unite people in ways that improve each person’s access to health,
+      </CallWrapper>
+
+      <AboutWrapper>
+        <h1>ABOUT US</h1>
+        <p>
+          As the central hub within the nonprofit sector in West Tennessee, we
+          unite people in ways that improve each person’s access to health,
             education, and financial stability.{" "}
+        </p>
+        <p>
+          With a 75-year history of service to West Tennessee, we are leading
+          our communities toward sustainable change. We connect people in need
+          to the resources that can help them, and we unite people who want to
+          help with the opportunity to do so.
           </p>
-          <p>
-            With a 75-year history of service to West Tennessee, we are leading
-            our communities toward sustainable change. We connect people in need
-            to the resources that can help them, and we unite people who want to
-            help with the opportunity to do so.
+        <p>
+          We focus on empowering our communities by partnering with local
+          agencies who are actively meeting the needs of our communities.
+          United Way brings together the best people in each community to
+          determine the most critical needs that require collective - not
+          individual - action.
           </p>
-          <p>
-            We focus on empowering our communities by partnering with local
-            agencies who are actively meeting the needs of our communities.
-            United Way brings together the best people in each community to
-            determine the most critical needs that require collective - not
-            individual - action.
-          </p>
-        </div>
-      </div>
-    </div>
+      </AboutWrapper>
+    </>
   );
 };
 
