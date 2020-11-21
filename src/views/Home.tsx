@@ -1,12 +1,9 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import SearchBar from "../components/global/searchbar";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
-import UnitedWayLogo from "../images/unitedway_logo.png";
-import HelpHubHeader from "../images/header.png";
+import UWHeader from "../images/uw_header.png";
 
 
 const StyledSVG = styled.img`
@@ -19,7 +16,7 @@ padding: 4em 0px 6em 0px;
 text-align: center;
 color: ${theme.colors.white};
 background-color: ${theme.colors.blue};
-// background-image: url(${HelpHubHeader});
+background-image: url(${UWHeader});
 background-size: cover;
 background-position: center center;
 background-repeat: no-repeat;
@@ -57,9 +54,15 @@ text-align: center;
   background-color: ${theme.colors.blue};
 };`;
 const BigCatWrapper = styled.div`
+max-width: 800px;
+min-width: 500px;
 background-color: ${theme.colors.white};
-padding-top: 5vw;
+padding-top: 2vw;
 padding-bottom: 5vw;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
 & a{
   display: flex;
   color: ${theme.colors.blue};
@@ -123,16 +126,14 @@ const Home = () => {
       </SearchWrapper>
 
       <BigCatWrapper>
-        <div className="cat-row-1">
-          {categories &&
-            categories.map((category: any) => (
-              <CatSpanWrapper>
-                <a>
-                  <StyledSVG src={category.icon} alt={category.label} /></a>
-                <p>{category.label}</p>
-              </CatSpanWrapper>
-            ))}
-        </div>
+        {categories &&
+          categories.map((category: any) => (
+            <CatSpanWrapper>
+              <a>
+                <StyledSVG src={category.icon} alt={category.label} /></a>
+              <p>{category.label}</p>
+            </CatSpanWrapper>
+          ))}
       </BigCatWrapper>
 
       <CallWrapper>

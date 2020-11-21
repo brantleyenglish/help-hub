@@ -21,16 +21,30 @@ align-items: center;
 };
 `;
 
+const SearchBarBtnWrapper = styled.button`
+color: white;
+background-color: ${theme.colors.gray};
+width: 85px;
+border: none;
+border-radius: 15px;
+padding: 7px;
+outline: none;
+&:hover{
+  background-color: ${theme.colors.lightBlue};
+  cursor: pointer;
+};
+`;
+
 const SearchBar = () => {
-    return (
-        <>
-            <SearchBarWrapper>
-                <FontAwesomeIcon icon={faSearch} className="search-icon" />
-                <input placeholder="Search for Services or Agencies" />
-            </SearchBarWrapper>
-            <button className="search-button">GO</button>
-        </>
-    );
+  return (
+    <>
+      <SearchBarWrapper>
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        <input placeholder="Search for Services or Agencies" />
+      </SearchBarWrapper>
+      <SearchBarBtnWrapper>GO</SearchBarBtnWrapper>
+    </>
+  );
 };
 
 export default SearchBar;

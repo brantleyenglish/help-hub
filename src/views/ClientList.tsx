@@ -1,12 +1,27 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { theme } from "../components/Theme";
 import { ClientListType } from "../../DataTypes";
 import ClientCard from "../components/clientList/clientCard";
 import { useClient } from "../context/ClientContext";
-import header from "../images/header.png";
+import SearchBar from "../components/global/searchbar";
+import UWHeader from "../images/uw_header.png";
+
+const ClientSearchWrapper = styled.div`
+padding: 40px 0px 40px 0px;
+text-align: center;
+background-color: ${theme.colors.blue};
+background-image: url(${UWHeader});
+background-size: cover;
+background-position: center center;
+background-repeat: no-repeat;
+& h1{
+    color: ${theme.colors.white};
+    font-size: 45px;
+    text-transform: uppercase;
+};
+`;
 
 const ClientListWrapper = styled.div`
   display: flex;
@@ -16,6 +31,8 @@ const ClientListWrapper = styled.div`
   align-items: center;
   padding: 30px 0;
 `;
+
+
 
 const ClientList = () => {
   const { clients } = useClient();
@@ -41,24 +58,13 @@ const ClientList = () => {
   };
 
   return (
-    <div className="ClientPage">
-      <div
-        className="client-search"
-        style={{
-          backgroundImage: `url(${header})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <h1> Clients</h1>
-        <span className="search-container">
-          <FontAwesomeIcon icon={faSearch} className="search-icon" />
-          <input value={search} onChange={handleSearchUpdate} />
-        </span>
+    <>
+      <ClientSearchWrapper>
+        <h1> Clients </h1>
+        <SearchBar></SearchBar>
+        <a href="">Advanced Search</a>
+      </ClientSearchWrapper>
 
-        <a>Advanced Search</a>
-      </div>
       <ClientListWrapper>
         {filteredClients &&
           filteredClients.map((client) => (
@@ -67,7 +73,7 @@ const ClientList = () => {
             </Link>
           ))}
       </ClientListWrapper>
-    </div>
+    </>
   );
 };
 

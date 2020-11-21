@@ -28,141 +28,12 @@ a:hover {
 /* -----------------------
       SEARCH STYLES
 ----------------------- */
-.service-search,
-.agency-search,
-.client-search {
-  padding: 40px 0px 40px 0px;
-  text-align: center;
-  background-color: #fefefe;
-  background-image: url(images/header.png);
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-}
-
-.service-search h1,
-.agency-search h1,
-.client-search h1 {
-  color: #fefefe;
-  font-size: 45px;
-  text-transform: uppercase;
-}
 
 .search-icon {
   position: absolute;
   color: #999999;
   margin-left: 6px;
   font-size: 10px;
-}
-
-button.search-button {
-  color: white;
-  background-color: #999999;
-  width: 85px;
-  border: none;
-  border-radius: 15px;
-  padding: 7px;
-  outline: none;
-}
-.search-button:hover {
-  background-color: #333333;
-  cursor: pointer;
-}
-/*SEARCH CATEGORIES*/
-.service-search a,
-.agency-search a {
-  display: flex;
-  color: #b23633;
-  background-color: #fefefe;
-  font-size: 15px;
-  width: 9px;
-  height: 9px;
-  padding: 10px;
-  text-align: center;
-  margin: 15px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.service-search a:hover,
-.agency-search a:hover {
-  background-color: #999999;
-}
-.service-search p,
-.eency-search p {
-  text-transform: uppercase;
-  margin: 8px;
-  color: #fefefe;
-  font-weight: 700;
-  font-size: 8px;
-}
-.cat-row-1,
-.cat-row-2,
-/* .cat3,   */
-.sm-cat,
-.search-categories {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* -----------------------
-      AGENCY LIST
------------------------ */
-
-.bckgrnd {
-  background-color: #fefefe;
-  padding: 10px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-.agency-card {
-  background-color: #f2f2f2;
-  border-radius: 15px;
-  width: 300px;
-  margin: 10px;
-  padding: 10px 20px;
-}
-.agency-card a {
-  display: flex;
-  color: #fefefe;
-  background-color: #b23633;
-  font-size: 17px;
-  width: 11px;
-  height: 11px;
-  padding: 10px;
-  margin: 15px;
-  border-radius: 3px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.agency-card img {
-  max-width: 80px;
-  padding: 10px;
-  float: left;
-}
-.agency-card h1 {
-  text-align: left;
-  color: #b23633;
-}
-.agency-card h1:hover {
-  color: #942e29;
-}
-.agency-card p {
-  color: #333333;
-}
-.category-tags {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  border-top: 4px white solid;
 }
 
 /* -----------------------
@@ -264,106 +135,6 @@ div.lefty {
 }
 
 
-/* -----------------------
-      SERVICE CARD
------------------------ */
-.service-list {
-  background-color: #fefefe;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 20px;
-}
-
-.service-card-icon {
-  display: flex;
-  flex-direction: column;
-  float: left;
-  padding: 0 20px;
-  margin: 0 20px;
-}
-
-.service-card-icon h1 {
-  font-size: 20px;
-  color: #b23633;
-  margin: 15px 0;
-}
-
-.service-card-icon img{
-  float: "left";
-  width: 120px;
-  border-radius: 100px;
-}
-
-.service-col-1 {
-  background-color: #f2f2f2;
-  border-right: solid #fefefe 4px;
-  max-width: 700px;
-  border-radius: 1vw 0 0 1vw;
-  padding: 1vw;
-}
-
-.service-col-1 h2{
-  font-size: 20px;
-  color: #B23633;
-}
-
-.service-col-1 p{
-  display: block;
-  text-align: left;
-  padding: 10px 0;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.service-col-1 h2:hover {
-  text-decoration: underline;
-  color: #942e29;
-}
-
-.service-col-2 {
-  background-color: #f2f2f2;
-  max-width: 300px;
-  border-radius: 0 1vw 1vw 0;
-}
-
-.service-col-2 ul {
-  padding-right: 40px;
-  padding: 10px 20px;
-}
-
-.service-col-2 li {
-  display: block;
-  text-align: left;
-  padding: 10px 0;
-  font-size: 18px;
-  color: #999999;
-}
-
-.service-col-2 a:not(.emailLink) {
-  display: flex;
-  color: #fefefe;
-  background-color: #b23633;
-  font-size: 17px;
-  width: 11px;
-  height: 11px;
-  padding: 10px;
-  margin: 15px;
-  border-radius: 3px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.service-col-2 ul li .editButton {
-  float: right;
-}
-
-.service-pg .service-col-2 ul {
-  padding-right: 40px;
-  padding: 30px 20px;
-}
-/*---*/
 
 /* -----------------------
       LOGGED IN STYLES
@@ -755,9 +526,9 @@ div.filebody a.fileIcon {
   color: #999999;
 }
 
-div.filebody a.fileIcon:hover {
+/* div.filebody a.fileIcon:hover {
   color: #666666;
-}
+} */
 
 div.bigClientDiv {
   background-color: #fefefe;

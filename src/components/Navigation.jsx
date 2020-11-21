@@ -43,10 +43,10 @@ const Navigation = () => {
           {false ? (
             <></>
           ) : (
-            <li className="nav-item">
-              <Link to="/login">Log in</Link>
-            </li>
-          )}
+              <li className="nav-item">
+                <Link to="/login">Log in</Link>
+              </li>
+            )}
         </ul>
       </div>
     </NavigationWrapper>
