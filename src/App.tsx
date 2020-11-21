@@ -27,7 +27,7 @@ const App: React.FC<any> = () => {
         <Nav />
         <Switch>
           <Route exact={true} path="/clients" component={ClientList} />
-          <Route exact={true} path="/clients/:id" component={ClientProfile} />
+          <Route exact={true} path="/clients/:clientId" component={ClientProfile} />
           <Route exact={true} path="/services" component={ServiceList} />
           <Route
             exact={true}

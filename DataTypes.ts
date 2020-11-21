@@ -1,15 +1,16 @@
 export type AgencyType = {
-  city: string;
-  contactFirstName: string;
-  contactLastName: string;
-  description: string;
   id: string;
   name: string;
-  phone: string;
-  streetAddress: string;
+  description: string;
   website: string;
+  contactFirstName: string;
+  contactLastName: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  city: string;
+  state: string;
   zip: string;
-  hours?: string;
   counties?: string[];
 };
 
@@ -18,23 +19,25 @@ export type AgencyListType = AgencyType[];
 export type AgencyContextType = {
   agencies: AgencyListType;
   agency: AgencyType;
-  updateAgencyInfo: ({newData, agencyId}: {newData:AgencyType, agencyId: string }) => Promise<void>
+  updateAgencyInfo: ({ newData, agencyId }: { newData: AgencyType, agencyId: string }) => Promise<void>
   agencyMessages: MessageListType;
 };
 
 export type ClientType = {
-  additionalNotes: string;
-  address: string;
-  county: string;
-  dob: string;
-  email: string;
-  ethnicity: string;
-  gender: string;
-  name: string;
-  phone: string;
+  id?: string;
   clientFirstName?: string;
   clientLastName?: string;
-  id?: string;
+  dob: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zip: string;
+  gender: string;
+  ethnicity: string;
+  county: string;
+  additionalNotes: string;
 }
 
 export type ClientListType = ClientType[];
@@ -42,11 +45,11 @@ export type ClientListType = ClientType[];
 export type ClientContextType = {
   clients: ClientListType;
   client: ClientType;
-  updateClientInfo: ({ clientId, newData}: {clientId: string, newData: object}) => Promise<void>
+  updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>
 };
 
 export type ServiceType = {
-    string: string;
+  string: string;
 }
 
 export type ServiceListType = ServiceType[];

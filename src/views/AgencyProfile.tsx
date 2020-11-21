@@ -1,37 +1,40 @@
+import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import styled from "styled-components";
+import { theme } from "../components/Theme";
+import * as Yup from "yup";
+import { AgencyType } from "../../DataTypes";
+import { useAgency } from "../context/AgencyContext";
+import { getAgency } from "../firebase/agencies";
+
 import {
   faBrowser,
   faClock,
   faPencil,
   faPhone,
   faTimes,
+  faEnvelope,
+  faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
 import { usePublicData } from "src/context/PublicContext";
-import styled from "styled-components";
-import * as Yup from "yup";
-import { AgencyType } from "../../DataTypes";
+
 import ServiceCard from "../components/ServiceList/ServiceCard";
-import { theme } from "../components/Theme";
-import { useAgency } from "../context/AgencyContext";
-import { getAgency } from "../firebase/agencies";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   background: ${theme.colors.white};
 `;
-
 const AgencyBackground = styled.div`
   width: 100%;
-  background: ${theme.colors.red};
-  padding: 80px 0;
+  background: ${theme.colors.blue};
+  padding: 0;
 `;
-
 const AgencyCardWrapper = styled.div`
-  max-width: 650px;
-  background: ${theme.colors.white};
+  max-width: 900px;
+  // background: ${theme.colors.lightBlue};
+  color: ${theme.colors.white};
   flex-direction: row;
   flex-wrap: wrap;
   border-radius: 2px;
@@ -39,9 +42,9 @@ const AgencyCardWrapper = styled.div`
   border-radius: 30px;
   padding: 40px;
 `;
-
 const EditButton = styled.button`
-  background: ${theme?.colors?.red};
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
   outline: none;
   border: none;
   padding: 5px;
@@ -54,25 +57,28 @@ const EditButton = styled.button`
   top: 0;
   right: 0;
   &:hover {
-    background: ${theme?.colors?.redDark};
+    background: ${theme?.colors?.white};
+    color: ${theme.colors.blue};
   }
 `;
-
 const StyledFormikFieldWraper = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
   /* width: 250px; */
-  margin: 10px 0;
+  margin: 10px 10px;
   color: ${theme.colors.gray};
   label {
-    /* width: 100%; */
+    color: ${theme.colors.lightBlue};
   }
   input {
-    /* width: 100%; */
+    width: 100%;
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
   }
 `;
-
 const FormFieldsWrapper = styled.div`
   width: 100%;
   flex-direction: row;
@@ -80,7 +86,6 @@ const FormFieldsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 const FormContentWrapper = styled.div`
   width: 100%;
   flex-direction: column;
@@ -88,11 +93,11 @@ const FormContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  font-size: 25px;
   img {
     object-fit: cover;
     border-radius: 999px;
@@ -101,14 +106,12 @@ const TitleWrapper = styled.div`
     margin-right: 50px;
   }
 `;
-
 const NavigationWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
-
 const NavigationButton = styled.button<{ isActive: boolean }>`
   padding: 3px 20px;
   flex: 1;
@@ -116,18 +119,24 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   justify-content: center;
   align-items: center;
   background: ${(p: any) =>
-    p.isActive ? theme.colors.redDark : theme.colors.red};
+    p.isActive ? theme.colors.blue : theme.colors.lightBlue};
   outline: none;
   border: none;
   color: ${theme.colors.white};
-  font-style: bold;
-  margin: 0 5px;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0 2px;
   &:hover {
-    background: ${theme.colors.redDark};
+    background: ${theme.colors.blue};
     cursor: pointer;
   }
+  &:first-child{
+    border-radius: 100px 0 0 100px;
+  };
+  &:last-child{
+    border-radius: 0 100px 100px 0;
+  };
 `;
-
 const ContentWrapper = styled.div`
   max-width: 650px;
   margin: auto;
@@ -155,10 +164,11 @@ type AgencyProfileType = {
   match: any;
 };
 
-type ActiveTabType = "services" | "messages" | "timeline" | "notes";
+type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
+  // TO DO: Just show Agency services
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, updateAgencyInfo, agencyMessages } = useAgency();
 
@@ -168,20 +178,22 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("services");
+  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("bulletinboard");
 
   const [error, setError] = React.useState("");
 
   const agencySchema = Yup.object().shape({
-    contactFirstName: Yup.string().required("Contact name required"),
-    contactLastName: Yup.string().required("Contact name required"),
-    city: Yup.string().required("City required"),
-    description: Yup.string().required("Agency description required"),
     name: Yup.string().required("Agency name can not be empty"),
-    phone: Yup.string().required("This email address is not valid"),
-    streetAddress: Yup.string().required("This email address is not valid"),
-    website: Yup.string().required("This email address is not valid"),
-    zip: Yup.string().required("This email address is not valid"),
+    description: Yup.string().required("Agency description can not be empty"),
+    website: Yup.string(),
+    contactFirstName: Yup.string(),
+    contactLastName: Yup.string(),
+    phone: Yup.string().required("Phone number can not be empty."),
+    streetAddress: Yup.string(),
+    city: Yup.string(),
+    zip: Yup.string(),
+    state: Yup.string(),
+    county: Yup.string().required("Select at least one county that you serve.")
   });
 
   const getAgencyProfile = async () => {
@@ -200,14 +212,16 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
       {agencyProfile && (
         <Formik
           initialValues={{
+            name: agencyProfile?.name || "",
+            description: agencyProfile?.description || "",
+            website: agencyProfile?.website || "",
             contactFirstName: agencyProfile?.contactFirstName || "",
             contactLastName: agencyProfile?.contactLastName || "",
-            city: agencyProfile?.city || "",
-            description: agencyProfile?.description || "",
-            name: agencyProfile?.name || "",
             phone: agencyProfile?.phone || "",
+            email: agencyProfile?.email || "",
             streetAddress: agencyProfile?.streetAddress || "",
-            website: agencyProfile?.website || "",
+            city: agencyProfile?.city || "",
+            state: agencyProfile?.state || "",
             zip: agencyProfile?.zip || "",
           }}
           validationSchema={agencySchema}
@@ -225,21 +239,15 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               <Form>
                 <TitleWrapper>
                   <img src="/images/helphub-pattern-red.png" />
-
                   <h1>{agencyProfile?.name}</h1>
+
                   {agency?.id === agencyId && (
-                    <EditButton onClick={() => setEditMode(!editMode)}>
+                    <EditButton type="button" onClick={() => setEditMode(!editMode)}>
                       {editMode ? (
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          color={theme?.colors?.white}
-                        />
+                        <FontAwesomeIcon icon={faTimes} />
                       ) : (
-                        <FontAwesomeIcon
-                          icon={faPencil}
-                          color={theme?.colors?.white}
-                        />
-                      )}
+                          <FontAwesomeIcon icon={faPencil} />
+                        )}
                     </EditButton>
                   )}
                 </TitleWrapper>
@@ -247,6 +255,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <FormFieldsWrapper>
                     <StyledFormikField name="name" label="Agency Name" />
                     <StyledFormikField name="description" label="Description" />
+                    <StyledFormikField name="website" label="Website" />
                     <StyledFormikField
                       name="contactFirstName"
                       label="Contact First name"
@@ -255,35 +264,39 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                       name="contactLastName"
                       label="Contact Last name"
                     />
-                    <StyledFormikField name="city" label="City" />
+                    <StyledFormikField name="phone" label="Phone #" />
+                    <StyledFormikField name="email" label="Email" />
                     <StyledFormikField
                       name="streetAddress"
                       label="Street Address"
                     />
-                    <StyledFormikField name="phone" label="Phone #" />
-                    <StyledFormikField name="website" label="Website" />
+                    <StyledFormikField name="city" label="City" />
+                    <StyledFormikField name="state" label="State" />
                     <StyledFormikField name="zip" label="Zip Code" />
                     {error && <p>{error}</p>}
                     <button type="submit">Submit</button>
                   </FormFieldsWrapper>
                 ) : (
-                  <FormContentWrapper>
-                    <p>{agencyProfile?.description}</p>
-                    <p>
-                      <FontAwesomeIcon icon={faPhone} /> {agencyProfile?.phone}
-                    </p>
-                    <p>
-                      <FontAwesomeIcon icon={faBrowser} />{" "}
-                      {agencyProfile?.website}
-                    </p>
-                    <p>
-                      <FontAwesomeIcon icon={faClock} /> {agencyProfile?.hours}
-                    </p>
-                    <p>{agencyProfile?.counties?.join(", ")}</p>
-                    <p>{agencyProfile?.streetAddress}</p>
-                    <p>{`${agencyProfile?.city}, TN ${agencyProfile?.zip}`}</p>
-                  </FormContentWrapper>
-                )}
+                    <FormContentWrapper>
+                      <h2>DESCRIPTION:</h2>
+                      <p>{agencyProfile?.description}</p>
+                      <p>
+                        <FontAwesomeIcon icon={faBrowser} />{" "}
+                        {agencyProfile?.website}
+                      </p>
+                      <h2>CONTACT INFO:</h2>
+                      <p><FontAwesomeIcon icon={faUser} />  Contact: {agencyProfile?.contactFirstName} {agencyProfile?.contactLastName}</p>
+                      <p>
+                        <FontAwesomeIcon icon={faPhone} /> Phone: {agencyProfile?.phone}
+                      </p>
+                      <p>
+                        <FontAwesomeIcon icon={faEnvelope} /> Email: {agencyProfile?.email}
+                      </p>
+                      <p>{agencyProfile?.streetAddress},</p>
+                      <p>{agencyProfile?.city}, {agencyProfile?.state}  {agencyProfile?.zip}</p>
+                      <p>{agencyProfile?.counties?.join(", ")}</p>
+                    </FormContentWrapper>
+                  )}
               </Form>
             </AgencyCardWrapper>
           </AgencyBackground>
@@ -293,17 +306,18 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {agency?.id === agencyId && (
           <NavigationWrapper>
             <NavigationButton
+              isActive={activeTab === "bulletinboard"}
+              onClick={() => setActiveTab("bulletinboard")}
+            >
+              <p>BULLETIN BOARD</p>
+            </NavigationButton>
+            <NavigationButton
               isActive={activeTab === "services"}
               onClick={() => setActiveTab("services")}
             >
               <p>SERVICES</p>
             </NavigationButton>
-            <NavigationButton
-              isActive={activeTab === "messages"}
-              onClick={() => setActiveTab("messages")}
-            >
-              <p>MESSAGES</p>
-            </NavigationButton>
+
             <NavigationButton
               isActive={activeTab === "timeline"}
               onClick={() => setActiveTab("timeline")}
@@ -311,10 +325,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               <p>TIMELINE</p>
             </NavigationButton>
             <NavigationButton
-              isActive={activeTab === "notes"}
-              onClick={() => setActiveTab("notes")}
+              isActive={activeTab === "reports"}
+              onClick={() => setActiveTab("reports")}
             >
-              <p>NOTES</p>
+              <p>REPORTS</p>
             </NavigationButton>
           </NavigationWrapper>
         )}
@@ -325,7 +339,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             ))}
           </>
         )}
-        {activeTab === "messages" && (
+        {activeTab === "bulletinboard" && (
           <>
             {allPublicMessages?.map((message: any) => (
               <MessageCard key={message?.id}>{message?.message}</MessageCard>
@@ -333,7 +347,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           </>
         )}
         {activeTab === "timeline" && <p>Is timeline</p>}
-        {activeTab === "notes" && (
+        {activeTab === "reports" && (
           <>
             {agencyMessages?.map((message: any) => (
               <MessageCard key={message?.id}>{message?.message}</MessageCard>

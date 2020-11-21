@@ -1,36 +1,48 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import styled from "styled-components";
+import { theme } from "../components/Theme";
 import * as Yup from "yup";
 import { ClientType } from "../../DataTypes";
-import { theme } from "../components/Theme";
 import { useClient } from "../context/ClientContext";
+import { getClient } from "../firebase/clients";
+
+import {
+  faBrowser,
+  faPencil,
+  faPhone,
+  faTimes,
+  faEnvelope,
+} from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+{/* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/ }
+
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
   flex-direction: column;
   background: ${theme.colors.white};
 `;
-
 const ClientBackground = styled.div`
   width: 100%;
-  background: ${theme.colors.red};
+  background: ${theme.colors.blue};
   padding: 80px 0;
 `;
-
 const ClientCardWrapper = styled.div`
-  max-width: 650px;
-  background: ${theme.colors.white};
-  flex-direction: row;
-  flex-wrap: wrap;
-  border-radius: 2px;
-  margin: auto;
-  border-radius: 30px;
-  padding: 40px;
+max-width: 900px;
+// background: ${theme.colors.lightBlue};
+color: ${theme.colors.white};
+flex-direction: row;
+flex-wrap: wrap;
+border-radius: 2px;
+margin: auto;
+border-radius: 30px;
+padding: 40px;
 `;
-
 const EditButton = styled.button`
-  background: ${theme?.colors?.red};
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
   outline: none;
   border: none;
   padding: 5px;
@@ -43,33 +55,42 @@ const EditButton = styled.button`
   top: 0;
   right: 0;
   &:hover {
-    background: ${theme?.colors?.redDark};
+    background: ${theme?.colors?.white};
+    color: ${theme.colors.blue};
   }
 `;
-
 const StyledFormikFieldWraper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  /* width: 250px; */
-  margin: 10px 0;
-  color: ${theme.colors.gray};
-  label {
-    /* width: 100%; */
-  }
-  input {
-    /* width: 100%; */
-  }
-`;
-
-const FormFieldsWrapper = styled.div`
+display: flex;
+flex-direction: column;
+width: 300px;
+/* width: 250px; */
+margin: 10px 10px;
+color: ${theme.colors.gray};
+label {
+  color: ${theme.colors.lightBlue};
+}
+input {
   width: 100%;
-  flex-direction: row;
+  border-radius: 4px;
+  padding: 5px;
+  border: none;
+  margin-top: 5px;
+}
+`;
+const FormFieldsWrapper = styled.div`
+width: 100%;
+flex-direction: row;
+flex-wrap: wrap;
+display: flex;
+justify-content: space-between;
+`;
+const FormContentWrapper = styled.div`
+  width: 100%;
+  flex-direction: column;
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
 `;
-
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -82,14 +103,12 @@ const TitleWrapper = styled.div`
     margin-right: 50px;
   }
 `;
-
 const NavigationWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
-
 const NavigationButton = styled.button<{ isActive: boolean }>`
   padding: 3px 20px;
   flex: 1;
@@ -97,18 +116,24 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   justify-content: center;
   align-items: center;
   background: ${(p: any) =>
-    p.isActive ? theme.colors.redDark : theme.colors.red};
+    p.isActive ? theme.colors.blue : theme.colors.lightBlue};
   outline: none;
   border: none;
   color: ${theme.colors.white};
-  font-style: bold;
-  margin: 0 5px;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0 2px;
   &:hover {
-    background: ${theme.colors.redDark};
+    background: ${theme.colors.blue};
     cursor: pointer;
   }
+  &:first-child{
+    border-radius: 100px 0 0 100px;
+  };
+  &:last-child{
+    border-radius: 0 100px 100px 0;
+  };
 `;
-
 const ContentWrapper = styled.div`
   max-width: 650px;
   margin: auto;
@@ -121,6 +146,7 @@ type StyledFormikFieldType = {
 };
 
 const StyledFormikField = ({ name, label }: StyledFormikFieldType) => {
+
   return (
     <StyledFormikFieldWraper>
       <label htmlFor={name}>{label}</label>
@@ -151,103 +177,142 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   const [error, setError] = React.useState("");
 
   const clientSchema = Yup.object().shape({
-    clientFirstName: Yup.string().required("Client first name required"),
-    clientLastName: Yup.string().required("Client last name required"),
+    clientFirstName: Yup.string().required("Client first name can not be empty."),
+    clientLastName: Yup.string().required("Client last name can not be empty."),
+    dob: Yup.string().required("Please include client's date of birth"),
+    phone: Yup.string(),
+    email: Yup.string(),
+    address: Yup.string(),
+    city: Yup.string(),
+    state: Yup.string(),
+    zip: Yup.string(),
+    gender: Yup.string(),
+    ethnicity: Yup.string(),
     county: Yup.string(),
     additionalNotes: Yup.string(),
-    phone: Yup.string(),
-    address: Yup.string(),
-    email: Yup.string(),
-    dob: Yup.string().required("Please include client's date of birth"),
-    ethnicity: Yup.string(),
-    gender: Yup.string(),
   });
 
-  // TO DO: Create Client Context
-  // const getClientProfile = async () => {
-  //   const clientData = await getClient({ clientId });
-  //   if (clientData && clientData !== "DoesNotExist" && clientData !== "Error") {
-  //     setClientProfile(clientData);
-  //   }
-  // };
+  const getClientProfile = async () => {
+    const clientData = await getClient({ clientId });
+    if (clientData && clientData !== "DoesNotExist") {
+      setClientProfile(clientData);
+    }
+  };
 
-  // // TO DO: Make equivilant for Timeline info and File info
-  // // const { allServices } = usePublicData();
-
-  // React.useEffect(() => {
-  //   getClientProfile();
-  // }, []);
+  React.useEffect(() => {
+    getClientProfile();
+  }, []);
 
   return (
     <ClientProfileWrapper>
       {clientProfile && (
-        <>
-          <Formik
-            initialValues={{
-              clientFirstName: clientProfile?.clientFirstName || "",
-              clientLastName: clientProfile?.clientLastName || "",
-              additionalNotes: clientProfile?.additionalNotes || "",
-              phone: clientProfile?.phone || "",
-              address: clientProfile?.address || "",
-              email: clientProfile?.email || "",
-              county: clientProfile?.county || "",
-              dob: clientProfile?.dob || "",
-              ethnicity: clientProfile?.ethnicity || "",
-              gender: clientProfile?.gender || "",
-            }}
-            validationSchema={clientSchema}
-            onSubmit={async (values) => {
-              if (updateClientInfo && clientProfile?.id) {
-                await updateClientInfo({
-                  clientId: clientProfile?.id,
-                  newData: { id: clientProfile?.id, ...values },
-                });
-              }
-            }}
-          >
+        <Formik
+          initialValues={{
+            clientFirstName: clientProfile?.clientFirstName || "",
+            clientLastName: clientProfile?.clientLastName || "",
+            dob: clientProfile?.dob || "",
+            phone: clientProfile?.phone || "",
+            email: clientProfile?.email || "",
+            streetAddress: clientProfile?.streetAddress || "",
+            city: clientProfile?.city || "",
+            state: clientProfile?.state || "",
+            zip: clientProfile?.zip || "",
+            gender: clientProfile?.gender || "",
+            ethnicity: clientProfile?.ethnicity || "",
+            county: clientProfile?.county || "",
+            additionalNotes: clientProfile?.additionalNotes || "",
+          }}
+          validationSchema={clientSchema}
+          onSubmit={async (values) => {
+            if (updateClientInfo && clientProfile?.id) {
+              await updateClientInfo({
+                clientId: clientProfile?.id,
+                newData: { id: clientProfile?.id, ...values },
+              });
+            }
+          }}
+        >
+          <ClientBackground>
             <ClientCardWrapper>
               <Form>
                 <TitleWrapper>
-                  <img src="/images/helphub-pattern-red.png" />
-                  <div>
-                    <h1>{clientProfile?.name}</h1>
-                    <p>Update client contact info!</p>
-                  </div>
+                  <h1>{clientProfile?.clientFirstName}</h1>
+                  <p>Update client contactinfo!</p>
+                  <EditButton type="button" onClick={() => setEditMode(!editMode)}>
+                    {editMode ? (
+                      <FontAwesomeIcon icon={faTimes} />
+                    ) : (
+                        <FontAwesomeIcon icon={faPencil} />
+                      )}
+                  </EditButton>
                 </TitleWrapper>
-                <FormFieldsWrapper>
-                  <StyledFormikField
-                    name="clientFirstName"
-                    label="Client First Name"
-                  />
-                  <StyledFormikField
-                    name="clientLastName"
-                    label="Client Last Name"
-                  />
-                  <StyledFormikField name="dob" label="Date of Birth" />
-                  <StyledFormikField
-                    name="additionalNotes"
-                    label="Additional Notes"
-                  />
-                  <StyledFormikField name="phone" label="Phone #" />
-                  <StyledFormikField name="address" label="Street Address" />
-                  <StyledFormikField name="county" label="County" />
-                  <StyledFormikField name="email" label="Email" />
-                  <StyledFormikField name="ethnicity" label="Ethnicity" />
-                  <StyledFormikField name="gender" label="Gender" />
-                </FormFieldsWrapper>
-
+                {editMode ? (
+                  <FormFieldsWrapper>
+                    <StyledFormikField name="clientFirstName" label="Client First Name" />
+                    <StyledFormikField name="clientLastName" label="Client Last Name" />
+                    <StyledFormikField name="dob" label="Date of Birth" />
+                    <StyledFormikField name="phone" label="Phone #" />
+                    <StyledFormikField name="email" label="Email" />
+                    <StyledFormikField name="streetAddress" label="Street Address" />
+                    <StyledFormikField name="city" label="City" />
+                    <StyledFormikField name="state" label="State" />
+                    <StyledFormikField name="zip" label="Zip Code" />
+                    <StyledFormikField name="gender" label="Gender" />
+                    <StyledFormikField name="ethnicity" label="Ethnicity" />
+                    <StyledFormikField name="county" label="County" />
+                    <StyledFormikField
+                      name="additionalNotes"
+                      label="Additional Notes"
+                    />
+                  </FormFieldsWrapper>
+                ) : (
+                    <FormContentWrapper>
+                      <p>
+                        <FontAwesomeIcon icon={faBrowser} />{" "}
+                        {clientProfile?.dob}
+                      </p>
+                      <p>
+                        <FontAwesomeIcon icon={faPhone} /> Phone: {clientProfile?.phone}
+                      </p>
+                      <p>
+                        <FontAwesomeIcon icon={faEnvelope} /> Email: {clientProfile?.email}
+                      </p>
+                      <p>{clientProfile?.streetAddress},</p>
+                      <p>{clientProfile?.city}, {clientProfile?.state}  {clientProfile?.zip}</p>
+                      <p>{clientProfile?.gender}</p>
+                      <p>{clientProfile?.ethnicity}</p>
+                      <p>{clientProfile?.county}</p>
+                      <p>{clientProfile?.additionalNotes}</p>
+                    </FormContentWrapper>
+                  )}
                 <button type="submit">Submit</button>
                 {error && <p>{error}</p>}
               </Form>
             </ClientCardWrapper>
-          </Formik>
-
-          {/* {allServices &&
-            allServices.map((service: any) => (
-              <ServiceCard service={service} />
-            ))} */}
-        </>
+          </ClientBackground>
+        </Formik>
       )}
+      <ContentWrapper>
+        <NavigationWrapper>
+          <NavigationButton
+            isActive={activeTab === "timeline"}
+            onClick={() => setActiveTab("timeline")}
+          >
+            <p>TIMELINE</p>
+          </NavigationButton>
+          <NavigationButton
+            isActive={activeTab === "files"}
+            onClick={() => setActiveTab("files")}
+          >
+            <p>FILES</p>
+          </NavigationButton>
+        </NavigationWrapper>
+
+        {activeTab === "timeline" && <p>This is the timeline.</p>}
+        {activeTab === "files" && <p>These are the files</p>}
+
+      </ContentWrapper>
+
     </ClientProfileWrapper>
   );
 };

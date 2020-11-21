@@ -26,18 +26,17 @@ export const ClientProvider: React.FC<any> = (props) => {
     console.log({ clientId, newData });
   }, []);
 
-  // TO DO: Update this for editing privledges
-  //     const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
-  //         if (user && user?.uid && clientId && user?.uid === clientId) {
-  //             const clientData = await getClient({ clientId: user?.uid });
-  //             if (clientData !== "DoesNotExisit") {
-  //                 await updateClient({
-  //                     client: clientData,
-  //                     data: newData,
-  //                 });
-  //             }
-  //         }
-  //     };
+  // const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
+  //   if (user && user?.uid && clientId && user?.uid === clientId) {
+  //     const clientData = await getClient({ clientId: user?.uid });
+  //     if (clientData !== "DoesNotExisit") {
+  //       await updateClient({
+  //         client: clientData,
+  //         data: newData,
+  //       });
+  //     }
+  //   }
+  // };
 
   React.useEffect(() => {
     getAllClientData();
