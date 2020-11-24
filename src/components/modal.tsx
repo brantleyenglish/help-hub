@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from "styled-components";
 import { theme } from "../components/Theme";
+import AgencyModalContent from "./modalContent/agencyModalContent"
 
 type ModalType = any;
 
@@ -71,6 +72,7 @@ const Modal: React.FC<ModalType> = ({ isShowing, hide }) => isShowing ? ReactDOM
                             </ModalCloseButton>
                         </ModalHeader>
                         <p>Hello, I'm a modal.</p>
+                        <AgencyModalContent></AgencyModalContent>
                     </ModalWrapper>
                 </ModalWrapperWrapper>
             </ModalOverlay>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import SearchBar from "../components/global/searchbar";
+import SearchBar from "../components/searchbar";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";

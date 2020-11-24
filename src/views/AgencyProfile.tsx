@@ -23,7 +23,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePublicData } from "src/context/PublicContext";
 
-import ServiceCard from "../components/ServiceList/ServiceCard";
+import ServiceCard from "../components/ServiceCard";
 import { Redirect } from "react-router-dom";
 
 const AgencyProfileWrapper = styled.div`
@@ -150,6 +150,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   background: ${(p: any) =>
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
+    & button{
+      background: ${theme.colors.lightBlue};
+    }
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -194,6 +197,11 @@ padding: 5px 7px;
 margin-left: 10px;
 border: none;
 border-radius: 5px;
+&:hover{
+  background-color: ${theme.colors.white} !important;
+  color: ${theme.colors.blue} !important;
+  cursor: pointer;
+};
 `;
 const MessageCard = styled.div``;
 

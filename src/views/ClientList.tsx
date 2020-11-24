@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
-import ClientCard from "../components/clientList/clientCard";
+import ClientCard from "../components/clientCard";
 import DateInput from "../components/DateInput";
 import NewClientForm from "../components/NewClientForm";
 import { theme } from "../components/Theme";

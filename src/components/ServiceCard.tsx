@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../Theme";
-import { usePublicData } from "../../context/PublicContext";
+import { theme } from "./Theme";
+import { usePublicData } from "../context/PublicContext";
 import {
   faHeartbeat,
   faTshirt,

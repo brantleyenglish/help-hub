@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ServiceCard from "../components/ServiceList/ServiceCard";
+import ServiceCard from "../components/ServiceCard";
 import { usePublicData } from "../context/PublicContext";
-import SearchBar from "../components/global/searchbar";
-import CategoryFilters from "../components/global/catFilters";
+import SearchBar from "../components/searchbar";
+import CategoryFilters from "../components/catFilters";
 import UWHeader from "../images/uw_header.png";
 import styled from "styled-components";
 import { theme } from "../components/Theme";

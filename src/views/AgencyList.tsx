@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useAgency } from "../context/AgencyContext";
 
 import UWHeader from "../images/uw_header.png";
-import SearchBar from "../components/global/searchbar";
-import CategoryFilters from "../components/global/catFilters";
+import SearchBar from "../components/searchbar";
+import CategoryFilters from "../components/catFilters";
 import AgencyCard from "../components/agencyCard";
 
 const AgencySearchWrapper = styled.div`
