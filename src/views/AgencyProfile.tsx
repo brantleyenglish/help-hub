@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { AgencyType } from "../../DataTypes";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
+import Modal from "../components/modal";
+import useModal from "../components/useModal";
 
 import {
   faBrowser,
@@ -15,11 +17,14 @@ import {
   faTimes,
   faEnvelope,
   faUser,
+  faMapMarkerAlt,
+  faPlus,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePublicData } from "src/context/PublicContext";
 
 import ServiceCard from "../components/ServiceList/ServiceCard";
+import { Redirect } from "react-router-dom";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -88,11 +93,36 @@ const FormFieldsWrapper = styled.div`
 `;
 const FormContentWrapper = styled.div`
   width: 100%;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: baseline;
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
+  & p{
+    margin-top: 0;
+    padding-top: 0;
+  };
+  & h2{
+    margin-bottom: 0;
+    color: ${theme.colors.lightBlue};
+  };
+  & h3{
+    color: ${theme.colors.lightBlue};
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    font-size: 16px;
+  };
 `;
+const FormLeftWrapper = styled.div`
+width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;`;
+const FormRightWrapper = styled.div`
+width: 50%;
+display: flex;
+flex-direction: column;
+justify-content: center;`;
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -129,6 +159,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background: ${theme.colors.blue};
     cursor: pointer;
+    & button{
+      background-color: ${theme.colors.lightBlue};
+    };
   }
   &:first-child{
     border-radius: 100px 0 0 100px;
@@ -142,7 +175,26 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
-
+const StyledFormikButton = styled.button`
+color: ${theme.colors.white};
+background-color: ${theme.colors.lightBlue};
+border: none;
+padding: 10px;
+border-radius: 50px;
+font-weight: bold;
+&:hover{
+  color: ${theme.colors.lightBlue};
+  background-color: ${theme.colors.white};
+};
+`;
+const AddBtnWrapper = styled.button`
+background-color: ${theme.colors.blue};
+color: ${theme.colors.white}; 
+padding: 5px 7px;
+margin-left: 10px;
+border: none;
+border-radius: 5px;
+`;
 const MessageCard = styled.div``;
 
 type StyledFormikFieldType = {
@@ -195,6 +247,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     state: Yup.string(),
     county: Yup.string().required("Select at least one county that you serve.")
   });
+
+  const { isShowing, toggle } = useModal();
 
   const getAgencyProfile = async () => {
     const agencyData = await getAgency({ agencyId });
@@ -274,27 +328,28 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <StyledFormikField name="state" label="State" />
                     <StyledFormikField name="zip" label="Zip Code" />
                     {error && <p>{error}</p>}
-                    <button type="submit">Submit</button>
+                    <StyledFormikButton type="submit">Submit</StyledFormikButton>
                   </FormFieldsWrapper>
                 ) : (
                     <FormContentWrapper>
-                      <h2>DESCRIPTION:</h2>
-                      <p>{agencyProfile?.description}</p>
-                      <p>
-                        <FontAwesomeIcon icon={faBrowser} />{" "}
-                        {agencyProfile?.website}
-                      </p>
-                      <h2>CONTACT INFO:</h2>
-                      <p><FontAwesomeIcon icon={faUser} />  Contact: {agencyProfile?.contactFirstName} {agencyProfile?.contactLastName}</p>
-                      <p>
-                        <FontAwesomeIcon icon={faPhone} /> Phone: {agencyProfile?.phone}
-                      </p>
-                      <p>
-                        <FontAwesomeIcon icon={faEnvelope} /> Email: {agencyProfile?.email}
-                      </p>
-                      <p>{agencyProfile?.streetAddress},</p>
-                      <p>{agencyProfile?.city}, {agencyProfile?.state}  {agencyProfile?.zip}</p>
-                      <p>{agencyProfile?.counties?.join(", ")}</p>
+                      <FormLeftWrapper>
+                        <h2>DESCRIPTION:</h2>
+                        <p>{agencyProfile?.description}</p>
+                        <h3><FontAwesomeIcon icon={faBrowser} /> Website</h3>
+                        <p> {agencyProfile?.website}</p>
+                      </FormLeftWrapper>
+                      <FormRightWrapper>
+                        <h2>CONTACT INFO:</h2>
+                        <h3><FontAwesomeIcon icon={faUser} />  Contact</h3>
+                        <p>{agencyProfile?.contactFirstName} {agencyProfile?.contactLastName}</p>
+                        <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                        <p>{agencyProfile?.phone}</p>
+                        <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                        <p>{agencyProfile?.email}</p>
+                        <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                        <p>{agencyProfile?.streetAddress}, {agencyProfile?.city}, {agencyProfile?.state}  {agencyProfile?.zip}</p>
+                        <p>{agencyProfile?.counties?.join(", ")}</p>
+                      </FormRightWrapper>
                     </FormContentWrapper>
                   )}
               </Form>
@@ -310,12 +365,18 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               onClick={() => setActiveTab("bulletinboard")}
             >
               <p>BULLETIN BOARD</p>
+              <AddBtnWrapper onClick={toggle}><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
+              <Modal
+                isShowing={isShowing}
+                hide={toggle}
+              />
             </NavigationButton>
             <NavigationButton
               isActive={activeTab === "services"}
               onClick={() => setActiveTab("services")}
             >
               <p>SERVICES</p>
+              <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
             </NavigationButton>
 
             <NavigationButton

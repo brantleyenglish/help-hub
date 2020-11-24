@@ -13,8 +13,15 @@ import {
   faPhone,
   faTimes,
   faEnvelope,
+  faCalendarAlt,
+  faMapMarkerAlt,
+  faVenusMars,
+  faUsers,
+  faMapMarkedAlt,
+  faPlus,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarked } from "@fortawesome/free-solid-svg-icons";
 
 {/* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/ }
 
@@ -27,10 +34,9 @@ const ClientProfileWrapper = styled.div`
 const ClientBackground = styled.div`
   width: 100%;
   background: ${theme.colors.blue};
-  padding: 80px 0;
 `;
 const ClientCardWrapper = styled.div`
-max-width: 900px;
+max-width: 650px;
 // background: ${theme.colors.lightBlue};
 color: ${theme.colors.white};
 flex-direction: row;
@@ -59,12 +65,12 @@ const EditButton = styled.button`
     color: ${theme.colors.blue};
   }
 `;
-const StyledFormikFieldWraper = styled.div`
+const StyledFormikFieldWrapper = styled.div`
 display: flex;
 flex-direction: column;
 width: 300px;
 /* width: 250px; */
-margin: 10px 10px;
+  margin: 10px 10px;
 color: ${theme.colors.gray};
 label {
   color: ${theme.colors.lightBlue};
@@ -85,23 +91,38 @@ display: flex;
 justify-content: space-between;
 `;
 const FormContentWrapper = styled.div`
-  width: 100%;
-  flex-direction: column;
-  flex-wrap: wrap;
   display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
   justify-content: space-between;
+  & p{
+    margin-top: 0;
+    padding-top: 0;
+  };
+  & h3{
+    color: ${theme.colors.lightBlue};
+    margin-bottom: 0;
+    padding-bottom: 5px;
+    font-size: 16px;
+  };
+`;
+const FormLeftWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const FormRightWrapper = styled.div`
+width: 50%;
+display: flex;
+flex-direction: column;
+justify-content: center;
 `;
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  img {
-    object-fit: cover;
-    border-radius: 999px;
-    width: 100px;
-    height: 100px;
-    margin-right: 50px;
-  }
 `;
 const NavigationWrapper = styled.div`
   width: 100%;
@@ -139,6 +160,18 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
+const StyledFormikButton = styled.button`
+color: ${theme.colors.white};
+background-color: ${theme.colors.lightBlue};
+border: none;
+padding: 10px;
+border-radius: 50px;
+font-weight: bold;
+&:hover{
+  color: ${theme.colors.lightBlue};
+  background-color: ${theme.colors.white};
+};
+`;
 
 type StyledFormikFieldType = {
   name: string;
@@ -148,11 +181,11 @@ type StyledFormikFieldType = {
 const StyledFormikField = ({ name, label }: StyledFormikFieldType) => {
 
   return (
-    <StyledFormikFieldWraper>
+    <StyledFormikFieldWrapper>
       <label htmlFor={name}>{label}</label>
       <Field name={name} id={name} />
       <ErrorMessage name={name} />
-    </StyledFormikFieldWraper>
+    </StyledFormikFieldWrapper>
   );
 };
 
@@ -160,7 +193,7 @@ type ClientProfileType = {
   match: any;
 };
 
-type ActiveTabType = "timeline" | "files";
+type ActiveTabType = "assistances" | "notes" | "files";
 
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
@@ -172,7 +205,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
 
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("timeline");
+  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("assistances");
 
   const [error, setError] = React.useState("");
 
@@ -236,8 +269,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             <ClientCardWrapper>
               <Form>
                 <TitleWrapper>
-                  <h1>{clientProfile?.clientFirstName}</h1>
-                  <p>Update client contactinfo!</p>
+                  <h1>{clientProfile?.clientFirstName} {clientProfile?.clientLastName}</h1>
                   <EditButton type="button" onClick={() => setEditMode(!editMode)}>
                     {editMode ? (
                       <FontAwesomeIcon icon={faTimes} />
@@ -248,44 +280,46 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                 </TitleWrapper>
                 {editMode ? (
                   <FormFieldsWrapper>
-                    <StyledFormikField name="clientFirstName" label="Client First Name" />
-                    <StyledFormikField name="clientLastName" label="Client Last Name" />
-                    <StyledFormikField name="dob" label="Date of Birth" />
-                    <StyledFormikField name="phone" label="Phone #" />
-                    <StyledFormikField name="email" label="Email" />
-                    <StyledFormikField name="streetAddress" label="Street Address" />
-                    <StyledFormikField name="city" label="City" />
-                    <StyledFormikField name="state" label="State" />
-                    <StyledFormikField name="zip" label="Zip Code" />
-                    <StyledFormikField name="gender" label="Gender" />
-                    <StyledFormikField name="ethnicity" label="Ethnicity" />
-                    <StyledFormikField name="county" label="County" />
-                    <StyledFormikField
-                      name="additionalNotes"
-                      label="Additional Notes"
-                    />
+                    <FormLeftWrapper>
+                      <StyledFormikField name="clientFirstName" label="Client First Name" />
+                      <StyledFormikField name="dob" label="Date of Birth" />
+                      <StyledFormikField name="email" label="Email" />
+                      <StyledFormikField name="gender" label="Gender" />
+                      <StyledFormikField name="streetAddress" label="Street Address" />
+                      <StyledFormikField name="state" label="State" />
+                    </FormLeftWrapper>
+                    <FormRightWrapper>
+                      <StyledFormikField name="clientLastName" label="Client Last Name" />
+                      <StyledFormikField name="phone" label="Phone #" />
+                      <StyledFormikField name="ethnicity" label="Ethnicity" />
+                      <StyledFormikField name="county" label="County" />
+                      <StyledFormikField name="city" label="City" />
+                      <StyledFormikField name="zip" label="Zip Code" />
+                    </FormRightWrapper>
+                    <StyledFormikButton type="submit">Submit</StyledFormikButton>
                   </FormFieldsWrapper>
                 ) : (
                     <FormContentWrapper>
-                      <p>
-                        <FontAwesomeIcon icon={faBrowser} />{" "}
-                        {clientProfile?.dob}
-                      </p>
-                      <p>
-                        <FontAwesomeIcon icon={faPhone} /> Phone: {clientProfile?.phone}
-                      </p>
-                      <p>
-                        <FontAwesomeIcon icon={faEnvelope} /> Email: {clientProfile?.email}
-                      </p>
-                      <p>{clientProfile?.streetAddress},</p>
-                      <p>{clientProfile?.city}, {clientProfile?.state}  {clientProfile?.zip}</p>
-                      <p>{clientProfile?.gender}</p>
-                      <p>{clientProfile?.ethnicity}</p>
-                      <p>{clientProfile?.county}</p>
-                      <p>{clientProfile?.additionalNotes}</p>
+                      <FormLeftWrapper>
+                        <h3><FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth</h3>
+                        <p>{clientProfile?.dob}</p>
+                        <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                        <p>{clientProfile?.phone}</p>
+                        <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                        <p>{clientProfile?.email}</p>
+                        <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                        <p>{clientProfile?.streetAddress}, {clientProfile?.city}, {clientProfile?.state}  {clientProfile?.zip}</p>
+                      </FormLeftWrapper>
+                      <FormRightWrapper>
+                        <h3><FontAwesomeIcon icon={faVenusMars} /> Gender</h3>
+                        <p>{clientProfile?.gender}</p>
+                        <h3><FontAwesomeIcon icon={faUsers} /> Ethnicity</h3>
+                        <p>{clientProfile?.ethnicity}</p>
+                        <h3><FontAwesomeIcon icon={faMapMarkedAlt} /> County</h3>
+                        <p>{clientProfile?.county}</p>
+                      </FormRightWrapper>
                     </FormContentWrapper>
                   )}
-                <button type="submit">Submit</button>
                 {error && <p>{error}</p>}
               </Form>
             </ClientCardWrapper>
@@ -295,10 +329,16 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       <ContentWrapper>
         <NavigationWrapper>
           <NavigationButton
-            isActive={activeTab === "timeline"}
-            onClick={() => setActiveTab("timeline")}
+            isActive={activeTab === "assistances"}
+            onClick={() => setActiveTab("assistances")}
           >
-            <p>TIMELINE</p>
+            <p>ASSISTANCES</p>
+          </NavigationButton>
+          <NavigationButton
+            isActive={activeTab === "notes"}
+            onClick={() => setActiveTab("notes")}
+          >
+            <p>NOTES</p>
           </NavigationButton>
           <NavigationButton
             isActive={activeTab === "files"}
@@ -308,7 +348,8 @@ const ClientProfile = ({ match }: ClientProfileType) => {
           </NavigationButton>
         </NavigationWrapper>
 
-        {activeTab === "timeline" && <p>This is the timeline.</p>}
+        {activeTab === "assistances" && <p>This where the assistance goes.</p>}
+        {activeTab === "notes" && <p>This where the notes go.</p>}
         {activeTab === "files" && <p>These are the files</p>}
 
       </ContentWrapper>
