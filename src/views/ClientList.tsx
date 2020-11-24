@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
 import ClientCard from "../components/clientList/clientCard";
 import DateInput from "../components/DateInput";
+import NewClientForm from "../components/NewClientForm";
 import { theme } from "../components/Theme";
 import { useClient } from "../context/ClientContext";
 import UWHeader from "../images/uw_header.png";
@@ -94,7 +95,7 @@ const ClientList = () => {
   console.log({ birthDate, firstName, lastName });
 
   const [searchState, setSearchState] = React.useState<"simple" | "advanced">(
-    "simple"
+    "advanced"
   );
 
   const filterBirthDate = (client: ClientType) => {
@@ -223,6 +224,12 @@ const ClientList = () => {
               <ClientCard client={client} />
             </Link>
           ))}
+        {filteredClients && filteredClients?.length === 0 && (
+          <ClientListWrapper>
+            <h2>Can't find who you are looking for?</h2>
+            <NewClientForm />
+          </ClientListWrapper>
+        )}
       </ClientListWrapper>
     </ClientPageWrapper>
   );

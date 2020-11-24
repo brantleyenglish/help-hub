@@ -93,4 +93,47 @@ const DateInput: React.FC<DateInputType> = ({ setValue }) => {
   );
 };
 
+type FormikDateInputType = {
+  setFieldValue: (
+    field: string,
+    value: any,
+    shouldValidate?: boolean | undefined
+  ) => void;
+  fieldName: string;
+};
+
+export const FormikDateInput: React.FC<FormikDateInputType> = ({
+  setFieldValue,
+  fieldName,
+}) => {
+  const [parsedDate, setParsedDate] = React.useState<string>("");
+
+  React.useEffect(() => {
+    setFieldValue(fieldName, parsedDate, true);
+  }, [parsedDate]);
+
+  const handleChange = (e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    const value = e.target.value;
+    const newValue = parseInput(value);
+    setParsedDate(newValue);
+  };
+
+  const handleBlur = (e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    const value = e.target.value;
+    const newValue = parseBlur(value);
+    setParsedDate(newValue);
+  };
+
+  return (
+    <DateInputField
+      onChange={handleChange}
+      value={parsedDate}
+      onBlur={handleBlur}
+      placeholder="Date of Birth - ## / ## / ####"
+    />
+  );
+};
+
 export default DateInput;
