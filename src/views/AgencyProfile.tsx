@@ -1,30 +1,26 @@
-import React from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import styled from "styled-components";
-import { theme } from "../components/Theme";
-import * as Yup from "yup";
-import { AgencyType } from "../../DataTypes";
-import { useAgency } from "../context/AgencyContext";
-import { getAgency } from "../firebase/agencies";
-import Modal from "../components/modal";
-import useModal from "../components/useModal";
-
 import {
   faBrowser,
-  faClock,
+  faEnvelope,
+  faMapMarkerAlt,
   faPencil,
   faPhone,
-  faTimes,
-  faEnvelope,
-  faUser,
-  faMapMarkerAlt,
   faPlus,
+  faTimes,
+  faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React from "react";
 import { usePublicData } from "src/context/PublicContext";
-
+import styled from "styled-components";
+import * as Yup from "yup";
+import { AgencyType } from "../../DataTypes";
+import Modal from "../components/modal";
 import ServiceCard from "../components/ServiceCard";
-import { Redirect } from "react-router-dom";
+import { theme } from "../components/Theme";
+import useModal from "../components/useModal";
+import { useAgency } from "../context/AgencyContext";
+import { getAgency } from "../firebase/agencies";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -98,31 +94,33 @@ const FormContentWrapper = styled.div`
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
-  & p{
+  & p {
     margin-top: 0;
     padding-top: 0;
-  };
-  & h2{
+  }
+  & h2 {
     margin-bottom: 0;
     color: ${theme.colors.lightBlue};
-  };
-  & h3{
+  }
+  & h3 {
     color: ${theme.colors.lightBlue};
     margin-bottom: 0;
     padding-bottom: 5px;
     font-size: 16px;
-  };
+  }
 `;
 const FormLeftWrapper = styled.div`
-width: 50%;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: center;`;
+  justify-content: center;
+`;
 const FormRightWrapper = styled.div`
-width: 50%;
-display: flex;
-flex-direction: column;
-justify-content: center;`;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -150,9 +148,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   background: ${(p: any) =>
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
-    & button{
-      background: ${theme.colors.lightBlue};
-    }
+  & button {
+    background: ${theme.colors.lightBlue};
+  }
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -162,16 +160,16 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background: ${theme.colors.blue};
     cursor: pointer;
-    & button{
+    & button {
       background-color: ${theme.colors.lightBlue};
-    };
+    }
   }
-  &:first-child{
+  &:first-child {
     border-radius: 100px 0 0 100px;
-  };
-  &:last-child{
+  }
+  &:last-child {
     border-radius: 0 100px 100px 0;
-  };
+  }
 `;
 const ContentWrapper = styled.div`
   max-width: 650px;
@@ -179,29 +177,29 @@ const ContentWrapper = styled.div`
   padding: 40px;
 `;
 const StyledFormikButton = styled.button`
-color: ${theme.colors.white};
-background-color: ${theme.colors.lightBlue};
-border: none;
-padding: 10px;
-border-radius: 50px;
-font-weight: bold;
-&:hover{
-  color: ${theme.colors.lightBlue};
-  background-color: ${theme.colors.white};
-};
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.lightBlue};
+  border: none;
+  padding: 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  &:hover {
+    color: ${theme.colors.lightBlue};
+    background-color: ${theme.colors.white};
+  }
 `;
 const AddBtnWrapper = styled.button`
-background-color: ${theme.colors.blue};
-color: ${theme.colors.white}; 
-padding: 5px 7px;
-margin-left: 10px;
-border: none;
-border-radius: 5px;
-&:hover{
-  background-color: ${theme.colors.white} !important;
-  color: ${theme.colors.blue} !important;
-  cursor: pointer;
-};
+  background-color: ${theme.colors.blue};
+  color: ${theme.colors.white};
+  padding: 5px 7px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    background-color: ${theme.colors.white} !important;
+    color: ${theme.colors.blue} !important;
+    cursor: pointer;
+  }
 `;
 const MessageCard = styled.div``;
 
@@ -238,7 +236,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("bulletinboard");
+  const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
+    "bulletinboard"
+  );
 
   const [error, setError] = React.useState("");
 
@@ -253,7 +253,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     city: Yup.string(),
     zip: Yup.string(),
     state: Yup.string(),
-    county: Yup.string().required("Select at least one county that you serve.")
+    county: Yup.string().required("Select at least one county that you serve."),
   });
 
   const { isShowing, toggle } = useModal();
@@ -304,12 +304,15 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <h1>{agencyProfile?.name}</h1>
 
                   {agency?.id === agencyId && (
-                    <EditButton type="button" onClick={() => setEditMode(!editMode)}>
+                    <EditButton
+                      type="button"
+                      onClick={() => setEditMode(!editMode)}
+                    >
                       {editMode ? (
                         <FontAwesomeIcon icon={faTimes} />
                       ) : (
-                          <FontAwesomeIcon icon={faPencil} />
-                        )}
+                        <FontAwesomeIcon icon={faPencil} />
+                      )}
                     </EditButton>
                   )}
                 </TitleWrapper>
@@ -336,30 +339,48 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <StyledFormikField name="state" label="State" />
                     <StyledFormikField name="zip" label="Zip Code" />
                     {error && <p>{error}</p>}
-                    <StyledFormikButton type="submit">Submit</StyledFormikButton>
+                    <StyledFormikButton type="submit">
+                      Submit
+                    </StyledFormikButton>
                   </FormFieldsWrapper>
                 ) : (
-                    <FormContentWrapper>
-                      <FormLeftWrapper>
-                        <h2>DESCRIPTION:</h2>
-                        <p>{agencyProfile?.description}</p>
-                        <h3><FontAwesomeIcon icon={faBrowser} /> Website</h3>
-                        <p> {agencyProfile?.website}</p>
-                      </FormLeftWrapper>
-                      <FormRightWrapper>
-                        <h2>CONTACT INFO:</h2>
-                        <h3><FontAwesomeIcon icon={faUser} />  Contact</h3>
-                        <p>{agencyProfile?.contactFirstName} {agencyProfile?.contactLastName}</p>
-                        <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
-                        <p>{agencyProfile?.phone}</p>
-                        <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
-                        <p>{agencyProfile?.email}</p>
-                        <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
-                        <p>{agencyProfile?.streetAddress}, {agencyProfile?.city}, {agencyProfile?.state}  {agencyProfile?.zip}</p>
-                        <p>{agencyProfile?.counties?.join(", ")}</p>
-                      </FormRightWrapper>
-                    </FormContentWrapper>
-                  )}
+                  <FormContentWrapper>
+                    <FormLeftWrapper>
+                      <h2>DESCRIPTION:</h2>
+                      <p>{agencyProfile?.description}</p>
+                      <h3>
+                        <FontAwesomeIcon icon={faBrowser} /> Website
+                      </h3>
+                      <p> {agencyProfile?.website}</p>
+                    </FormLeftWrapper>
+                    <FormRightWrapper>
+                      <h2>CONTACT INFO:</h2>
+                      <h3>
+                        <FontAwesomeIcon icon={faUser} /> Contact
+                      </h3>
+                      <p>
+                        {agencyProfile?.contactFirstName}{" "}
+                        {agencyProfile?.contactLastName}
+                      </p>
+                      <h3>
+                        <FontAwesomeIcon icon={faPhone} /> Phone
+                      </h3>
+                      <p>{agencyProfile?.phone}</p>
+                      <h3>
+                        <FontAwesomeIcon icon={faEnvelope} /> Email
+                      </h3>
+                      <p>{agencyProfile?.email}</p>
+                      <h3>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                      </h3>
+                      <p>
+                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                        {agencyProfile?.state} {agencyProfile?.zip}
+                      </p>
+                      <p>{agencyProfile?.counties?.join(", ")}</p>
+                    </FormRightWrapper>
+                  </FormContentWrapper>
+                )}
               </Form>
             </AgencyCardWrapper>
           </AgencyBackground>
@@ -373,18 +394,19 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               onClick={() => setActiveTab("bulletinboard")}
             >
               <p>BULLETIN BOARD</p>
-              <AddBtnWrapper onClick={toggle}><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
-              <Modal
-                isShowing={isShowing}
-                hide={toggle}
-              />
+              <AddBtnWrapper onClick={toggle}>
+                <FontAwesomeIcon icon={faPlus} />
+              </AddBtnWrapper>
+              <Modal isShowing={isShowing} hide={toggle} />
             </NavigationButton>
             <NavigationButton
               isActive={activeTab === "services"}
               onClick={() => setActiveTab("services")}
             >
               <p>SERVICES</p>
-              <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
+              <AddBtnWrapper>
+                <FontAwesomeIcon icon={faPlus} />
+              </AddBtnWrapper>
             </NavigationButton>
 
             <NavigationButton
@@ -410,19 +432,16 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "bulletinboard" && (
           <>
+            {agencyMessages?.map((message: any) => (
+              <MessageCard key={message?.id}>{message?.message}</MessageCard>
+            ))}
             {allPublicMessages?.map((message: any) => (
               <MessageCard key={message?.id}>{message?.message}</MessageCard>
             ))}
           </>
         )}
         {activeTab === "timeline" && <p>Is timeline</p>}
-        {activeTab === "reports" && (
-          <>
-            {agencyMessages?.map((message: any) => (
-              <MessageCard key={message?.id}>{message?.message}</MessageCard>
-            ))}
-          </>
-        )}
+        {activeTab === "reports" && <p>Is reports</p>}
       </ContentWrapper>
     </AgencyProfileWrapper>
   );

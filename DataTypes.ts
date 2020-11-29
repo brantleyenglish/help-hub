@@ -72,3 +72,19 @@ export type MessageType = {
 }
 
 export type MessageListType = MessageType[];
+
+export type AssistanceType = SingleAssistanceType[];
+
+export type SingleAssistanceType = {
+  agencyId: string;
+  clientId: string;
+  serviceId: string;
+  date: string;
+  isPrivate: boolean;
+}
+
+export type AssistanceContextType = {
+  assistance: AssistanceType;
+  setAssistanceClientId: (id: string) => Promise<void>;
+  setAssistanceAgencyId: (id: string) => Promise<void>
+};
