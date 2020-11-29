@@ -49,7 +49,19 @@ export type ClientContextType = {
 };
 
 export type ServiceType = {
-  string: string;
+  agencyId: string;
+  categories: string[];
+  id: string;
+  city: string;
+  contactFirstName: string;
+  contactLastName: string;
+  description: string;
+  email: string;
+  name: string;
+  phone: string;
+  state: string;
+  streetAddress: string;
+  zip: string;
 }
 
 export type ServiceListType = ServiceType[];

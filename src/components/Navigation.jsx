@@ -17,9 +17,7 @@ const Navigation = () => {
     <NavigationWrapper className="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/login">About</Link>
       <FontAwesomeIcon icon={faThumbsUp} color="green" />
-      {/* <a className="navbar-brand" href="#">
-        <img src="images/helphub.png" alt="" />
-      </a> */}
+     
       <button
         className="navbar-toggler"
         type="button"
