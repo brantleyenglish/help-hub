@@ -12,6 +12,7 @@ export type AgencyType = {
   state: string;
   zip: string;
   counties?: string[];
+  categories?: string[];
 };
 
 export type AgencyListType = AgencyType[];

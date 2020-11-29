@@ -48,13 +48,6 @@ const SearchBar = styled.input`
   font-size: 12px;
 `;
 
-const AdvancedSearchBar = styled.input`
-  padding: 5px;
-  font-size: 12px;
-  flex: 1;
-  margin: 0px 10px;
-`;
-
 const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -76,7 +69,7 @@ const CategoryButton = styled.button<{ active: boolean }>`
   cursor: pointer;
   margin: 10px 5px 0px;
   border-radius: 10px;
-  border: 1px solid ${theme.colors.white};
+  /* border: 1px solid ${theme.colors.white}; */
   width: 40px;
   height: 40px;
   &:hover {
@@ -136,7 +129,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
   return (
     <ServiceWrapper>
       <ServiceSearchWrapper>
-        <h1> Services </h1>
+        <h1>Services</h1>
         <SearchInputWrapper>
           <SearchBar onChange={handleSearchUpdate} type="search" />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
