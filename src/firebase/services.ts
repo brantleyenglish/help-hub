@@ -1,9 +1,13 @@
 import { db } from "./config";
 
-import {ServiceListType} from '../../DataTypes';
+import {ServiceListType, ServiceType} from '../../DataTypes';
 
 type GetServiceType ={
   serviceId: string;
+}
+
+type GetServicesByAgencyIdType = {
+  agencyId: string;
 }
 
 export const getAllServices = async () => {
@@ -26,12 +30,26 @@ export const getService = async ({ serviceId }: GetServiceType) => {
     const service = await doc.get();
 
     if (service.exists) {
-      return service.data();
+      return service.data() as ServiceType;
     } else {
       return false;
     }
   } catch (e) {
     console.log("Error getService:", e);
     return "Error";
+  }
+};
+
+export const getServicesByAgencyId = async ({ agencyId }: GetServicesByAgencyIdType) => {
+  try {
+    const docs = await db.collection("services").where("agencyId", "==", agencyId).get();
+    const services: any = [];
+    docs.forEach((service) => {
+      services.push(service.data());
+    });
+    return services as ServiceListType;
+  } catch (e) {
+    console.log("Error getAssistanceByAgency:", e);
+    return 'Error';
   }
 };

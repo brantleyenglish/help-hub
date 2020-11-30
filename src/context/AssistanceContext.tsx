@@ -1,9 +1,16 @@
 import React from "react";
-import { AssistanceContextType, AssistanceType } from "../../DataTypes";
+import {
+  AssistanceContextType,
+  AssistanceDataArrayType,
+  AssistanceType,
+} from "../../DataTypes";
+import { getAgency } from "../firebase/agencies";
 import {
   getAssistanceByAgency,
   getAssistanceByClient,
 } from "../firebase/assistance";
+import { getClient } from "../firebase/clients";
+import { getService } from "../firebase/services";
 import { useAuth } from "./AuthContext";
 
 export const AssistanceContext = React.createContext<Partial<any>>({});
@@ -19,14 +26,30 @@ export const AssistanceProvider: React.FC<any> = (props) => {
 
   const [agencyId, setAssistanceAgencyId] = React.useState<string>("");
 
+  const [
+    assistanceData,
+    setAssistanceData,
+  ] = React.useState<AssistanceDataArrayType | null>(null);
+
+  React.useEffect(() => {
+    console.log({ assistanceData });
+  }, [assistanceData]);
+
+  React.useEffect(() => {
+    console.log({ assistance });
+  }, [assistance]);
+
   const updateAssistanceByAgency = async () => {
     const assistanceData = await getAssistanceByAgency({ agencyId });
     if (assistanceData !== "Error") {
       setAssistance(
         assistanceData?.filter(
           (singleAssistance) =>
-            singleAssistance?.agencyId === user?.uid ||
-            !singleAssistance?.isPrivate
+            singleAssistance?.agencyId &&
+            singleAssistance?.serviceId &&
+            singleAssistance?.clientId &&
+            (singleAssistance?.agencyId === user?.uid ||
+              !singleAssistance?.isPrivate)
         )
       );
     }
@@ -38,10 +61,46 @@ export const AssistanceProvider: React.FC<any> = (props) => {
       setAssistance(
         assistanceData?.filter(
           (singleAssistance) =>
-            singleAssistance?.agencyId === user?.uid ||
-            !singleAssistance?.isPrivate
+            singleAssistance?.agencyId &&
+            singleAssistance?.serviceId &&
+            singleAssistance?.clientId &&
+            (singleAssistance?.agencyId === user?.uid ||
+              !singleAssistance?.isPrivate)
         )
       );
+    }
+  };
+
+  const getAssistanceData = async () => {
+    if (assistance) {
+      const assistanceDataObject: AssistanceDataArrayType = [];
+      for await (const singleAssistance of assistance) {
+        const agencyData = await getAgency({
+          agencyId: singleAssistance?.agencyId,
+        });
+        const clientData = await getClient({
+          clientId: singleAssistance?.clientId,
+        });
+        const serviceData = await getService({
+          serviceId: singleAssistance?.serviceId,
+        });
+        if (
+          agencyData &&
+          clientData &&
+          serviceData &&
+          typeof agencyData !== "string" &&
+          typeof clientData !== "string" &&
+          typeof serviceData !== "string"
+        ) {
+          assistanceDataObject?.push({
+            date: singleAssistance?.date,
+            agency: agencyData,
+            client: clientData,
+            service: serviceData,
+          });
+        }
+      }
+      setAssistanceData(assistanceDataObject);
     }
   };
 
@@ -53,7 +112,15 @@ export const AssistanceProvider: React.FC<any> = (props) => {
     updateAssistanceByAgency();
   }, [agencyId]);
 
-  const value = { assistance, setAssistanceClientId, setAssistanceAgencyId };
+  React.useEffect(() => {
+    getAssistanceData();
+  }, [assistance]);
+
+  const value = {
+    assistanceData,
+    setAssistanceClientId,
+    setAssistanceAgencyId,
+  };
 
   return <AssistanceContext.Provider value={value} {...props} />;
 };

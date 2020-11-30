@@ -11,10 +11,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
+import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { AgencyType } from "../../DataTypes";
+import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
 import Modal from "../components/modal";
 import ServiceCard from "../components/ServiceCard";
 import { theme } from "../components/Theme";
@@ -229,6 +230,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   // TO DO: Just show Agency services
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, updateAgencyInfo, agencyMessages } = useAgency();
+  const { assistanceData } = useAssistance();
 
   const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
     null
@@ -237,7 +239,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
-    "bulletinboard"
+    agency?.id === agencyId ? "bulletinboard" : "services"
   );
 
   const [error, setError] = React.useState("");
@@ -425,22 +427,38 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "services" && (
           <>
-            {allServices?.map((service: any) => (
-              <ServiceCard service={service} key={service?.id} />
-            ))}
+            {allServices
+              ?.filter((service: ServiceType) => service?.agencyId === agencyId)
+              ?.map((service: ServiceType) => (
+                <ServiceCard service={service} key={service?.id} />
+              ))}
           </>
         )}
         {activeTab === "bulletinboard" && (
           <>
             {agencyMessages?.map((message: any) => (
-              <MessageCard key={message?.id}>{message?.message}</MessageCard>
+              <MessageCard key={`${message?.id}-1`}>
+                {message?.message}
+              </MessageCard>
             ))}
             {allPublicMessages?.map((message: any) => (
-              <MessageCard key={message?.id}>{message?.message}</MessageCard>
+              <MessageCard key={`${message?.id} - 2`}>
+                {message?.message}
+              </MessageCard>
             ))}
           </>
         )}
-        {activeTab === "timeline" && <p>Is timeline</p>}
+        {activeTab === "timeline" && (
+          <>
+            {assistanceData?.map((assistance: AssistanceDataType) => (
+              <MessageCard
+                key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
+              >
+                {`${assistance?.date} - ${assistance?.client?.clientFirstName} ${assistance?.client?.clientLastName} was offered ${assistance?.service?.name} by ${assistance?.agency?.name}`}
+              </MessageCard>
+            ))}
+          </>
+        )}
         {activeTab === "reports" && <p>Is reports</p>}
       </ContentWrapper>
     </AgencyProfileWrapper>

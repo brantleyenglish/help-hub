@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AgencyType } from "../../DataTypes";
 import AgencyCard from "../components/agencyCard";
-// import SearchBar from "../components/searchbar";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
+import { useAssistance } from "../context/AssistanceContext";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";
 
@@ -100,6 +100,7 @@ const CategoryButton = styled.button<{ active: boolean }>`
 const AgencyList = () => {
   const { agencies } = useAgency();
   const { categories } = usePublicData();
+  const { setAssistanceAgencyId } = useAssistance();
 
   const [search, setSearch] = React.useState<string>("");
   const [category, setCategory] = React.useState<string>("");
@@ -158,7 +159,13 @@ const AgencyList = () => {
       <AgencyListWrapper>
         {filteredAgencies &&
           filteredAgencies.map((agency: AgencyType) => (
-            <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
+            <Link
+              to={`/agencies/${agency?.id}`}
+              key={agency?.id}
+              onClick={() =>
+                setAssistanceAgencyId ? setAssistanceAgencyId(agency?.id) : null
+              }
+            >
               <AgencyCard agency={agency} />
             </Link>
           ))}

@@ -83,8 +83,17 @@ export type SingleAssistanceType = {
   isPrivate: boolean;
 }
 
+export type AssistanceDataType = {
+  agency: AgencyType;
+  client: ClientType;
+  service: ServiceType;
+  date: string;
+}
+
+export type AssistanceDataArrayType = AssistanceDataType[];
+
 export type AssistanceContextType = {
-  assistance: AssistanceType;
+  assistanceData: AssistanceDataArrayType;
   setAssistanceClientId: (id: string) => Promise<void>;
   setAssistanceAgencyId: (id: string) => Promise<void>
 };
