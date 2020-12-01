@@ -8,6 +8,7 @@ import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
 import Modal from "../components/modal";
 import useModal from "../components/useModal";
+import BulletinCard from "../components/cards/BulletinCard"
 
 import {
   faBrowser,
@@ -152,7 +153,7 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
     & button{
       background: ${theme.colors.lightBlue};
-    }
+    };
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -204,6 +205,7 @@ border-radius: 5px;
 };
 `;
 const MessageCard = styled.div``;
+
 
 type StyledFormikFieldType = {
   name: string;
@@ -411,11 +413,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "bulletinboard" && (
           <>
             {allPublicMessages?.map((message: any) => (
-              <MessageCard key={message?.id}>{message?.message}</MessageCard>
-            ))}
+              <BulletinCard />))}
           </>
         )}
-        {activeTab === "timeline" && <p>Is timeline</p>}
+        {activeTab === "timeline" && <p>This is the timeline</p>}
         {activeTab === "reports" && (
           <>
             {agencyMessages?.map((message: any) => (

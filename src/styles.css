@@ -51,6 +51,36 @@ a:hover {
   float: left;
 }
 
+div.AgEnCy {
+  padding: 10px 16%;
+  display: flex;
+}
+div.lefty,
+div.righty {
+  background-color: #f2f2f2;
+  margin: 15px 0px;
+}
+.lefty img {
+  width: 125px;
+  height: 125px;
+  border-radius: 100%;
+  padding-right: 30px;
+}
+.lefty img,
+.lefty h1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+div.AgEnCy h1 {
+  color: #b23633;
+}
+div.AgEnCy p {
+  color: #999999;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
 div.AgEnCy h2 {
   color: #b23633;
   font-size: 20px;
@@ -105,6 +135,54 @@ div.lefty {
 }
 
 
+/* -----------------------
+      SERVICE CARD
+----------------------- */
+
+
+.service-col-2 {
+  background-color: #f2f2f2;
+  max-width: 300px;
+  border-radius: 0 1vw 1vw 0;
+}
+
+.service-col-2 ul {
+  padding-right: 40px;
+  padding: 10px 20px;
+}
+
+.service-col-2 li {
+  display: block;
+  text-align: left;
+  padding: 10px 0;
+  font-size: 18px;
+  color: #999999;
+}
+
+.service-col-2 a:not(.emailLink) {
+  display: flex;
+  color: #fefefe;
+  background-color: #b23633;
+  font-size: 17px;
+  width: 11px;
+  height: 11px;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.service-col-2 ul li .editButton {
+  float: right;
+}
+
+.service-col-2 ul {
+  padding-right: 40px;
+  padding: 30px 20px;
+}
+/*---*/
 
 /* -----------------------
       LOGGED IN STYLES
@@ -148,7 +226,7 @@ div.lefty {
   display: flex;
 }
 
-.timeline .iconContainer {
+.iconContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -334,16 +412,6 @@ div.timelineMod {
   flex-direction: row;
 }
 
-a.assistanceIcon {
-  color: #b23633;
-  font-size: 100px;
-  border-right: #fefefe 3px solid;
-  display: flex;
-  align-items: center;
-  padding: 10px 10px;
-  margin: 0 5px;
-}
-
 div.timelineMod h1,
 .timelineMod h2,
 .timelineMod h3 {
@@ -496,9 +564,9 @@ div.filebody a.fileIcon {
   color: #999999;
 }
 
-/* div.filebody a.fileIcon:hover {
+div.filebody a.fileIcon:hover {
   color: #666666;
-} */
+}
 
 div.bigClientDiv {
   background-color: #fefefe;
