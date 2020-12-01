@@ -8,6 +8,7 @@ import ClientCard from "../components/clientCard";
 import DateInput from "../components/DateInput";
 import NewClientForm from "../components/NewClientForm";
 import { theme } from "../components/Theme";
+import { useAssistance } from "../context/AssistanceContext";
 import { useClient } from "../context/ClientContext";
 import UWHeader from "../images/uw_header.png";
 
@@ -86,6 +87,7 @@ const ClientListWrapper = styled.div`
 
 const ClientList = () => {
   const { clients } = useClient();
+  const { setAssistanceClientId } = useAssistance();
 
   const [search, setSearch] = React.useState<string>("");
   const [birthDate, setBirthDate] = React.useState<string>("");
@@ -220,7 +222,15 @@ const ClientList = () => {
       <ClientListWrapper>
         {filteredClients &&
           filteredClients.map((client) => (
-            <Link to={`/clients/${client?.id}`} key={client?.id}>
+            <Link
+              to={`/clients/${client?.id}`}
+              key={client?.id}
+              onClick={() =>
+                setAssistanceClientId && client?.id
+                  ? setAssistanceClientId(client?.id)
+                  : null
+              }
+            >
               <ClientCard client={client} />
             </Link>
           ))}

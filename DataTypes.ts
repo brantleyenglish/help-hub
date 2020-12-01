@@ -12,6 +12,7 @@ export type AgencyType = {
   state: string;
   zip: string;
   counties?: string[];
+  categories?: string[];
 };
 
 export type AgencyListType = AgencyType[];
@@ -49,7 +50,19 @@ export type ClientContextType = {
 };
 
 export type ServiceType = {
-  string: string;
+  agencyId: string;
+  categories: string[];
+  id: string;
+  city: string;
+  contactFirstName: string;
+  contactLastName: string;
+  description: string;
+  email: string;
+  name: string;
+  phone: string;
+  state: string;
+  streetAddress: string;
+  zip: string;
 }
 
 export type ServiceListType = ServiceType[];
@@ -59,3 +72,28 @@ export type MessageType = {
 }
 
 export type MessageListType = MessageType[];
+
+export type AssistanceType = SingleAssistanceType[];
+
+export type SingleAssistanceType = {
+  agencyId: string;
+  clientId: string;
+  serviceId: string;
+  date: string;
+  isPrivate: boolean;
+}
+
+export type AssistanceDataType = {
+  agency: AgencyType;
+  client: ClientType;
+  service: ServiceType;
+  date: string;
+}
+
+export type AssistanceDataArrayType = AssistanceDataType[];
+
+export type AssistanceContextType = {
+  assistanceData: AssistanceDataArrayType;
+  setAssistanceClientId: (id: string) => Promise<void>;
+  setAssistanceAgencyId: (id: string) => Promise<void>
+};

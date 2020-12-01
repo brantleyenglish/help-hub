@@ -1,20 +1,17 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-
+import ThemeWrapper from "../src/components/Theme";
 import Footer from "./components/global/footer";
 import Nav from "./components/global/nav";
-
-import HomePage from "./views/Home";
-import ServiceList from "./views/ServiceList";
-import AgencyProfile from "./views/AgencyProfile";
-import Login from "./views/Login";
 import AgencyList from "./views/AgencyList";
-import ClientProfile from "./views/ClientProfile";
+import AgencyProfile from "./views/AgencyProfile";
 import ClientList from "./views/ClientList";
+import ClientProfile from "./views/ClientProfile";
+import HomePage from "./views/Home";
+import Login from "./views/Login";
+import ServiceList from "./views/ServiceList";
 import Signup from "./views/Signup";
-
-import ThemeWrapper from "../src/components/Theme";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -27,7 +24,11 @@ const App: React.FC<any> = () => {
         <Nav />
         <Switch>
           <Route exact={true} path="/clients" component={ClientList} />
-          <Route exact={true} path="/clients/:clientId" component={ClientProfile} />
+          <Route
+            exact={true}
+            path="/clients/:clientId"
+            component={ClientProfile}
+          />
           <Route exact={true} path="/services" component={ServiceList} />
           <Route
             exact={true}
