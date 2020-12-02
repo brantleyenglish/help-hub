@@ -1,3 +1,10 @@
+import React from "react";
+import styled from "styled-components";
+import * as Yup from "yup";
+import Modal from "../components/modal";
+import BulletinCard from "../components/cards/BulletinCard"
+import ServiceCard from "../components/ServiceCard";
+import useModal from "../components/useModal";
 import {
   faBrowser,
   faEnvelope,
@@ -10,16 +17,10 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
 import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
-import styled from "styled-components";
-import * as Yup from "yup";
 import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
-import Modal from "../components/modal";
-import ServiceCard from "../components/ServiceCard";
 import { theme } from "../components/Theme";
-import useModal from "../components/useModal";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
 
@@ -149,9 +150,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   background: ${(p: any) =>
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
-  & button {
-    background: ${theme.colors.lightBlue};
-  }
+    & button{
+      background: ${theme.colors.lightBlue};
+    };
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -203,6 +204,7 @@ const AddBtnWrapper = styled.button`
   }
 `;
 const MessageCard = styled.div``;
+
 
 type StyledFormikFieldType = {
   name: string;
@@ -313,8 +315,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                       {editMode ? (
                         <FontAwesomeIcon icon={faTimes} />
                       ) : (
-                        <FontAwesomeIcon icon={faPencil} />
-                      )}
+                          <FontAwesomeIcon icon={faPencil} />
+                        )}
                     </EditButton>
                   )}
                 </TitleWrapper>
@@ -346,43 +348,43 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </StyledFormikButton>
                   </FormFieldsWrapper>
                 ) : (
-                  <FormContentWrapper>
-                    <FormLeftWrapper>
-                      <h2>DESCRIPTION:</h2>
-                      <p>{agencyProfile?.description}</p>
-                      <h3>
-                        <FontAwesomeIcon icon={faBrowser} /> Website
+                    <FormContentWrapper>
+                      <FormLeftWrapper>
+                        <h2>DESCRIPTION:</h2>
+                        <p>{agencyProfile?.description}</p>
+                        <h3>
+                          <FontAwesomeIcon icon={faBrowser} /> Website
                       </h3>
-                      <p> {agencyProfile?.website}</p>
-                    </FormLeftWrapper>
-                    <FormRightWrapper>
-                      <h2>CONTACT INFO:</h2>
-                      <h3>
-                        <FontAwesomeIcon icon={faUser} /> Contact
+                        <p> {agencyProfile?.website}</p>
+                      </FormLeftWrapper>
+                      <FormRightWrapper>
+                        <h2>CONTACT INFO:</h2>
+                        <h3>
+                          <FontAwesomeIcon icon={faUser} /> Contact
                       </h3>
-                      <p>
-                        {agencyProfile?.contactFirstName}{" "}
-                        {agencyProfile?.contactLastName}
-                      </p>
-                      <h3>
-                        <FontAwesomeIcon icon={faPhone} /> Phone
+                        <p>
+                          {agencyProfile?.contactFirstName}{" "}
+                          {agencyProfile?.contactLastName}
+                        </p>
+                        <h3>
+                          <FontAwesomeIcon icon={faPhone} /> Phone
                       </h3>
-                      <p>{agencyProfile?.phone}</p>
-                      <h3>
-                        <FontAwesomeIcon icon={faEnvelope} /> Email
+                        <p>{agencyProfile?.phone}</p>
+                        <h3>
+                          <FontAwesomeIcon icon={faEnvelope} /> Email
                       </h3>
-                      <p>{agencyProfile?.email}</p>
-                      <h3>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                        <p>{agencyProfile?.email}</p>
+                        <h3>
+                          <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                       </h3>
-                      <p>
-                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                        {agencyProfile?.state} {agencyProfile?.zip}
-                      </p>
-                      <p>{agencyProfile?.counties?.join(", ")}</p>
-                    </FormRightWrapper>
-                  </FormContentWrapper>
-                )}
+                        <p>
+                          {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                          {agencyProfile?.state} {agencyProfile?.zip}
+                        </p>
+                        <p>{agencyProfile?.counties?.join(", ")}</p>
+                      </FormRightWrapper>
+                    </FormContentWrapper>
+                  )}
               </Form>
             </AgencyCardWrapper>
           </AgencyBackground>
@@ -437,14 +439,20 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "bulletinboard" && (
           <>
             {agencyMessages?.map((message: any) => (
-              <MessageCard key={`${message?.id}-1`}>
-                {message?.message}
-              </MessageCard>
+              <>
+                <MessageCard key={`${message?.id}-1`}>
+                  {message?.message}
+                </MessageCard>
+                <BulletinCard></BulletinCard>
+              </>
             ))}
             {allPublicMessages?.map((message: any) => (
-              <MessageCard key={`${message?.id} - 2`}>
-                {message?.message}
-              </MessageCard>
+              <>
+                <MessageCard key={`${message?.id} - 2`}>
+                  {message?.message}
+                </MessageCard>
+                <BulletinCard></BulletinCard>
+              </>
             ))}
           </>
         )}

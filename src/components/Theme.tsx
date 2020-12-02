@@ -5,11 +5,12 @@ export const theme = {
   colors: {
     gray: "#999999",
     grayLight: "#F2F2F2",
-    red: "#B23633",
+    red: "#EB5446",
     redDark: "#942E29",
     white: "#FFFFFF",
     blue: "#0e4680",
     lightBlue: "#6291c0",
+    yellow: "#F4B76B"
   },
   fonts: {
     regular: "Roboto-Regular",

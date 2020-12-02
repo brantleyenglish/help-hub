@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import { ClientType } from "../../DataTypes";
 import { useClient } from "../context/ClientContext";
 import { getClient } from "../firebase/clients";
-
 import {
   faBrowser,
   faPencil,
@@ -21,7 +20,9 @@ import {
   faPlus,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarked } from "@fortawesome/free-solid-svg-icons";
+import AssistanceCard from "../components/cards/AssistanceCard";
+import NoteCard from "../components/cards/NoteCard";
+import FileCard from "../components/cards/FileCard";
 
 {/* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/ }
 
@@ -58,6 +59,7 @@ const EditButton = styled.button`
   justify-content: center;
   align-items: center;
   position: absolute;
+  cursor: pointer;
   top: 0;
   right: 0;
   &:hover {
@@ -138,6 +140,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   background: ${(p: any) =>
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
+    & button{
+      background: ${theme.colors.lightBlue};
+    };
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -147,6 +152,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background: ${theme.colors.blue};
     cursor: pointer;
+    & button{
+      background-color: ${theme.colors.lightBlue};
+    };
   }
   &:first-child{
     border-radius: 100px 0 0 100px;
@@ -171,6 +179,26 @@ font-weight: bold;
   color: ${theme.colors.lightBlue};
   background-color: ${theme.colors.white};
 };
+`;
+const AddBtnWrapper = styled.button`
+background-color: ${theme.colors.blue};
+color: ${theme.colors.white}; 
+padding: 5px 7px;
+margin-left: 10px;
+border: none;
+border-radius: 5px;
+&:hover{
+  background-color: ${theme.colors.white} !important;
+  color: ${theme.colors.blue} !important;
+  cursor: pointer;
+};
+`;
+const FileCardWrapper = styled.div`
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-content: center;
 `;
 
 type StyledFormikFieldType = {
@@ -333,24 +361,46 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("assistances")}
           >
             <p>ASSISTANCES</p>
+            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
           </NavigationButton>
           <NavigationButton
             isActive={activeTab === "notes"}
             onClick={() => setActiveTab("notes")}
           >
             <p>NOTES</p>
+            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
           </NavigationButton>
           <NavigationButton
             isActive={activeTab === "files"}
             onClick={() => setActiveTab("files")}
           >
             <p>FILES</p>
+            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
           </NavigationButton>
         </NavigationWrapper>
 
-        {activeTab === "assistances" && <p>This where the assistance goes.</p>}
-        {activeTab === "notes" && <p>This where the notes go.</p>}
-        {activeTab === "files" && <p>These are the files</p>}
+        {activeTab === "assistances" &&
+          <>
+            <AssistanceCard />
+            <AssistanceCard />
+            <AssistanceCard />
+          </>
+        }
+        {activeTab === "notes" &&
+          <>
+            <NoteCard />
+            <NoteCard />
+            <NoteCard />
+          </>
+        }
+        {activeTab === "files" &&
+          <FileCardWrapper>
+            <FileCard />
+            <FileCard />
+            <FileCard />
+            <FileCard />
+          </FileCardWrapper>
+        }
 
       </ContentWrapper>
 
