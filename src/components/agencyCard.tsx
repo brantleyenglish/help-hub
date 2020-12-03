@@ -12,70 +12,67 @@ import HHPlaceholder from "../images/helphubPlaceholder.png";
 import { theme } from "./Theme";
 
 const AgencyCardWrapper = styled.div`
-  background-color: ${theme.colors.grayLight};
-  border-radius: 15px;
-  width: 300px;
-  margin: 10px;
-  padding: 0px;
-  & a {
-    display: flex;
-    color: ${theme.colors.white};
-    background-color: ${theme.colors.blue};
-    font-size: 19px;
-    width: 12px;
-    height: 14px;
-    padding: 14px;
-    margin: 30px 30px 0px 15px;
-    border-radius: 9px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  & p {
-    color: ${theme.colors.gray};
-    text-align: justify;
-    padding: 0px 30px 0px 30px;
-  }
+  display: flex;
+  flex-flow: column;
+  margin: 0px 25px 50px 25px;
+`;
+const AgencyCardContentWrapper = styled.div`
+background: ${theme.colors.grayLight};
+margin: 0px 0px 10px 0px;
+padding: 30px;
+width: 250px;
+min-height: 275px;
+border-radius: 10px 10px 0px 0px;
+p{
+  color: ${theme.colors.gray};
+};
 `;
 
 const AgencyCardHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 0px 30px;
-  padding-top: 30px;
+  justify-items: center;
   & img {
     object-fit: cover;
     border-radius: 999px;
-    max-width: 70px;
+    width: 70px;
+    height: 70px;
     margin: 0px 20px 0px 0px;
     float: left;
   }
   & h1 {
     text-align: left;
     color: ${theme.colors.blue};
-    margin: 0;
     font-size: 25px;
   }
   & h1:hover {
     color: ${theme.colors.lightBlue};
+    cursor: pointer;
   }
 `;
 
 const CategoryTagsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding 30px;
+  background: ${theme.colors.grayLight};
+  color: ${theme.colors.gray};
+  font-size: 20px;
+  border-radius: 0px 0px 10px 10px;
+`;
+
+const IconWrapper = styled.div`
 display: flex;
-flex-direction: row;
-flex-wrap: wrap;
+color: ${theme.colors.white};
+background-color: ${theme.colors.blue};
+font-size: 20px;
+padding: 10px;
+width: 20px;
+height: 20px;
+border-radius: 10px;
+align-items: center;
 justify-content: center;
-border-top: 8px white solid;
-margin: 0;
-padding 0px 0px 30px 0px;
-& p{
-  margin-bottom:0;
-  padding-bottom:0;
-};
-& a{
-  margin: 15px 20px 0px;
-};
 `;
 
 type AgencyType = {
@@ -98,28 +95,29 @@ type AgencyCardType = {
 const AgencyCard = ({ agency }: AgencyCardType) => {
   return (
     <AgencyCardWrapper>
-      <AgencyCardHeaderWrapper>
-        <img src={HHPlaceholder} alt="agencylogo" />
-        <h1>{agency?.name}</h1>
-      </AgencyCardHeaderWrapper>
+      <AgencyCardContentWrapper>
+        <AgencyCardHeaderWrapper>
+          <img src={HHPlaceholder} alt="agencylogo" />
+          <h1>{agency?.name}</h1>
+        </AgencyCardHeaderWrapper>
 
-      <p>{agency?.description}</p>
+        <p>{agency?.description}</p>
 
-      <p>
-        <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-        {agency?.phone}
-      </p>
+        <p>
+          <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
+          {agency?.phone}
+        </p>
 
-      <p>
-        <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
-        {agency?.website}
-      </p>
-
+        <p>
+          <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
+          {agency?.website}
+        </p>
+      </AgencyCardContentWrapper>
       <CategoryTagsWrapper>
-        <p>SERVICE CATEGORIES:</p>
-        <FontAwesomeIcon icon={faHeartbeat} />
-        <FontAwesomeIcon icon={faTshirt} />
-        <FontAwesomeIcon icon={faUtensils} />
+        <IconWrapper><FontAwesomeIcon icon={faHeartbeat} /></IconWrapper>
+        <IconWrapper><FontAwesomeIcon icon={faTshirt} /></IconWrapper>
+        <IconWrapper><FontAwesomeIcon icon={faUtensils} /></IconWrapper>
+        <IconWrapper><FontAwesomeIcon icon={faHeartbeat} /></IconWrapper>
       </CategoryTagsWrapper>
     </AgencyCardWrapper>
   );

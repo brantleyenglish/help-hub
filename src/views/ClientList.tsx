@@ -73,6 +73,8 @@ const ClientSearchWrapper = styled.div`
     color: ${theme.colors.white};
     font-size: 45px;
     text-transform: uppercase;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 `;
 
@@ -188,36 +190,37 @@ const ClientList = () => {
     <ClientPageWrapper>
       <ClientSearchWrapper>
         <h1>Clients</h1>
+        <ClientTableWrapper>
+          <SearchWrapper>
+            {searchState === "simple" && (
+              <SearchInputWrapper>
+                <SearchBar onChange={handleSearchUpdate} type="search" />
+                {/* <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} /> */}
+              </SearchInputWrapper>
+            )}
+            {searchState === "advanced" && (
+              <SearchInputWrapper>
+                <AdvancedSearchBar
+                  onChange={handleFirstNameUpdate}
+                  type="search"
+                  placeholder="First Name"
+                />
+                <AdvancedSearchBar
+                  onChange={handleLastNamehUpdate}
+                  type="search"
+                  placeholder="Last Name"
+                />
+                <DateInput setValue={setBirthDate} />
+              </SearchInputWrapper>
+            )}
+            <SearchOptions onClick={toggleSearchState}>
+              <FontAwesomeIcon icon={faEllipsisH} style={{ color: "#0e4680" }} />
+            </SearchOptions>
+          </SearchWrapper>
+        </ClientTableWrapper>
+
       </ClientSearchWrapper>
 
-      <ClientTableWrapper>
-        <SearchWrapper>
-          {searchState === "simple" && (
-            <SearchInputWrapper>
-              <SearchBar onChange={handleSearchUpdate} type="search" />
-              {/* <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} /> */}
-            </SearchInputWrapper>
-          )}
-          {searchState === "advanced" && (
-            <SearchInputWrapper>
-              <AdvancedSearchBar
-                onChange={handleFirstNameUpdate}
-                type="search"
-                placeholder="First Name"
-              />
-              <AdvancedSearchBar
-                onChange={handleLastNamehUpdate}
-                type="search"
-                placeholder="Last Name"
-              />
-              <DateInput setValue={setBirthDate} />
-            </SearchInputWrapper>
-          )}
-          <SearchOptions onClick={toggleSearchState}>
-            <FontAwesomeIcon icon={faEllipsisH} style={{ color: "#0e4680" }} />
-          </SearchOptions>
-        </SearchWrapper>
-      </ClientTableWrapper>
 
       <ClientListWrapper>
         {filteredClients &&

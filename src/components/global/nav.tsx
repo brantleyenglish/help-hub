@@ -88,9 +88,11 @@ const Nav = () => {
         <Link to="/agencies">
           <NavLinkWrapper>Agencies</NavLinkWrapper>
         </Link>
-        <Link to="/clients">
-          <NavLinkWrapper>Clients</NavLinkWrapper>
-        </Link>
+        {user && (
+          <Link to="/clients">
+            <NavLinkWrapper>Clients</NavLinkWrapper>
+          </Link>
+        )}
         {!user && (
           <Link to="/login">
             <NavLinkWrapper>Log In</NavLinkWrapper>
