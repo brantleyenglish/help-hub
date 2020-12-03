@@ -35,6 +35,7 @@ const ClientProfileWrapper = styled.div`
 const ClientBackground = styled.div`
   width: 100%;
   background: ${theme.colors.blue};
+  padding: 0;
 `;
 const ClientCardWrapper = styled.div`
 max-width: 650px;
@@ -60,8 +61,8 @@ const EditButton = styled.button`
   align-items: center;
   position: absolute;
   cursor: pointer;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   &:hover {
     background: ${theme?.colors?.white};
     color: ${theme.colors.blue};
@@ -93,8 +94,9 @@ display: flex;
 justify-content: space-between;
 `;
 const FormContentWrapper = styled.div`
+width: 100%;
+flex-direction: row;
   display: flex;
-  flex-direction: row;
   align-items: baseline;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -175,6 +177,7 @@ border: none;
 padding: 10px;
 border-radius: 50px;
 font-weight: bold;
+cursor: pointer;
 &:hover{
   color: ${theme.colors.lightBlue};
   background-color: ${theme.colors.white};

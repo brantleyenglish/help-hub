@@ -23,6 +23,7 @@ import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { getAgency } from "../firebase/agencies";
+import HHPlaceholder from "../images/helphubPlaceholder.png";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -35,7 +36,7 @@ const AgencyBackground = styled.div`
   padding: 0;
 `;
 const AgencyCardWrapper = styled.div`
-  max-width: 900px;
+  max-width: 650px;
   // background: ${theme.colors.lightBlue};
   color: ${theme.colors.white};
   flex-direction: row;
@@ -54,11 +55,12 @@ const EditButton = styled.button`
   width: 25px;
   height: 25px;
   display: flex;
+  cursor: pointer;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   &:hover {
     background: ${theme?.colors?.white};
     color: ${theme.colors.blue};
@@ -99,17 +101,17 @@ const FormContentWrapper = styled.div`
   & p {
     margin-top: 0;
     padding-top: 0;
-  }
+  };
   & h2 {
     margin-bottom: 0;
     color: ${theme.colors.lightBlue};
-  }
+  };
   & h3 {
     color: ${theme.colors.lightBlue};
     margin-bottom: 0;
     padding-bottom: 5px;
     font-size: 16px;
-  }
+  };
 `;
 const FormLeftWrapper = styled.div`
   width: 50%;
@@ -127,13 +129,12 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  font-size: 25px;
   img {
     object-fit: cover;
     border-radius: 999px;
-    width: 100px;
-    height: 100px;
-    margin-right: 50px;
+    width: 70px;
+    height: 70px;
+    margin-right: 25px;
   }
 `;
 const NavigationWrapper = styled.div`
@@ -179,15 +180,18 @@ const ContentWrapper = styled.div`
   padding: 40px;
 `;
 const StyledFormikButton = styled.button`
-  color: ${theme.colors.white};
-  background-color: ${theme.colors.lightBlue};
-  border: none;
-  padding: 10px;
-  border-radius: 50px;
-  font-weight: bold;
-  &:hover {
-    color: ${theme.colors.lightBlue};
-    background-color: ${theme.colors.white};
+color: ${theme.colors.white};
+background-color: ${theme.colors.lightBlue};
+border: none;
+padding: 10px;
+border-radius: 50px;
+font-weight: bold;
+cursor: pointer;
+width: 80px;
+height: 40px;
+&:hover {
+  color: ${theme.colors.lightBlue};
+  background-color: ${theme.colors.white};
   }
 `;
 const AddBtnWrapper = styled.button`
@@ -304,7 +308,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             <AgencyCardWrapper>
               <Form>
                 <TitleWrapper>
-                  <img src="/images/helphub-pattern-red.png" />
+                  <img src={HHPlaceholder} />
                   <h1>{agencyProfile?.name}</h1>
 
                   {agency?.id === agencyId && (

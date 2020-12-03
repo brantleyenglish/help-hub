@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import helphubPlaceholder from "../images/helphubPlaceholder.png";
+import HHPlaceholder from "../images/helphubPlaceholder.png";
 import { theme } from "./Theme";
 
 const AgencyCardWrapper = styled.div`
@@ -44,8 +44,10 @@ const AgencyCardHeaderWrapper = styled.div`
   padding: 0px 30px;
   padding-top: 30px;
   & img {
+    object-fit: cover;
+    border-radius: 999px;
     max-width: 70px;
-    padding: 0px 20px 0px 0px;
+    margin: 0px 20px 0px 0px;
     float: left;
   }
   & h1 {
@@ -97,7 +99,7 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
   return (
     <AgencyCardWrapper>
       <AgencyCardHeaderWrapper>
-        <img src={helphubPlaceholder} alt="agencylogo" />
+        <img src={HHPlaceholder} alt="agencylogo" />
         <h1>{agency?.name}</h1>
       </AgencyCardHeaderWrapper>
 
