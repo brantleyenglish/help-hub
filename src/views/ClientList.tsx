@@ -1,10 +1,10 @@
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisH, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
-import ClientCard from "../components/clientCard";
+import ClientRow from "../components/clientRow";
 import DateInput from "../components/DateInput";
 import NewClientForm from "../components/NewClientForm";
 import { theme } from "../components/Theme";
@@ -22,7 +22,6 @@ const ClientTableWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const SearchWrapper = styled.div`
   padding: 30px;
   max-width: 800px;
@@ -30,26 +29,22 @@ const SearchWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
 const SearchBar = styled.input`
   width: 100%;
   padding: 5px;
   font-size: 12px;
 `;
-
 const AdvancedSearchBar = styled.input`
   padding: 5px;
   font-size: 12px;
   flex: 1;
   margin: 0px 10px;
 `;
-
 const SearchOptions = styled.button`
   /* outline: none;
   border: none;
   background-color: #0e4680; */
 `;
-
 const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -60,7 +55,6 @@ const SearchInputWrapper = styled.div`
     right: 10px;
   }
 `;
-
 const ClientSearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   text-align: center;
@@ -77,15 +71,73 @@ const ClientSearchWrapper = styled.div`
     padding-bottom: 0;
   }
 `;
-
 const ClientListWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 0;
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // align-items: center;
+  padding: 30px;
 `;
+const ClientTable = styled.table`
+border-collapse: collapse;
+// width: 75%;
+display: flex;
+flex-direction: column;
+tr {
+  th {
+    color: ${theme.colors.red};
+    text-align: left;
+    font-size: 1rem;
+    padding: 1rem;
+    svg {
+      font-size: 1rem;
+      margin-left:.5rem;
+    }
+    > div {
+      display: flex;
+      align-items: center;
+    }
+  }
+  td {
+    font-size: 1rem;
+    padding: 1rem;
+    &:last-child {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+`;
+const ClientTableHeader = styled.tr`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 2px solid ${theme.colors.gray};
+  div {
+    padding: .5rem;
+  }
+`;
+const ClientTableBody = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+border: 2px solid ${theme.colors.gray};
+border-top:none;
+border-bottom:none;
+&:last-child {
+  border: 2px solid ${theme.colors.gray};
+  border-top:none;
+}
+:nth-child(even) {
+background: ${theme.colors.grayLight};
+}
+:hover{
+  background: ${theme.colors.blue};
+  color: ${theme.colors.white};
+}
+`;
+
 
 const ClientList = () => {
   const { clients } = useClient();
@@ -153,7 +205,7 @@ const ClientList = () => {
             (client?.dob && client?.dob?.toLowerCase()?.includes(search)) ||
             (client?.clientFirstName &&
               client?.clientLastName &&
-              `${client?.clientFirstName} ${client?.clientLastName}`
+              `${client?.clientFirstName} ${client?.clientLastName} `
                 ?.toLowerCase()
                 ?.includes(search))
         );
@@ -221,30 +273,55 @@ const ClientList = () => {
 
       </ClientSearchWrapper>
 
-
       <ClientListWrapper>
-        {filteredClients &&
-          filteredClients.map((client) => (
-            <Link
-              to={`/clients/${client?.id}`}
-              key={client?.id}
-              onClick={() =>
-                setAssistanceClientId && client?.id
-                  ? setAssistanceClientId(client?.id)
-                  : null
-              }
-            >
-              <ClientCard client={client} />
-            </Link>
-          ))}
-        {filteredClients && filteredClients?.length === 0 && (
-          <ClientListWrapper>
-            <h2>Can't find who you are looking for?</h2>
-            <NewClientForm />
-          </ClientListWrapper>
-        )}
-      </ClientListWrapper>
-    </ClientPageWrapper>
+        <ClientTable>
+          <ClientTableHeader>
+            <th scope="col">
+              <div>First Name <FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+            <th scope="col">
+              <div>Last Name <FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+            <th scope="col">
+              <div>Date of Birth <FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+            <th scope="col">
+              <div>Email <FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+            <th scope="col">
+              <div>Phone <FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+            <th scope="col">
+              <div>Address<FontAwesomeIcon icon={faArrowDown} /></div>
+            </th>
+          </ClientTableHeader>
+          {filteredClients &&
+            filteredClients.map((client) => (
+              <ClientTableBody>
+                <Link
+                  to={`/clients/${client?.id}`}
+                  key={client?.id}
+                  onClick={() => setAssistanceClientId && client?.id
+                    ? setAssistanceClientId(client?.id)
+                    : null}
+                >
+                  <ClientRow client={client} />
+                </Link>
+              </ClientTableBody>
+            ))}
+        </ClientTable>
+
+
+        {
+          filteredClients && filteredClients?.length === 0 && (
+            <ClientListWrapper>
+              <h2>Can't find who you are looking for?</h2>
+              <NewClientForm />
+            </ClientListWrapper>
+          )
+        }
+      </ClientListWrapper >
+    </ClientPageWrapper >
   );
 };
 
