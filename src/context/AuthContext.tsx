@@ -24,10 +24,6 @@ AuthContext.displayName = "AuthContext";
 export const AuthProvider: React.FC<any> = (props) => {
   const [user, setUser] = React.useState<any>(null);
 
-  // React.useEffect(() => {
-  //   console.log({ user });
-  // }, [user]);
-
   React.useEffect(() => {
     const onAuthStateChange = auth().onAuthStateChanged((user) => {
       if (user) {

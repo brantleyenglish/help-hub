@@ -1,4 +1,4 @@
-import { faEllipsisH, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faArrowDown, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
@@ -73,23 +73,23 @@ const ClientListWrapper = styled.div`
   padding: 30px;
 `;
 const ClientTable = styled.table`
-border-collapse: collapse;
-flex-direction: column;
-width: 100%
+  border-collapse: collapse;
+  flex-direction: column;
+  width: 100%;
 `;
 const ClientTableHeader = styled.tr`
-justify-content: space-around;
-background: ${theme.colors.blue};
-border: 2px solid ${theme.colors.blue};
+  justify-content: space-around;
+  background: ${theme.colors.blue};
+  border: 2px solid ${theme.colors.blue};
 
-th {
+  th {
     color: ${theme.colors.white};
     text-align: left;
     font-size: 1rem;
     padding: 1rem;
     svg {
       font-size: 1rem;
-      margin-left:.5rem;
+      margin-left: 0.5rem;
     }
     > div {
       align-items: center;
@@ -97,29 +97,28 @@ th {
   }
 `;
 const ClientTableBody = styled.tbody`
-border: 2px solid ${theme.colors.gray};
-border-top: none;
-border-bottom: none;
-a{
-  color: ${theme.colors.gray};
-}
-&:last-child {
   border: 2px solid ${theme.colors.gray};
-  border-top:none;
-}
-&:nth-child(even) {
-  background: ${theme.colors.grayLight};
+  border-top: none;
+  border-bottom: none;
+  a {
+    color: ${theme.colors.gray};
   }
-tr:hover{
+  &:last-child {
+    border: 2px solid ${theme.colors.gray};
+    border-top: none;
+  }
+  &:nth-child(even) {
+    background: ${theme.colors.grayLight};
+  }
+  tr:hover {
     background: ${theme.colors.yellow};
-    & a{
+    & a {
       color: ${theme.colors.white};
     }
   }
 `;
 
-
-const ClientList = () => {
+const ClientList: React.FC<{}> = ({}) => {
   const { clients } = useClient();
 
   const [search, setSearch] = React.useState<string>("");
@@ -245,11 +244,13 @@ const ClientList = () => {
               </SearchInputWrapper>
             )}
             <SearchOptions onClick={toggleSearchState}>
-              <FontAwesomeIcon icon={faEllipsisH} style={{ color: "#0e4680" }} />
+              <FontAwesomeIcon
+                icon={faEllipsisH}
+                style={{ color: "#0e4680" }}
+              />
             </SearchOptions>
           </SearchWrapper>
         </ClientTableWrapper>
-
       </ClientSearchWrapper>
 
       <ClientListWrapper>
@@ -258,43 +259,51 @@ const ClientList = () => {
           {/* tr */}
           <ClientTableHeader>
             <th scope="col">
-              <div>First Name <FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                First Name <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
             <th scope="col">
-              <div>Last Name <FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                Last Name <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
             <th scope="col">
-              <div>Date of Birth <FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                Date of Birth <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
             <th scope="col">
-              <div>Email <FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                Email <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
             <th scope="col">
-              <div>Phone <FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                Phone <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
             <th scope="col">
-              <div>Address<FontAwesomeIcon icon={faArrowDown} /></div>
+              <div>
+                Address
+                <FontAwesomeIcon icon={faArrowDown} />
+              </div>
             </th>
           </ClientTableHeader>
           <ClientTableBody>
             {filteredClients &&
-              filteredClients.map((client) => (
-                <ClientRow client={client} />
-              ))}
+              filteredClients.map((client) => <ClientRow client={client} />)}
           </ClientTableBody>
         </ClientTable>
 
-
-        {
-          filteredClients && filteredClients?.length === 0 && (
-            <ClientListWrapper>
-              <h2>Can't find who you are looking for?</h2>
-              <NewClientForm />
-            </ClientListWrapper>
-          )
-        }
-      </ClientListWrapper >
-    </ClientPageWrapper >
+        {filteredClients && filteredClients?.length === 0 && (
+          <ClientListWrapper>
+            <h2>Can't find who you are looking for?</h2>
+            <NewClientForm />
+          </ClientListWrapper>
+        )}
+      </ClientListWrapper>
+    </ClientPageWrapper>
   );
 };
 

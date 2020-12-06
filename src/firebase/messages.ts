@@ -21,7 +21,6 @@ export const getPublicMessages = async () => {
 };
 
 export const getAgencyMessages = async ({ agencyId }: GetAgencyMessagesType) => {
-    console.log({agencyId})
   try {
     const docs = await db.collection("messages").where("agencyId", "==", agencyId).get();
     const messages: any = [];
