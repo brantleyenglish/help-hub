@@ -16,7 +16,7 @@ import styled from "styled-components";
 import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
 import ModalWrapper from "../components/ModalWrapper";
-import ServiceCard from "../components/ServiceCard";
+import ServiceCard from "../components/cards/ServiceCard";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";

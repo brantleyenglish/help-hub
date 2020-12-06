@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AgencyType } from "../../DataTypes";
-import AgencyCard from "../components/agencyCard";
+import AgencyCard from "../components/cards/AgencyCard";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useAssistance } from "../context/AssistanceContext";

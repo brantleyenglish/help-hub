@@ -6,6 +6,7 @@ import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useModal } from "../context/ModalContext";
 
+
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -19,49 +20,49 @@ const StyledButton = styled.button`
   }
 `;
 
-const AddAssistanceModal: React.FC<{}> = () => {
+const AddNoteModal: React.FC<{}> = () => {
 
     const { setActiveModal } = useModal();
 
-    const assistanceSchema = Yup.object().shape({
-        agencyId: Yup.string(),
-        clientId: Yup.string(),
+    const noteSchema = Yup.object().shape({
+        noteTitle: Yup.string().required("You must include a subject."),
+        noteBody: Yup.string().required("You must include a message."),
+        isPrivate: Yup.string(),
         date: Yup.string(),
-        notes: Yup.string(),
-        serviceId: Yup.string(),
+        agencyId: Yup.string(),
     });
 
     return (
         <Formik
             initialValues={{
-                agencyId: "",
-                clientId: "",
+                noteTitle: "",
+                noteBody: "",
+                isPrivate: "false",
                 date: "",
-                notes: "",
-                serviceId: "",
+                agencyId: "",
             }}
 
-            // TO DO: Update for AddService action
+            // TO DO: Update for AddNote action
 
-            validationSchema={assistanceSchema}
+            validationSchema={noteSchema}
             onSubmit={async (values) => {
                 console.log({ values });
             }}
         >
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
-                    [Service Name] - [Client Name] received help from [Agency Name] on [Date]
+                    <StyledFormikField name="noteTitle" label="Title of Note" />
                     <StyledFormikField
-                        name="notes"
-                        label="Anything to add?"
+                        name="noteBody"
+                        label="Note"
                         type="textarea"
                     />
                     <input type="checkbox" />
-                    <p>Make this assistance private (only those with access to your agency can view this information).</p>
+                    <p>Make this note private (only those with access to your agency can view this message).</p>
                     <StyledButton type="submit">Submit</StyledButton>
                 </Form>
             )}
         </Formik>
     );
 };
-export default AddAssistanceModal;
+export default AddNoteModal;

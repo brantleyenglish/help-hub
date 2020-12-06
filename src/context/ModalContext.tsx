@@ -23,10 +23,13 @@ export type ActiveModalsType =
   | "AssistanceDelete"
   | "FileCreate"
   | "FileEdit"
-  | "FileDelete";
+  | "FileDelete"
+  | "NoteCreate"
+  | "NoteEdit"
+  | "NoteDelete";
 
 export const ModalContext = React.createContext<ModalContextType>({
-  setActiveModal: () => {},
+  setActiveModal: () => { },
   activeModal: "",
 });
 ModalContext.displayName = "ModalContext";

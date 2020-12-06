@@ -87,8 +87,19 @@ cursor: pointer;
 };
 `;
 
+type BulletinType = {
+    subject: String;
+    message: String;
+    agencyId: String;
+    date: String;
+    isPrivate: String;
+};
 
-const BulletinCard = () => {
+type BulletinCardType = {
+    bulletin?: BulletinType;
+};
+
+const BulletinCard = ({ bulletin }: BulletinCardType) => {
 
     // const [editMode, setEditMode] = React.useState<boolean>(false);
 
@@ -99,23 +110,17 @@ const BulletinCard = () => {
             </BulletinCardIconWrapper>
             <BulletinCardContentWrapper>
                 <BulletinHeaderWrapper>
-                    <h1>Bulletin Title</h1>
-                    <h2>Created by: Agency Name</h2>
-                    {/* <EditButton type="button" onClick={() => setEditMode(!editMode)}>
-                        {editMode ? (
-                            <FontAwesomeIcon icon={faTimes} />
-                        ) : ( */}
+                    <h1>{bulletin?.subject}</h1>
+                    <h2>Created by: [Agency Name]</h2>
                     <EditButton>
                         <FontAwesomeIcon icon={faPencil} />
                     </EditButton>
-                    {/* )}
-                    </EditButton> */}
                     <DeleteButton>
                         <FontAwesomeIcon icon={faTrash} />
                     </DeleteButton>
                 </BulletinHeaderWrapper>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
-                <p>Date of Bulletin: 01 / 02 / 2020</p>
+                <p>{bulletin?.message}</p>
+                <p>{bulletin?.date}</p>
             </BulletinCardContentWrapper>
         </BulletinCardWrapper>
     );

@@ -8,8 +8,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import HHPlaceholder from "../images/helphubPlaceholder.png";
-import { theme } from "./Theme";
+import HHPlaceholder from "../../images/helphubPlaceholder.png";
+import { theme } from "../Theme";
 
 const AgencyCardWrapper = styled.div`
   display: flex;
@@ -27,7 +27,6 @@ p{
   color: ${theme.colors.gray};
 };
 `;
-
 const AgencyCardHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -50,7 +49,6 @@ const AgencyCardHeaderWrapper = styled.div`
     cursor: pointer;
   }
 `;
-
 const CategoryTagsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -61,7 +59,6 @@ const CategoryTagsWrapper = styled.div`
   font-size: 20px;
   border-radius: 0px 0px 10px 10px;
 `;
-
 const IconWrapper = styled.div`
 display: flex;
 color: ${theme.colors.white};

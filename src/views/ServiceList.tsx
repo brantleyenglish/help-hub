@@ -4,7 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ServiceType } from "../../DataTypes";
-import ServiceCard from "../components/ServiceCard";
+import ServiceCard from "../components/cards/ServiceCard";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";
