@@ -1,31 +1,30 @@
-import React from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import styled from "styled-components";
-import { theme } from "../components/Theme";
-import * as Yup from "yup";
-import { ClientType } from "../../DataTypes";
-import { useClient } from "../context/ClientContext";
-import { getClient } from "../firebase/clients";
 import {
-  faBrowser,
+  faCalendarAlt,
+  faEnvelope,
+  faMapMarkedAlt,
+  faMapMarkerAlt,
   faPencil,
   faPhone,
-  faTimes,
-  faEnvelope,
-  faCalendarAlt,
-  faMapMarkerAlt,
-  faVenusMars,
-  faUsers,
-  faMapMarkedAlt,
   faPlus,
+  faUsers,
+  faVenusMars,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import styled from "styled-components";
+import { ClientType } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
-import NoteCard from "../components/cards/NoteCard";
 import FileCard from "../components/cards/FileCard";
-
-{/* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/ }
-
+import NoteCard from "../components/cards/NoteCard";
+import ModalWrapper from "../components/ModalWrapper";
+import { theme } from "../components/Theme";
+import { useClient } from "../context/ClientContext";
+import { useModal } from "../context/ModalContext";
+import { getClient } from "../firebase/clients";
+import EditClientModal from "../modals/EditClientModal";
+{
+  /* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/
+}
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -37,15 +36,15 @@ const ClientBackground = styled.div`
   background: ${theme.colors.blue};
 `;
 const ClientCardWrapper = styled.div`
-max-width: 650px;
-// background: ${theme.colors.lightBlue};
-color: ${theme.colors.white};
-flex-direction: row;
-flex-wrap: wrap;
-border-radius: 2px;
-margin: auto;
-border-radius: 30px;
-padding: 40px;
+  max-width: 650px;
+  // background: ${theme.colors.lightBlue};
+  color: ${theme.colors.white};
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 2px;
+  margin: auto;
+  border-radius: 30px;
+  padding: 40px;
 `;
 const EditButton = styled.button`
   background: ${theme?.colors?.lightBlue};
@@ -68,29 +67,29 @@ const EditButton = styled.button`
   }
 `;
 const StyledFormikFieldWrapper = styled.div`
-display: flex;
-flex-direction: column;
-width: 300px;
-/* width: 250px; */
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  /* width: 250px; */
   margin: 10px 10px;
-color: ${theme.colors.gray};
-label {
-  color: ${theme.colors.lightBlue};
-}
-input {
-  width: 100%;
-  border-radius: 4px;
-  padding: 5px;
-  border: none;
-  margin-top: 5px;
-}
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+  }
+  input {
+    width: 100%;
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+  }
 `;
 const FormFieldsWrapper = styled.div`
-width: 100%;
-flex-direction: row;
-flex-wrap: wrap;
-display: flex;
-justify-content: space-between;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
 `;
 const FormContentWrapper = styled.div`
   display: flex;
@@ -98,16 +97,16 @@ const FormContentWrapper = styled.div`
   align-items: baseline;
   flex-wrap: wrap;
   justify-content: space-between;
-  & p{
+  & p {
     margin-top: 0;
     padding-top: 0;
-  };
-  & h3{
+  }
+  & h3 {
     color: ${theme.colors.lightBlue};
     margin-bottom: 0;
     padding-bottom: 5px;
     font-size: 16px;
-  };
+  }
 `;
 const FormLeftWrapper = styled.div`
   width: 50%;
@@ -116,10 +115,10 @@ const FormLeftWrapper = styled.div`
   justify-content: center;
 `;
 const FormRightWrapper = styled.div`
-width: 50%;
-display: flex;
-flex-direction: column;
-justify-content: center;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 const TitleWrapper = styled.div`
   display: flex;
@@ -140,9 +139,9 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   align-items: center;
   background: ${(p: any) =>
     p.isActive ? theme.colors.blue : theme.colors.lightBlue};
-    & button{
-      background: ${theme.colors.lightBlue};
-    };
+  & button {
+    background: ${theme.colors.lightBlue};
+  }
   outline: none;
   border: none;
   color: ${theme.colors.white};
@@ -152,16 +151,16 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   &:hover {
     background: ${theme.colors.blue};
     cursor: pointer;
-    & button{
+    & button {
       background-color: ${theme.colors.lightBlue};
-    };
+    }
   }
-  &:first-child{
+  &:first-child {
     border-radius: 100px 0 0 100px;
-  };
-  &:last-child{
+  }
+  &:last-child {
     border-radius: 0 100px 100px 0;
-  };
+  }
 `;
 const ContentWrapper = styled.div`
   max-width: 650px;
@@ -169,53 +168,37 @@ const ContentWrapper = styled.div`
   padding: 40px;
 `;
 const StyledFormikButton = styled.button`
-color: ${theme.colors.white};
-background-color: ${theme.colors.lightBlue};
-border: none;
-padding: 10px;
-border-radius: 50px;
-font-weight: bold;
-&:hover{
-  color: ${theme.colors.lightBlue};
-  background-color: ${theme.colors.white};
-};
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.lightBlue};
+  border: none;
+  padding: 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  &:hover {
+    color: ${theme.colors.lightBlue};
+    background-color: ${theme.colors.white};
+  }
 `;
 const AddBtnWrapper = styled.button`
-background-color: ${theme.colors.blue};
-color: ${theme.colors.white}; 
-padding: 5px 7px;
-margin-left: 10px;
-border: none;
-border-radius: 5px;
-&:hover{
-  background-color: ${theme.colors.white} !important;
-  color: ${theme.colors.blue} !important;
-  cursor: pointer;
-};
+  background-color: ${theme.colors.blue};
+  color: ${theme.colors.white};
+  padding: 5px 7px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  &:hover {
+    background-color: ${theme.colors.white} !important;
+    color: ${theme.colors.blue} !important;
+    cursor: pointer;
+  }
 `;
 const FileCardWrapper = styled.div`
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: center;
-align-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
 `;
-
-type StyledFormikFieldType = {
-  name: string;
-  label: string;
-};
-
-const StyledFormikField = ({ name, label }: StyledFormikFieldType) => {
-
-  return (
-    <StyledFormikFieldWrapper>
-      <label htmlFor={name}>{label}</label>
-      <Field name={name} id={name} />
-      <ErrorMessage name={name} />
-    </StyledFormikFieldWrapper>
-  );
-};
 
 type ClientProfileType = {
   match: any;
@@ -231,27 +214,13 @@ const ClientProfile = ({ match }: ClientProfileType) => {
     null
   );
 
+  const { setActiveModal } = useModal();
+
   const [editMode, setEditMode] = React.useState<boolean>(false);
 
-  const [activeTab, setActiveTab] = React.useState<ActiveTabType>("assistances");
-
-  const [error, setError] = React.useState("");
-
-  const clientSchema = Yup.object().shape({
-    clientFirstName: Yup.string().required("Client first name can not be empty."),
-    clientLastName: Yup.string().required("Client last name can not be empty."),
-    dob: Yup.string().required("Please include client's date of birth"),
-    phone: Yup.string(),
-    email: Yup.string(),
-    address: Yup.string(),
-    city: Yup.string(),
-    state: Yup.string(),
-    zip: Yup.string(),
-    gender: Yup.string(),
-    ethnicity: Yup.string(),
-    county: Yup.string(),
-    additionalNotes: Yup.string(),
-  });
+  const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
+    "assistances"
+  );
 
   const getClientProfile = async () => {
     const clientData = await getClient({ clientId });
@@ -266,93 +235,65 @@ const ClientProfile = ({ match }: ClientProfileType) => {
 
   return (
     <ClientProfileWrapper>
+      <ModalWrapper modalId="ClientEdit">
+        <EditClientModal
+          clientProfile={clientProfile}
+          getClientProfile={getClientProfile}
+        />
+      </ModalWrapper>
       {clientProfile && (
-        <Formik
-          initialValues={{
-            clientFirstName: clientProfile?.clientFirstName || "",
-            clientLastName: clientProfile?.clientLastName || "",
-            dob: clientProfile?.dob || "",
-            phone: clientProfile?.phone || "",
-            email: clientProfile?.email || "",
-            streetAddress: clientProfile?.streetAddress || "",
-            city: clientProfile?.city || "",
-            state: clientProfile?.state || "",
-            zip: clientProfile?.zip || "",
-            gender: clientProfile?.gender || "",
-            ethnicity: clientProfile?.ethnicity || "",
-            county: clientProfile?.county || "",
-            additionalNotes: clientProfile?.additionalNotes || "",
-          }}
-          validationSchema={clientSchema}
-          onSubmit={async (values) => {
-            if (updateClientInfo && clientProfile?.id) {
-              await updateClientInfo({
-                clientId: clientProfile?.id,
-                newData: { id: clientProfile?.id, ...values },
-              });
-            }
-          }}
-        >
-          <ClientBackground>
-            <ClientCardWrapper>
-              <Form>
-                <TitleWrapper>
-                  <h1>{clientProfile?.clientFirstName} {clientProfile?.clientLastName}</h1>
-                  <EditButton type="button" onClick={() => setEditMode(!editMode)}>
-                    {editMode ? (
-                      <FontAwesomeIcon icon={faTimes} />
-                    ) : (
-                        <FontAwesomeIcon icon={faPencil} />
-                      )}
-                  </EditButton>
-                </TitleWrapper>
-                {editMode ? (
-                  <FormFieldsWrapper>
-                    <FormLeftWrapper>
-                      <StyledFormikField name="clientFirstName" label="Client First Name" />
-                      <StyledFormikField name="dob" label="Date of Birth" />
-                      <StyledFormikField name="email" label="Email" />
-                      <StyledFormikField name="gender" label="Gender" />
-                      <StyledFormikField name="streetAddress" label="Street Address" />
-                      <StyledFormikField name="state" label="State" />
-                    </FormLeftWrapper>
-                    <FormRightWrapper>
-                      <StyledFormikField name="clientLastName" label="Client Last Name" />
-                      <StyledFormikField name="phone" label="Phone #" />
-                      <StyledFormikField name="ethnicity" label="Ethnicity" />
-                      <StyledFormikField name="county" label="County" />
-                      <StyledFormikField name="city" label="City" />
-                      <StyledFormikField name="zip" label="Zip Code" />
-                    </FormRightWrapper>
-                    <StyledFormikButton type="submit">Submit</StyledFormikButton>
-                  </FormFieldsWrapper>
-                ) : (
-                    <FormContentWrapper>
-                      <FormLeftWrapper>
-                        <h3><FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth</h3>
-                        <p>{clientProfile?.dob}</p>
-                        <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
-                        <p>{clientProfile?.phone}</p>
-                        <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
-                        <p>{clientProfile?.email}</p>
-                        <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
-                        <p>{clientProfile?.streetAddress}, {clientProfile?.city}, {clientProfile?.state}  {clientProfile?.zip}</p>
-                      </FormLeftWrapper>
-                      <FormRightWrapper>
-                        <h3><FontAwesomeIcon icon={faVenusMars} /> Gender</h3>
-                        <p>{clientProfile?.gender}</p>
-                        <h3><FontAwesomeIcon icon={faUsers} /> Ethnicity</h3>
-                        <p>{clientProfile?.ethnicity}</p>
-                        <h3><FontAwesomeIcon icon={faMapMarkedAlt} /> County</h3>
-                        <p>{clientProfile?.county}</p>
-                      </FormRightWrapper>
-                    </FormContentWrapper>
-                  )}
-                {error && <p>{error}</p>}
-              </Form>
-            </ClientCardWrapper>
-          </ClientBackground>
-        </Formik>
+        <ClientBackground>
+          <ClientCardWrapper>
+            <TitleWrapper>
+              <h1>
+                {clientProfile?.clientFirstName} {clientProfile?.clientLastName}
+              </h1>
+              <EditButton
+                type="button"
+                onClick={() => setActiveModal("ClientEdit")}
+              >
+                <FontAwesomeIcon icon={faPencil} />
+              </EditButton>
+            </TitleWrapper>
+            <FormContentWrapper>
+              <FormLeftWrapper>
+                <h3>
+                  <FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth
+                </h3>
+                <p>{clientProfile?.dob}</p>
+                <h3>
+                  <FontAwesomeIcon icon={faPhone} /> Phone
+                </h3>
+                <p>{clientProfile?.phone}</p>
+                <h3>
+                  <FontAwesomeIcon icon={faEnvelope} /> Email
+                </h3>
+                <p>{clientProfile?.email}</p>
+                <h3>
+                  <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                </h3>
+                <p>
+                  {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
+                  {clientProfile?.state} {clientProfile?.zip}
+                </p>
+              </FormLeftWrapper>
+              <FormRightWrapper>
+                <h3>
+                  <FontAwesomeIcon icon={faVenusMars} /> Gender
+                </h3>
+                <p>{clientProfile?.gender}</p>
+                <h3>
+                  <FontAwesomeIcon icon={faUsers} /> Ethnicity
+                </h3>
+                <p>{clientProfile?.ethnicity}</p>
+                <h3>
+                  <FontAwesomeIcon icon={faMapMarkedAlt} /> County
+                </h3>
+                <p>{clientProfile?.county}</p>
+              </FormRightWrapper>
+            </FormContentWrapper>
+          </ClientCardWrapper>
+        </ClientBackground>
       )}
       <ContentWrapper>
         <NavigationWrapper>
@@ -361,49 +302,53 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("assistances")}
           >
             <p>ASSISTANCES</p>
-            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
+            <AddBtnWrapper>
+              <FontAwesomeIcon icon={faPlus} />
+            </AddBtnWrapper>
           </NavigationButton>
           <NavigationButton
             isActive={activeTab === "notes"}
             onClick={() => setActiveTab("notes")}
           >
             <p>NOTES</p>
-            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
+            <AddBtnWrapper>
+              <FontAwesomeIcon icon={faPlus} />
+            </AddBtnWrapper>
           </NavigationButton>
           <NavigationButton
             isActive={activeTab === "files"}
             onClick={() => setActiveTab("files")}
           >
             <p>FILES</p>
-            <AddBtnWrapper><FontAwesomeIcon icon={faPlus} /></AddBtnWrapper>
+            <AddBtnWrapper>
+              <FontAwesomeIcon icon={faPlus} />
+            </AddBtnWrapper>
           </NavigationButton>
         </NavigationWrapper>
 
-        {activeTab === "assistances" &&
+        {activeTab === "assistances" && (
           <>
             <AssistanceCard />
             <AssistanceCard />
             <AssistanceCard />
           </>
-        }
-        {activeTab === "notes" &&
+        )}
+        {activeTab === "notes" && (
           <>
             <NoteCard />
             <NoteCard />
             <NoteCard />
           </>
-        }
-        {activeTab === "files" &&
+        )}
+        {activeTab === "files" && (
           <FileCardWrapper>
             <FileCard />
             <FileCard />
             <FileCard />
             <FileCard />
           </FileCardWrapper>
-        }
-
+        )}
       </ContentWrapper>
-
     </ClientProfileWrapper>
   );
 };

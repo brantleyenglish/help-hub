@@ -3,6 +3,7 @@ import { AgencyProvider } from "./AgencyContext";
 import { AssistanceProvider } from "./AssistanceContext";
 import { AuthProvider } from "./AuthContext";
 import { ClientProvider } from "./ClientContext";
+import { ModalProvider } from "./ModalContext";
 import { PublicProvider } from "./PublicContext";
 
 const ContextProviders: React.FC<any> = ({ children }) => {
@@ -11,7 +12,9 @@ const ContextProviders: React.FC<any> = ({ children }) => {
       <AuthProvider>
         <ClientProvider>
           <AgencyProvider>
-            <AssistanceProvider>{children}</AssistanceProvider>
+            <AssistanceProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </AssistanceProvider>
           </AgencyProvider>
         </ClientProvider>
       </AuthProvider>
