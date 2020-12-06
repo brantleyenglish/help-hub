@@ -80,11 +80,6 @@ const AddServiceModal: React.FC<{}> = () => {
                     <StyledFormikField name="city" label="City" />
                     <StyledFormikField name="state" label="State" />
                     <StyledFormikField name="zip" label="Zip Code" />
-
-
-
-                    <input type="checkbox" />
-                    <p>Make this bulletin private (only those with access to your agency can view this message).</p>
                     <StyledButton type="submit">Submit</StyledButton>
                 </Form>
             )}
