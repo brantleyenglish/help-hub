@@ -70,11 +70,6 @@ const ClientSearchWrapper = styled.div`
   }
 `;
 const ClientListWrapper = styled.div`
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: wrap;
-  // justify-content: center;
-  // align-items: center;
   padding: 30px;
 `;
 const ClientTable = styled.table`
