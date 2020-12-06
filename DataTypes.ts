@@ -1,3 +1,11 @@
+export type CategoryType = {
+  icon: string;
+  label: string;
+  name: string;
+};
+
+export type CategoryListType = CategoryType[];
+
 export type AgencyType = {
   id: string;
   name: string;

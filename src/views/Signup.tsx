@@ -20,7 +20,7 @@ const SignUp = () => {
 
   const signupValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("This email address is not valid"),
-    passcode: Yup.string().matches(signupPassword, {
+    passcode: Yup.string().matches(signupPassword || /.*/, {
       message:
         "This passcode does not match. Please contact United Way West TN.",
     }),

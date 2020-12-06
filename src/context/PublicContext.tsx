@@ -1,14 +1,20 @@
 import React from "react";
+import {
+  CategoryListType,
+  MessageListType,
+  ServiceListType,
+} from "../../DataTypes";
 import { getAllAgencies } from "../firebase/agencies";
 import { getPublicMessages } from "../firebase/messages";
 import { getSettings } from "../firebase/misc";
 import { getAllServices } from "../firebase/services";
 
 export type PublicContextType = {
-  categories: any;
-  allServices: any;
-  signupPassword: any;
-  allPublicMessages: any;
+  categories: CategoryListType;
+  allServices: ServiceListType;
+  signupPassword: RegExp;
+  allPublicMessages: MessageListType;
+  getPublicData: () => Promise<void>;
 };
 
 export const PublicContext = React.createContext<Partial<PublicContextType>>(
@@ -34,7 +40,7 @@ export const PublicProvider: React.FC<any> = (props) => {
     getPublicData();
   }, []);
 
-  const value = publicData ? { ...publicData } : {};
+  const value = publicData ? { ...publicData, getPublicData } : {};
 
   return <PublicContext.Provider value={value} {...props} />;
 };
