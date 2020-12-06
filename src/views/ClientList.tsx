@@ -1,14 +1,12 @@
 import { faEllipsisH, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
 import ClientRow from "../components/clientRow";
 import DateInput from "../components/DateInput";
 import NewClientForm from "../components/NewClientForm";
 import { theme } from "../components/Theme";
-import { useAssistance } from "../context/AssistanceContext";
 import { useClient } from "../context/ClientContext";
 import UWHeader from "../images/uw_header.png";
 
@@ -81,12 +79,16 @@ const ClientListWrapper = styled.div`
 `;
 const ClientTable = styled.table`
 border-collapse: collapse;
-// width: 75%;
-display: flex;
 flex-direction: column;
-tr {
-  th {
-    color: ${theme.colors.red};
+width: 100%
+`;
+const ClientTableHeader = styled.tr`
+justify-content: space-around;
+background: ${theme.colors.blue};
+border: 2px solid ${theme.colors.blue};
+
+th {
+    color: ${theme.colors.white};
     text-align: left;
     font-size: 1rem;
     padding: 1rem;
@@ -95,53 +97,35 @@ tr {
       margin-left:.5rem;
     }
     > div {
-      display: flex;
       align-items: center;
     }
   }
-  td {
-    font-size: 1rem;
-    padding: 1rem;
-    &:last-child {
-      display: flex;
-      align-items: center;
-    }
-  }
-}
 `;
-const ClientTableHeader = styled.tr`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  border: 2px solid ${theme.colors.gray};
-  div {
-    padding: .5rem;
-  }
-`;
-const ClientTableBody = styled.div`
-width: 100%;
-display: flex;
-justify-content: center;
+const ClientTableBody = styled.tbody`
 border: 2px solid ${theme.colors.gray};
-border-top:none;
-border-bottom:none;
+border-top: none;
+border-bottom: none;
+a{
+  color: ${theme.colors.gray};
+}
 &:last-child {
   border: 2px solid ${theme.colors.gray};
   border-top:none;
 }
-:nth-child(even) {
-background: ${theme.colors.grayLight};
-}
-:hover{
-  background: ${theme.colors.blue};
-  color: ${theme.colors.white};
-}
+&:nth-child(even) {
+  background: ${theme.colors.grayLight};
+  }
+tr:hover{
+    background: ${theme.colors.yellow};
+    & a{
+      color: ${theme.colors.white};
+    }
+  }
 `;
 
 
 const ClientList = () => {
   const { clients } = useClient();
-  const { setAssistanceClientId } = useAssistance();
 
   const [search, setSearch] = React.useState<string>("");
   const [birthDate, setBirthDate] = React.useState<string>("");
@@ -274,7 +258,9 @@ const ClientList = () => {
       </ClientSearchWrapper>
 
       <ClientListWrapper>
+        {/* Table */}
         <ClientTable>
+          {/* tr */}
           <ClientTableHeader>
             <th scope="col">
               <div>First Name <FontAwesomeIcon icon={faArrowDown} /></div>
@@ -295,20 +281,12 @@ const ClientList = () => {
               <div>Address<FontAwesomeIcon icon={faArrowDown} /></div>
             </th>
           </ClientTableHeader>
-          {filteredClients &&
-            filteredClients.map((client) => (
-              <ClientTableBody>
-                <Link
-                  to={`/clients/${client?.id}`}
-                  key={client?.id}
-                  onClick={() => setAssistanceClientId && client?.id
-                    ? setAssistanceClientId(client?.id)
-                    : null}
-                >
-                  <ClientRow client={client} />
-                </Link>
-              </ClientTableBody>
-            ))}
+          <ClientTableBody>
+            {filteredClients &&
+              filteredClients.map((client) => (
+                <ClientRow client={client} />
+              ))}
+          </ClientTableBody>
         </ClientTable>
 
 

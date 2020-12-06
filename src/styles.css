@@ -16,10 +16,6 @@ button {
 }
 a {
   text-decoration: none;
-  color: #999999;
-}
-a:hover {
-  color: rgb(95, 95, 95);
 }
 .header h2 {
   font-weight: 500;
@@ -209,9 +205,7 @@ div.lefty {
   z-index: 2;
   text-align: center;
 }
-.loggedInHeader a:hover {
-  background-color: #942e29;
-}
+
 
 .loggedInHeader span #downIcon {
   color: #b23633;
@@ -564,9 +558,6 @@ div.filebody a.fileIcon {
   color: #999999;
 }
 
-div.filebody a.fileIcon:hover {
-  color: #666666;
-}
 
 div.bigClientDiv {
   background-color: #fefefe;

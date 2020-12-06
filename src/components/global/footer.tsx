@@ -13,6 +13,7 @@ const FooterWrapper = styled.div`
   & a {
     margin-left: 1.5vw;
     margin-right: 1.5vw;
+    color: ${theme.colors.gray};
   }
   & a:hover {
     color: ${theme.colors.blue};
