@@ -31,14 +31,6 @@ export const AssistanceProvider: React.FC<any> = (props) => {
     setAssistanceData,
   ] = React.useState<AssistanceDataArrayType | null>(null);
 
-  React.useEffect(() => {
-    console.log({ assistanceData });
-  }, [assistanceData]);
-
-  React.useEffect(() => {
-    console.log({ assistance });
-  }, [assistance]);
-
   const updateAssistanceByAgency = async () => {
     const assistanceData = await getAssistanceByAgency({ agencyId });
     if (assistanceData !== "Error") {

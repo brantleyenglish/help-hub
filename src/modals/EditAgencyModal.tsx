@@ -57,7 +57,6 @@ const EditAgencyModal: React.FC<{
       }}
       validationSchema={agencySchema}
       onSubmit={async (values) => {
-        console.log({ values });
         if (updateAgencyInfo && agencyProfile) {
           await updateAgencyInfo({
             agencyId: agencyProfile?.id,

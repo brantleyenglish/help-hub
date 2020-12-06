@@ -18,19 +18,19 @@ const ServiceListWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
 `;
-const ServiceSearchWrapper = styled.div`  
-padding: 40px 0px 40px 0px;
-text-align: center;
-background-color: ${theme.colors.blue};
-background-image: url(${UWHeader});
-background-size: cover;
-background-position: center center;
-background-repeat: no-repeat;
-& h1 {
-  color: ${theme.colors.white};
-  font-size: 45px;
-  text-transform: uppercase;
-};
+const ServiceSearchWrapper = styled.div`
+  padding: 40px 0px 40px 0px;
+  text-align: center;
+  background-color: ${theme.colors.blue};
+  background-image: url(${UWHeader});
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  & h1 {
+    color: ${theme.colors.white};
+    font-size: 45px;
+    text-transform: uppercase;
+  }
 `;
 const SearchInputWrapper = styled.div`
   position: relative;
@@ -73,7 +73,7 @@ const CategoryButton = styled.button<{ active: boolean }>`
         brightness(100%) contrast(100%);
     }
   }
-  p{
+  p {
     text-transform: uppercase;
     color: ${theme.colors.white};
     font-weight: 700;
@@ -92,8 +92,6 @@ const ServiceList: React.FC<ServiceListType> = () => {
 
   const [search, setSearch] = React.useState<string>(urlSearch);
   const [category, setCategory] = React.useState<string>(urlCategory);
-
-  console.log({ allServices, category });
 
   const updateCategory = (value: string) => {
     if (value === category) {

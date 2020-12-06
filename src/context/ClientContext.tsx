@@ -1,7 +1,12 @@
 import React from "react";
 import { ClientContextType, ClientListType } from "../../DataTypes";
-import { getAllClients } from "../firebase/clients";
+import { getAllClients, getClient, updateClient } from "../firebase/clients";
 import { useAuth } from "./AuthContext";
+
+type UpdateClientInfoType = {
+  clientId: string;
+  newData: any;
+};
 
 export const ClientContext = React.createContext<Partial<ClientContextType>>(
   {}
@@ -22,21 +27,20 @@ export const ClientProvider: React.FC<any> = (props) => {
     }
   }, [user]);
 
-  const updateClientInfo = React.useCallback(async ({ clientId, newData }) => {
-    console.log({ clientId, newData });
-  }, []);
-
-  // const updateClientInfo = async ({ clientId, newData }: UpdateClientInfo) => {
-  //   if (user && user?.uid && clientId && user?.uid === clientId) {
-  //     const clientData = await getClient({ clientId: user?.uid });
-  //     if (clientData !== "DoesNotExisit") {
-  //       await updateClient({
-  //         client: clientData,
-  //         data: newData,
-  //       });
-  //     }
-  //   }
-  // };
+  const updateClientInfo = async ({
+    clientId,
+    newData,
+  }: UpdateClientInfoType) => {
+    if (user && user?.uid && clientId) {
+      const clientData = await getClient({ clientId });
+      if (clientData !== "DoesNotExist" && clientData) {
+        await updateClient({
+          client: clientData,
+          data: newData,
+        });
+      }
+    }
+  };
 
   React.useEffect(() => {
     getAllClientData();
