@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import CategoryDropdown from "../components/CategoryDropdown";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { useModal } from "../context/ModalContext";
+import { usePublicData } from "../context/PublicContext";
+import { createService } from "../firebase/services";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -20,9 +23,9 @@ const StyledButton = styled.button`
 `;
 
 const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
-  const [selectedCategories, setSelectedCategories] = React.useState<string[]>(
-    []
-  );
+  const { setActiveModal } = useModal();
+  const { refreshServices } = usePublicData();
+  const [categories, setCategories] = React.useState<string[]>([]);
   const serviceSchema = Yup.object().shape({
     name: Yup.string().required("You must give your service a name."),
     description: Yup.string().required(
@@ -36,7 +39,6 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
     city: Yup.string(),
     state: Yup.string(),
     zip: Yup.string(),
-    categories: Yup.string(),
   });
 
   return (
@@ -52,11 +54,14 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
         city: "",
         state: "",
         zip: "",
-        categories: "",
       }}
       validationSchema={serviceSchema}
       onSubmit={async (values) => {
-        console.log({ values, selectedCategories });
+        await createService({ data: { ...values, agencyId, categories } });
+        if (refreshServices) {
+          await refreshServices();
+        }
+        setActiveModal("");
       }}
     >
       {({ handleSubmit }) => (
@@ -81,7 +86,7 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
           <StyledFormikField name="city" label="City" />
           <StyledFormikField name="state" label="State" />
           <StyledFormikField name="zip" label="Zip Code" />
-          <CategoryDropdown setCategories={setSelectedCategories} />
+          <CategoryDropdown setCategories={setCategories} />
           <StyledButton type="submit">Submit</StyledButton>
         </Form>
       )}
