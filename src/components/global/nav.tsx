@@ -1,13 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { theme } from "../Theme";
-import { useAssistance } from "../../context/AssistanceContext";
-import UnitedWayLogo from "../../images/uw_logo.png";
-import ProfilePic from "../../images/helphubPlaceholder.png";
-import { useAuth } from "../../context/AuthContext";
 import { useAgency } from "../../context/AgencyContext";
-
+import { useAuth } from "../../context/AuthContext";
+import UnitedWayLogo from "../../images/uw_logo.png";
+import { theme } from "../Theme";
 
 const NavWrapper = styled.div`
   background-color: #f2f2f2;
@@ -64,11 +61,7 @@ const NavSpanWrapper = styled.span`
   flex-direction: row;
 `;
 
-
-
 const Nav = () => {
-
-  const { setAssistanceAgencyId } = useAssistance();
   const { user } = useAuth();
   const { agency } = useAgency();
 
@@ -99,13 +92,7 @@ const Nav = () => {
           </Link>
         )}
         {user && (
-          <Link
-            to={`/agencies/${user?.uid}`}
-            key={user?.uid}
-            onClick={() =>
-              setAssistanceAgencyId ? setAssistanceAgencyId(user?.uid) : null
-            }
-          >
+          <Link to={`/agencies/${user?.uid}`} key={user?.uid}>
             <ProfileNavLinkWrapper>
               {/* <img src={ProfilePic} alt="" /> */}
               {agency?.name}

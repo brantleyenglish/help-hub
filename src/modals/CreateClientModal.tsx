@@ -1,48 +1,70 @@
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import React from "react";
+import styled from "styled-components";
 import * as Yup from "yup";
 import { FormikDateInput } from "../components/DateInput";
-import DropdownInput from "../components/DropdownInput";
-import { useAuth } from "../context/AuthContext";
+import StyledFormikField from "../components/StyledFormikField";
+import { theme } from "../components/Theme";
+import { useClient } from "../context/ClientContext";
+import { useModal } from "../context/ModalContext";
 
-const NewClientForm = () => {
+const StyledButton = styled.button`
+  background: ${theme.colors.blue};
+  color: ${theme.colors.white};
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  &:hover {
+    background: ${theme.colors.lightBlue};
+    cursor: pointer;
+  }
+`;
+
+const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
+  resetFilters,
+}) => {
+  const { createClient, getAllClientData } = useClient();
   const [error, setError] = React.useState("");
-  const { user, loginUser } = useAuth();
-  const [readyForRedirect, setReadyForRedirect] = React.useState<boolean>(
-    false
-  );
+  const { setActiveModal } = useModal();
 
   const loginValidationSchema = Yup.object().shape({
-    firstName: Yup?.string()?.required(),
-    lastName: Yup?.string()?.required(),
+    clientFirstName: Yup?.string()?.required(),
+    clientLastName: Yup?.string()?.required(),
     dob: Yup?.string()?.required(),
-    phone: Yup?.string(),
-    address: Yup?.string(),
+    email: Yup?.string(),
+    streetAddress: Yup?.string(),
     city: Yup?.string(),
+    state: Yup?.string(),
     zip: Yup?.string(),
-    gender: Yup?.string(),
-    ethnicity: Yup?.string(),
+    gender: Yup?.string()?.required(),
+    ethnicity: Yup?.string()?.required(),
   });
 
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
+        clientFirstName: "",
+        clientLastName: "",
         dob: "",
         phone: "",
-        address: "",
+        email: "",
+        streetAddress: "",
         city: "",
+        state: "",
         zip: "",
-        gender: "",
-        ethnicity: "",
+        gender: "m",
+        ethnicity: "white",
       }}
       validationSchema={loginValidationSchema}
       onSubmit={async (values) => {
-        if (values?.firstName && values?.lastName && values?.dob) {
+        if (values && createClient && getAllClientData) {
           try {
             console.log(values);
-            // await createClient(values);
+            await createClient({ data: values });
+            getAllClientData();
+            resetFilters();
+            setActiveModal("");
           } catch (e) {
             setError(e?.message);
           }
@@ -52,35 +74,24 @@ const NewClientForm = () => {
       {({ values, setFieldValue }) => (
         <Form>
           <h1>Create Client</h1>
-          <label htmlFor="firstName">First Name</label>
-          <Field name="firstName" type="firstName" />
-
-          <label htmlFor="lastName">Last Name</label>
-          <Field name="lastName" type="lastName" />
-
-          <label htmlFor="dob">Date of Birth</label>
+          <StyledFormikField name="clientFirstName" label="Client First Name" />
+          <StyledFormikField name="clientLastName" label="Client Last Name" />
           <FormikDateInput
             fieldName="dob"
             setFieldValue={setFieldValue}
             intialValue={values?.dob}
             label="Date of Birth"
           />
-          <label htmlFor="phone">Phone #</label>
-          <Field name="phone" type="phone" />
-
-          <label htmlFor="address">Street Address</label>
-          <Field name="address" type="address" />
-
-          <label htmlFor="city">City</label>
-          <Field name="city" type="city" />
-
-          <label htmlFor="zip">Zip</label>
-          <Field name="zip" type="zip" />
-
-          <label htmlFor="gender">Gender</label>
-          <DropdownInput
+          <StyledFormikField name="phone" label="Phone #" />
+          <StyledFormikField name="email" label="Email" />
+          <StyledFormikField name="streetAddress" label="Street Address" />
+          <StyledFormikField name="state" label="State" />
+          <StyledFormikField name="city" label="City" />
+          <StyledFormikField name="zip" label="Zip Code" />
+          <StyledFormikField
             name="gender"
-            setFieldValue={setFieldValue}
+            label="Gender"
+            type="select"
             options={[
               {
                 value: "m",
@@ -88,7 +99,7 @@ const NewClientForm = () => {
               },
               {
                 value: "f",
-                label: "female",
+                label: "Female",
               },
               {
                 value: "other",
@@ -96,11 +107,10 @@ const NewClientForm = () => {
               },
             ]}
           />
-
-          <label htmlFor="ethnicity">Ethnicty</label>
-          <DropdownInput
+          <StyledFormikField
             name="ethnicity"
-            setFieldValue={setFieldValue}
+            label="Ethnicity"
+            type="select"
             options={[
               {
                 value: "white",
@@ -133,7 +143,7 @@ const NewClientForm = () => {
             ]}
           />
 
-          <button type="submit">Submit</button>
+          <StyledButton type="submit">Submit</StyledButton>
           {error && <p>{error}</p>}
         </Form>
       )}
@@ -141,4 +151,4 @@ const NewClientForm = () => {
   );
 };
 
-export default NewClientForm;
+export default CreateClientModal;

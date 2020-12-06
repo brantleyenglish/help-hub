@@ -37,8 +37,8 @@ export type ClientType = {
   zip: string;
   gender: string;
   ethnicity: string;
-  county: string;
-  additionalNotes: string;
+  // county: string;
+  // additionalNotes: string;
 }
 
 export type ClientListType = ClientType[];
@@ -46,7 +46,9 @@ export type ClientListType = ClientType[];
 export type ClientContextType = {
   clients: ClientListType;
   client: ClientType;
-  updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>
+  updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>;
+  createClient: ({ data }: {data: ClientType}) => Promise<void>;
+  getAllClientData: () => Promise<void>;
 };
 
 export type ServiceType = {

@@ -13,7 +13,8 @@ const StyledFormikFieldWrapper = styled.div`
     text-align: left;
   }
   input,
-  textarea {
+  textarea,
+  select {
     border-radius: 4px;
     padding: 5px;
     border: none;
@@ -22,21 +23,36 @@ const StyledFormikFieldWrapper = styled.div`
   }
 `;
 
+type SelectOptionType = {
+  label: string;
+  value: string;
+};
+
 type StyledFormikFieldType = {
   name: string;
   label: string;
   type?: "input" | "textarea" | "select";
+  options?: SelectOptionType[];
 };
 
 const StyledFormikField = ({
   name,
   label,
   type = "input",
+  options = [],
 }: StyledFormikFieldType) => {
   return (
     <StyledFormikFieldWrapper>
       <label htmlFor={name}>{label}</label>
-      <Field name={name} id={name} as={type} />
+      {type === "select" ? (
+        <Field name={name} id={name} as={type}>
+          {options?.map((option: SelectOptionType) => (
+            <option value={option?.value}>{option?.label}</option>
+          ))}
+        </Field>
+      ) : (
+        <Field name={name} id={name} as={type} />
+      )}
       <ErrorMessage name={name} />
     </StyledFormikFieldWrapper>
   );

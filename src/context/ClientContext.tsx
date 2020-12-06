@@ -1,11 +1,20 @@
 import React from "react";
-import { ClientContextType, ClientListType } from "../../DataTypes";
-import { getAllClients, getClient, updateClient } from "../firebase/clients";
+import { ClientContextType, ClientListType, ClientType } from "../../DataTypes";
+import {
+  createClientData,
+  getAllClients,
+  getClient,
+  updateClient,
+} from "../firebase/clients";
 import { useAuth } from "./AuthContext";
 
 type UpdateClientInfoType = {
   clientId: string;
-  newData: any;
+  newData: ClientType;
+};
+
+type CreateClientType = {
+  data: ClientType;
 };
 
 export const ClientContext = React.createContext<Partial<ClientContextType>>(
@@ -42,11 +51,15 @@ export const ClientProvider: React.FC<any> = (props) => {
     }
   };
 
+  const createClient = async ({ data }: CreateClientType) => {
+    createClientData({ data });
+  };
+
   React.useEffect(() => {
     getAllClientData();
   }, [getAllClientData]);
 
-  const value = { clients, updateClientInfo };
+  const value = { clients, updateClientInfo, createClient, getAllClientData };
 
   return <ClientContext.Provider value={value} {...props} />;
 };

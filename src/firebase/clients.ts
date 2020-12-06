@@ -7,6 +7,10 @@ type UpdateClientType = {
     data: any;
 };
 
+type CreateClientType = {
+    data: ClientType;
+}
+
 export const getAllClients = async () => {
     try {
         const docs = await db.collection("clients").get();
@@ -35,12 +39,13 @@ export const getClient = async ({ clientId }: ClientIdType) => {
     }
 };
 
-export const createClient = async ({ clientId }: ClientIdType) => {
+export const createClientData = async ({ data }: CreateClientType) => {
     try {
-        const docRef = db.collection("clients").doc(clientId);
+        const docRef =  db.collection("clients").doc();
         await docRef.set({
-            id: clientId,
-        });
+            id: docRef?.id,
+            ...data
+        })
         const client = await docRef.get();
         if (client.exists) {
             return client.data();

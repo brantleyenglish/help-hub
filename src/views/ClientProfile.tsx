@@ -18,14 +18,14 @@ import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
+import { useAssistance } from "../context/AssistanceContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
-import EditClientModal from "../modals/EditClientModal";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddNoteModal from "../modals/AddNoteModal";
 import AddFileModal from "../modals/AddFileModal";
-
+import EditClientModal from "../modals/EditClientModal";
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -175,6 +175,7 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { client, updateClientInfo } = useClient();
+  const { setAssistanceClientId } = useAssistance();
 
   const [clientProfile, setClientProfile] = React.useState<ClientType | null>(
     null
@@ -187,6 +188,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   );
 
   const getClientProfile = async () => {
+    if (setAssistanceClientId) {
+      setAssistanceClientId(clientId);
+    }
     const clientData = await getClient({ clientId });
     if (clientData && clientData !== "DoesNotExist") {
       setClientProfile(clientData);
@@ -253,7 +257,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                 <h3>
                   <FontAwesomeIcon icon={faMapMarkedAlt} /> County
                 </h3>
-                <p>{clientProfile?.county}</p>
+                {/* <p>{clientProfile?.county}</p> */}
               </FormRightWrapper>
             </FormContentWrapper>
           </ClientCardWrapper>

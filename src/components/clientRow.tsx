@@ -1,95 +1,28 @@
-import React, { Component } from 'react';
+import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { theme } from "../components/Theme";
-import { Link } from "react-router-dom";
-
-import { useClient } from "../context/ClientContext";
-import { ClientListType, ClientType } from "../../DataTypes";
-import { useAssistance } from "../context/AssistanceContext";
-
 
 const StyledRow = styled.tr`
-justify-content: space-around;
-font-size: 1rem;
-td{
+  justify-content: space-around;
+  font-size: 1rem;
+  cursor: pointer;
+  td {
     padding: 1rem;
-}
+  }
 `;
 
 const ClientRow: React.FC<any> = ({ client }) => {
-    const { setAssistanceClientId } = useAssistance();
+  const history = useHistory();
 
-    return (
-        <StyledRow>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.clientFirstName}
-                </Link>
-            </td>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.clientLastName}
-                </Link>
-            </td>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.dob}
-                </Link>
-            </td>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.email}
-                </Link>
-            </td>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.phone}
-                </Link>
-            </td>
-            <td>
-                <Link
-                    to={`/clients/${client?.id}`}
-                    key={client?.id}
-                    onClick={() => setAssistanceClientId && client?.id
-                        ? setAssistanceClientId(client?.id)
-                        : null}
-                >
-                    {client?.streetAddress}
-                </Link>
-            </td>
-
-
-        </StyledRow >
-    );
+  return (
+    <StyledRow onClick={() => history?.push(`/clients/${client?.id}`)}>
+      <td>{client?.clientFirstName}</td>
+      <td>{client?.clientLastName}</td>
+      <td>{client?.dob}</td>
+      <td>{client?.email}</td>
+      <td>{client?.phone}</td>
+      <td>{client?.streetAddress}</td>
+    </StyledRow>
+  );
 };
 export default ClientRow;
