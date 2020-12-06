@@ -6,6 +6,7 @@ import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useModal } from "../context/ModalContext";
 
+
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -19,49 +20,51 @@ const StyledButton = styled.button`
   }
 `;
 
-const AddAssistanceModal: React.FC<{}> = () => {
+const AddFileModal: React.FC<{}> = () => {
 
     const { setActiveModal } = useModal();
 
-    const assistanceSchema = Yup.object().shape({
+    const noteSchema = Yup.object().shape({
+        fileTitle: Yup.string().required("You must include a subject."),
+        description: Yup.string(),
+        isPrivate: Yup.string(),
+        date: Yup.string(),
         agencyId: Yup.string(),
         clientId: Yup.string(),
-        date: Yup.string(),
-        notes: Yup.string(),
-        serviceId: Yup.string(),
     });
 
     return (
         <Formik
             initialValues={{
+                fileTitle: "",
+                description: "",
+                isPrivate: "false",
+                date: "",
                 agencyId: "",
                 clientId: "",
-                date: "",
-                notes: "",
-                serviceId: "",
             }}
 
-            // TO DO: Update for AddService action
+            // TO DO: Update for AddFile action
 
-            validationSchema={assistanceSchema}
+            validationSchema={noteSchema}
             onSubmit={async (values) => {
                 console.log({ values });
             }}
         >
             {({ handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
-                    [Service Name] - [Client Name] received help from [Agency Name] on [Date]
+                    <StyledFormikField name="fileTitle" label="Name of File" />
                     <StyledFormikField
-                        name="notes"
-                        label="Anything to add?"
+                        name="description"
+                        label="Description of File (optional)"
                         type="textarea"
                     />
                     <input type="checkbox" />
-                    <p>Make this assistance private (only those with access to your agency can view this information).</p>
+                    <p>Make this file private (only those with access to your agency can view this file).</p>
                     <StyledButton type="submit">Submit</StyledButton>
                 </Form>
             )}
         </Formik>
     );
 };
-export default AddAssistanceModal;
+export default AddFileModal;

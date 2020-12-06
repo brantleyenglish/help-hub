@@ -10,8 +10,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { usePublicData } from "../context/PublicContext";
-import { theme } from "./Theme";
+import { usePublicData } from "../../context/PublicContext";
+import { theme } from "../Theme";
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)

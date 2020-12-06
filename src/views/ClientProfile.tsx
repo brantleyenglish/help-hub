@@ -23,10 +23,9 @@ import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
+import AddNoteModal from "../modals/AddNoteModal";
+import AddFileModal from "../modals/AddFileModal";
 import EditClientModal from "../modals/EditClientModal";
-{
-  /* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/
-}
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -69,7 +68,6 @@ const EditButton = styled.button`
     color: ${theme.colors.blue};
   }
 `;
-
 const FormContentWrapper = styled.div`
   width: 100%;
   flex-direction: row;
@@ -147,7 +145,6 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
-
 const AddBtnWrapper = styled.button`
   background-color: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -268,6 +265,8 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       )}
       <ContentWrapper>
         <NavigationWrapper>
+
+          {/* ASSISTANCES NAV BUTTON*/}
           <NavigationButton
             isActive={activeTab === "assistances"}
             onClick={() => setActiveTab("assistances")}
@@ -280,21 +279,31 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               <FontAwesomeIcon icon={faPlus} />
             </AddBtnWrapper>
           </NavigationButton>
+
+          {/* NOTES NAV BUTTON */}
           <NavigationButton
             isActive={activeTab === "notes"}
             onClick={() => setActiveTab("notes")}
           >
+            <ModalWrapper modalId="NoteCreate">
+              <AddNoteModal />
+            </ModalWrapper>
             <p>NOTES</p>
-            <AddBtnWrapper>
+            <AddBtnWrapper onClick={() => setActiveModal("NoteCreate")}>
               <FontAwesomeIcon icon={faPlus} />
             </AddBtnWrapper>
           </NavigationButton>
+
+          {/* FILES NAV BUTTON */}
           <NavigationButton
             isActive={activeTab === "files"}
             onClick={() => setActiveTab("files")}
           >
+            <ModalWrapper modalId="FileCreate">
+              <AddFileModal />
+            </ModalWrapper>
             <p>FILES</p>
-            <AddBtnWrapper>
+            <AddBtnWrapper onClick={() => setActiveModal("FileCreate")}>
               <FontAwesomeIcon icon={faPlus} />
             </AddBtnWrapper>
           </NavigationButton>

@@ -78,7 +78,11 @@ export type ServiceType = {
 export type ServiceListType = ServiceType[];
 
 export type MessageType = {
+  subject: string;
   message: string;
+  agencyId: string;
+  date: string;
+  isPrivate: boolean;
 }
 
 export type MessageListType = MessageType[];
