@@ -108,7 +108,7 @@ const DateInput: React.FC<DateInputType> = ({ setValue }) => {
       onChange={handleChange}
       value={parsedDate}
       onBlur={handleBlur}
-      placeholder="Date of Birth - ## / ## / ####"
+      placeholder="Date of Birth - MM / DD / YYYY"
     />
   );
 };
@@ -157,7 +157,7 @@ export const FormikDateInput: React.FC<FormikDateInputType> = ({
         onChange={handleChange}
         value={parsedDate}
         onBlur={handleBlur}
-        placeholder="Date of Birth - ## / ## / ####"
+        placeholder="MM / DD / YYYY"
       />
     </StyledFormikFieldWrapper>
   );

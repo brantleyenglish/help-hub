@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
 import ClientRow from "../components/clientRow";
 import DateInput from "../components/DateInput";
-import NewClientForm from "../components/NewClientForm";
+import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useClient } from "../context/ClientContext";
+import { useModal } from "../context/ModalContext";
 import UWHeader from "../images/uw_header.png";
+import CreateClientModal from "../modals/CreateClientModal";
 
 const ClientPageWrapper = styled.div``;
 
@@ -120,8 +122,36 @@ const ClientTableBody = styled.tbody`
   }
 `;
 
+const EditButton = styled.button`
+  margin: auto;
+  padding: 8px 10px;
+  background: ${theme?.colors?.blue};
+  font-size: 18px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  color: ${theme?.colors?.white};
+  cursor: pointer;
+  &:hover {
+    background: ${theme?.colors?.lightBlue};
+  }
+`;
+
+const NewClientWrapper = styled.div`
+  max-width: 800px;
+  padding: 30px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  h2 {
+    text-align: center;
+    margin-top: 0;
+  }
+`;
+
 const ClientList: React.FC<{}> = ({}) => {
   const { clients } = useClient();
+  const { setActiveModal } = useModal();
 
   const [birthDate, setBirthDate] = React.useState<string>("");
   const [firstName, setFirstName] = React.useState<string>("");
@@ -180,6 +210,15 @@ const ClientList: React.FC<{}> = ({}) => {
 
   return (
     <ClientPageWrapper>
+      <ModalWrapper modalId="ClientCreate">
+        <CreateClientModal
+          resetFilters={() => {
+            setBirthDate("");
+            setFirstName("");
+            setLastName("");
+          }}
+        />
+      </ModalWrapper>
       <ClientSearchWrapper>
         <h1>Clients</h1>
         <ClientTableWrapper>
@@ -220,28 +259,16 @@ const ClientList: React.FC<{}> = ({}) => {
               </div>
             </th>
             <th scope="col">
-              <div>
-                Date of Birth
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
+              <div>Date of Birth</div>
             </th>
             <th scope="col">
-              <div>
-                Email
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
+              <div>Email</div>
             </th>
             <th scope="col">
-              <div>
-                Phone
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
+              <div>Phone</div>
             </th>
             <th scope="col">
-              <div>
-                Address
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
+              <div>Address</div>
             </th>
           </ClientTableHeader>
           <ClientTableBody>
@@ -249,12 +276,13 @@ const ClientList: React.FC<{}> = ({}) => {
               filteredClients.map((client) => <ClientRow client={client} />)}
           </ClientTableBody>
         </ClientTable>
-
         {filteredClients && filteredClients?.length === 0 && (
-          <ClientListWrapper>
+          <NewClientWrapper>
             <h2>Can't find who you are looking for?</h2>
-            <NewClientForm />
-          </ClientListWrapper>
+            <EditButton onClick={() => setActiveModal("ClientCreate")}>
+              Create a Client
+            </EditButton>
+          </NewClientWrapper>
         )}
       </ClientListWrapper>
     </ClientPageWrapper>

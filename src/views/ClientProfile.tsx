@@ -22,8 +22,8 @@ import { useAssistance } from "../context/AssistanceContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
-import EditClientModal from "../modals/EditClientModal";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
+import EditClientModal from "../modals/EditClientModal";
 {
   /* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/
 }
@@ -260,7 +260,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                 <h3>
                   <FontAwesomeIcon icon={faMapMarkedAlt} /> County
                 </h3>
-                <p>{clientProfile?.county}</p>
+                {/* <p>{clientProfile?.county}</p> */}
               </FormRightWrapper>
             </FormContentWrapper>
           </ClientCardWrapper>

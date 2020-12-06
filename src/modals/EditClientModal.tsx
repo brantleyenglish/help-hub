@@ -43,8 +43,6 @@ const EditClientModal: React.FC<{
     zip: Yup.string(),
     gender: Yup.string(),
     ethnicity: Yup.string(),
-    county: Yup.string(),
-    additionalNotes: Yup.string(),
   });
   return (
     <Formik
@@ -58,10 +56,8 @@ const EditClientModal: React.FC<{
         city: clientProfile?.city || "",
         state: clientProfile?.state || "",
         zip: clientProfile?.zip || "",
-        gender: clientProfile?.gender || "",
-        ethnicity: clientProfile?.ethnicity || "",
-        county: clientProfile?.county || "",
-        additionalNotes: clientProfile?.additionalNotes || "",
+        gender: clientProfile?.gender || "m",
+        ethnicity: clientProfile?.ethnicity || "white",
       }}
       validationSchema={clientSchema}
       onSubmit={async (values) => {
@@ -86,14 +82,65 @@ const EditClientModal: React.FC<{
             label="Date of Birth"
           />
           <StyledFormikField name="phone" label="Phone #" />
-          <StyledFormikField name="ethnicity" label="Ethnicity" />
           <StyledFormikField name="email" label="Email" />
-          <StyledFormikField name="gender" label="Gender" />
           <StyledFormikField name="streetAddress" label="Street Address" />
           <StyledFormikField name="state" label="State" />
-          <StyledFormikField name="county" label="County" />
           <StyledFormikField name="city" label="City" />
           <StyledFormikField name="zip" label="Zip Code" />
+          <StyledFormikField
+            name="gender"
+            label="Gender"
+            type="select"
+            options={[
+              {
+                value: "m",
+                label: "Male",
+              },
+              {
+                value: "f",
+                label: "Female",
+              },
+              {
+                value: "other",
+                label: "Other / N/A",
+              },
+            ]}
+          />
+          <StyledFormikField
+            name="ethnicity"
+            label="Ethnicity"
+            type="select"
+            options={[
+              {
+                value: "white",
+                label: "White",
+              },
+              {
+                value: "black",
+                label: "Black / African American",
+              },
+              {
+                value: "hispanic",
+                label: "Hispanic / Latino",
+              },
+              {
+                value: "asian",
+                label: "Asian American",
+              },
+              {
+                value: "native",
+                label: "American Indian / Alaska Native",
+              },
+              {
+                value: "pacific",
+                label: "Native Hawaiian / Pacific Islander",
+              },
+              {
+                value: "other",
+                label: "Other / N/A",
+              },
+            ]}
+          />
           <StyledButton type="submit">Submit</StyledButton>
         </Form>
       )}
