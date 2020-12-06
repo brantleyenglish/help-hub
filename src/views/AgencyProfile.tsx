@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
+import AddBulletinModal from "src/modals/AddBulletinModal";
 import styled from "styled-components";
 import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
@@ -22,6 +23,8 @@ import { useModal } from "../context/ModalContext";
 import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
 import EditAgencyModal from "../modals/EditAgencyModal";
+import AddServiceModal from "../modals/AddServiceModal";
+
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -270,31 +273,44 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
       <ContentWrapper>
         {agency?.id === agencyId && (
           <NavigationWrapper>
+
+            {/* BULLETIN BOARD */}
             <NavigationButton
               isActive={activeTab === "bulletinboard"}
               onClick={() => setActiveTab("bulletinboard")}
             >
+              <ModalWrapper modalId="MessageCreate">
+                <AddBulletinModal />
+              </ModalWrapper>
               <p>BULLETIN BOARD</p>
               <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
                 <FontAwesomeIcon icon={faPlus} />
               </AddBtnWrapper>
             </NavigationButton>
+
+            {/* SERVICES */}
             <NavigationButton
               isActive={activeTab === "services"}
               onClick={() => setActiveTab("services")}
             >
+              <ModalWrapper modalId="ServiceCreate">
+                <AddServiceModal />
+              </ModalWrapper>
               <p>SERVICES</p>
               <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
                 <FontAwesomeIcon icon={faPlus} />
               </AddBtnWrapper>
             </NavigationButton>
 
+            {/* TIMELINE */}
             <NavigationButton
               isActive={activeTab === "timeline"}
               onClick={() => setActiveTab("timeline")}
             >
               <p>TIMELINE</p>
             </NavigationButton>
+
+            {/* REPORTS */}
             <NavigationButton
               isActive={activeTab === "reports"}
               onClick={() => setActiveTab("reports")}
