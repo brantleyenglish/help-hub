@@ -22,6 +22,7 @@ import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
 import EditClientModal from "../modals/EditClientModal";
+import AddAssistanceModal from "../modals/AddAssistanceModal";
 {
   /* TO DO: MAKE THIS PAGE ONLY ACCESSIBLE FOR LOGGED IN PEOPLE*/
 }
@@ -266,8 +267,11 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             isActive={activeTab === "assistances"}
             onClick={() => setActiveTab("assistances")}
           >
+            <ModalWrapper modalId="AssistanceCreate">
+              <AddAssistanceModal />
+            </ModalWrapper>
             <p>ASSISTANCES</p>
-            <AddBtnWrapper>
+            <AddBtnWrapper onClick={() => setActiveModal("AssistanceCreate")}>
               <FontAwesomeIcon icon={faPlus} />
             </AddBtnWrapper>
           </NavigationButton>
