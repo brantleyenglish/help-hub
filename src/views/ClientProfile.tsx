@@ -18,6 +18,7 @@ import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
+import { useAssistance } from "../context/AssistanceContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
@@ -176,6 +177,7 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { client, updateClientInfo } = useClient();
+  const { setAssistanceClientId } = useAssistance();
 
   const [clientProfile, setClientProfile] = React.useState<ClientType | null>(
     null
@@ -188,6 +190,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   );
 
   const getClientProfile = async () => {
+    if (setAssistanceClientId) {
+      setAssistanceClientId(clientId);
+    }
     const clientData = await getClient({ clientId });
     if (clientData && clientData !== "DoesNotExist") {
       setClientProfile(clientData);

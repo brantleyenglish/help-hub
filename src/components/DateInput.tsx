@@ -6,7 +6,7 @@ const DateInputField = styled.input`
   padding: 5px;
   font-size: 12px;
   flex: 1;
-  margin: 0px 15px;
+  margin: 0px 0px 0px 10px;
 `;
 
 const StyledFormikFieldWrapper = styled.div`

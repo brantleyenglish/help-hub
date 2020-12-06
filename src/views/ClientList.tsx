@@ -1,5 +1,3 @@
-import { faArrowDown, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
@@ -32,22 +30,22 @@ const SearchBar = styled.input`
   padding: 5px;
   font-size: 12px;
 `;
-const AdvancedSearchBar = styled.input`
+const AdvancedSearchBar = styled.input<{
+  marginLeft?: string;
+  marginRight?: string;
+}>`
   padding: 5px;
   font-size: 12px;
   flex: 1;
   margin: 0px 10px;
-`;
-const SearchOptions = styled.button`
-  /* outline: none;
-  border: none;
-  background-color: #0e4680; */
+  ${(p) => p?.marginLeft && `margin-left: ${p?.marginLeft}`};
+  ${(p) => p?.marginRight && `margin-right: ${p?.marginRight}`}
 `;
 const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
-  margin-right: 30px;
   display: flex;
+  justify-content: space-between;
   > svg {
     position: absolute;
     right: 10px;
@@ -76,6 +74,8 @@ const ClientTable = styled.table`
   border-collapse: collapse;
   flex-direction: column;
   width: 100%;
+  max-width: 800px;
+  margin: auto;
 `;
 const ClientTableHeader = styled.tr`
   justify-content: space-around;
@@ -100,20 +100,22 @@ const ClientTableBody = styled.tbody`
   border: 2px solid ${theme.colors.gray};
   border-top: none;
   border-bottom: none;
-  a {
+  td {
     color: ${theme.colors.gray};
   }
   &:last-child {
     border: 2px solid ${theme.colors.gray};
     border-top: none;
   }
-  &:nth-child(even) {
-    background: ${theme.colors.grayLight};
-  }
-  tr:hover {
-    background: ${theme.colors.yellow};
-    & a {
-      color: ${theme.colors.white};
+  tr {
+    background: ${theme.colors.white};
+    &:nth-child(even) {
+      background: ${theme.colors.grayLight};
+    }
+    &:hover {
+      td {
+        color: ${theme.colors.lightBlue};
+      }
     }
   }
 `;
@@ -121,16 +123,9 @@ const ClientTableBody = styled.tbody`
 const ClientList: React.FC<{}> = ({}) => {
   const { clients } = useClient();
 
-  const [search, setSearch] = React.useState<string>("");
   const [birthDate, setBirthDate] = React.useState<string>("");
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
-
-  console.log({ birthDate, firstName, lastName });
-
-  const [searchState, setSearchState] = React.useState<"simple" | "advanced">(
-    "advanced"
-  );
 
   const filterBirthDate = (client: ClientType) => {
     if (client?.dob) {
@@ -168,38 +163,13 @@ const ClientList: React.FC<{}> = ({}) => {
 
   const filteredClients = React.useMemo<ClientListType>(() => {
     if (clients) {
-      if (searchState === "simple") {
-        // If no search return all
-        if (search?.length === 0) {
-          return clients;
-        }
-        // If search filter clients
-        return clients?.filter(
-          (client: ClientType) =>
-            (client?.clientFirstName &&
-              client?.clientFirstName?.toLowerCase()?.includes(search)) ||
-            (client?.clientLastName &&
-              client?.clientLastName?.toLowerCase()?.includes(search)) ||
-            (client?.dob && client?.dob?.toLowerCase()?.includes(search)) ||
-            (client?.clientFirstName &&
-              client?.clientLastName &&
-              `${client?.clientFirstName} ${client?.clientLastName} `
-                ?.toLowerCase()
-                ?.includes(search))
-        );
-      } else if (searchState === "advanced") {
-        return clients
-          ?.filter(filterBirthDate)
-          ?.filter(filterFirstName)
-          ?.filter(filterLastName);
-      }
+      return clients
+        ?.filter(filterBirthDate)
+        ?.filter(filterFirstName)
+        ?.filter(filterLastName);
     }
     return [];
-  }, [search, clients, searchState, birthDate, firstName, lastName]);
-
-  const handleSearchUpdate = (e: React.BaseSyntheticEvent) => {
-    setSearch(e.target.value?.toLowerCase());
-  };
+  }, [clients, birthDate, firstName, lastName]);
 
   const handleFirstNameUpdate = (e: React.BaseSyntheticEvent) => {
     setFirstName(e.target.value?.toLowerCase());
@@ -208,47 +178,26 @@ const ClientList: React.FC<{}> = ({}) => {
     setLastName(e.target.value?.toLowerCase());
   };
 
-  const toggleSearchState = () => {
-    if (searchState === "simple") {
-      setSearchState("advanced");
-    } else if (searchState === "advanced") {
-      setSearchState("simple");
-    }
-  };
-
   return (
     <ClientPageWrapper>
       <ClientSearchWrapper>
         <h1>Clients</h1>
         <ClientTableWrapper>
           <SearchWrapper>
-            {searchState === "simple" && (
-              <SearchInputWrapper>
-                <SearchBar onChange={handleSearchUpdate} type="search" />
-                {/* <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} /> */}
-              </SearchInputWrapper>
-            )}
-            {searchState === "advanced" && (
-              <SearchInputWrapper>
-                <AdvancedSearchBar
-                  onChange={handleFirstNameUpdate}
-                  type="search"
-                  placeholder="First Name"
-                />
-                <AdvancedSearchBar
-                  onChange={handleLastNamehUpdate}
-                  type="search"
-                  placeholder="Last Name"
-                />
-                <DateInput setValue={setBirthDate} />
-              </SearchInputWrapper>
-            )}
-            <SearchOptions onClick={toggleSearchState}>
-              <FontAwesomeIcon
-                icon={faEllipsisH}
-                style={{ color: "#0e4680" }}
+            <SearchInputWrapper>
+              <AdvancedSearchBar
+                onChange={handleFirstNameUpdate}
+                type="search"
+                placeholder="First Name"
+                marginLeft="0px"
               />
-            </SearchOptions>
+              <AdvancedSearchBar
+                onChange={handleLastNamehUpdate}
+                type="search"
+                placeholder="Last Name"
+              />
+              <DateInput setValue={setBirthDate} />
+            </SearchInputWrapper>
           </SearchWrapper>
         </ClientTableWrapper>
       </ClientSearchWrapper>
@@ -260,33 +209,38 @@ const ClientList: React.FC<{}> = ({}) => {
           <ClientTableHeader>
             <th scope="col">
               <div>
-                First Name <FontAwesomeIcon icon={faArrowDown} />
+                First Name
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
             <th scope="col">
               <div>
-                Last Name <FontAwesomeIcon icon={faArrowDown} />
+                Last Name
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
             <th scope="col">
               <div>
-                Date of Birth <FontAwesomeIcon icon={faArrowDown} />
+                Date of Birth
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
             <th scope="col">
               <div>
-                Email <FontAwesomeIcon icon={faArrowDown} />
+                Email
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
             <th scope="col">
               <div>
-                Phone <FontAwesomeIcon icon={faArrowDown} />
+                Phone
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
             <th scope="col">
               <div>
                 Address
-                <FontAwesomeIcon icon={faArrowDown} />
+                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
           </ClientTableHeader>

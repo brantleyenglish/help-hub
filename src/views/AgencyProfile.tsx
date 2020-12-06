@@ -22,9 +22,8 @@ import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
-import EditAgencyModal from "../modals/EditAgencyModal";
 import AddServiceModal from "../modals/AddServiceModal";
-
+import EditAgencyModal from "../modals/EditAgencyModal";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -180,9 +179,10 @@ type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId } = match.params;
   // TO DO: Just show Agency services
+
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, updateAgencyInfo, agencyMessages } = useAgency();
-  const { assistanceData } = useAssistance();
+  const { assistanceData, setAssistanceAgencyId } = useAssistance();
 
   const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
     null
@@ -195,6 +195,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { setActiveModal } = useModal();
 
   const getAgencyProfile = async () => {
+    if (setAssistanceAgencyId) {
+      setAssistanceAgencyId(agencyId);
+    }
     const agencyData = await getAgency({ agencyId });
     if (agencyData && agencyData !== "DoesNotExist" && agencyData !== "Error") {
       setAgencyProfile(agencyData);
@@ -273,7 +276,6 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
       <ContentWrapper>
         {agency?.id === agencyId && (
           <NavigationWrapper>
-
             {/* BULLETIN BOARD */}
             <NavigationButton
               isActive={activeTab === "bulletinboard"}
