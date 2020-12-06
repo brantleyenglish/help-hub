@@ -34,6 +34,7 @@ const ClientProfileWrapper = styled.div`
 const ClientBackground = styled.div`
   width: 100%;
   background: ${theme.colors.blue};
+  padding: 0;
 `;
 const ClientCardWrapper = styled.div`
   max-width: 650px;
@@ -59,41 +60,18 @@ const EditButton = styled.button`
   align-items: center;
   position: absolute;
   cursor: pointer;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   &:hover {
     background: ${theme?.colors?.white};
     color: ${theme.colors.blue};
   }
 `;
-const StyledFormikFieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  /* width: 250px; */
-  margin: 10px 10px;
-  color: ${theme.colors.gray};
-  label {
-    color: ${theme.colors.lightBlue};
-  }
-  input {
-    width: 100%;
-    border-radius: 4px;
-    padding: 5px;
-    border: none;
-    margin-top: 5px;
-  }
-`;
-const FormFieldsWrapper = styled.div`
+
+const FormContentWrapper = styled.div`
   width: 100%;
   flex-direction: row;
-  flex-wrap: wrap;
   display: flex;
-  justify-content: space-between;
-`;
-const FormContentWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
   align-items: baseline;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -167,18 +145,7 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
-const StyledFormikButton = styled.button`
-  color: ${theme.colors.white};
-  background-color: ${theme.colors.lightBlue};
-  border: none;
-  padding: 10px;
-  border-radius: 50px;
-  font-weight: bold;
-  &:hover {
-    color: ${theme.colors.lightBlue};
-    background-color: ${theme.colors.white};
-  }
-`;
+
 const AddBtnWrapper = styled.button`
   background-color: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -215,8 +182,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   );
 
   const { setActiveModal } = useModal();
-
-  const [editMode, setEditMode] = React.useState<boolean>(false);
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     "assistances"

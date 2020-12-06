@@ -20,6 +20,7 @@ import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import { getAgency } from "../firebase/agencies";
+import HHPlaceholder from "../images/helphubPlaceholder.png";
 import EditAgencyModal from "../modals/EditAgencyModal";
 
 const AgencyProfileWrapper = styled.div`
@@ -33,7 +34,7 @@ const AgencyBackground = styled.div`
   padding: 0;
 `;
 const AgencyCardWrapper = styled.div`
-  max-width: 900px;
+  max-width: 650px;
   // background: ${theme.colors.lightBlue};
   color: ${theme.colors.white};
   flex-direction: row;
@@ -52,11 +53,12 @@ const EditButton = styled.button`
   width: 25px;
   height: 25px;
   display: flex;
+  cursor: pointer;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   &:hover {
     background: ${theme?.colors?.white};
     color: ${theme.colors.blue};
@@ -101,13 +103,12 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  font-size: 25px;
   img {
     object-fit: cover;
     border-radius: 999px;
-    width: 100px;
-    height: 100px;
-    margin-right: 50px;
+    width: 70px;
+    height: 70px;
+    margin-right: 25px;
   }
 `;
 const NavigationWrapper = styled.div`
@@ -152,7 +153,6 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
-
 const AddBtnWrapper = styled.button`
   background-color: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -214,7 +214,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         <AgencyBackground>
           <AgencyCardWrapper>
             <TitleWrapper>
-              <img src="/images/helphub-pattern-red.png" />
+              <img src={HHPlaceholder} />
               <h1>{agencyProfile?.name}</h1>
 
               {agency?.id === agencyId && (
