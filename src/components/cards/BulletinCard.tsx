@@ -8,6 +8,9 @@ import {
     faTrash,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { usePublicData } from "../../context/PublicContext";
+import { useAgency } from "../../context/AgencyContext";
+
 
 const BulletinCardWrapper = styled.div`
 display: flex;
@@ -87,7 +90,7 @@ cursor: pointer;
 };
 `;
 
-type BulletinType = {
+type MessageType = {
     subject: String;
     message: String;
     agencyId: String;
@@ -95,13 +98,15 @@ type BulletinType = {
     isPrivate: String;
 };
 
-type BulletinCardType = {
-    bulletin?: BulletinType;
+type MessageCardType = {
+    message?: MessageType;
 };
 
-const BulletinCard = ({ bulletin }: BulletinCardType) => {
+const BulletinCard = ({ message }: MessageCardType) => {
 
     // const [editMode, setEditMode] = React.useState<boolean>(false);
+    const { allServices, allPublicMessages } = usePublicData();
+    const { agency, updateAgencyInfo, agencyMessages } = useAgency();
 
     return (
         <BulletinCardWrapper>
@@ -110,7 +115,7 @@ const BulletinCard = ({ bulletin }: BulletinCardType) => {
             </BulletinCardIconWrapper>
             <BulletinCardContentWrapper>
                 <BulletinHeaderWrapper>
-                    <h1>{bulletin?.subject}</h1>
+                    <h1>{message?.subject}</h1>
                     <h2>Created by: [Agency Name]</h2>
                     <EditButton>
                         <FontAwesomeIcon icon={faPencil} />
@@ -119,8 +124,8 @@ const BulletinCard = ({ bulletin }: BulletinCardType) => {
                         <FontAwesomeIcon icon={faTrash} />
                     </DeleteButton>
                 </BulletinHeaderWrapper>
-                <p>{bulletin?.message}</p>
-                <p>{bulletin?.date}</p>
+                <p>{message?.message}</p>
+                <p>{message?.date}</p>
             </BulletinCardContentWrapper>
         </BulletinCardWrapper>
     );

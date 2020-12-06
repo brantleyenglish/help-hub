@@ -331,20 +331,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "bulletinboard" && (
           <>
             {agencyMessages?.map((message: any) => (
-              <>
-                <MessageCard key={`${message?.id}-1`}>
-                  {message?.message}
-                </MessageCard>
-                <BulletinCard></BulletinCard>
-              </>
+              <BulletinCard message={message} key={`${message?.id}-1`} />
             ))}
             {allPublicMessages?.map((message: any) => (
-              <>
-                <MessageCard key={`${message?.id} - 2`}>
-                  {message?.message}
-                </MessageCard>
-                <BulletinCard></BulletinCard>
-              </>
+              <BulletinCard message={message} key={`${message?.id} - 2`} />
             ))}
           </>
         )}

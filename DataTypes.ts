@@ -67,7 +67,7 @@ export type ServiceType = {
 
 export type ServiceListType = ServiceType[];
 
-export type BulletinType = {
+export type MessageType = {
   subject: string;
   message: string;
   agencyId: string;
@@ -75,7 +75,7 @@ export type BulletinType = {
   isPrivate: boolean;
 }
 
-export type BulletinListType = BulletinType[];
+export type MessageListType = MessageType[];
 
 export type AssistanceType = SingleAssistanceType[];
 
