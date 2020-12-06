@@ -1,11 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import { theme } from "../components/Theme";
 
 const DateInputField = styled.input`
   padding: 5px;
   font-size: 12px;
   flex: 1;
   margin: 0px 15px;
+`;
+
+const StyledFormikFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px;
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+    text-align: left;
+  }
+  input,
+  textarea {
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+    background: ${theme.colors.grayLight};
+  }
 `;
 
 const checkValue = (str: string, max: number) => {
@@ -100,13 +120,17 @@ type FormikDateInputType = {
     shouldValidate?: boolean | undefined
   ) => void;
   fieldName: string;
+  label: string;
+  intialValue?: string;
 };
 
 export const FormikDateInput: React.FC<FormikDateInputType> = ({
   setFieldValue,
   fieldName,
+  label,
+  intialValue = "",
 }) => {
-  const [parsedDate, setParsedDate] = React.useState<string>("");
+  const [parsedDate, setParsedDate] = React.useState<string>(intialValue);
 
   React.useEffect(() => {
     setFieldValue(fieldName, parsedDate, true);
@@ -127,12 +151,15 @@ export const FormikDateInput: React.FC<FormikDateInputType> = ({
   };
 
   return (
-    <DateInputField
-      onChange={handleChange}
-      value={parsedDate}
-      onBlur={handleBlur}
-      placeholder="Date of Birth - ## / ## / ####"
-    />
+    <StyledFormikFieldWrapper>
+      <label htmlFor={fieldName}>{label}</label>
+      <input
+        onChange={handleChange}
+        value={parsedDate}
+        onBlur={handleBlur}
+        placeholder="Date of Birth - ## / ## / ####"
+      />
+    </StyledFormikFieldWrapper>
   );
 };
 

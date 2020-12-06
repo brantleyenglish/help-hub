@@ -59,7 +59,12 @@ const NewClientForm = () => {
           <Field name="lastName" type="lastName" />
 
           <label htmlFor="dob">Date of Birth</label>
-          <FormikDateInput setFieldValue={setFieldValue} fieldName="dob" />
+          <FormikDateInput
+            fieldName="dob"
+            setFieldValue={setFieldValue}
+            intialValue={values?.dob}
+            label="Date of Birth"
+          />
           <label htmlFor="phone">Phone #</label>
           <Field name="phone" type="phone" />
 
