@@ -15,6 +15,8 @@ import {
     ServiceType,
 } from "../../../DataTypes";
 
+
+
 const TimelineAssistanceCardWrapper = styled.div`
 display: flex;
 `;
@@ -70,7 +72,7 @@ right: 0;
 border-radius: 5px;
 cursor: pointer;
 &:hover {
-    background: ${theme?.colors?.red};
+    background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
 };
 `;
@@ -108,12 +110,6 @@ const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({ assistance }
                 <TimelineAssistanceHeaderWrapper>
                     <h1>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName} received a service.</h1>
                     <h2>Service Provided: {assistance?.service?.name}</h2>
-                    <EditButton>
-                        <FontAwesomeIcon icon={faPencil} />
-                    </EditButton>
-                    <DeleteButton>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </DeleteButton>
                 </TimelineAssistanceHeaderWrapper>
                 {assistance?.notes && (
                     <p>Additional Notes: {assistance?.notes}</p>

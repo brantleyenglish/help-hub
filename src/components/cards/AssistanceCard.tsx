@@ -4,6 +4,11 @@ import React from "react";
 import styled from "styled-components";
 import { AssistanceDataType } from "../../../DataTypes";
 import { theme } from "../Theme";
+import ModalWrapper from "../ModalWrapper";
+import { useModal } from "../../context/ModalContext";
+import EditAssistanceModal from "../../modals/EditAssistanceModal";
+import DeleteAssistanceModal from "../../modals/DeleteAssistanceModal";
+
 
 const AssistanceCardWrapper = styled.div`
   display: flex;
@@ -59,7 +64,7 @@ const EditButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: ${theme?.colors?.red};
+    background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
   }
 `;
@@ -88,7 +93,7 @@ type AssistanceCard = {
 };
 
 const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
-  // const [editMode, setEditMode] = React.useState<boolean>(false);
+  const { setActiveModal } = useModal();
 
   return (
     <AssistanceCardWrapper>
@@ -99,12 +104,20 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
         <AssistanceHeaderWrapper>
           <h1>{assistance?.service?.name}</h1>
           <h2>Provided by: {assistance?.agency?.name}</h2>
-
-          <EditButton>
+          <ModalWrapper modalId="AssistanceEdit">
+            <EditAssistanceModal
+            // message={message} 
+            />
+          </ModalWrapper>
+          <EditButton onClick={() => setActiveModal("AssistanceEdit")}>
             <FontAwesomeIcon icon={faPencil} />
           </EditButton>
-
-          <DeleteButton>
+          <ModalWrapper modalId="AssistanceDelete">
+            <DeleteAssistanceModal
+            // message={message} 
+            />
+          </ModalWrapper>
+          <DeleteButton onClick={() => setActiveModal("AssistanceDelete")}>
             <FontAwesomeIcon icon={faTrash} />
           </DeleteButton>
         </AssistanceHeaderWrapper>
