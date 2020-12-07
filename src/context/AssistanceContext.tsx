@@ -129,6 +129,7 @@ export const AssistanceProvider: React.FC<any> = (props) => {
     assistanceData,
     setAssistanceClientId,
     setAssistanceAgencyId,
+    updateAssistanceByClient,
   };
 
   return <AssistanceContext.Provider value={value} {...props} />;

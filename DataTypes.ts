@@ -113,4 +113,5 @@ export type AssistanceContextType = {
   assistanceData: AssistanceDataArrayType;
   setAssistanceClientId: (id: string) => Promise<void>;
   setAssistanceAgencyId: (id: string) => Promise<void>;
+  updateAssistanceByClient: () => Promise<void>;
 };

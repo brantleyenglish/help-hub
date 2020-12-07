@@ -50,7 +50,7 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
   const { setActiveModal } = useModal();
   const { allServices } = usePublicData();
   const { user } = useAuth();
-  const { setAssistanceClientId } = useAssistance();
+  const { updateAssistanceByClient } = useAssistance();
   const assistanceSchema = Yup.object().shape({
     notes: Yup.string(),
     serviceId: Yup.string(),
@@ -85,8 +85,9 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
             date: `${month} / ${date} / ${newDate?.getFullYear()}`,
           },
         });
-        if (setAssistanceClientId && client?.id) {
-          await setAssistanceClientId(client?.id);
+
+        if (updateAssistanceByClient) {
+          await updateAssistanceByClient();
         }
         setActiveModal("");
       }}
