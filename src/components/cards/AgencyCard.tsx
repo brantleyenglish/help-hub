@@ -1,13 +1,15 @@
-import {
-  faGlobe,
-  faHeartbeat,
-  faPhone,
-  faTshirt,
-  faUtensils,
-} from "@fortawesome/free-solid-svg-icons";
+import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
+import {
+  AgencyType,
+  CategoryType,
+  ServiceListType,
+  ServiceType,
+} from "../../../DataTypes";
+import { usePublicData } from "../../context/PublicContext";
+import { getServicesByAgencyId } from "../../firebase/services";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
 
@@ -22,15 +24,15 @@ const AgencyCardWrapper = styled.div`
   margin: 0px 25px 50px 25px;
 `;
 const AgencyCardContentWrapper = styled.div`
-background: ${theme.colors.grayLight};
-margin: 0px 0px 10px 0px;
-padding: 30px;
-width: 250px;
-min-height: 275px;
-border-radius: 10px 10px 0px 0px;
-p{
-  color: ${theme.colors.gray};
-};
+  background: ${theme.colors.grayLight};
+  margin: 0px 0px 10px 0px;
+  padding: 30px;
+  width: 250px;
+  min-height: 275px;
+  border-radius: 10px 10px 0px 0px;
+  p {
+    color: ${theme.colors.gray};
+  }
 `;
 const AgencyCardHeaderWrapper = styled.div`
   display: flex;
@@ -58,43 +60,58 @@ const CategoryTagsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding 30px;
+  padding: 30px;
   background: ${theme.colors.grayLight};
   color: ${theme.colors.gray};
   font-size: 20px;
   border-radius: 0px 0px 10px 10px;
 `;
 const IconWrapper = styled.div`
-display: flex;
-color: ${theme.colors.white};
-background-color: ${theme.colors.blue};
-font-size: 20px;
-padding: 10px;
-width: 20px;
-height: 20px;
-border-radius: 10px;
-align-items: center;
-justify-content: center;
+  display: flex;
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.blue};
+  font-size: 20px;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
 `;
-
-type AgencyType = {
-  name: String;
-  id: String;
-  city: String;
-  contactFirstName: String;
-  contactLastName: String;
-  description: String;
-  phone: String;
-  streetAddress: String;
-  website: String;
-  zip: String;
-};
 
 type AgencyCardType = {
   agency?: AgencyType;
 };
 
 const AgencyCard = ({ agency }: AgencyCardType) => {
+  const [services, setServices] = React.useState<ServiceListType>([]);
+  const { categories } = usePublicData();
+
+  React.useEffect(() => {
+    getServices();
+  }, []);
+
+  const getServices = async () => {
+    if (agency?.id) {
+      const serviceData = await getServicesByAgencyId({ agencyId: agency?.id });
+      if (serviceData !== "Error") {
+        setServices(serviceData);
+      }
+    }
+  };
+
+  const agencyCategories = React.useMemo(() => {
+    return services
+      ?.reduce((accu: string[], service: ServiceType) => {
+        return [...accu, ...service?.categories];
+      }, [])
+      ?.filter(
+        (value: string, index: number, self: string[]) =>
+          self.indexOf(value) === index
+      );
+  }, [services]);
+
+  // const serives = getServicesByAgencyId(agencyId: agency?.id);
   return (
     <AgencyCardWrapper>
       <AgencyCardContentWrapper>
@@ -116,10 +133,22 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
         </p>
       </AgencyCardContentWrapper>
       <CategoryTagsWrapper>
-        {/* {categories &&
-          categories.filter(category => service?.categories?.includes(category?.name)).map((categoryData: any) => (
-            <IconWrapper><StyledSVG src={categoryData?.icon} alt={categoryData?.label} /></IconWrapper>
-          ))} */}
+        {agencyCategories.map((categoryId: string) => (
+          <IconWrapper>
+            <StyledSVG
+              src={
+                categories?.find(
+                  (category: CategoryType) => category?.name === categoryId
+                )?.icon
+              }
+              alt={
+                categories?.find(
+                  (category: CategoryType) => category?.name === categoryId
+                )?.icon
+              }
+            />
+          </IconWrapper>
+        ))}
       </CategoryTagsWrapper>
     </AgencyCardWrapper>
   );
