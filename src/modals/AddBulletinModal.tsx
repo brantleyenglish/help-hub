@@ -27,7 +27,6 @@ const StyledFormikFieldWrapper = styled.div`
     background: ${theme.colors.grayLight};
   }
 `;
-
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -39,6 +38,9 @@ const StyledButton = styled.button`
     background: ${theme.colors.lightBlue};
     cursor: pointer;
   }
+`;
+const StyledHeader = styled.div`
+color: ${theme.colors.blue};
 `;
 
 const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
@@ -56,51 +58,54 @@ const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
   });
 
   return (
-    <Formik
-      initialValues={{
-        subject: "",
-        message: "",
-      }}
-      validationSchema={bulletinSchema}
-      onSubmit={async (values) => {
-        const newDate = new Date();
-        const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
-        const date = ("0" + newDate?.getDate()).slice(-2);
-        await createMessage({
-          data: {
-            ...values,
-            isPrivate,
-            agencyId,
-            date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-          },
-        });
-        if (refreshMessages) {
-          await refreshMessages();
-        }
-        setActiveModal("");
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="subject" label="Subject Line" />
-          <StyledFormikField name="message" label="Message" type="textarea" />
-          <StyledFormikFieldWrapper>
-            <label htmlFor="isPrivate">
-              Make this bulletin private (only those with access to your agency
-              can view this message).
+    <>
+      <StyledHeader><h2>Add Bulletin Board Message</h2></StyledHeader>
+      <Formik
+        initialValues={{
+          subject: "",
+          message: "",
+        }}
+        validationSchema={bulletinSchema}
+        onSubmit={async (values) => {
+          const newDate = new Date();
+          const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
+          const date = ("0" + newDate?.getDate()).slice(-2);
+          await createMessage({
+            data: {
+              ...values,
+              isPrivate,
+              agencyId,
+              date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+            },
+          });
+          if (refreshMessages) {
+            await refreshMessages();
+          }
+          setActiveModal("");
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="subject" label="Subject Line" />
+            <StyledFormikField name="message" label="Message" type="textarea" />
+            <StyledFormikFieldWrapper>
+              <label htmlFor="isPrivate">
+                Make this bulletin private (only those with access to your agency
+                can view this message).
             </label>
-            <input
-              type="checkbox"
-              checked={isPrivate}
-              onChange={() => toggleIsPrivate()}
-            />
-          </StyledFormikFieldWrapper>
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => toggleIsPrivate()}
+              />
+            </StyledFormikFieldWrapper>
 
-          {/* <p>Make this bulletin private (only those with access to your agency can view this message).</p> */}
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+            {/* <p>Make this bulletin private (only those with access to your agency can view this message).</p> */}
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 export default AddBulletinModal;

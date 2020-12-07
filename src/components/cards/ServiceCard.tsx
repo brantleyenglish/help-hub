@@ -14,6 +14,10 @@ import React from "react";
 import styled from "styled-components";
 import { usePublicData } from "../../context/PublicContext";
 import { theme } from "../Theme";
+import { useModal } from "../../context/ModalContext";
+import ModalWrapper from "../ModalWrapper";
+import EditServiceModal from "../../modals/EditServiceModal";
+import DeleteServiceModal from "../../modals/DeleteServiceModal";
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -138,17 +142,28 @@ type ServiceCardType = {
 
 const ServiceCard = ({ service }: ServiceCardType) => {
   const { categories } = usePublicData();
+  const { setActiveModal } = useModal();
+
   return (
     <>
       <ServiceCardWrapper>
         <ServiceCardContentWrapper>
 
           <ServiceCardHeaderWrapper>
-            <EditButton>
+            <ModalWrapper modalId="ServiceEdit">
+              <EditServiceModal
+              // service={service} 
+              />
+            </ModalWrapper>
+            <EditButton onClick={() => setActiveModal("ServiceEdit")}>
               <FontAwesomeIcon icon={faPencil} />
             </EditButton>
-
-            <DeleteButton>
+            <ModalWrapper modalId="ServiceDelete">
+              <DeleteServiceModal
+              // service={service} 
+              />
+            </ModalWrapper>
+            <DeleteButton onClick={() => setActiveModal("ServiceDelete")}>
               <FontAwesomeIcon icon={faTrash} />
             </DeleteButton>
             <h1>{service?.name}</h1>

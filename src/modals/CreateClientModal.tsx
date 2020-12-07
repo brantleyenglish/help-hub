@@ -20,6 +20,9 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+color: ${theme.colors.blue};
+`;
 
 const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
   resetFilters,
@@ -72,7 +75,7 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <h1>Create Client</h1>
+          <StyledHeader><h1>Create Client</h1></StyledHeader>
           <StyledFormikField name="clientFirstName" label="Client First Name" />
           <StyledFormikField name="clientLastName" label="Client Last Name" />
           <FormikDateInput

@@ -107,7 +107,6 @@ type MessageCardType = {
 };
 
 const BulletinCard = ({ message }: MessageCardType) => {
-  // const [editMode, setEditMode] = React.useState<boolean>(false);
   const { allAgencies } = usePublicData();
 
   const { allServices, allPublicMessages } = usePublicData();

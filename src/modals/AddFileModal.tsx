@@ -22,6 +22,9 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+  color: ${theme.colors.blue};
+`;
 
 const StyledFormikFieldWrapper = styled.div`
   display: flex;

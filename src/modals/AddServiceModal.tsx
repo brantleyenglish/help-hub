@@ -21,6 +21,9 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+color: ${theme.colors.blue};
+`;
 
 const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
   const { setActiveModal } = useModal();
@@ -42,55 +45,58 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
   });
 
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        description: "",
-        contactFirstName: "",
-        contactLastName: "",
-        phone: "",
-        email: "",
-        streetAddress: "",
-        city: "",
-        state: "",
-        zip: "",
-      }}
-      validationSchema={serviceSchema}
-      onSubmit={async (values) => {
-        await createService({ data: { ...values, agencyId, categories } });
-        if (refreshServices) {
-          await refreshServices();
-        }
-        setActiveModal("");
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="name" label="Name of Service" />
-          <StyledFormikField
-            name="description"
-            label="Description of Servivce"
-            type="textarea"
-          />
-          <StyledFormikField
-            name="contactFirstName"
-            label="First Name of Contact for this Service"
-          />
-          <StyledFormikField
-            name="contactLastName"
-            label="Last Name of Contact for this Service"
-          />
-          <StyledFormikField name="phone" label="Phone Number" />
-          <StyledFormikField name="email" label="Email" />
-          <StyledFormikField name="streetAddress" label="Street Address" />
-          <StyledFormikField name="city" label="City" />
-          <StyledFormikField name="state" label="State" />
-          <StyledFormikField name="zip" label="Zip Code" />
-          <CategoryDropdown setCategories={setCategories} />
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <StyledHeader><h2>Add a Service</h2></StyledHeader>
+      <Formik
+        initialValues={{
+          name: "",
+          description: "",
+          contactFirstName: "",
+          contactLastName: "",
+          phone: "",
+          email: "",
+          streetAddress: "",
+          city: "",
+          state: "",
+          zip: "",
+        }}
+        validationSchema={serviceSchema}
+        onSubmit={async (values) => {
+          await createService({ data: { ...values, agencyId, categories } });
+          if (refreshServices) {
+            await refreshServices();
+          }
+          setActiveModal("");
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="name" label="Name of Service" />
+            <StyledFormikField
+              name="description"
+              label="Description of Servivce"
+              type="textarea"
+            />
+            <StyledFormikField
+              name="contactFirstName"
+              label="First Name of Contact for this Service"
+            />
+            <StyledFormikField
+              name="contactLastName"
+              label="Last Name of Contact for this Service"
+            />
+            <StyledFormikField name="phone" label="Phone Number" />
+            <StyledFormikField name="email" label="Email" />
+            <StyledFormikField name="streetAddress" label="Street Address" />
+            <StyledFormikField name="city" label="City" />
+            <StyledFormikField name="state" label="State" />
+            <StyledFormikField name="zip" label="Zip Code" />
+            <CategoryDropdown setCategories={setCategories} />
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 export default AddServiceModal;
