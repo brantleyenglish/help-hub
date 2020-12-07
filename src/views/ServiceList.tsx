@@ -17,6 +17,12 @@ const ServiceListWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  a:hover{
+    div>div{
+      background:  ${theme.colors.grayHighlight};
+    cursor:pointer;
+  }
+  }
 `;
 const ServiceSearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;
