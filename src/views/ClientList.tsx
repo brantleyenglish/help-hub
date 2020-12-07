@@ -99,14 +99,14 @@ const ClientTableHeader = styled.tr`
   }
 `;
 const ClientTableBody = styled.tbody`
-  border: 2px solid ${theme.colors.gray};
+  border: 2px solid ${theme.colors.grayLight};
   border-top: none;
   border-bottom: none;
   td {
     color: ${theme.colors.gray};
   }
   &:last-child {
-    border: 2px solid ${theme.colors.gray};
+    border: 2px solid ${theme.colors.grayLight};
     border-top: none;
   }
   tr {
@@ -149,7 +149,7 @@ const NewClientWrapper = styled.div`
   }
 `;
 
-const ClientList: React.FC<{}> = ({}) => {
+const ClientList: React.FC<{}> = ({ }) => {
   const { clients } = useClient();
   const { setActiveModal } = useModal();
 
@@ -258,16 +258,16 @@ const ClientList: React.FC<{}> = ({}) => {
                 {/* <FontAwesomeIcon icon={faArrowDown} /> */}
               </div>
             </th>
-            <th scope="col">
+            <th scope="col" style={{ minWidth: "150px" }}>
               <div>Date of Birth</div>
             </th>
             <th scope="col">
               <div>Email</div>
             </th>
-            <th scope="col">
+            <th scope="col" style={{ minWidth: "120px" }}>
               <div>Phone</div>
             </th>
-            <th scope="col">
+            <th scope="col" style={{ minWidth: "150px" }} >
               <div>Address</div>
             </th>
           </ClientTableHeader>
@@ -285,7 +285,7 @@ const ClientList: React.FC<{}> = ({}) => {
           </NewClientWrapper>
         )}
       </ClientListWrapper>
-    </ClientPageWrapper>
+    </ClientPageWrapper >
   );
 };
 

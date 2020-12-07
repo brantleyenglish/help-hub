@@ -10,7 +10,8 @@ export const theme = {
     white: "#FFFFFF",
     blue: "#0e4680",
     lightBlue: "#6291c0",
-    yellow: "#F4B76B"
+    yellow: "#F4B76B",
+    grayHighlight: "#E5E5E5",
   },
   fonts: {
     regular: "Roboto-Regular",

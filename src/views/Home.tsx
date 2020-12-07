@@ -58,7 +58,7 @@ const BigCatWrapper = styled.div`
   max-width: 800px;
   min-width: 500px;
   background-color: ${theme.colors.white};
-  padding-top: 2vw;
+  padding-top: 1vw;
   padding-bottom: 5vw;
   display: flex;
   flex-direction: row;
@@ -114,6 +114,16 @@ const AboutWrapper = styled.div`
     font-weight: 500;
   }
 `;
+const StyledCatTitle = styled.h2`
+margin-top:40px;
+margin-bottom:0px;
+padding: 0;
+font-size: 30px;
+text-align: center;
+text-transform: uppercase;
+color: ${theme.colors.blue};
+font-weight: bold;
+`;
 
 const Home = () => {
   const { categories } = usePublicData();
@@ -125,6 +135,8 @@ const Home = () => {
         <h2>Search dozens of agencies and their services.</h2>
         <SearchBar></SearchBar>
       </SearchWrapper>
+
+      <StyledCatTitle>Search Services by Category</StyledCatTitle>
 
       <BigCatWrapper>
         {categories &&
