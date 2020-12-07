@@ -12,13 +12,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AssistanceDataType, ClientType } from "../../DataTypes";
+import { AssistanceDataType, ClientNotes, ClientType } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
 import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAssistance } from "../context/AssistanceContext";
+import { useAuth } from "../context/AuthContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
@@ -174,6 +175,7 @@ type ActiveTabType = "assistances" | "notes" | "files";
 
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
+  const { user } = useAuth();
   const { client, updateClientInfo } = useClient();
   const { setAssistanceClientId, assistanceData } = useAssistance();
 
@@ -202,6 +204,8 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   React.useEffect(() => {
     getClientProfile();
   }, []);
+
+  console.log({ clientProfile: clientProfile?.notes });
 
   return (
     <ClientProfileWrapper>
@@ -287,7 +291,10 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("notes")}
           >
             <ModalWrapper modalId="NoteCreate">
-              <AddNoteModal />
+              <AddNoteModal
+                clientProfile={clientProfile}
+                getClientProfile={getClientProfile}
+              />
             </ModalWrapper>
             <p>NOTES</p>
             <AddBtnWrapper onClick={() => setActiveModal("NoteCreate")}>
@@ -324,9 +331,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
         )}
         {activeTab === "notes" && (
           <>
-            <NoteCard />
-            <NoteCard />
-            <NoteCard />
+            {clientProfile?.notes
+              ?.filter(
+                (note: ClientNotes) =>
+                  !note?.isPrivate || note?.agencyId === user?.uid
+              )
+              ?.map((note: ClientNotes, index: number) => (
+                <NoteCard note={note} key={note?.id} />
+              ))}
           </>
         )}
         {activeTab === "files" && (

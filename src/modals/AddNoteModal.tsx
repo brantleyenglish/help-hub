@@ -2,10 +2,32 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+import { ClientType } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { useAuth } from "../context/AuthContext";
+import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 
+const StyledFormikFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px;
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+    text-align: left;
+  }
+  input,
+  textarea,
+  select {
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+    background: ${theme.colors.grayLight};
+  }
+`;
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -20,49 +42,92 @@ const StyledButton = styled.button`
   }
 `;
 
-const AddNoteModal: React.FC<{}> = () => {
+const AddBulletinModal: React.FC<{
+  clientProfile: ClientType | null;
+  getClientProfile: () => void;
+}> = ({ clientProfile, getClientProfile }) => {
+  const { setActiveModal } = useModal();
+  const { user } = useAuth();
+  const { updateClientInfo } = useClient();
+  const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
 
-    const { setActiveModal } = useModal();
+  const toggleIsPrivate = () => {
+    setIsPrivate(!isPrivate);
+  };
 
-    const noteSchema = Yup.object().shape({
-        noteTitle: Yup.string().required("You must include a subject."),
-        noteBody: Yup.string().required("You must include a message."),
-        isPrivate: Yup.string(),
-        date: Yup.string(),
-        agencyId: Yup.string(),
-    });
+  const bulletinSchema = Yup.object().shape({
+    subject: Yup.string().required("You must include a subject."),
+    message: Yup.string().required("You must include a message."),
+  });
 
-    return (
-        <Formik
-            initialValues={{
-                noteTitle: "",
-                noteBody: "",
-                isPrivate: "false",
-                date: "",
-                agencyId: "",
-            }}
+  return (
+    <Formik
+      initialValues={{
+        subject: "",
+        message: "",
+      }}
+      validationSchema={bulletinSchema}
+      onSubmit={async (values) => {
+        const newDate = new Date();
+        const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
+        const date = ("0" + newDate?.getDate()).slice(-2);
+        if (updateClientInfo && clientProfile?.id) {
+          await updateClientInfo(
+            clientProfile?.notes
+              ? {
+                  clientId: clientProfile?.id,
+                  newData: {
+                    notes: [
+                      ...clientProfile?.notes,
+                      {
+                        ...values,
+                        isPrivate,
+                        agencyId: user?.uid,
+                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                      },
+                    ],
+                  },
+                }
+              : {
+                  clientId: clientProfile?.id,
+                  newData: {
+                    notes: [
+                      {
+                        ...values,
+                        isPrivate,
+                        agencyId: user?.uid,
+                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                      },
+                    ],
+                  },
+                }
+          );
+        }
+        getClientProfile();
+        setActiveModal("");
+      }}
+    >
+      {({ handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          <StyledFormikField name="subject" label="Subject Line" />
+          <StyledFormikField name="message" label="Message" type="textarea" />
+          <StyledFormikFieldWrapper>
+            <label htmlFor="isPrivate">
+              Make this bulletin private (only those with access to your client
+              can view this message).
+            </label>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={() => toggleIsPrivate()}
+            />
+          </StyledFormikFieldWrapper>
 
-            // TO DO: Update for AddNote action
-
-            validationSchema={noteSchema}
-            onSubmit={async (values) => {
-                console.log({ values });
-            }}
-        >
-            {({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                    <StyledFormikField name="noteTitle" label="Title of Note" />
-                    <StyledFormikField
-                        name="noteBody"
-                        label="Note"
-                        type="textarea"
-                    />
-                    <input type="checkbox" />
-                    <p>Make this note private (only those with access to your agency can view this message).</p>
-                    <StyledButton type="submit">Submit</StyledButton>
-                </Form>
-            )}
-        </Formik>
-    );
+          {/* <p>Make this bulletin private (only those with access to your client can view this message).</p> */}
+          <StyledButton type="submit">Submit</StyledButton>
+        </Form>
+      )}
+    </Formik>
+  );
 };
-export default AddNoteModal;
+export default AddBulletinModal;
