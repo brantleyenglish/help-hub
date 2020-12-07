@@ -10,7 +10,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usePublicData } from "../../context/PublicContext";
 import { useAgency } from "../../context/AgencyContext";
-
+import EditBulletinModal from "../../modals/EditBulletinModal";
+import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
+import { useModal } from "../../context/ModalContext";
+import ModalWrapper from "../ModalWrapper";
 
 const BulletinCardWrapper = styled.div`
 display: flex;
@@ -107,6 +110,23 @@ const BulletinCard = ({ message }: MessageCardType) => {
     // const [editMode, setEditMode] = React.useState<boolean>(false);
     const { allServices, allPublicMessages } = usePublicData();
     const { agency, updateAgencyInfo, agencyMessages } = useAgency();
+    const { setActiveModal } = useModal();
+
+
+    //TO DO: Revise to display existing form content
+
+    // const getAgencyProfile = async () => {
+    //     if (setAssistanceClientId) {
+    //       setAssistanceClientId(clientId);
+    //     }
+    //     const clientData = await getClient({ clientId });
+    //     if (clientData && clientData !== "DoesNotExist") {
+    //       setClientProfile(clientData);
+    //     }
+    //   };
+    // React.useEffect(() => {
+    //     getAgencyProfile();
+    // }, []);
 
     return (
         <BulletinCardWrapper>
@@ -117,10 +137,19 @@ const BulletinCard = ({ message }: MessageCardType) => {
                 <BulletinHeaderWrapper>
                     <h1>{message?.subject}</h1>
                     <h2>Created by: [Agency Name]</h2>
-                    <EditButton>
+                    <ModalWrapper modalId="MessageEdit">
+                        {/* TO DO: Fix error that appears with the EditButtonModal */}
+                        {/* <EditBulletinModal
+                            message={message}
+                            getAgencyProfile={getAgencyProfile} /> */}
+                    </ModalWrapper>
+                    <EditButton onClick={() => setActiveModal("MessageEdit")}>
                         <FontAwesomeIcon icon={faPencil} />
                     </EditButton>
-                    <DeleteButton>
+                    <ModalWrapper modalId="MessageDelete">
+                        <DeleteBulletinModal />
+                    </ModalWrapper>
+                    <DeleteButton onClick={() => setActiveModal("MessageDelete")}>
                         <FontAwesomeIcon icon={faTrash} />
                     </DeleteButton>
                 </BulletinHeaderWrapper>
