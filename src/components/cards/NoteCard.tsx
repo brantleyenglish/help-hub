@@ -5,13 +5,6 @@ import styled from "styled-components";
 import { AgencyType, ClientNotes } from "../../../DataTypes";
 import { usePublicData } from "../../context/PublicContext";
 import { theme } from "../Theme";
-import {
-    faComment,
-    faTimes,
-    faPencil,
-    faTrash,
-} from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useModal } from "../../context/ModalContext";
 import ModalWrapper from "../ModalWrapper";
 import EditNoteModal from "../../modals/EditNoteModal";
@@ -97,42 +90,40 @@ cursor: pointer;
 `;
 
 const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
-    // const [editMode, setEditMode] = React.useState<boolean>(false);
     const { allAgencies } = usePublicData();
+    const { setActiveModal } = useModal();
 
-    const NoteCard = () => {
+    return (
+        <NoteCardWrapper>
+            <NoteCardIconWrapper>
+                <FontAwesomeIcon icon={faComment} size="4x" />
+            </NoteCardIconWrapper>
+            <NoteCardContentWrapper>
+                <NoteHeaderWrapper>
+                    <h1>{note?.subject}</h1>
+                    <h2>Created by: {note?.agency?.name}</h2>
+                    <ModalWrapper modalId="NoteEdit">
+                        <EditNoteModal
+                        // note={note} 
+                        />
+                    </ModalWrapper>
+                    <EditButton onClick={() => setActiveModal("NoteEdit")}>
+                        <FontAwesomeIcon icon={faPencil} />
+                    </EditButton>
+                    <ModalWrapper modalId="NoteDelete">
+                        <DeleteNoteModal
+                        // note={note} 
+                        />
+                    </ModalWrapper>
+                    <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </DeleteButton>
+                </NoteHeaderWrapper>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
+                <p>Date of Note: 01 / 02 / 2020</p>
+            </NoteCardContentWrapper>
+        </NoteCardWrapper>
+    );
+};
 
-        // const [editMode, setEditMode] = React.useState<boolean>(false);
-
-        return (
-            <NoteCardWrapper>
-                <NoteCardIconWrapper>
-                    <FontAwesomeIcon icon={faComment} size="4x" />
-                </NoteCardIconWrapper>
-                <NoteCardContentWrapper>
-                    <NoteHeaderWrapper>
-                        <h1>Note Title</h1>
-                        <h2>Created by: Agency Name</h2>
-                        <ModalWrapper modalId="NoteEdit">
-                            <EditBulletinModal
-                                message={message} />
-                        </ModalWrapper>
-                        <EditButton onClick={() => setActiveModal("NoteEdit")}>
-                            <FontAwesomeIcon icon={faPencil} />
-                        </EditButton>
-                        <ModalWrapper modalId="NoteDelete">
-                            <EditBulletinModal
-                                message={message} />
-                        </ModalWrapper>
-                        <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
-                            <FontAwesomeIcon icon={faTrash} />
-                        </DeleteButton>
-                    </NoteHeaderWrapper>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
-                    <p>Date of Note: 01 / 02 / 2020</p>
-                </NoteCardContentWrapper>
-            </NoteCardWrapper>
-        );
-    };
-
-    export default NoteCard;
+export default NoteCard;
