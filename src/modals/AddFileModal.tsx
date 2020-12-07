@@ -19,6 +19,9 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+color: ${theme.colors.blue};
+`;
 
 const AddFileModal: React.FC<{}> = () => {
 
@@ -34,37 +37,40 @@ const AddFileModal: React.FC<{}> = () => {
     });
 
     return (
-        <Formik
-            initialValues={{
-                fileTitle: "",
-                description: "",
-                isPrivate: "false",
-                date: "",
-                agencyId: "",
-                clientId: "",
-            }}
+        <>
+            <StyledHeader><h2>Add a File</h2></StyledHeader>
+            <Formik
+                initialValues={{
+                    fileTitle: "",
+                    description: "",
+                    isPrivate: "false",
+                    date: "",
+                    agencyId: "",
+                    clientId: "",
+                }}
 
-            // TO DO: Update for AddFile action
+                // TO DO: Update for AddFile action
 
-            validationSchema={noteSchema}
-            onSubmit={async (values) => {
-                console.log({ values });
-            }}
-        >
-            {({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                    <StyledFormikField name="fileTitle" label="Name of File" />
-                    <StyledFormikField
-                        name="description"
-                        label="Description of File (optional)"
-                        type="textarea"
-                    />
-                    <input type="checkbox" />
-                    <p>Make this file private (only those with access to your agency can view this file).</p>
-                    <StyledButton type="submit">Submit</StyledButton>
-                </Form>
-            )}
-        </Formik>
+                validationSchema={noteSchema}
+                onSubmit={async (values) => {
+                    console.log({ values });
+                }}
+            >
+                {({ handleSubmit }) => (
+                    <Form onSubmit={handleSubmit}>
+                        <StyledFormikField name="fileTitle" label="Name of File" />
+                        <StyledFormikField
+                            name="description"
+                            label="Description of File (optional)"
+                            type="textarea"
+                        />
+                        <input type="checkbox" />
+                        <p>Make this file private (only those with access to your agency can view this file).</p>
+                        <StyledButton type="submit">Submit</StyledButton>
+                    </Form>
+                )}
+            </Formik>
+        </>
     );
 };
 export default AddFileModal;

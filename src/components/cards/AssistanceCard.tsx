@@ -106,7 +106,7 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
           <h2>Provided by: {assistance?.agency?.name}</h2>
           <ModalWrapper modalId="AssistanceEdit">
             <EditAssistanceModal
-            // message={message} 
+              assistance={assistance}
             />
           </ModalWrapper>
           <EditButton onClick={() => setActiveModal("AssistanceEdit")}>

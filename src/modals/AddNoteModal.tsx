@@ -28,7 +28,6 @@ const StyledFormikFieldWrapper = styled.div`
     background: ${theme.colors.grayLight};
   }
 `;
-
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -40,6 +39,9 @@ const StyledButton = styled.button`
     background: ${theme.colors.lightBlue};
     cursor: pointer;
   }
+`;
+const StyledHeader = styled.div`
+color: ${theme.colors.blue};
 `;
 
 const AddBulletinModal: React.FC<{
@@ -61,20 +63,22 @@ const AddBulletinModal: React.FC<{
   });
 
   return (
-    <Formik
-      initialValues={{
-        subject: "",
-        message: "",
-      }}
-      validationSchema={bulletinSchema}
-      onSubmit={async (values) => {
-        const newDate = new Date();
-        const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
-        const date = ("0" + newDate?.getDate()).slice(-2);
-        if (updateClientInfo && clientProfile?.id) {
-          await updateClientInfo(
-            clientProfile?.notes
-              ? {
+    <>
+      <StyledHeader><h2>Add a Note</h2></StyledHeader>
+      <Formik
+        initialValues={{
+          subject: "",
+          message: "",
+        }}
+        validationSchema={bulletinSchema}
+        onSubmit={async (values) => {
+          const newDate = new Date();
+          const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
+          const date = ("0" + newDate?.getDate()).slice(-2);
+          if (updateClientInfo && clientProfile?.id) {
+            await updateClientInfo(
+              clientProfile?.notes
+                ? {
                   clientId: clientProfile?.id,
                   newData: {
                     notes: [
@@ -88,7 +92,7 @@ const AddBulletinModal: React.FC<{
                     ],
                   },
                 }
-              : {
+                : {
                   clientId: clientProfile?.id,
                   newData: {
                     notes: [
@@ -101,33 +105,34 @@ const AddBulletinModal: React.FC<{
                     ],
                   },
                 }
-          );
-        }
-        getClientProfile();
-        setActiveModal("");
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="subject" label="Subject Line" />
-          <StyledFormikField name="message" label="Message" type="textarea" />
-          <StyledFormikFieldWrapper>
-            <label htmlFor="isPrivate">
-              Make this bulletin private (only those with access to your client
-              can view this message).
+            );
+          }
+          getClientProfile();
+          setActiveModal("");
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="subject" label="Subject Line" />
+            <StyledFormikField name="message" label="Message" type="textarea" />
+            <StyledFormikFieldWrapper>
+              <label htmlFor="isPrivate">
+                Make this bulletin private (only those with access to your client
+                can view this message).
             </label>
-            <input
-              type="checkbox"
-              checked={isPrivate}
-              onChange={() => toggleIsPrivate()}
-            />
-          </StyledFormikFieldWrapper>
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => toggleIsPrivate()}
+              />
+            </StyledFormikFieldWrapper>
 
-          {/* <p>Make this bulletin private (only those with access to your client can view this message).</p> */}
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+            {/* <p>Make this bulletin private (only those with access to your client can view this message).</p> */}
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 export default AddBulletinModal;
