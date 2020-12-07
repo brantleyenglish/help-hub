@@ -50,6 +50,17 @@ export const AssistanceProvider: React.FC<any> = (props) => {
   const updateAssistanceByClient = async () => {
     const assistanceData = await getAssistanceByClient({ clientId });
     if (assistanceData !== "Error") {
+      console.log({
+        test: assistanceData?.filter(
+          (singleAssistance) =>
+            singleAssistance?.agencyId &&
+            singleAssistance?.serviceId &&
+            singleAssistance?.clientId &&
+            (singleAssistance?.agencyId === user?.uid ||
+              !singleAssistance?.isPrivate)
+        ),
+        user: user?.uid,
+      });
       setAssistance(
         assistanceData?.filter(
           (singleAssistance) =>
@@ -86,6 +97,8 @@ export const AssistanceProvider: React.FC<any> = (props) => {
         ) {
           assistanceDataObject?.push({
             date: singleAssistance?.date,
+            notes: singleAssistance?.notes,
+            isPrivate: singleAssistance?.isPrivate,
             agency: agencyData,
             client: clientData,
             service: serviceData,
@@ -97,12 +110,16 @@ export const AssistanceProvider: React.FC<any> = (props) => {
   };
 
   React.useEffect(() => {
-    updateAssistanceByClient();
-  }, [clientId]);
+    if (user) {
+      updateAssistanceByClient();
+    }
+  }, [clientId, user]);
 
   React.useEffect(() => {
-    updateAssistanceByAgency();
-  }, [agencyId]);
+    if (user) {
+      updateAssistanceByAgency();
+    }
+  }, [agencyId, user]);
 
   React.useEffect(() => {
     getAssistanceData();
