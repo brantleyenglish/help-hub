@@ -1,10 +1,35 @@
 import { Form, Formik } from "formik";
 import React from "react";
+import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import * as Yup from "yup";
+import { ClientType, ServiceType } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { useAssistance } from "../context/AssistanceContext";
+import { useAuth } from "../context/AuthContext";
 import { useModal } from "../context/ModalContext";
+import { createAssistance } from "../firebase/assistance";
+
+const StyledFormikFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px;
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+    text-align: left;
+  }
+  input,
+  textarea,
+  select {
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+    background: ${theme.colors.grayLight};
+  }
+`;
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -19,49 +44,95 @@ const StyledButton = styled.button`
   }
 `;
 
-const AddAssistanceModal: React.FC<{}> = () => {
+const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
+  client,
+}) => {
+  const { setActiveModal } = useModal();
+  const { allServices } = usePublicData();
+  const { user } = useAuth();
+  const { setAssistanceClientId } = useAssistance();
+  const assistanceSchema = Yup.object().shape({
+    notes: Yup.string(),
+    serviceId: Yup.string(),
+  });
 
-    const { setActiveModal } = useModal();
+  const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
 
-    const assistanceSchema = Yup.object().shape({
-        agencyId: Yup.string(),
-        clientId: Yup.string(),
-        date: Yup.string(),
-        notes: Yup.string(),
-        serviceId: Yup.string(),
-    });
+  const toggleIsPrivate = () => {
+    setIsPrivate(!isPrivate);
+  };
 
-    return (
-        <Formik
-            initialValues={{
-                agencyId: "",
-                clientId: "",
-                date: "",
-                notes: "",
-                serviceId: "",
-            }}
-
-            // TO DO: Update for AddService action
-
-            validationSchema={assistanceSchema}
-            onSubmit={async (values) => {
-                console.log({ values });
-            }}
-        >
-            {({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                    [Service Name] - [Client Name] received help from [Agency Name] on [Date]
-                    <StyledFormikField
-                        name="notes"
-                        label="Anything to add?"
-                        type="textarea"
-                    />
-                    <input type="checkbox" />
-                    <p>Make this assistance private (only those with access to your agency can view this information).</p>
-                    <StyledButton type="submit">Submit</StyledButton>
-                </Form>
-            )}
-        </Formik>
-    );
+  return (
+    <Formik
+      initialValues={{
+        notes: "",
+        serviceId:
+          allServices?.find(
+            (service: ServiceType) => service?.agencyId === user?.uid
+          )?.id || "",
+      }}
+      validationSchema={assistanceSchema}
+      onSubmit={async (values) => {
+        const newDate = new Date();
+        const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
+        const date = ("0" + newDate?.getDate()).slice(-2);
+        await createAssistance({
+          data: {
+            ...values,
+            isPrivate,
+            agencyId: user?.uid || "",
+            clientId: client?.id || "",
+            date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+          },
+        });
+        if (setAssistanceClientId && client?.id) {
+          await setAssistanceClientId(client?.id);
+        }
+        setActiveModal("");
+      }}
+    >
+      {({ handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+          Add assistance for {client?.clientFirstName} {client?.clientLastName}
+          <StyledFormikField
+            name="serviceId"
+            label="Service Offered"
+            type="select"
+            options={
+              allServices
+                ? allServices
+                    ?.filter(
+                      (service: ServiceType) => service?.agencyId === user?.uid
+                    )
+                    ?.map((service: ServiceType) => {
+                      return {
+                        value: service?.id,
+                        label: service?.name,
+                      };
+                    })
+                : []
+            }
+          />
+          <StyledFormikField
+            name="notes"
+            label="Anything to add?"
+            type="textarea"
+          />
+          <StyledFormikFieldWrapper>
+            <label htmlFor="isPrivate">
+              Make this bulletin private (only those with access to your agency
+              can view this message).
+            </label>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={() => toggleIsPrivate()}
+            />
+          </StyledFormikFieldWrapper>
+          <StyledButton type="submit">Submit</StyledButton>
+        </Form>
+      )}
+    </Formik>
+  );
 };
 export default AddAssistanceModal;

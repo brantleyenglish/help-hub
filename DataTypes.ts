@@ -95,6 +95,7 @@ export type SingleAssistanceType = {
   serviceId: string;
   date: string;
   isPrivate: boolean;
+  notes: string;
 }
 
 export type AssistanceDataType = {
@@ -102,6 +103,8 @@ export type AssistanceDataType = {
   client: ClientType;
   service: ServiceType;
   date: string;
+  isPrivate: boolean;
+  notes: string;
 }
 
 export type AssistanceDataArrayType = AssistanceDataType[];
@@ -109,5 +112,5 @@ export type AssistanceDataArrayType = AssistanceDataType[];
 export type AssistanceContextType = {
   assistanceData: AssistanceDataArrayType;
   setAssistanceClientId: (id: string) => Promise<void>;
-  setAssistanceAgencyId: (id: string) => Promise<void>
+  setAssistanceAgencyId: (id: string) => Promise<void>;
 };

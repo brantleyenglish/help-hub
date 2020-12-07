@@ -1,6 +1,6 @@
 
 import { db } from "./config";
-import { AssistanceType } from '../../DataTypes';
+import { AssistanceType, SingleAssistanceType } from '../../DataTypes';
 
 type GetAssistanceByAgencyType = { agencyId: string };
 type GetAssistanceByClientType = { clientId: string };
@@ -28,9 +28,33 @@ export const getAssistanceByClient = async ({clientId}: GetAssistanceByClientTyp
         docs.forEach((singleAssistance) => {
             assistance.push(singleAssistance.data());
         });
+
         return assistance as AssistanceType;
       } catch (e) {
         console.log("Error getAssistanceByClient:", e);
         return 'Error';
       }
   };
+
+  type CreateAssistanceType = {
+    data: SingleAssistanceType;
+  }
+
+  export const createAssistance = async ({ data }: CreateAssistanceType) => {
+    try {
+        const docRef =  db.collection("assistance").doc();
+        await docRef.set({
+          id: docRef?.id,
+          ...data
+        })
+        const assistance = await docRef.get();
+        if (assistance.exists) {
+            return assistance.data();
+        } else {
+            return "DoesNotExisit";
+        }
+    } catch (e) {
+        console.log("Error createClient:", e);
+    }
+  };
+  

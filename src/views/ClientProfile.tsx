@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { ClientType } from "../../DataTypes";
+import { AssistanceDataType, ClientType } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
 import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
@@ -23,8 +23,8 @@ import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { getClient } from "../firebase/clients";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
-import AddNoteModal from "../modals/AddNoteModal";
 import AddFileModal from "../modals/AddFileModal";
+import AddNoteModal from "../modals/AddNoteModal";
 import EditClientModal from "../modals/EditClientModal";
 
 const ClientProfileWrapper = styled.div`
@@ -175,7 +175,9 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { client, updateClientInfo } = useClient();
-  const { setAssistanceClientId } = useAssistance();
+  const { setAssistanceClientId, assistanceData } = useAssistance();
+
+  console.log({ assistanceData });
 
   const [clientProfile, setClientProfile] = React.useState<ClientType | null>(
     null
@@ -265,14 +267,13 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       )}
       <ContentWrapper>
         <NavigationWrapper>
-
           {/* ASSISTANCES NAV BUTTON*/}
           <NavigationButton
             isActive={activeTab === "assistances"}
             onClick={() => setActiveTab("assistances")}
           >
             <ModalWrapper modalId="AssistanceCreate">
-              <AddAssistanceModal />
+              <AddAssistanceModal client={clientProfile} />
             </ModalWrapper>
             <p>ASSISTANCES</p>
             <AddBtnWrapper onClick={() => setActiveModal("AssistanceCreate")}>
@@ -311,9 +312,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
 
         {activeTab === "assistances" && (
           <>
-            <AssistanceCard />
-            <AssistanceCard />
-            <AssistanceCard />
+            {assistanceData?.map((assistance: AssistanceDataType) => (
+              <AssistanceCard assistance={assistance} />
+            ))}
           </>
         )}
         {activeTab === "notes" && (
