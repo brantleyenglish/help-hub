@@ -8,6 +8,11 @@ import {
     faTrash,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useModal } from "../../context/ModalContext";
+import ModalWrapper from "../ModalWrapper";
+import EditFileModal from "../../modals/EditFileModal";
+import DeleteFileModal from "../../modals/DeleteFileModal"
+
 
 const FileCardWrapper = styled.div`
 display: flex;
@@ -94,7 +99,7 @@ right: 30px;
 border-radius: 5px;
 cursor: pointer;
 &:hover {
-    background: ${theme?.colors?.yellow};
+    background: ${theme?.colors?.red};
     color: ${theme.colors.white};
 };
 `;
@@ -102,7 +107,7 @@ cursor: pointer;
 
 const FileCard = () => {
 
-    // const [editMode, setEditMode] = React.useState<boolean>(false);
+    const { setActiveModal } = useModal();
 
     return (
         <FileCardWrapper>
@@ -116,16 +121,22 @@ const FileCard = () => {
                 </FileHeaderWrapper>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
                 <p>Date Created: 01 / 02 / 2020</p>
-                {/* <EditButton type="button" onClick={() => setEditMode(!editMode)}>
-                        {editMode ? (
-                            <FontAwesomeIcon icon={faTimes} />
-                        ) : ( */}
-                <EditButton>
+
+                <ModalWrapper modalId="FileEdit">
+                    <EditFileModal
+                    // file={file} 
+                    />
+                </ModalWrapper>
+                <EditButton onClick={() => setActiveModal("FileEdit")}>
                     <FontAwesomeIcon icon={faPencil} />
                 </EditButton>
-                {/* )}
-                    </EditButton> */}
-                <DeleteButton>
+
+                <ModalWrapper modalId="FileDelete">
+                    <DeleteFileModal
+                    // file={file} 
+                    />
+                </ModalWrapper>
+                <DeleteButton onClick={() => setActiveModal("FileDelete")}>
                     <FontAwesomeIcon icon={faTrash} />
                 </DeleteButton>
             </FileCardContentWrapper>

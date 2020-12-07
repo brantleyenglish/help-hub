@@ -93,7 +93,7 @@ const EditButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: ${theme?.colors?.red};
+    background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
   }
 `;

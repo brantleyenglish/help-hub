@@ -8,6 +8,11 @@ import {
     faTrash,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useModal } from "../../context/ModalContext";
+import ModalWrapper from "../ModalWrapper";
+import EditNoteModal from "../../modals/EditNoteModal";
+import DeleteNoteModal from "../../modals/DeleteNoteModal";
+
 
 const NoteCardWrapper = styled.div`
 display: flex;
@@ -82,7 +87,7 @@ right: 30px;
 border-radius: 5px;
 cursor: pointer;
 &:hover {
-    background: ${theme?.colors?.yellow};
+    background: ${theme?.colors?.red};
     color: ${theme.colors.white};
 };
 `;
@@ -101,16 +106,18 @@ const NoteCard = () => {
                 <NoteHeaderWrapper>
                     <h1>Note Title</h1>
                     <h2>Created by: Agency Name</h2>
-                    {/* <EditButton type="button" onClick={() => setEditMode(!editMode)}>
-                        {editMode ? (
-                            <FontAwesomeIcon icon={faTimes} />
-                        ) : ( */}
-                    <EditButton>
+                    <ModalWrapper modalId="NoteEdit">
+                        <EditBulletinModal
+                            message={message} />
+                    </ModalWrapper>
+                    <EditButton onClick={() => setActiveModal("NoteEdit")}>
                         <FontAwesomeIcon icon={faPencil} />
                     </EditButton>
-                    {/* )}
-                    </EditButton> */}
-                    <DeleteButton>
+                    <ModalWrapper modalId="NoteDelete">
+                        <EditBulletinModal
+                            message={message} />
+                    </ModalWrapper>
+                    <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
                         <FontAwesomeIcon icon={faTrash} />
                     </DeleteButton>
                 </NoteHeaderWrapper>

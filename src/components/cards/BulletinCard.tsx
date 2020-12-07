@@ -89,7 +89,7 @@ const DeleteButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: ${theme?.colors?.yellow};
+    background: ${theme?.colors?.red};
     color: ${theme.colors.white};
   }
 `;
@@ -133,8 +133,6 @@ const BulletinCard = ({ message }: MessageCardType) => {
           {agency?.id === message?.agencyId && (
             <>
               <ModalWrapper modalId="MessageEdit">
-                <></>
-                {/* TO DO: Fix error that appears with the EditButtonModal */}
                 <EditBulletinModal
                   message={message} />
               </ModalWrapper>
