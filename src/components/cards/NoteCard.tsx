@@ -3,13 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import { AgencyType, ClientNotes } from "../../../DataTypes";
-import { usePublicData } from "../../context/PublicContext";
-import { theme } from "../Theme";
 import { useModal } from "../../context/ModalContext";
-import ModalWrapper from "../ModalWrapper";
-import EditNoteModal from "../../modals/EditNoteModal";
+import { usePublicData } from "../../context/PublicContext";
 import DeleteNoteModal from "../../modals/DeleteNoteModal";
-
+import EditNoteModal from "../../modals/EditNoteModal";
+import ModalWrapper from "../ModalWrapper";
+import { theme } from "../Theme";
 
 const NoteCardWrapper = styled.div`
   display: flex;
@@ -70,60 +69,67 @@ const EditButton = styled.button`
   }
 `;
 const DeleteButton = styled.button`
-background: ${theme?.colors?.lightBlue};
-color: ${theme.colors.white};
-border: none;
-padding: 5px;
-width: 25px;
-height: 25px;
-display: flex;
-justify-content: center;
-position: absolute;
-top: 0;
-right: 30px;
-border-radius: 5px;
-cursor: pointer;
-&:hover {
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
     background: ${theme?.colors?.red};
     color: ${theme.colors.white};
   }
 `;
 
 const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
-    const { allAgencies } = usePublicData();
-    const { setActiveModal } = useModal();
+  const { allAgencies } = usePublicData();
+  const { setActiveModal } = useModal();
 
-    return (
-        <NoteCardWrapper>
-            <NoteCardIconWrapper>
-                <FontAwesomeIcon icon={faComment} size="4x" />
-            </NoteCardIconWrapper>
-            <NoteCardContentWrapper>
-                <NoteHeaderWrapper>
-                    <h1>{note?.subject}</h1>
-                    <h2>Created by: {note?.agency?.name}</h2>
-                    <ModalWrapper modalId="NoteEdit">
-                        <EditNoteModal
-                        // note={note} 
-                        />
-                    </ModalWrapper>
-                    <EditButton onClick={() => setActiveModal("NoteEdit")}>
-                        <FontAwesomeIcon icon={faPencil} />
-                    </EditButton>
-                    <ModalWrapper modalId="NoteDelete">
-                        <DeleteNoteModal
-                        // note={note} 
-                        />
-                    </ModalWrapper>
-                    <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </DeleteButton>
-                </NoteHeaderWrapper>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
-                <p>Date of Note: 01 / 02 / 2020</p>
-            </NoteCardContentWrapper>
-        </NoteCardWrapper>
-    );
+  return (
+    <NoteCardWrapper>
+      <NoteCardIconWrapper>
+        <FontAwesomeIcon icon={faComment} size="4x" />
+      </NoteCardIconWrapper>
+      <NoteCardContentWrapper>
+        <NoteHeaderWrapper>
+          <h1>{note?.subject}</h1>
+          <h2>
+            Created by:{" "}
+            {
+              allAgencies?.find(
+                (agency: AgencyType) => agency?.id === note?.agencyId
+              )?.name
+            }
+          </h2>
+          <ModalWrapper modalId="NoteEdit">
+            <EditNoteModal
+            // note={note}
+            />
+          </ModalWrapper>
+          <EditButton onClick={() => setActiveModal("NoteEdit")}>
+            <FontAwesomeIcon icon={faPencil} />
+          </EditButton>
+          <ModalWrapper modalId="NoteDelete">
+            <DeleteNoteModal
+            // note={note}
+            />
+          </ModalWrapper>
+          <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
+            <FontAwesomeIcon icon={faTrash} />
+          </DeleteButton>
+        </NoteHeaderWrapper>
+        <p>{note?.message}</p>
+        <p>Date of Note: {note?.date}</p>
+      </NoteCardContentWrapper>
+    </NoteCardWrapper>
+  );
 };
 
 export default NoteCard;
