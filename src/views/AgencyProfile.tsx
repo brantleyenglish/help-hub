@@ -29,6 +29,7 @@ import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
 import AddServiceModal from "../modals/AddServiceModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
+import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -350,11 +351,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "timeline" && (
           <>
             {assistanceData?.map((assistance: AssistanceDataType) => (
-              <MessageCard
+              <TimelineAssistanceCard
+                assistance={assistance}
                 key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
-              >
-                {`${assistance?.date} - ${assistance?.client?.clientFirstName} ${assistance?.client?.clientLastName} was offered ${assistance?.service?.name} by ${assistance?.agency?.name}`}
-              </MessageCard>
+              />
             ))}
           </>
         )}

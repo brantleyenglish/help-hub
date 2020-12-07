@@ -17,6 +17,12 @@ const ServiceListWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  a:hover{
+    div>div{
+      background:  ${theme.colors.grayHighlight};
+    cursor:pointer;
+  }
+  }
 `;
 const ServiceSearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;
@@ -30,6 +36,13 @@ const ServiceSearchWrapper = styled.div`
     color: ${theme.colors.white};
     font-size: 45px;
     text-transform: uppercase;
+    margin-bottom: 0;
+    text-weight: 300;
+  }
+  & h3 {
+    color: ${theme.colors.white};
+    text-transform: uppercase;
+    margin-top: 10px;
   }
 `;
 const SearchInputWrapper = styled.div`
@@ -128,6 +141,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
     <>
       <ServiceSearchWrapper>
         <h1>Services</h1>
+        <h3>Search for keywords or sort by category.</h3>
         <SearchInputWrapper>
           <SearchBar onChange={handleSearchUpdate} type="search" />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />

@@ -8,6 +8,12 @@ import {
     faTrash,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    AgencyType,
+    AssistanceDataType,
+    MessageType,
+    ServiceType,
+} from "../../../DataTypes";
 
 const TimelineAssistanceCardWrapper = styled.div`
 display: flex;
@@ -32,21 +38,22 @@ margin: 10px 0px;
 border-radius: 0px 10px 10px 0px;
 padding: 15px 20px;
 width: 100%;
-& h1{
-  color: ${theme.colors.blue};
-  font-size: 25px;
-  margin: 10px 0 0 0;
-  padding: 0;
-};
-& h2{
-    font-size: 20px;
-    margin: 0;
-    padding; 0;
-};
 `;
 const TimelineAssistanceHeaderWrapper = styled.div`
   align-items: center;
   position: relative;
+  h1{
+    color: ${theme.colors.blue};
+      font-size: 20px;
+      margin: 10px 0 0 0;
+      padding: 0;
+  }
+  h2 {
+    color: ${theme.colors.red};
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
 `;
 const EditButton = styled.button`
 background: ${theme?.colors?.lightBlue};
@@ -87,11 +94,11 @@ cursor: pointer;
 };
 `;
 
+type TimelineAssistanceCard = {
+    assistance: AssistanceDataType;
+};
 
-const TimelineAssistanceCard = () => {
-
-    // const [editMode, setEditMode] = React.useState<boolean>(false);
-
+const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({ assistance }) => {
     return (
         <TimelineAssistanceCardWrapper>
             <TimelineAssistanceCardIconWrapper>
@@ -99,23 +106,19 @@ const TimelineAssistanceCard = () => {
             </TimelineAssistanceCardIconWrapper>
             <TimelineAssistanceCardContentWrapper>
                 <TimelineAssistanceHeaderWrapper>
-                    <h1>[Client Name] received help from your agency.</h1>
-                    <h2>Service Provided: [Service Name]</h2>
-                    {/* <EditButton type="button" onClick={() => setEditMode(!editMode)}>
-                        {editMode ? (
-                            <FontAwesomeIcon icon={faTimes} />
-                        ) : ( */}
+                    <h1>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName} received a service.</h1>
+                    <h2>Service Provided: {assistance?.service?.name}</h2>
                     <EditButton>
                         <FontAwesomeIcon icon={faPencil} />
                     </EditButton>
-                    {/* )}
-                    </EditButton> */}
                     <DeleteButton>
                         <FontAwesomeIcon icon={faTrash} />
                     </DeleteButton>
                 </TimelineAssistanceHeaderWrapper>
-                <p>Additional Notes: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
-                <p>Date of Assistance: 01 / 02 / 2020</p>
+                {assistance?.notes && (
+                    <p>Additional Notes: {assistance?.notes}</p>
+                )}
+                <p>Date: {assistance?.date}</p>
             </TimelineAssistanceCardContentWrapper>
         </TimelineAssistanceCardWrapper>
     );

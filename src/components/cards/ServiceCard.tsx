@@ -6,7 +6,9 @@ import {
   faTshirt,
   faUser,
   faUtensils,
-} from "@fortawesome/free-solid-svg-icons";
+  faPencil,
+  faTrash,
+} from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
@@ -22,11 +24,6 @@ const ServiceCardWrapper = styled.div`
 display: flex;
 flex-flow: column;
 margin: 0px 25px 50px 25px;
-:hover{
-  >div{
-    background:  ${theme.colors.grayHighlight};
-  cursor:pointer;
-}
 }
 `;
 const ServiceCardContentWrapper = styled.div`
@@ -48,6 +45,7 @@ p{
 `;
 const ServiceCardHeaderWrapper = styled.div`
 display: flex;
+position: relative;
 flex-direction:column;
 & h1 {
   text-align: left;
@@ -80,7 +78,44 @@ border-radius: 10px;
 align-items: center;
 justify-content: center;
 `;
-
+const EditButton = styled.button`
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background: ${theme?.colors?.red};
+    color: ${theme.colors.white};
+  }
+`;
+const DeleteButton = styled.button`
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background: ${theme?.colors?.red};
+    color: ${theme.colors.white};
+  }
+`;
 type ServiceType = {
   id: String;
   name: String;
@@ -107,7 +142,15 @@ const ServiceCard = ({ service }: ServiceCardType) => {
     <>
       <ServiceCardWrapper>
         <ServiceCardContentWrapper>
+
           <ServiceCardHeaderWrapper>
+            <EditButton>
+              <FontAwesomeIcon icon={faPencil} />
+            </EditButton>
+
+            <DeleteButton>
+              <FontAwesomeIcon icon={faTrash} />
+            </DeleteButton>
             <h1>{service?.name}</h1>
             <h3>Provided by Agency Name</h3>
           </ServiceCardHeaderWrapper>

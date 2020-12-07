@@ -20,12 +20,6 @@ const AgencyCardWrapper = styled.div`
   display: flex;
   flex-flow: column;
   margin: 0px 25px 50px 25px;
-  :hover{
-    >div{
-      background:  ${theme.colors.grayHighlight};
-    cursor:pointer;
-  }
-  }
 `;
 const AgencyCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
