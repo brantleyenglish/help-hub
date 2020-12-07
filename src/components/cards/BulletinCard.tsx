@@ -12,6 +12,7 @@ import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
 import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
 import ModalWrapper from "../ModalWrapper";
+import EditBulletinModal from "../../modals/EditBulletinModal";
 import { theme } from "../Theme";
 
 const BulletinCardWrapper = styled.div`
@@ -134,9 +135,8 @@ const BulletinCard = ({ message }: MessageCardType) => {
               <ModalWrapper modalId="MessageEdit">
                 <></>
                 {/* TO DO: Fix error that appears with the EditButtonModal */}
-                {/* <EditBulletinModal
-                            message={message}
-                            getAgencyProfile={getAgencyProfile} /> */}
+                <EditBulletinModal
+                  message={message} />
               </ModalWrapper>
               <EditButton onClick={() => setActiveModal("MessageEdit")}>
                 <FontAwesomeIcon icon={faPencil} />

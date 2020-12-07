@@ -31,9 +31,8 @@ type MessageType = {
 };
 
 const EditBulletinModal: React.FC<{
-    message: MessageType | null;
-    getAgencyProfile: () => void;
-}> = ({ message, getAgencyProfile }) => {
+    message: MessageType | undefined;
+}> = ({ message }) => {
     const { updateAgencyInfo } = useAgency();
     const { setActiveModal } = useModal();
     const { allPublicMessages } = usePublicData();
@@ -59,14 +58,14 @@ const EditBulletinModal: React.FC<{
             validationSchema={bulletinSchema}
             onSubmit={async (values) => {
                 console.log({ values });
-                // if (updateAgencyInfo && message) {
-                //     await updateAgencyInfo({
-                //         agencyId: message?.id,
-                //         newData: { id: message?.id, ...values },
-                //     });
-                //     getAgencyProfile();
-                //     setActiveModal("");
-                // }
+                if (updateAgencyInfo && message) {
+                    await updateAgencyInfo({
+                        agencyId: message?.agencyId,
+                        newData: { id: message?.id, ...values },
+                    });
+                    getAgencyProfile();
+                    setActiveModal("");
+                }
             }}
         >
             {({ handleSubmit }) => (
