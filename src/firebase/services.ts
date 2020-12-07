@@ -53,3 +53,37 @@ export const getServicesByAgencyId = async ({ agencyId }: GetServicesByAgencyIdT
     return 'Error';
   }
 };
+
+type CreateServiceType = {
+  agencyId: string;
+  categories: string[];
+  city: string;
+  contactFirstName: string;
+  contactLastName: string;
+  description: string;
+  email: string;
+  name: string;
+  phone: string;
+  state: string;
+  streetAddress: string;
+  zip: string;
+}
+
+
+export const createService = async ({ data }: {data: CreateServiceType}) => {
+  try {
+      const docRef =  db.collection("services").doc();
+      await docRef.set({
+        id: docRef?.id,
+        ...data
+      })
+      const service = await docRef.get();
+      if (service.exists) {
+          return service.data();
+      } else {
+          return "DoesNotExisit";
+      }
+  } catch (e) {
+      console.log("Error createClient:", e);
+  }
+};

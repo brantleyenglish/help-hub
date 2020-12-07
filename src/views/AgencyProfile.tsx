@@ -296,7 +296,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               onClick={() => setActiveTab("services")}
             >
               <ModalWrapper modalId="ServiceCreate">
-                <AddServiceModal />
+                <AddServiceModal agencyId={agencyId} />
               </ModalWrapper>
               <p>SERVICES</p>
               <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
