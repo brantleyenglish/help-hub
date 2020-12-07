@@ -312,9 +312,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
 
         {activeTab === "assistances" && (
           <>
-            {assistanceData?.map((assistance: AssistanceDataType) => (
-              <AssistanceCard assistance={assistance} />
-            ))}
+            {assistanceData?.map(
+              (assistance: AssistanceDataType, index: number) => (
+                <AssistanceCard
+                  assistance={assistance}
+                  key={`${assistance?.service?.id}-${index}`}
+                />
+              )
+            )}
           </>
         )}
         {activeTab === "notes" && (
