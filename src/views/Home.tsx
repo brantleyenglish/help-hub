@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import SearchBar from "../components/searchbar";
+// import SearchBar from "../components/searchbar";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -124,16 +128,46 @@ text-transform: uppercase;
 color: ${theme.colors.blue};
 font-weight: bold;
 `;
+const SearchInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  max-width: 500px;
+  > svg {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+  }
+`;
+const SearchBar = styled.input`
+  width: 100%;
+  padding: 5px;
+  font-size: 12px;
+`;
 
 const Home = () => {
+  // const query = useQuery();
   const { categories } = usePublicData();
+  // const urlSearch = query.get("search")?.toLowerCase() || "";
+
+  // const handleSearchUpdate = (e: React.BaseSyntheticEvent) => {
+  //   setSearch(e.target.value?.toLowerCase());
+  // };
+  // const [search, setSearch] = React.useState<string>(urlSearch);
 
   return (
     <>
       <SearchWrapper>
         <h1> Find Help, Get Help.</h1>
         <h2>Search dozens of agencies and their services.</h2>
-        <SearchBar></SearchBar>
+        <SearchInputWrapper>
+          <SearchBar
+            // onChange={handleSearchUpdate} 
+            type="search"
+          />
+          <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
+        </SearchInputWrapper>
       </SearchWrapper>
 
       <StyledCatTitle>Search Services by Category</StyledCatTitle>

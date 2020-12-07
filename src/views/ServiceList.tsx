@@ -21,6 +21,9 @@ const ServiceListWrapper = styled.div`
     div>div{
       background:  ${theme.colors.grayHighlight};
     cursor:pointer;
+    .icon{
+      background: ${theme.colors.yellow};
+    }
   }
   }
 `;
@@ -141,7 +144,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
     <>
       <ServiceSearchWrapper>
         <h1>Services</h1>
-        <h3>Search for keywords or sort by category.</h3>
+        <h3>Search keywords or sort by category.</h3>
         <SearchInputWrapper>
           <SearchBar onChange={handleSearchUpdate} type="search" />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />

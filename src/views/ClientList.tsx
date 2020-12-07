@@ -121,7 +121,6 @@ const ClientTableBody = styled.tbody`
     }
   }
 `;
-
 const EditButton = styled.button`
   margin: auto;
   padding: 8px 10px;
@@ -136,7 +135,6 @@ const EditButton = styled.button`
     background: ${theme?.colors?.lightBlue};
   }
 `;
-
 const NewClientWrapper = styled.div`
   max-width: 800px;
   padding: 30px;

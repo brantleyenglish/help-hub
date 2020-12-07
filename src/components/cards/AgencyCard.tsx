@@ -103,7 +103,7 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
       <CategoryTagsWrapper>
         {agency?.categories &&
           agency?.categories.map((categoryId: string) => (
-            <IconWrapper>
+            <IconWrapper className="icon">
               <StyledSVG
                 src={
                   categories?.find(

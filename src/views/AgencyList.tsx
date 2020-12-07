@@ -20,6 +20,9 @@ const AgencyListWrapper = styled.div`
     div>div{
       background:  ${theme.colors.grayHighlight};
     cursor:pointer;
+    .icon{
+      background: ${theme.colors.yellow};
+    }
   }
   }
 `;
@@ -35,6 +38,12 @@ const AgencySearchWrapper = styled.div`
     color: ${theme.colors.white};
     font-size: 45px;
     text-transform: uppercase;
+    margin-bottom: 0;
+  }
+  & h3 {
+    color: ${theme.colors.white};
+    text-transform: uppercase;
+    margin-top: 10px;
   }
 `;
 const SearchInputWrapper = styled.div`
@@ -128,6 +137,7 @@ const AgencyList = () => {
     <>
       <AgencySearchWrapper>
         <h1>Agencies</h1>
+        <h3>Search keywords or sort by service category.</h3>
         <SearchInputWrapper>
           <SearchBar onChange={handleSearchUpdate} type="search" />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />

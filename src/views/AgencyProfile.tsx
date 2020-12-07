@@ -27,6 +27,8 @@ import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
+import ReportSample from "../images/reportSample.png";
+
 import AddServiceModal from "../modals/AddServiceModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
 import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
@@ -72,7 +74,6 @@ const EditButton = styled.button`
     color: ${theme.colors.blue};
   }
 `;
-
 const FormContentWrapper = styled.div`
   width: 100%;
   flex-direction: row;
@@ -174,6 +175,11 @@ const AddBtnWrapper = styled.button`
     cursor: pointer;
   }
 `;
+const ServiceCardWrapper = styled.div`
+padding: 10px;
+display: flex;
+justify-content: center;`;
+
 const MessageCard = styled.div``;
 
 type AgencyProfileType = {
@@ -332,7 +338,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             {allServices
               ?.filter((service: ServiceType) => service?.agencyId === agencyId)
               ?.map((service: ServiceType) => (
-                <ServiceCard service={service} key={service?.id} />
+                <ServiceCardWrapper>
+                  <ServiceCard service={service} key={service?.id} />
+                </ServiceCardWrapper>
               ))}
           </>
         )}
@@ -358,7 +366,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             ))}
           </>
         )}
-        {activeTab === "reports" && <p>Is reports</p>}
+        {activeTab === "reports" &&
+          <img src={ReportSample} alt="" style={{ width: "100%" }} />
+        }
       </ContentWrapper>
     </AgencyProfileWrapper>
   );

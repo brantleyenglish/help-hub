@@ -108,7 +108,6 @@ type MessageCardType = {
 
 const BulletinCard = ({ message }: MessageCardType) => {
   const { allAgencies } = usePublicData();
-
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, updateAgencyInfo, agencyMessages } = useAgency();
   const { setActiveModal } = useModal();

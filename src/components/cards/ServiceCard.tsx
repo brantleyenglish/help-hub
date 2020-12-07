@@ -15,6 +15,8 @@ import styled from "styled-components";
 import { usePublicData } from "../../context/PublicContext";
 import { theme } from "../Theme";
 import { useModal } from "../../context/ModalContext";
+import { useAgency } from "../../context/AgencyContext";
+import { AgencyType } from "../../../DataTypes";
 import ModalWrapper from "../ModalWrapper";
 import EditServiceModal from "../../modals/EditServiceModal";
 import DeleteServiceModal from "../../modals/DeleteServiceModal";
@@ -63,6 +65,7 @@ flex-direction:column;
 const CategoryTagsWrapper = styled.div`
 display: flex;
   justify-content: space-between;
+  width: 300px;
   flex-direction: row;
   padding 30px;
   background: ${theme.colors.grayLight};
@@ -120,6 +123,7 @@ const DeleteButton = styled.button`
     color: ${theme.colors.white};
   }
 `;
+
 type ServiceType = {
   id: String;
   name: String;
@@ -141,33 +145,47 @@ type ServiceCardType = {
 };
 
 const ServiceCard = ({ service }: ServiceCardType) => {
+  const { allAgencies } = usePublicData();
   const { categories } = usePublicData();
+  const { agency } = useAgency();
+
   const { setActiveModal } = useModal();
 
   return (
     <>
       <ServiceCardWrapper>
         <ServiceCardContentWrapper>
-
           <ServiceCardHeaderWrapper>
-            <ModalWrapper modalId="ServiceEdit">
-              <EditServiceModal
-              // service={service} 
-              />
-            </ModalWrapper>
-            <EditButton onClick={() => setActiveModal("ServiceEdit")}>
-              <FontAwesomeIcon icon={faPencil} />
-            </EditButton>
-            <ModalWrapper modalId="ServiceDelete">
-              <DeleteServiceModal
-              // service={service} 
-              />
-            </ModalWrapper>
-            <DeleteButton onClick={() => setActiveModal("ServiceDelete")}>
-              <FontAwesomeIcon icon={faTrash} />
-            </DeleteButton>
-            <h1>{service?.name}</h1>
-            <h3>Provided by Agency Name</h3>
+            <>
+              {agency?.id === service?.agencyId && (
+                <>
+                  <ModalWrapper modalId="ServiceEdit">
+                    <EditServiceModal
+                    // service={service} 
+                    />
+                  </ModalWrapper>
+                  <EditButton onClick={() => setActiveModal("ServiceEdit")}>
+                    <FontAwesomeIcon icon={faPencil} />
+                  </EditButton>
+                  <ModalWrapper modalId="ServiceDelete">
+                    <DeleteServiceModal
+                    // service={service} 
+                    />
+                  </ModalWrapper>
+                  <DeleteButton onClick={() => setActiveModal("ServiceDelete")}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </DeleteButton>
+                </>
+              )}
+              <h1>{service?.name}</h1>
+              <h3>Provided by{" "}
+                {
+                  allAgencies?.find(
+                    (agency: AgencyType) => agency?.id === service?.agencyId
+                  )?.name
+                }
+              </h3>
+            </>
           </ServiceCardHeaderWrapper>
 
           <p>{service?.description}</p>
@@ -197,7 +215,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
         <CategoryTagsWrapper>
           {categories &&
             categories.filter(category => service?.categories?.includes(category?.name)).map((categoryData: any) => (
-              <IconWrapper><StyledSVG src={categoryData?.icon} alt={categoryData?.label} /></IconWrapper>
+              <IconWrapper className="icon"><StyledSVG src={categoryData?.icon} alt={categoryData?.label} /></IconWrapper>
             ))}
         </CategoryTagsWrapper>
       </ServiceCardWrapper>

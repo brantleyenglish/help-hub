@@ -25,7 +25,6 @@ const LoginWrapper = styled.div`
     color: ${theme.colors.white};
   };
 `;
-
 const FormFieldsWrapper = styled.div`
   flex-direction: column;
   flex-wrap: wrap;
@@ -33,7 +32,6 @@ const FormFieldsWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const FieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,7 +44,6 @@ const FieldWrapper = styled.div`
     margin-top: 5px;
   }
 `;
-
 const SubmitBtn = styled.button`
 color: ${theme.colors.white};
   background-color: ${theme.colors.lightBlue};
@@ -60,13 +57,12 @@ color: ${theme.colors.white};
     color: ${theme.colors.lightBlue};
     background-color: ${theme.colors.white};
     `;
-
 const ErrorWrapper = styled.div`
 color: ${theme.colors.red};
 margin: 0 0 10px 0;
 `;
 
-const SignUp = () => {
+const Login = () => {
   const history = useHistory();
   const [error, setError] = React.useState("");
   const { user, loginUser } = useAuth();
@@ -128,4 +124,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

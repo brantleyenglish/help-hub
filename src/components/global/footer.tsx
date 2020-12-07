@@ -25,13 +25,11 @@ const Footer = () => {
     <FooterWrapper>
       <Link to="/">HelpHub</Link>
       <p>᛫</p>
-      <Link to="/pages/servicespg">Services</Link>
+      <Link to="/services">Services</Link>
       <p>᛫</p>
-      <Link to="/pages/mainAgencies">Agencies</Link>
+      <Link to="/agencies">Agencies</Link>
       <p>᛫</p>
-      <Link to="/pages/clientHome">Clients</Link>
-      <p>᛫</p>
-      <Link to="/pages/agencies">Agency Profile</Link>
+      <Link to="/clients">Clients</Link>
       <p>᛫</p>
       <Link to="/">Log Out</Link>
     </FooterWrapper>
