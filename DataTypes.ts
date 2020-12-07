@@ -32,6 +32,20 @@ export type AgencyContextType = {
   agencyMessages: MessageListType;
 };
 
+export type ClientNotes = {
+  id?: string;
+  agencyId: string;
+  date: string;
+  isPrivate?:boolean;
+  message: string;
+  subject: string;
+}
+
+export type ClientFiles = {
+  id?: string;
+  filePath?: string;
+}
+
 export type ClientType = {
   id?: string;
   clientFirstName?: string;
@@ -45,8 +59,8 @@ export type ClientType = {
   zip: string;
   gender: string;
   ethnicity: string;
-  // county: string;
-  // additionalNotes: string;
+  notes?: ClientNotes[];
+  files?: ClientFiles[];
 }
 
 export type ClientListType = ClientType[];
