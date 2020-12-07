@@ -40,7 +40,7 @@ const CallWrapper = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  & button {
+  & a {
     padding: 0.5vw 2vw 0.5vw 2vw;
     margin: 1vw;
     margin-left: 2vw;
@@ -50,7 +50,7 @@ const CallWrapper = styled.div`
     color: ${theme.colors.white};
     cursor: pointer;
   }
-  & button:hover {
+  & a:hover {
     background-color: ${theme.colors.blue};
   }
 `;
@@ -140,7 +140,7 @@ const Home = () => {
 
       <CallWrapper>
         <h1> Can't find what you need?</h1>
-        <button>CALL 211</button>
+        <a href="tel:211">CALL 211</a>
       </CallWrapper>
 
       <AboutWrapper>

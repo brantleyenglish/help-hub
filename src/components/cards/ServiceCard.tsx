@@ -19,67 +19,64 @@ const StyledSVG = styled.img`
   height: 20px;
 `;
 const ServiceCardWrapper = styled.div`
-  background-color: ${theme.colors.grayLight};
-  border-radius: 15px;
-  width: 400px;
-  margin: 10px;
+display: flex;
+flex-flow: column;
+margin: 0px 25px 50px 25px;
+`;
+const ServiceCardContentWrapper = styled.div`
+background: ${theme.colors.grayLight};
+margin: 0px 0px 10px 0px;
+padding: 30px;
+width: 300px;
+min-height: 275px;
+border-radius: 10px 10px 0px 0px;
+p{
+  color: ${theme.colors.gray};
+};
+& h3 {
+  color: ${theme.colors.lightBlue};
   padding: 0px;
-  & a {
-    display: flex;
-    color: ${theme.colors.white};
-    background-color: ${theme.colors.blue};
-    font-size: 19px;
-    width: 12px;
-    height: 14px;
-    padding: 14px;
-    margin: 30px 30px 0px 15px;
-    border-radius: 9px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
-  & p {
-    color: ${theme.colors.gray};
-    text-align: justify;
-    padding: 0px 30px 0px 30px;
-  }
-  & h3 {
-    padding: 0px 30px 0px 30px;
-  }
+  margin: 0px;
+}
 `;
 const ServiceCardHeaderWrapper = styled.div`
-  align-items: center;
-  padding: 0px 30px;
-  padding-top: 30px;
-  & h1 {
-    text-align: left;
-    color: ${theme.colors.blue};
-    margin: 0;
-    font-size: 25px;
-  }
-  & h1:hover {
-    color: ${theme.colors.lightBlue};
-  }
-  & h3 {
-    padding: 0px;
-    margin: 0px;
-  }
+display: flex;
+flex-direction:column;
+& h1 {
+  text-align: left;
+  color: ${theme.colors.blue};
+  font-size: 25px;
+  padding-bottom: 0;
+  margin-bottom: 5px;
+
+}
+& h1:hover {
+  color: ${theme.colors.lightBlue};
+  cursor: pointer;
+}
+ 
 `;
 const CategoryTagsWrapper = styled.div`
 display: flex;
-flex-direction: row;
-flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: row;
+  padding 30px;
+  background: ${theme.colors.grayLight};
+  color: ${theme.colors.gray};
+  font-size: 20px;
+  border-radius: 0px 0px 10px 10px;
+`;
+const IconWrapper = styled.div`
+display: flex;
+color: ${theme.colors.white};
+background-color: ${theme.colors.blue};
+font-size: 20px;
+padding: 10px;
+width: 20px;
+height: 20px;
+border-radius: 10px;
+align-items: center;
 justify-content: center;
-border-top: 8px white solid;
-margin: 0;
-padding 0px 0px 30px 0px;
-& p{
-  margin-bottom:0;
-  padding-bottom:0;
-};
-& a{
-  margin: 15px 20px 0px;
-};
 `;
 
 type ServiceType = {
@@ -107,40 +104,40 @@ const ServiceCard = ({ service }: ServiceCardType) => {
   return (
     <>
       <ServiceCardWrapper>
-        <ServiceCardHeaderWrapper>
-          <h1>{service?.name}</h1>
-          <h3>Provided by Agency Name</h3>
-        </ServiceCardHeaderWrapper>
+        <ServiceCardContentWrapper>
+          <ServiceCardHeaderWrapper>
+            <h1>{service?.name}</h1>
+            <h3>Provided by Agency Name</h3>
+          </ServiceCardHeaderWrapper>
 
-        <p>{service?.description}</p>
+          <p>{service?.description}</p>
 
-        <h3>CONTACT INFO:</h3>
-        <p>
-          <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
+          <h3>Contact Information:</h3>
+          <p>
+            <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
           Contact: {service?.contactFirstName} {service?.contactLastName}
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} /> Phone:{" "}
-          {service?.phone}
-        </p>
-        <p>
-          <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} /> Phone:{" "}
+            {service?.phone}
+          </p>
+          <p>
+            <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
           Email: {service?.email}
-        </p>
-        <p>
-          <FontAwesomeIcon
-            icon={faMapMarkerAlt}
-            style={{ color: "#0e4680", paddingRight: 5 }}
-          />
-          {service?.streetAddress}, {service?.city}, {service?.state}{" "}
-          {service?.zip}
-        </p>
-
+          </p>
+          <p>
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              style={{ color: "#0e4680", paddingRight: 5 }}
+            />
+            {service?.streetAddress}, {service?.city}, {service?.state}{" "}
+            {service?.zip}
+          </p>
+        </ServiceCardContentWrapper>
         <CategoryTagsWrapper>
-          <p>SERVICE CATEGORIES:</p>
-          <FontAwesomeIcon icon={faHeartbeat} />
-          <FontAwesomeIcon icon={faTshirt} />
-          <FontAwesomeIcon icon={faUtensils} />
+          <IconWrapper><FontAwesomeIcon icon={faHeartbeat} /></IconWrapper>
+          <IconWrapper><FontAwesomeIcon icon={faTshirt} /></IconWrapper>
+          <IconWrapper><FontAwesomeIcon icon={faUtensils} /></IconWrapper>
         </CategoryTagsWrapper>
       </ServiceCardWrapper>
     </>
