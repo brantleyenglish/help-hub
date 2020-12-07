@@ -1,28 +1,23 @@
+import { faFileAlt, faPencil, faTrash } from "@fortawesome/pro-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../Theme";
-import {
-    faFileAlt,
-    faTimes,
-    faPencil,
-    faTrash,
-} from "@fortawesome/pro-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AgencyType, ClientFiles } from "../../../DataTypes";
 import { useModal } from "../../context/ModalContext";
-import ModalWrapper from "../ModalWrapper";
+import { usePublicData } from "../../context/PublicContext";
+import DeleteFileModal from "../../modals/DeleteFileModal";
 import EditFileModal from "../../modals/EditFileModal";
-import DeleteFileModal from "../../modals/DeleteFileModal"
-
+import ModalWrapper from "../ModalWrapper";
+import { theme } from "../Theme";
 
 const FileCardWrapper = styled.div`
-display: flex;
-flex-flow: column;
-margin: 10px;
-align-items: center;
-justify-content: center;
-
+  display: flex;
+  flex-flow: column;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
 `;
-const FileCardIconWrapper = styled.div`
+const FileCardIconWrapper = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,11 +30,11 @@ const FileCardIconWrapper = styled.div`
   padding: 15px 20px;
   margin: 10px 0px 0px 0px;
   border-radius: 10px 10px 0px 0px;
-  &:hover{
+  &:hover {
     background-color: ${theme.colors.yellow};
-    cursor:pointer;
-  };
-  `;
+    cursor: pointer;
+  }
+`;
 const FileCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
 color: ${theme.colors.gray};
@@ -64,84 +59,90 @@ const FileHeaderWrapper = styled.div`
   align-items: center;
 `;
 const EditButton = styled.button`
-background: ${theme?.colors?.lightBlue};
-color: ${theme.colors.white};
-border: none;
-padding: 5px;
-margin 30px;
-width: 25px;
-height: 25px;
-display: flex;
-justify-content: center;
-position: absolute;
-bottom: 0;
-right: 0;
-border-radius: 5px;
-cursor: pointer;
-&:hover {
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  margin: 30px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
     background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
-};
+  }
 `;
 const DeleteButton = styled.button`
-background: ${theme?.colors?.lightBlue};
-color: ${theme.colors.white};
-border: none;
-padding: 5px;
-margin 30px;
-width: 25px;
-height: 25px;
-display: flex;
-justify-content: center;
-position: absolute;
-bottom: 0;
-right: 30px;
-border-radius: 5px;
-cursor: pointer;
-&:hover {
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  margin: 30px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
     background: ${theme?.colors?.red};
     color: ${theme.colors.white};
-};
+  }
 `;
 
+const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
+  const { setActiveModal } = useModal();
+  const { allAgencies } = usePublicData();
 
-const FileCard = () => {
+  return (
+    <FileCardWrapper>
+      <FileCardIconWrapper href={file?.downloadUrl} target="_blank">
+        <FontAwesomeIcon icon={faFileAlt} size="4x" />
+      </FileCardIconWrapper>
+      <FileCardContentWrapper>
+        <FileHeaderWrapper>
+          <h1>{file?.fileTitle}</h1>
+          <h2>
+            Added by:{" "}
+            {
+              allAgencies?.find(
+                (agency: AgencyType) => agency?.id === file?.agencyId
+              )?.name
+            }
+          </h2>
+        </FileHeaderWrapper>
+        <p>{file?.description}</p>
+        <p>Date Created: {file?.date}</p>
 
-    const { setActiveModal } = useModal();
+        <ModalWrapper modalId="FileEdit">
+          <EditFileModal
+          // file={file}
+          />
+        </ModalWrapper>
+        <EditButton onClick={() => setActiveModal("FileEdit")}>
+          <FontAwesomeIcon icon={faPencil} />
+        </EditButton>
 
-    return (
-        <FileCardWrapper>
-            <FileCardIconWrapper>
-                <FontAwesomeIcon icon={faFileAlt} size="4x" />
-            </FileCardIconWrapper>
-            <FileCardContentWrapper>
-                <FileHeaderWrapper>
-                    <h1>File Title</h1>
-                    <h2>Added by: Agency Name</h2>
-                </FileHeaderWrapper>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem nihil dicta cumque inventore amet deleniti. Aperiam repellat nisi fugit illum saepe optio doloribus ipsam amet provident ipsum, ex dolor sed?</p>
-                <p>Date Created: 01 / 02 / 2020</p>
-
-                <ModalWrapper modalId="FileEdit">
-                    <EditFileModal
-                    // file={file} 
-                    />
-                </ModalWrapper>
-                <EditButton onClick={() => setActiveModal("FileEdit")}>
-                    <FontAwesomeIcon icon={faPencil} />
-                </EditButton>
-
-                <ModalWrapper modalId="FileDelete">
-                    <DeleteFileModal
-                    // file={file} 
-                    />
-                </ModalWrapper>
-                <DeleteButton onClick={() => setActiveModal("FileDelete")}>
-                    <FontAwesomeIcon icon={faTrash} />
-                </DeleteButton>
-            </FileCardContentWrapper>
-        </FileCardWrapper>
-    );
+        <ModalWrapper modalId="FileDelete">
+          <DeleteFileModal
+          // file={file}
+          />
+        </ModalWrapper>
+        <DeleteButton onClick={() => setActiveModal("FileDelete")}>
+          <FontAwesomeIcon icon={faTrash} />
+        </DeleteButton>
+      </FileCardContentWrapper>
+    </FileCardWrapper>
+  );
 };
 
 export default FileCard;

@@ -27,23 +27,23 @@ const NoteCardIconWrapper = styled.div`
   border-radius: 10px 0px 0px 10px;
 `;
 const NoteCardContentWrapper = styled.div`
-background: ${theme.colors.grayLight};
-color: ${theme.colors.gray};
-margin: 10px 0px;
-border-radius: 0px 10px 10px 0px;
-padding: 15px 20px;
-width: 100%;
-& h1{
-  color: ${theme.colors.blue};
-  font-size: 25px;
-  margin: 10px 0 0 0;
-  padding: 0;
-};
-& h2{
+  background: ${theme.colors.grayLight};
+  color: ${theme.colors.gray};
+  margin: 10px 0px;
+  border-radius: 0px 10px 10px 0px;
+  padding: 15px 20px;
+  width: 100%;
+  & h1 {
+    color: ${theme.colors.blue};
+    font-size: 25px;
+    margin: 10px 0 0 0;
+    padding: 0;
+  }
+  & h2 {
     font-size: 20px;
     margin: 0;
-    padding; 0;
-};
+    padding: 0;
+  }
 `;
 const NoteHeaderWrapper = styled.div`
   align-items: center;

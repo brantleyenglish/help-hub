@@ -50,17 +50,6 @@ export const AssistanceProvider: React.FC<any> = (props) => {
   const updateAssistanceByClient = async () => {
     const assistanceData = await getAssistanceByClient({ clientId });
     if (assistanceData !== "Error") {
-      console.log({
-        test: assistanceData?.filter(
-          (singleAssistance) =>
-            singleAssistance?.agencyId &&
-            singleAssistance?.serviceId &&
-            singleAssistance?.clientId &&
-            (singleAssistance?.agencyId === user?.uid ||
-              !singleAssistance?.isPrivate)
-        ),
-        user: user?.uid,
-      });
       setAssistance(
         assistanceData?.filter(
           (singleAssistance) =>

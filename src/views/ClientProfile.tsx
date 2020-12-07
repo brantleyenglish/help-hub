@@ -12,7 +12,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AssistanceDataType, ClientNotes, ClientType } from "../../DataTypes";
+import {
+  AssistanceDataType,
+  ClientFiles,
+  ClientNotes,
+  ClientType,
+} from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
 import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
@@ -179,11 +184,11 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   const { client, updateClientInfo } = useClient();
   const { setAssistanceClientId, assistanceData } = useAssistance();
 
-  console.log({ assistanceData });
-
   const [clientProfile, setClientProfile] = React.useState<ClientType | null>(
     null
   );
+
+  console.log({ clientProfile });
 
   const { setActiveModal } = useModal();
 
@@ -204,8 +209,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   React.useEffect(() => {
     getClientProfile();
   }, []);
-
-  console.log({ clientProfile: clientProfile?.notes });
 
   return (
     <ClientProfileWrapper>
@@ -308,7 +311,10 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("files")}
           >
             <ModalWrapper modalId="FileCreate">
-              <AddFileModal />
+              <AddFileModal
+                clientProfile={clientProfile}
+                getClientProfile={getClientProfile}
+              />
             </ModalWrapper>
             <p>FILES</p>
             <AddBtnWrapper onClick={() => setActiveModal("FileCreate")}>
@@ -343,10 +349,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
         )}
         {activeTab === "files" && (
           <FileCardWrapper>
-            <FileCard />
-            <FileCard />
-            <FileCard />
-            <FileCard />
+            {clientProfile?.files
+              ?.filter(
+                (file: ClientFiles) =>
+                  !file?.isPrivate || file?.agencyId === user?.uid
+              )
+              ?.map((file: ClientFiles, index: number) => (
+                <FileCard file={file} key={file?.id} />
+              ))}
           </FileCardWrapper>
         )}
       </ContentWrapper>

@@ -43,7 +43,13 @@ export type ClientNotes = {
 
 export type ClientFiles = {
   id?: string;
-  filePath?: string;
+  downloadUrl?: string;
+  fileTitle: string;
+  description?: string;
+  isPrivate?:boolean;
+  clientId?:string;
+  agencyId?: string;
+  date?: string;
 }
 
 export type ClientType = {

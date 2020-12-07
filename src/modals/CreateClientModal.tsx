@@ -60,7 +60,6 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
       onSubmit={async (values) => {
         if (values && createClient && getAllClientData) {
           try {
-            console.log(values);
             await createClient({ data: values });
             getAllClientData();
             resetFilters();
