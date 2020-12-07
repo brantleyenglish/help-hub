@@ -8,7 +8,10 @@ import React from "react";
 import styled from "styled-components";
 import { AgencyType } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
+import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
+import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
+import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
 
 const BulletinCardWrapper = styled.div`
@@ -105,7 +108,10 @@ type MessageCardType = {
 const BulletinCard = ({ message }: MessageCardType) => {
   // const [editMode, setEditMode] = React.useState<boolean>(false);
   const { allAgencies } = usePublicData();
-  const { agency } = useAgency();
+
+  const { allServices, allPublicMessages } = usePublicData();
+  const { agency, updateAgencyInfo, agencyMessages } = useAgency();
+  const { setActiveModal } = useModal();
 
   return (
     <BulletinCardWrapper>
@@ -125,10 +131,20 @@ const BulletinCard = ({ message }: MessageCardType) => {
           </h2>
           {agency?.id === message?.agencyId && (
             <>
-              <EditButton>
+              <ModalWrapper modalId="MessageEdit">
+                <></>
+                {/* TO DO: Fix error that appears with the EditButtonModal */}
+                {/* <EditBulletinModal
+                            message={message}
+                            getAgencyProfile={getAgencyProfile} /> */}
+              </ModalWrapper>
+              <EditButton onClick={() => setActiveModal("MessageEdit")}>
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
-              <DeleteButton>
+              <ModalWrapper modalId="MessageDelete">
+                <DeleteBulletinModal />
+              </ModalWrapper>
+              <DeleteButton onClick={() => setActiveModal("MessageDelete")}>
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </>
