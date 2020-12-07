@@ -12,7 +12,7 @@ import useQuery from "../utils/useQuery";
 
 const ServiceListWrapper = styled.div`
   background-color: ${theme.colors.white};
-  padding: 10px;
+  padding: 50px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

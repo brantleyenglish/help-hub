@@ -11,10 +11,21 @@ import styled from "styled-components";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
 
+const StyledSVG = styled.img`
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
+    brightness(106%) contrast(100%);
+  height: 22px;
+`;
 const AgencyCardWrapper = styled.div`
   display: flex;
   flex-flow: column;
   margin: 0px 25px 50px 25px;
+  :hover{
+    >div{
+      background:  ${theme.colors.grayHighlight};
+    cursor:pointer;
+  }
+  }
 `;
 const AgencyCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
@@ -111,10 +122,10 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
         </p>
       </AgencyCardContentWrapper>
       <CategoryTagsWrapper>
-        <IconWrapper><FontAwesomeIcon icon={faHeartbeat} /></IconWrapper>
-        <IconWrapper><FontAwesomeIcon icon={faTshirt} /></IconWrapper>
-        <IconWrapper><FontAwesomeIcon icon={faUtensils} /></IconWrapper>
-        <IconWrapper><FontAwesomeIcon icon={faHeartbeat} /></IconWrapper>
+        {/* {categories &&
+          categories.filter(category => service?.categories?.includes(category?.name)).map((categoryData: any) => (
+            <IconWrapper><StyledSVG src={categoryData?.icon} alt={categoryData?.label} /></IconWrapper>
+          ))} */}
       </CategoryTagsWrapper>
     </AgencyCardWrapper>
   );

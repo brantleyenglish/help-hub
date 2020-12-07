@@ -21,7 +21,7 @@ const ClientRow: React.FC<any> = ({ client }) => {
       <td>{client?.dob}</td>
       <td>{client?.email}</td>
       <td>{client?.phone}</td>
-      <td>{client?.streetAddress}</td>
+      <td>{client?.streetAddress} {client?.city}, {client?.state} </td>
     </StyledRow>
   );
 };

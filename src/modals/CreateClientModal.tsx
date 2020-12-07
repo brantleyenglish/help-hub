@@ -94,16 +94,20 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
             type="select"
             options={[
               {
-                value: "m",
+                value: "Male",
                 label: "Male",
               },
               {
-                value: "f",
+                value: "Female",
                 label: "Female",
               },
               {
-                value: "other",
-                label: "Other / N/A",
+                value: "Transgender",
+                label: "Transgender",
+              },
+              {
+                value: "Other/Not Reported",
+                label: "Other / Not Reported",
               },
             ]}
           />
@@ -113,32 +117,32 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
             type="select"
             options={[
               {
-                value: "white",
-                label: "White",
+                value: "White/Caucasian",
+                label: "White / Caucasian",
               },
               {
-                value: "black",
+                value: "Black/African American",
                 label: "Black / African American",
               },
               {
-                value: "hispanic",
-                label: "Hispanic / Latino",
+                value: "Hipanic/Latinx",
+                label: "Hipanic / Latinx",
               },
               {
-                value: "asian",
+                value: "Asian American",
                 label: "Asian American",
               },
               {
-                value: "native",
-                label: "American Indian / Alaska Native",
+                value: "American Indian/Alaskan Native",
+                label: "American Indian / Alaskan Native",
               },
               {
-                value: "pacific",
+                value: "Native Hawaiian/Pacific Islander",
                 label: "Native Hawaiian / Pacific Islander",
               },
               {
-                value: "other",
-                label: "Other / N/A",
+                value: "Other",
+                label: "Other",
               },
             ]}
           />
