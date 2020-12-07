@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AgencyListType,
   CategoryListType,
   MessageListType,
   ServiceListType,
@@ -11,6 +12,7 @@ import { getAllServices } from "../firebase/services";
 
 export type PublicContextType = {
   categories: CategoryListType;
+  allAgencies: AgencyListType;
   allServices: ServiceListType;
   signupPassword: RegExp;
   allPublicMessages: MessageListType;

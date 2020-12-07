@@ -13,10 +13,15 @@ import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
 import AddBulletinModal from "src/modals/AddBulletinModal";
 import styled from "styled-components";
-import { AgencyType, AssistanceDataType, ServiceType } from "../../DataTypes";
+import {
+  AgencyType,
+  AssistanceDataType,
+  MessageType,
+  ServiceType,
+} from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
-import ModalWrapper from "../components/ModalWrapper";
 import ServiceCard from "../components/cards/ServiceCard";
+import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
@@ -282,7 +287,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               onClick={() => setActiveTab("bulletinboard")}
             >
               <ModalWrapper modalId="MessageCreate">
-                <AddBulletinModal />
+                <AddBulletinModal agencyId={agencyId} />
               </ModalWrapper>
               <p>BULLETIN BOARD</p>
               <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
@@ -332,9 +337,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "bulletinboard" && (
           <>
-            {agencyMessages?.map((message: any) => (
-              <BulletinCard message={message} key={`${message?.id}-1`} />
-            ))}
+            {agencyMessages
+              ?.filter((message: MessageType) => message?.isPrivate)
+              ?.map((message: any) => (
+                <BulletinCard message={message} key={`${message?.id}-1`} />
+              ))}
             {allPublicMessages?.map((message: any) => (
               <BulletinCard message={message} key={`${message?.id} - 2`} />
             ))}

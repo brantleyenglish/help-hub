@@ -1,6 +1,6 @@
 import { db } from "./config";
 
-import {MessageListType} from '../../DataTypes';
+import {MessageListType, MessageType} from '../../DataTypes';
 
 type GetAgencyMessagesType ={
   agencyId: string;
@@ -33,3 +33,25 @@ export const getAgencyMessages = async ({ agencyId }: GetAgencyMessagesType) => 
     return "Error";
   }
 }
+
+type CreateMessageType = {
+  data: MessageType;
+}
+
+export const createMessage = async ({ data }: CreateMessageType) => {
+  try {
+      const docRef =  db.collection("messages").doc();
+      await docRef.set({
+        id: docRef?.id,
+        ...data
+      })
+      const message = await docRef.get();
+      if (message.exists) {
+          return message.data();
+      } else {
+          return "DoesNotExisit";
+      }
+  } catch (e) {
+      console.log("Error createClient:", e);
+  }
+};
