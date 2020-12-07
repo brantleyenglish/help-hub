@@ -1,15 +1,9 @@
 import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
-import {
-  AgencyType,
-  CategoryType,
-  ServiceListType,
-  ServiceType,
-} from "../../../DataTypes";
-import { usePublicData } from "../../context/PublicContext";
-import { getServicesByAgencyId } from "../../firebase/services";
+import { AgencyType, CategoryType } from "../../../DataTypes";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
 
@@ -84,33 +78,7 @@ type AgencyCardType = {
 };
 
 const AgencyCard = ({ agency }: AgencyCardType) => {
-  const [services, setServices] = React.useState<ServiceListType>([]);
   const { categories } = usePublicData();
-
-  React.useEffect(() => {
-    getServices();
-  }, []);
-
-  const getServices = async () => {
-    if (agency?.id) {
-      const serviceData = await getServicesByAgencyId({ agencyId: agency?.id });
-      if (serviceData !== "Error") {
-        setServices(serviceData);
-      }
-    }
-  };
-
-  const agencyCategories = React.useMemo(() => {
-    return services
-      ?.reduce((accu: string[], service: ServiceType) => {
-        return [...accu, ...service?.categories];
-      }, [])
-      ?.filter(
-        (value: string, index: number, self: string[]) =>
-          self.indexOf(value) === index
-      );
-  }, [services]);
-
   // const serives = getServicesByAgencyId(agencyId: agency?.id);
   return (
     <AgencyCardWrapper>
@@ -133,22 +101,23 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
         </p>
       </AgencyCardContentWrapper>
       <CategoryTagsWrapper>
-        {agencyCategories.map((categoryId: string) => (
-          <IconWrapper>
-            <StyledSVG
-              src={
-                categories?.find(
-                  (category: CategoryType) => category?.name === categoryId
-                )?.icon
-              }
-              alt={
-                categories?.find(
-                  (category: CategoryType) => category?.name === categoryId
-                )?.icon
-              }
-            />
-          </IconWrapper>
-        ))}
+        {agency?.categories &&
+          agency?.categories.map((categoryId: string) => (
+            <IconWrapper>
+              <StyledSVG
+                src={
+                  categories?.find(
+                    (category: CategoryType) => category?.name === categoryId
+                  )?.icon
+                }
+                alt={
+                  categories?.find(
+                    (category: CategoryType) => category?.name === categoryId
+                  )?.icon
+                }
+              />
+            </IconWrapper>
+          ))}
       </CategoryTagsWrapper>
     </AgencyCardWrapper>
   );

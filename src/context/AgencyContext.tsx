@@ -4,6 +4,7 @@ import {
   AgencyListType,
   AgencyType,
   MessageListType,
+  ServiceType,
 } from "../../DataTypes";
 import {
   createAgency,
@@ -12,6 +13,7 @@ import {
   updateAgency,
 } from "../firebase/agencies";
 import { getAgencyMessages } from "../firebase/messages";
+import { getServicesByAgencyId } from "../firebase/services";
 import { useAuth } from "./AuthContext";
 
 type UpdateAgencyInfo = {
@@ -56,7 +58,29 @@ export const AgencyProvider: React.FC<any> = (props) => {
   const getAllAgencyData = async () => {
     const agenciesData = await getAllAgencies();
     if (agenciesData !== "Error") {
-      setAgencies(agenciesData);
+      const newAgenciesArray: AgencyListType = [];
+      for await (const agencyData of agenciesData) {
+        const serviceData = await getServicesByAgencyId({
+          agencyId: agencyData?.id,
+        });
+        if (serviceData === "Error") {
+          newAgenciesArray?.push({ ...agencyData, categories: [] });
+        } else {
+          const agencyCategories = serviceData
+            ?.reduce((accu: string[], service: ServiceType) => {
+              return [...accu, ...service?.categories];
+            }, [])
+            ?.filter(
+              (value: string, index: number, self: string[]) =>
+                self.indexOf(value) === index
+            );
+          newAgenciesArray?.push({
+            ...agencyData,
+            categories: agencyCategories,
+          });
+        }
+      }
+      setAgencies(newAgenciesArray);
     }
   };
 
