@@ -1,24 +1,23 @@
-import React from "react";
-import styled from "styled-components";
-import { theme } from "../Theme";
 import {
-    faThumbtack,
-    faTimes,
-    faPencil,
-    faTrash,
+  faPencil,
+  faThumbtack,
+  faTrash,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { usePublicData } from "../../context/PublicContext";
+import React from "react";
+import styled from "styled-components";
+import { AgencyType } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
-import EditBulletinModal from "../../modals/EditBulletinModal";
-import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
 import { useModal } from "../../context/ModalContext";
+import { usePublicData } from "../../context/PublicContext";
+import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
 import ModalWrapper from "../ModalWrapper";
+import { theme } from "../Theme";
 
 const BulletinCardWrapper = styled.div`
-display: flex;
+  display: flex;
 `;
-const BulletinCardIconWrapper = styled.div`
+const BulletinCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +29,8 @@ const BulletinCardIconWrapper = styled.div`
   padding: 15px 20px;
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
-  `;
+  opacity: ${(p) => (p?.isTranslucent ? 0.7 : 1)};
+`;
 const BulletinCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
 color: ${theme.colors.gray};
@@ -55,109 +55,106 @@ const BulletinHeaderWrapper = styled.div`
   position: relative;
 `;
 const EditButton = styled.button`
-background: ${theme?.colors?.lightBlue};
-color: ${theme.colors.white};
-border: none;
-padding: 5px;
-width: 25px;
-height: 25px;
-display: flex;
-justify-content: center;
-position: absolute;
-top: 0;
-right: 0;
-border-radius: 5px;
-cursor: pointer;
-&:hover {
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
     background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
-};
+  }
 `;
 const DeleteButton = styled.button`
-background: ${theme?.colors?.lightBlue};
-color: ${theme.colors.white};
-border: none;
-padding: 5px;
-width: 25px;
-height: 25px;
-display: flex;
-justify-content: center;
-position: absolute;
-top: 0;
-right: 30px;
-border-radius: 5px;
-cursor: pointer;
-&:hover {
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  border: none;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
     background: ${theme?.colors?.yellow};
     color: ${theme.colors.white};
-};
+  }
 `;
 
 type MessageType = {
-    subject: String;
-    message: String;
-    agencyId: String;
-    date: String;
-    isPrivate: String;
+  subject: String;
+  message: String;
+  agencyId: String;
+  date: String;
+  isPrivate: String;
 };
 
 type MessageCardType = {
-    message?: MessageType;
+  message?: MessageType;
 };
 
 const BulletinCard = ({ message }: MessageCardType) => {
+  // const [editMode, setEditMode] = React.useState<boolean>(false);
+  const { allAgencies } = usePublicData();
 
-    // const [editMode, setEditMode] = React.useState<boolean>(false);
-    const { allServices, allPublicMessages } = usePublicData();
-    const { agency, updateAgencyInfo, agencyMessages } = useAgency();
-    const { setActiveModal } = useModal();
+  const { allServices, allPublicMessages } = usePublicData();
+  const { agency, updateAgencyInfo, agencyMessages } = useAgency();
+  const { setActiveModal } = useModal();
 
-
-    //TO DO: Revise to display existing form content
-
-    // const getAgencyProfile = async () => {
-    //     if (setAssistanceClientId) {
-    //       setAssistanceClientId(clientId);
-    //     }
-    //     const clientData = await getClient({ clientId });
-    //     if (clientData && clientData !== "DoesNotExist") {
-    //       setClientProfile(clientData);
-    //     }
-    //   };
-    // React.useEffect(() => {
-    //     getAgencyProfile();
-    // }, []);
-
-    return (
-        <BulletinCardWrapper>
-            <BulletinCardIconWrapper>
-                <FontAwesomeIcon icon={faThumbtack} size="4x" />
-            </BulletinCardIconWrapper>
-            <BulletinCardContentWrapper>
-                <BulletinHeaderWrapper>
-                    <h1>{message?.subject}</h1>
-                    <h2>Created by: [Agency Name]</h2>
-                    <ModalWrapper modalId="MessageEdit">
-                        {/* TO DO: Fix error that appears with the EditButtonModal */}
-                        {/* <EditBulletinModal
+  return (
+    <BulletinCardWrapper>
+      <BulletinCardIconWrapper isTranslucent={!!message?.isPrivate}>
+        <FontAwesomeIcon icon={faThumbtack} size="4x" />
+      </BulletinCardIconWrapper>
+      <BulletinCardContentWrapper>
+        <BulletinHeaderWrapper>
+          <h1>{message?.subject}</h1>
+          <h2>
+            Created by:{" "}
+            {
+              allAgencies?.find(
+                (agency: AgencyType) => agency?.id === message?.agencyId
+              )?.name
+            }
+          </h2>
+          {agency?.id === message?.agencyId && (
+            <>
+              <ModalWrapper modalId="MessageEdit">
+                <></>
+                {/* TO DO: Fix error that appears with the EditButtonModal */}
+                {/* <EditBulletinModal
                             message={message}
                             getAgencyProfile={getAgencyProfile} /> */}
-                    </ModalWrapper>
-                    <EditButton onClick={() => setActiveModal("MessageEdit")}>
-                        <FontAwesomeIcon icon={faPencil} />
-                    </EditButton>
-                    <ModalWrapper modalId="MessageDelete">
-                        <DeleteBulletinModal />
-                    </ModalWrapper>
-                    <DeleteButton onClick={() => setActiveModal("MessageDelete")}>
-                        <FontAwesomeIcon icon={faTrash} />
-                    </DeleteButton>
-                </BulletinHeaderWrapper>
-                <p>{message?.message}</p>
-                <p>{message?.date}</p>
-            </BulletinCardContentWrapper>
-        </BulletinCardWrapper>
-    );
+              </ModalWrapper>
+              <EditButton onClick={() => setActiveModal("MessageEdit")}>
+                <FontAwesomeIcon icon={faPencil} />
+              </EditButton>
+              <ModalWrapper modalId="MessageDelete">
+                <DeleteBulletinModal />
+              </ModalWrapper>
+              <DeleteButton onClick={() => setActiveModal("MessageDelete")}>
+                <FontAwesomeIcon icon={faTrash} />
+              </DeleteButton>
+            </>
+          )}
+        </BulletinHeaderWrapper>
+        <p>{message?.message}</p>
+        <p>{message?.date}</p>
+      </BulletinCardContentWrapper>
+    </BulletinCardWrapper>
+  );
 };
 
 export default BulletinCard;
