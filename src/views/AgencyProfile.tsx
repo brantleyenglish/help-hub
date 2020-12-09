@@ -233,8 +233,14 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           <AgencyCardWrapper>
             <TitleWrapper>
               <img src={HHPlaceholder} />
-              <h1>{agencyProfile?.name}</h1>
-
+              {agency?.name && (
+                <h1>{agencyProfile?.name}</h1>
+              )}
+              {!agency?.name && (
+                <>
+                  <h1>Welcome to Your Agency Profile</h1>
+                </>
+              )}
               {agency?.id === agencyId && (
                 <EditButton
                   type="button"
@@ -246,38 +252,61 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             </TitleWrapper>
 
             <FormContentWrapper>
+              {!agency?.name && (
+                <>
+                  <p style={{ paddingTop: "10px" }}>Click the edit button in the upper right corner to edit your agency info. </p>
+                </>
+              )}
               <FormLeftWrapper>
-                <h2>DESCRIPTION:</h2>
-                <p>{agencyProfile?.description}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faBrowser} /> Website
+                {agency?.description && (
+                  <>
+                    <h2>DESCRIPTION:</h2>
+                    <p>{agencyProfile?.description}</p>
+                  </>
+                )}
+                {agency?.website && (
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faBrowser} /> Website
                 </h3>
-                <p> {agencyProfile?.website}</p>
+                    <p> {agencyProfile?.website}</p>
+                  </>
+                )}
               </FormLeftWrapper>
               <FormRightWrapper>
-                <h2>CONTACT INFO:</h2>
-                <h3>
-                  <FontAwesomeIcon icon={faUser} /> Contact
-                </h3>
-                <p>
-                  {agencyProfile?.contactFirstName}{" "}
-                  {agencyProfile?.contactLastName}
-                </p>
-                <h3>
-                  <FontAwesomeIcon icon={faPhone} /> Phone
-                </h3>
-                <p>{agencyProfile?.phone}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faEnvelope} /> Email
-                </h3>
-                <p>{agencyProfile?.email}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
-                </h3>
-                <p>
-                  {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                  {agencyProfile?.state} {agencyProfile?.zip}
-                </p>
+                {agency?.name && (
+                  <h2>CONTACT INFO:</h2>
+                )}
+                {agency?.contactFirstName && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faUser} /> Contact</h3>
+                    <p>
+                      {agencyProfile?.contactFirstName}{" "}
+                      {agencyProfile?.contactLastName}
+                    </p>
+                  </>
+                )}
+                {agency?.phone && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                    <p>{agencyProfile?.phone}</p>
+                  </>
+                )}
+                {agency?.email && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                    <p>{agencyProfile?.email}</p>
+                  </>
+                )}
+                {agency?.streetAddress && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                    <p>
+                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                      {agencyProfile?.state} {agencyProfile?.zip}
+                    </p>
+                  </>
+                )}
                 <p>{agencyProfile?.counties?.join(", ")}</p>
               </FormRightWrapper>
             </FormContentWrapper>

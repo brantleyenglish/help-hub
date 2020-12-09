@@ -72,7 +72,7 @@ const StyledSVG = styled.img`
 `;
 const CategoryButton = styled.button<{ active: boolean }>`
   background: ${(p) =>
-    p?.active ? theme.colors.blue : theme.colors.lightBlue};
+    p?.active ? theme.colors.yellow : theme.colors.lightBlue};
   outline: none;
   border: none;
   cursor: pointer;
@@ -83,7 +83,7 @@ const CategoryButton = styled.button<{ active: boolean }>`
   width: 40px;
   height: 40px;
   &:hover {
-    background: ${theme.colors.blue};
+    background: ${theme.colors.yellow};
     img {
       filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(298deg)
         brightness(100%) contrast(100%);

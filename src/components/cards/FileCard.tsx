@@ -120,7 +120,9 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
             }
           </h2>
         </FileHeaderWrapper>
-        <p>{file?.description}</p>
+        {file?.description && (
+          <p>{file?.description}</p>
+        )}
         <p>Date Created: {file?.date}</p>
 
         <ModalWrapper modalId="FileEdit">

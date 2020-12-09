@@ -234,39 +234,51 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             </TitleWrapper>
             <FormContentWrapper>
               <FormLeftWrapper>
-                <h3>
-                  <FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth
-                </h3>
-                <p>{clientProfile?.dob}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faPhone} /> Phone
-                </h3>
-                <p>{clientProfile?.phone}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faEnvelope} /> Email
-                </h3>
-                <p>{clientProfile?.email}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
-                </h3>
-                <p>
-                  {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
-                  {clientProfile?.state} {clientProfile?.zip}
-                </p>
+                {clientProfile?.dob && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth</h3>
+                    <p>{clientProfile?.dob}</p>
+                  </>
+                )}
+                {clientProfile?.phone && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                    <p>{clientProfile?.phone}</p>
+                  </>
+                )}
+                {clientProfile?.email && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                    <p>{clientProfile?.email}</p>
+                  </>
+                )}
+                {clientProfile?.streetAddress && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                    <p>
+                      {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
+                      {clientProfile?.state} {clientProfile?.zip}
+                    </p>
+                  </>
+                )}
               </FormLeftWrapper>
               <FormRightWrapper>
-                <h3>
-                  <FontAwesomeIcon icon={faVenusMars} /> Gender
-                </h3>
-                <p>{clientProfile?.gender}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faUsers} /> Ethnicity
-                </h3>
-                <p>{clientProfile?.ethnicity}</p>
-                <h3>
-                  <FontAwesomeIcon icon={faMapMarkedAlt} /> County
-                </h3>
+                {clientProfile?.gender && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faVenusMars} /> Gender</h3>
+                    <p>{clientProfile?.gender}</p>
+                  </>
+                )}
+                {clientProfile?.ethnicity && (
+                  <>
+                    <h3><FontAwesomeIcon icon={faUsers} /> Ethnicity</h3>
+                    <p>{clientProfile?.ethnicity}</p>
+                  </>
+                )}
+                {/* {clientProfile?.county && ( */}
+                {/* <h3><FontAwesomeIcon icon={faMapMarkedAlt} /> County</h3> */}
                 {/* <p>{clientProfile?.county}</p> */}
+                {/* )} */}
               </FormRightWrapper>
             </FormContentWrapper>
           </ClientCardWrapper>

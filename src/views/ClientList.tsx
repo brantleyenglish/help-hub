@@ -12,13 +12,14 @@ import CreateClientModal from "../modals/CreateClientModal";
 
 const ClientPageWrapper = styled.div``;
 
-const ClientTableWrapper = styled.div`
+const SearchWrapperWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
   width: 100%;
   justify-content: center;
   align-items: center;
+  overflow-x:auto;
 `;
 const SearchWrapper = styled.div`
   padding: 30px;
@@ -70,7 +71,7 @@ const ClientSearchWrapper = styled.div`
   }
 `;
 const ClientListWrapper = styled.div`
-  padding: 30px;
+  margin: 30px;
 `;
 const ClientTable = styled.table`
   border-collapse: collapse;
@@ -219,7 +220,7 @@ const ClientList: React.FC<{}> = ({ }) => {
       </ModalWrapper>
       <ClientSearchWrapper>
         <h1>Clients</h1>
-        <ClientTableWrapper>
+        <SearchWrapperWrapper>
           <SearchWrapper>
             <SearchInputWrapper>
               <AdvancedSearchBar
@@ -236,12 +237,12 @@ const ClientList: React.FC<{}> = ({ }) => {
               <DateInput setValue={setBirthDate} />
             </SearchInputWrapper>
           </SearchWrapper>
-        </ClientTableWrapper>
+        </SearchWrapperWrapper>
       </ClientSearchWrapper>
 
-      <ClientListWrapper>
+      <ClientListWrapper style={{ overflowX: "auto" }}>
         {/* Table */}
-        <ClientTable>
+        <ClientTable >
           {/* tr */}
           <ClientTableHeader>
             <th scope="col">

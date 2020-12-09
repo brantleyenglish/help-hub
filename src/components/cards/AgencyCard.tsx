@@ -90,15 +90,19 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
 
         <p>{agency?.description}</p>
 
-        <p>
-          <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-          {agency?.phone}
-        </p>
+        {agency?.phone && (
+          <p>
+            <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
+            {agency?.phone}
+          </p>
+        )}
 
-        <p>
-          <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
-          {agency?.website}
-        </p>
+        {agency?.website && (
+          <p>
+            <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
+            {agency?.website}
+          </p>
+        )}
       </AgencyCardContentWrapper>
       <CategoryTagsWrapper>
         {agency?.categories &&

@@ -22,6 +22,23 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2{
+  color: ${theme.colors.red};
+  font-size: 15px;
+  padding: 0;  
+  margin: 2px;
+};
+h3 {
+  color: ${theme.colors.red};
+  font-size: 15px;
+  padding: 0;  
+  margin: 5px;
+}
+div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 `;
 
 const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
@@ -40,8 +57,8 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
     city: Yup?.string(),
     state: Yup?.string(),
     zip: Yup?.string(),
-    gender: Yup?.string()?.required(),
-    ethnicity: Yup?.string()?.required(),
+    gender: Yup?.string(),
+    ethnicity: Yup?.string(),
   });
 
   return (
@@ -56,8 +73,8 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
         city: "",
         state: "",
         zip: "",
-        gender: "m",
-        ethnicity: "white",
+        gender: "Male",
+        ethnicity: "White/Caucasian",
       }}
       validationSchema={loginValidationSchema}
       onSubmit={async (values) => {
@@ -75,7 +92,13 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <StyledHeader><h1>Create Client</h1></StyledHeader>
+          <StyledHeader><h1>Create Client</h1>
+            <h2>Before entering information please ask the client the following: </h2>
+            <h3>"Do you give this organization permission to collect your personal and financial data?"</h3>
+            <div>
+              Yes<input type="checkbox" /></div>
+          </StyledHeader>
+
           <StyledFormikField name="clientFirstName" label="Client First Name" />
           <StyledFormikField name="clientLastName" label="Client Last Name" />
           <FormikDateInput

@@ -191,26 +191,34 @@ const ServiceCard = ({ service }: ServiceCardType) => {
           <p>{service?.description}</p>
 
           <h3>Contact Information:</h3>
-          <p>
-            <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
+          {service?.contactFirstName && (
+            <p>
+              <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
           Contact: {service?.contactFirstName} {service?.contactLastName}
-          </p>
-          <p>
-            <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} /> Phone:{" "}
-            {service?.phone}
-          </p>
-          <p>
-            <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
+            </p>
+          )}
+          {service?.phone && (
+            <p>
+              <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} /> Phone:{" "}
+              {service?.phone}
+            </p>
+          )}
+          {service?.email && (
+            <p>
+              <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
           Email: {service?.email}
-          </p>
-          <p>
-            <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              style={{ color: "#0e4680", paddingRight: 5 }}
-            />
-            {service?.streetAddress}, {service?.city}, {service?.state}{" "}
-            {service?.zip}
-          </p>
+            </p>
+          )}
+          {service?.streetAddress && (
+            <p>
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                style={{ color: "#0e4680", paddingRight: 5 }}
+              />
+              {service?.streetAddress}, {service?.city}, {service?.state}{" "}
+              {service?.zip}
+            </p>
+          )}
         </ServiceCardContentWrapper>
         <CategoryTagsWrapper>
           {categories &&
