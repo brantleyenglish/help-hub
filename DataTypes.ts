@@ -36,7 +36,7 @@ export type ClientNotes = {
   id?: string;
   agencyId: string;
   date: string;
-  isPrivate?:boolean;
+  isPrivate?: boolean;
   message: string;
   subject: string;
 }
@@ -46,8 +46,8 @@ export type ClientFiles = {
   downloadUrl?: string;
   fileTitle: string;
   description?: string;
-  isPrivate?:boolean;
-  clientId?:string;
+  isPrivate?: boolean;
+  clientId?: string;
   agencyId?: string;
   date?: string;
 }
@@ -75,7 +75,7 @@ export type ClientContextType = {
   clients: ClientListType;
   client: ClientType;
   updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>;
-  createClient: ({ data }: {data: ClientType}) => Promise<void>;
+  createClient: ({ data }: { data: ClientType }) => Promise<void>;
   getAllClientData: () => Promise<void>;
 };
 

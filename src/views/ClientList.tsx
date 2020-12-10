@@ -69,6 +69,13 @@ const ClientSearchWrapper = styled.div`
     margin-bottom: 0;
     padding-bottom: 0;
   }
+  h2 {
+    color: ${theme.colors.white};
+    font-size: 20px;
+    width: 50%;
+    margin: auto;
+    font-weight: normal;
+  }
 `;
 const ClientListWrapper = styled.div`
   margin: 30px;
@@ -219,7 +226,8 @@ const ClientList: React.FC<{}> = ({ }) => {
         />
       </ModalWrapper>
       <ClientSearchWrapper>
-        <h1>Clients</h1>
+        <h1>Search Clients</h1>
+        <h2>To create a client, confirm they are not already in the database by filling all three fields below. If there are no results, the "Create Client" button will appear. </h2>
         <SearchWrapperWrapper>
           <SearchWrapper>
             <SearchInputWrapper>

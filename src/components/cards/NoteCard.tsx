@@ -9,6 +9,7 @@ import DeleteNoteModal from "../../modals/DeleteNoteModal";
 import EditNoteModal from "../../modals/EditNoteModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
+import { useAgency } from "../../context/AgencyContext";
 
 const NoteCardWrapper = styled.div`
   display: flex;
@@ -91,6 +92,8 @@ const DeleteButton = styled.button`
 const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
   const { allAgencies } = usePublicData();
   const { setActiveModal } = useModal();
+  const { agency } = useAgency();
+
 
   return (
     <NoteCardWrapper>
@@ -108,22 +111,26 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
               )?.name
             }
           </h2>
-          <ModalWrapper modalId="NoteEdit">
-            <EditNoteModal
-            // note={note}
-            />
-          </ModalWrapper>
-          <EditButton onClick={() => setActiveModal("NoteEdit")}>
-            <FontAwesomeIcon icon={faPencil} />
-          </EditButton>
-          <ModalWrapper modalId="NoteDelete">
-            <DeleteNoteModal
-            // note={note}
-            />
-          </ModalWrapper>
-          <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
-            <FontAwesomeIcon icon={faTrash} />
-          </DeleteButton>
+          {agency?.id === note?.agencyId && (
+            <>
+              <ModalWrapper modalId="NoteEdit">
+                <EditNoteModal
+                // note={note}
+                />
+              </ModalWrapper>
+              <EditButton onClick={() => setActiveModal("NoteEdit")}>
+                <FontAwesomeIcon icon={faPencil} />
+              </EditButton>
+              <ModalWrapper modalId="NoteDelete">
+                <DeleteNoteModal
+                // note={note}
+                />
+              </ModalWrapper>
+              <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
+                <FontAwesomeIcon icon={faTrash} />
+              </DeleteButton>
+            </>
+          )}
         </NoteHeaderWrapper>
         {note?.message && (
           <p>{note?.message}</p>)}

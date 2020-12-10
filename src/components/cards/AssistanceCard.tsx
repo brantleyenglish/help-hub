@@ -8,6 +8,8 @@ import ModalWrapper from "../ModalWrapper";
 import { useModal } from "../../context/ModalContext";
 import EditAssistanceModal from "../../modals/EditAssistanceModal";
 import DeleteAssistanceModal from "../../modals/DeleteAssistanceModal";
+import { useAgency } from "../../context/AgencyContext";
+import { AgencyType } from "../../../DataTypes";
 
 
 const AssistanceCardWrapper = styled.div`
@@ -94,6 +96,7 @@ type AssistanceCard = {
 
 const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
   const { setActiveModal } = useModal();
+  const { agency } = useAgency();
 
   return (
     <AssistanceCardWrapper>
@@ -104,22 +107,26 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
         <AssistanceHeaderWrapper>
           <h1>{assistance?.service?.name}</h1>
           <h2>Provided by: {assistance?.agency?.name}</h2>
-          <ModalWrapper modalId="AssistanceEdit">
-            <EditAssistanceModal
-              assistance={assistance}
-            />
-          </ModalWrapper>
-          <EditButton onClick={() => setActiveModal("AssistanceEdit")}>
-            <FontAwesomeIcon icon={faPencil} />
-          </EditButton>
-          <ModalWrapper modalId="AssistanceDelete">
-            <DeleteAssistanceModal
-            // message={message} 
-            />
-          </ModalWrapper>
-          <DeleteButton onClick={() => setActiveModal("AssistanceDelete")}>
-            <FontAwesomeIcon icon={faTrash} />
-          </DeleteButton>
+          {/* {agency?.id === assistance?.agency?.agencyId && ( */}
+          <>
+            <ModalWrapper modalId="AssistanceEdit">
+              <EditAssistanceModal
+                assistance={assistance}
+              />
+            </ModalWrapper>
+            <EditButton onClick={() => setActiveModal("AssistanceEdit")}>
+              <FontAwesomeIcon icon={faPencil} />
+            </EditButton>
+            <ModalWrapper modalId="AssistanceDelete">
+              <DeleteAssistanceModal
+              // message={message} 
+              />
+            </ModalWrapper>
+            <DeleteButton onClick={() => setActiveModal("AssistanceDelete")}>
+              <FontAwesomeIcon icon={faTrash} />
+            </DeleteButton>
+          </>
+          {/* )} */}
         </AssistanceHeaderWrapper>
         <p>{assistance?.notes}</p>
         <p>Date of Assistance: {assistance?.date}</p>

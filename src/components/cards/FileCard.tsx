@@ -9,6 +9,7 @@ import DeleteFileModal from "../../modals/DeleteFileModal";
 import EditFileModal from "../../modals/EditFileModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
+import { useAgency } from "../../context/AgencyContext";
 
 const FileCardWrapper = styled.div`
   display: flex;
@@ -102,6 +103,8 @@ const DeleteButton = styled.button`
 const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
   const { setActiveModal } = useModal();
   const { allAgencies } = usePublicData();
+  const { agency } = useAgency();
+
 
   return (
     <FileCardWrapper>
@@ -124,24 +127,27 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
           <p>{file?.description}</p>
         )}
         <p>Date Created: {file?.date}</p>
+        {agency?.id === file?.agencyId && (
+          <>
+            <ModalWrapper modalId="FileEdit">
+              <EditFileModal
+              // file={file}
+              />
+            </ModalWrapper>
+            <EditButton onClick={() => setActiveModal("FileEdit")}>
+              <FontAwesomeIcon icon={faPencil} />
+            </EditButton>
 
-        <ModalWrapper modalId="FileEdit">
-          <EditFileModal
-          // file={file}
-          />
-        </ModalWrapper>
-        <EditButton onClick={() => setActiveModal("FileEdit")}>
-          <FontAwesomeIcon icon={faPencil} />
-        </EditButton>
-
-        <ModalWrapper modalId="FileDelete">
-          <DeleteFileModal
-          // file={file}
-          />
-        </ModalWrapper>
-        <DeleteButton onClick={() => setActiveModal("FileDelete")}>
-          <FontAwesomeIcon icon={faTrash} />
-        </DeleteButton>
+            <ModalWrapper modalId="FileDelete">
+              <DeleteFileModal
+              // file={file}
+              />
+            </ModalWrapper>
+            <DeleteButton onClick={() => setActiveModal("FileDelete")}>
+              <FontAwesomeIcon icon={faTrash} />
+            </DeleteButton>
+          </>
+        )}
       </FileCardContentWrapper>
     </FileCardWrapper>
   );
