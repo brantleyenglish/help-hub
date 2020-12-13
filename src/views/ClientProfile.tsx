@@ -1,7 +1,6 @@
 import {
   faCalendarAlt,
   faEnvelope,
-  faMapMarkedAlt,
   faMapMarkerAlt,
   faPencil,
   faPhone,
@@ -210,6 +209,21 @@ const ClientProfile = ({ match }: ClientProfileType) => {
     getClientProfile();
   }, []);
 
+  const sortByDate = (
+    a: ClientFiles | ClientNotes | AssistanceDataType,
+    b: ClientFiles | ClientNotes | AssistanceDataType
+  ) => {
+    if (a?.date && b?.date) {
+      if (a?.date > b?.date) {
+        return -1;
+      }
+      if (a?.date < b?.date) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
   return (
     <ClientProfileWrapper>
       <ModalWrapper modalId="ClientEdit">
@@ -236,25 +250,33 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               <FormLeftWrapper>
                 {clientProfile?.dob && (
                   <>
-                    <h3><FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faCalendarAlt} /> Date of Birth
+                    </h3>
                     <p>{clientProfile?.dob}</p>
                   </>
                 )}
                 {clientProfile?.phone && (
                   <>
-                    <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faPhone} /> Phone
+                    </h3>
                     <p>{clientProfile?.phone}</p>
                   </>
                 )}
                 {clientProfile?.email && (
                   <>
-                    <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faEnvelope} /> Email
+                    </h3>
                     <p>{clientProfile?.email}</p>
                   </>
                 )}
                 {clientProfile?.streetAddress && (
                   <>
-                    <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                    </h3>
                     <p>
                       {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
                       {clientProfile?.state} {clientProfile?.zip}
@@ -265,13 +287,17 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               <FormRightWrapper>
                 {clientProfile?.gender && (
                   <>
-                    <h3><FontAwesomeIcon icon={faVenusMars} /> Gender</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faVenusMars} /> Gender
+                    </h3>
                     <p>{clientProfile?.gender}</p>
                   </>
                 )}
                 {clientProfile?.ethnicity && (
                   <>
-                    <h3><FontAwesomeIcon icon={faUsers} /> Ethnicity</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faUsers} /> Ethnicity
+                    </h3>
                     <p>{clientProfile?.ethnicity}</p>
                   </>
                 )}
@@ -337,14 +363,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
 
         {activeTab === "assistances" && (
           <>
-            {assistanceData?.map(
-              (assistance: AssistanceDataType, index: number) => (
+            {assistanceData
+              ?.sort(sortByDate)
+              ?.map((assistance: AssistanceDataType, index: number) => (
                 <AssistanceCard
                   assistance={assistance}
                   key={`${assistance?.service?.id}-${index}`}
                 />
-              )
-            )}
+              ))}
           </>
         )}
         {activeTab === "notes" && (
@@ -354,6 +380,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                 (note: ClientNotes) =>
                   !note?.isPrivate || note?.agencyId === user?.uid
               )
+              ?.sort(sortByDate)
               ?.map((note: ClientNotes, index: number) => (
                 <NoteCard note={note} key={note?.id} />
               ))}
@@ -366,6 +393,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                 (file: ClientFiles) =>
                   !file?.isPrivate || file?.agencyId === user?.uid
               )
+              ?.sort(sortByDate)
               ?.map((file: ClientFiles, index: number) => (
                 <FileCard file={file} key={file?.id} />
               ))}

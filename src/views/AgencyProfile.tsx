@@ -21,6 +21,7 @@ import {
 } from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
 import ServiceCard from "../components/cards/ServiceCard";
+import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
@@ -28,10 +29,8 @@ import { useModal } from "../context/ModalContext";
 import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
 import ReportSample from "../images/reportSample.png";
-
 import AddServiceModal from "../modals/AddServiceModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
-import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -176,9 +175,10 @@ const AddBtnWrapper = styled.button`
   }
 `;
 const ServiceCardWrapper = styled.div`
-padding: 10px;
-display: flex;
-justify-content: center;`;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+`;
 
 const MessageCard = styled.div``;
 
@@ -220,6 +220,46 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     getAgencyProfile();
   }, []);
 
+  const sortByDate = (
+    a: AssistanceDataType | MessageType,
+    b: AssistanceDataType | MessageType
+  ) => {
+    if (a?.date && b?.date) {
+      if (a?.date > b?.date) {
+        return -1;
+      }
+      if (a?.date < b?.date) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
+  const messageList = React.useMemo(() => {
+    const mergedMessages =
+      agencyMessages && allPublicMessages
+        ? [
+            ...agencyMessages?.filter(
+              (message: MessageType) => message?.isPrivate
+            ),
+            ...allPublicMessages,
+          ]
+        : [];
+    return mergedMessages?.sort(sortByDate);
+  }, [agencyMessages, allPublicMessages]);
+
+  const sortByName = (a: ServiceType, b: ServiceType) => {
+    if (a?.name && b?.name) {
+      if (a?.name < b?.name) {
+        return -1;
+      }
+      if (a?.name > b?.name) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
   return (
     <AgencyProfileWrapper>
       <ModalWrapper modalId="AgencyEdit">
@@ -233,9 +273,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           <AgencyCardWrapper>
             <TitleWrapper>
               <img src={HHPlaceholder} />
-              {agency?.name && (
-                <h1>{agencyProfile?.name}</h1>
-              )}
+              {agency?.name && <h1>{agencyProfile?.name}</h1>}
               {!agency?.name && (
                 <>
                   <h1>Welcome to Your Agency Profile</h1>
@@ -254,7 +292,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             <FormContentWrapper>
               {!agency?.name && (
                 <>
-                  <p style={{ paddingTop: "10px" }}>Click the edit button in the upper right corner to edit your agency info. </p>
+                  <p style={{ paddingTop: "10px" }}>
+                    Click the edit button in the upper right corner to edit your
+                    agency info.{" "}
+                  </p>
                 </>
               )}
               <FormLeftWrapper>
@@ -268,18 +309,18 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faBrowser} /> Website
-                </h3>
+                    </h3>
                     <p> {agencyProfile?.website}</p>
                   </>
                 )}
               </FormLeftWrapper>
               <FormRightWrapper>
-                {agency?.name && (
-                  <h2>CONTACT INFO:</h2>
-                )}
+                {agency?.name && <h2>CONTACT INFO:</h2>}
                 {agency?.contactFirstName && (
                   <>
-                    <h3><FontAwesomeIcon icon={faUser} /> Contact</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faUser} /> Contact
+                    </h3>
                     <p>
                       {agencyProfile?.contactFirstName}{" "}
                       {agencyProfile?.contactLastName}
@@ -288,19 +329,25 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 )}
                 {agency?.phone && (
                   <>
-                    <h3><FontAwesomeIcon icon={faPhone} /> Phone</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faPhone} /> Phone
+                    </h3>
                     <p>{agencyProfile?.phone}</p>
                   </>
                 )}
                 {agency?.email && (
                   <>
-                    <h3><FontAwesomeIcon icon={faEnvelope} /> Email</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faEnvelope} /> Email
+                    </h3>
                     <p>{agencyProfile?.email}</p>
                   </>
                 )}
                 {agency?.streetAddress && (
                   <>
-                    <h3><FontAwesomeIcon icon={faMapMarkerAlt} /> Address</h3>
+                    <h3>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                    </h3>
                     <p>
                       {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
                       {agencyProfile?.state} {agencyProfile?.zip}
@@ -366,6 +413,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           <>
             {allServices
               ?.filter((service: ServiceType) => service?.agencyId === agencyId)
+              ?.sort(sortByName)
               ?.map((service: ServiceType) => (
                 <ServiceCardWrapper>
                   <ServiceCard service={service} key={service?.id} />
@@ -375,29 +423,26 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "bulletinboard" && (
           <>
-            {agencyMessages
-              ?.filter((message: MessageType) => message?.isPrivate)
-              ?.map((message: any) => (
-                <BulletinCard message={message} key={`${message?.id}-1`} />
-              ))}
-            {allPublicMessages?.map((message: any) => (
-              <BulletinCard message={message} key={`${message?.id} - 2`} />
+            {messageList?.map((message: any) => (
+              <BulletinCard message={message} key={`${message?.id}`} />
             ))}
           </>
         )}
         {activeTab === "timeline" && (
           <>
-            {assistanceData?.map((assistance: AssistanceDataType) => (
-              <TimelineAssistanceCard
-                assistance={assistance}
-                key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
-              />
-            ))}
+            {assistanceData
+              ?.sort(sortByDate)
+              ?.map((assistance: AssistanceDataType) => (
+                <TimelineAssistanceCard
+                  assistance={assistance}
+                  key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
+                />
+              ))}
           </>
         )}
-        {activeTab === "reports" &&
+        {activeTab === "reports" && (
           <img src={ReportSample} alt="" style={{ width: "100%" }} />
-        }
+        )}
       </ContentWrapper>
     </AgencyProfileWrapper>
   );
