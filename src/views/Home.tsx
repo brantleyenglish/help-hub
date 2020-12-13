@@ -1,14 +1,11 @@
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-// import SearchBar from "../components/searchbar";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -119,14 +116,14 @@ const AboutWrapper = styled.div`
   }
 `;
 const StyledCatTitle = styled.h2`
-margin-top:40px;
-margin-bottom:0px;
-padding: 0;
-font-size: 30px;
-text-align: center;
-text-transform: uppercase;
-color: ${theme.colors.blue};
-font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  padding: 0;
+  font-size: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${theme.colors.blue};
+  font-weight: bold;
 `;
 const SearchInputWrapper = styled.div`
   position: relative;
@@ -147,14 +144,26 @@ const SearchBar = styled.input`
 `;
 
 const Home = () => {
-  // const query = useQuery();
   const { categories } = usePublicData();
-  // const urlSearch = query.get("search")?.toLowerCase() || "";
+  const history = useHistory();
+  const [search, setSearch] = React.useState<string>("");
 
-  // const handleSearchUpdate = (e: React.BaseSyntheticEvent) => {
-  //   setSearch(e.target.value?.toLowerCase());
-  // };
-  // const [search, setSearch] = React.useState<string>(urlSearch);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  };
+
+  const handleSearchUpdate = (e: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
+    setSearch(e.target.value?.toLowerCase());
+  };
+
+  const handleSubmit = () => {
+    if (search?.length > 0) {
+      history?.push(`/services?search=${search}`);
+    }
+  };
 
   return (
     <>
@@ -163,10 +172,15 @@ const Home = () => {
         <h2>Search dozens of agencies and their services.</h2>
         <SearchInputWrapper>
           <SearchBar
-            // onChange={handleSearchUpdate} 
+            onChange={handleSearchUpdate}
             type="search"
+            onKeyDown={handleKeyDown}
           />
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
+          <FontAwesomeIcon
+            icon={faSearch}
+            style={{ color: "#0e4680" }}
+            onClick={handleSubmit}
+          />
         </SearchInputWrapper>
       </SearchWrapper>
 

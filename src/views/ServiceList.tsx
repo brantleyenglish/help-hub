@@ -17,14 +17,14 @@ const ServiceListWrapper = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  a:hover{
-    div>div{
-      background:  ${theme.colors.grayHighlight};
-    cursor:pointer;
-    .icon{
-      background: ${theme.colors.yellow};
+  a:hover {
+    div > div {
+      background: ${theme.colors.grayHighlight};
+      cursor: pointer;
+      .icon {
+        background: ${theme.colors.yellow};
+      }
     }
-  }
   }
 `;
 const ServiceSearchWrapper = styled.div`
@@ -126,7 +126,11 @@ const ServiceList: React.FC<ServiceListType> = () => {
       return allServices
         ?.filter((service: ServiceType) => {
           if (search?.length > 0) {
-            return service?.name?.toLowerCase()?.includes(search);
+            return (
+              service?.name?.toLowerCase()?.includes(search) ||
+              service?.categories?.includes(search) ||
+              service?.city?.toLowerCase()?.includes(search)
+            );
           }
           return true;
         })
@@ -146,7 +150,11 @@ const ServiceList: React.FC<ServiceListType> = () => {
         <h1>Services</h1>
         <h3>Search keywords or sort by category.</h3>
         <SearchInputWrapper>
-          <SearchBar onChange={handleSearchUpdate} type="search" />
+          <SearchBar
+            onChange={handleSearchUpdate}
+            type="search"
+            defaultValue={search}
+          />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
         </SearchInputWrapper>
         {categories &&
