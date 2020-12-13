@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
   AgencyContextType,
   AgencyListType,
@@ -28,6 +29,7 @@ AgencyContext.displayName = "AgencyContext";
 
 export const AgencyProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
+  const history = useHistory();
   const [agency, setAgency] = React.useState<AgencyType | null>(null);
 
   const [agencies, setAgencies] = React.useState<AgencyListType | null>(null);
@@ -107,6 +109,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
       });
       if (agencyMessageData !== "Error") {
         setAgencyMessages(agencyMessageData);
+        history.push(`/agencies/${agency?.id}`);
       }
     }
   }, [agency]);

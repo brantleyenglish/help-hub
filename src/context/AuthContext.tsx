@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { login, logout } from "../firebase/auth";
 import { auth } from "../firebase/config";
 
@@ -23,6 +24,7 @@ AuthContext.displayName = "AuthContext";
 
 export const AuthProvider: React.FC<any> = (props) => {
   const [user, setUser] = React.useState<any>(null);
+  const history = useHistory();
 
   React.useEffect(() => {
     const onAuthStateChange = auth().onAuthStateChanged((user) => {
@@ -41,6 +43,7 @@ export const AuthProvider: React.FC<any> = (props) => {
   const logoutUser = () => {
     logout();
     setUser(null);
+    history.push("/");
   };
 
   const value = { user, logoutUser, loginUser };

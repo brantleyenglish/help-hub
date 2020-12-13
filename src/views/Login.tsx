@@ -1,9 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
-import { theme } from "../components/Theme";
-import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
+import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
 import UWHeader from "../images/uw_header.png";
 
@@ -20,10 +19,10 @@ const LoginWrapper = styled.div`
     color: ${theme.colors.white};
     font-size: 45px;
     text-transform: uppercase;
-  };
-  & label{
+  }
+  & label {
     color: ${theme.colors.white};
-  };
+  }
 `;
 const FormFieldsWrapper = styled.div`
   flex-direction: column;
@@ -45,7 +44,7 @@ const FieldWrapper = styled.div`
   }
 `;
 const SubmitBtn = styled.button`
-color: ${theme.colors.white};
+  color: ${theme.colors.white};
   background-color: ${theme.colors.lightBlue};
   border: none;
   padding: 10px;
@@ -56,25 +55,16 @@ color: ${theme.colors.white};
   &:hover {
     color: ${theme.colors.lightBlue};
     background-color: ${theme.colors.white};
-    `;
+  }
+`;
 const ErrorWrapper = styled.div`
-color: ${theme.colors.red};
-margin: 0 0 10px 0;
+  color: ${theme.colors.red};
+  margin: 0 0 10px 0;
 `;
 
 const Login = () => {
-  const history = useHistory();
   const [error, setError] = React.useState("");
-  const { user, loginUser } = useAuth();
-  const [readyForRedirect, setReadyForRedirect] = React.useState<boolean>(
-    false
-  );
-
-  React.useEffect(() => {
-    if (user?.uid && history && readyForRedirect) {
-      history.push(`/agencies/${user?.uid}`);
-    }
-  }, [user, history, readyForRedirect]);
+  const { loginUser } = useAuth();
 
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email address is not valid."),
@@ -99,7 +89,6 @@ const Login = () => {
                 email: values?.email,
                 password: values?.password,
               });
-              setReadyForRedirect(true);
             } catch (e) {
               setError(e?.message);
             }
@@ -110,11 +99,19 @@ const Login = () => {
           <FormFieldsWrapper>
             <h1>Login</h1>
             <label htmlFor="email">Email Address</label>
-            <FieldWrapper><Field name="email" type="email" /></FieldWrapper>
-            <ErrorWrapper><ErrorMessage name="email" /></ErrorWrapper>
+            <FieldWrapper>
+              <Field name="email" type="email" />
+            </FieldWrapper>
+            <ErrorWrapper>
+              <ErrorMessage name="email" />
+            </ErrorWrapper>
             <label htmlFor="password">Password</label>
-            <FieldWrapper><Field name="password" type="text" /></FieldWrapper>
-            <ErrorWrapper><ErrorMessage name="password" /></ErrorWrapper>
+            <FieldWrapper>
+              <Field name="password" type="text" />
+            </FieldWrapper>
+            <ErrorWrapper>
+              <ErrorMessage name="password" />
+            </ErrorWrapper>
             <SubmitBtn type="submit">Submit</SubmitBtn>
             {error && <p>{error}</p>}
           </FormFieldsWrapper>
