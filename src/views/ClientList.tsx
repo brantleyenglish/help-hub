@@ -19,7 +19,7 @@ const SearchWrapperWrapper = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
-  overflow-x:auto;
+  overflow-x: auto;
 `;
 const SearchWrapper = styled.div`
   padding: 30px;
@@ -155,7 +155,7 @@ const NewClientWrapper = styled.div`
   }
 `;
 
-const ClientList: React.FC<{}> = ({ }) => {
+const ClientList: React.FC<{}> = ({}) => {
   const { clients } = useClient();
   const { setActiveModal } = useModal();
 
@@ -197,12 +197,33 @@ const ClientList: React.FC<{}> = ({ }) => {
     return false;
   };
 
+  const sortClients = (a: ClientType, b: ClientType) => {
+    if (a?.clientLastName && b?.clientLastName) {
+      if (a?.clientLastName < b?.clientLastName) {
+        return -1;
+      }
+      if (a?.clientLastName > b?.clientLastName) {
+        return 1;
+      }
+    }
+    if (a?.clientFirstName && b?.clientFirstName) {
+      if (a?.clientFirstName < b?.clientFirstName) {
+        return -1;
+      }
+      if (a?.clientFirstName > b?.clientFirstName) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
   const filteredClients = React.useMemo<ClientListType>(() => {
     if (clients) {
       return clients
         ?.filter(filterBirthDate)
         ?.filter(filterFirstName)
-        ?.filter(filterLastName);
+        ?.filter(filterLastName)
+        ?.sort(sortClients);
     }
     return [];
   }, [clients, birthDate, firstName, lastName]);
@@ -227,7 +248,11 @@ const ClientList: React.FC<{}> = ({ }) => {
       </ModalWrapper>
       <ClientSearchWrapper>
         <h1>Search Clients</h1>
-        <h2>To create a client, confirm they are not already in the database by filling all three fields below. If there are no results, the "Create Client" button will appear. </h2>
+        <h2>
+          To create a client, confirm they are not already in the database by
+          filling all three fields below. If there are no results, the "Create
+          Client" button will appear.{" "}
+        </h2>
         <SearchWrapperWrapper>
           <SearchWrapper>
             <SearchInputWrapper>
@@ -250,7 +275,7 @@ const ClientList: React.FC<{}> = ({ }) => {
 
       <ClientListWrapper style={{ overflowX: "auto" }}>
         {/* Table */}
-        <ClientTable >
+        <ClientTable>
           {/* tr */}
           <ClientTableHeader>
             <th scope="col">
@@ -274,7 +299,7 @@ const ClientList: React.FC<{}> = ({ }) => {
             <th scope="col" style={{ minWidth: "120px" }}>
               <div>Phone</div>
             </th>
-            <th scope="col" style={{ minWidth: "150px" }} >
+            <th scope="col" style={{ minWidth: "150px" }}>
               <div>Address</div>
             </th>
           </ClientTableHeader>
@@ -292,7 +317,7 @@ const ClientList: React.FC<{}> = ({ }) => {
           </NewClientWrapper>
         )}
       </ClientListWrapper>
-    </ClientPageWrapper >
+    </ClientPageWrapper>
   );
 };
 

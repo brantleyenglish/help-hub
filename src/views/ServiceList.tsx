@@ -121,6 +121,18 @@ const ServiceList: React.FC<ServiceListType> = () => {
     setSearch(e.target.value?.toLowerCase());
   };
 
+  const sortServices = (a: ServiceType, b: ServiceType) => {
+    if (a?.name && b?.name) {
+      if (a?.name < b?.name) {
+        return -1;
+      }
+      if (a?.name > b?.name) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
   const filteredServices = React.useMemo(() => {
     if (allServices) {
       return allServices
@@ -139,7 +151,8 @@ const ServiceList: React.FC<ServiceListType> = () => {
             return service?.categories?.includes(category);
           }
           return true;
-        });
+        })
+        ?.sort(sortServices);
     }
     return [];
   }, [category, search, allServices]);

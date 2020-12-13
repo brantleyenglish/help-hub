@@ -16,14 +16,14 @@ const AgencyListWrapper = styled.div`
   flex-wrap: wrap;
   padding: 50px;
   justify-content: space-around;
-  a:hover{
-    div>div{
-      background:  ${theme.colors.grayHighlight};
-    cursor:pointer;
-    .icon{
-      background: ${theme.colors.yellow};
+  a:hover {
+    div > div {
+      background: ${theme.colors.grayHighlight};
+      cursor: pointer;
+      .icon {
+        background: ${theme.colors.yellow};
+      }
     }
-  }
   }
 `;
 const AgencySearchWrapper = styled.div`
@@ -114,6 +114,18 @@ const AgencyList = () => {
     setSearch(e.target.value?.toLowerCase());
   };
 
+  const sortAgencies = (a: AgencyType, b: AgencyType) => {
+    if (a?.name && b?.name) {
+      if (a?.name < b?.name) {
+        return -1;
+      }
+      if (a?.name > b?.name) {
+        return 1;
+      }
+    }
+    return 0;
+  };
+
   const filteredAgencies = React.useMemo(() => {
     if (agencies) {
       return agencies
@@ -128,7 +140,8 @@ const AgencyList = () => {
             return agency?.categories?.includes(category);
           }
           return true;
-        });
+        })
+        ?.sort(sortAgencies);
     }
     return [];
   }, [category, search, agencies]);
