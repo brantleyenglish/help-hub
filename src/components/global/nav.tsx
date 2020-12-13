@@ -32,6 +32,24 @@ const NavLinkWrapper = styled.div`
     color: #333333;
   }
 `;
+
+const NavLinkButton = styled.div`
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-top: 1vw;
+  padding-bottom: 0.3vw;
+  padding-left: 0.5vw;
+  padding-right: 0.5vw;
+  font-size: 15px;
+  color: #999999;
+  text-transform: uppercase;
+  border-bottom: 2px ${theme.colors.lightBlue} solid;
+  cursor: pointer;
+  &:hover {
+    color: #333333;
+  }
+`;
+
 const ProfileNavLinkWrapper = styled.div`
   margin-left: 25px;
   margin-right: 25px;
@@ -52,7 +70,7 @@ const ProfileNavLinkWrapper = styled.div`
   //   border-radius: 100%;
   //   margin: 0;
   //   padding: 0;
-  }
+  /* } */
 `;
 const NavSpanWrapper = styled.span`
   position: absolute;
@@ -62,7 +80,7 @@ const NavSpanWrapper = styled.span`
 `;
 
 const Nav = () => {
-  const { user } = useAuth();
+  const { user, logoutUser } = useAuth();
   const { agency } = useAgency();
 
   return (
@@ -99,6 +117,7 @@ const Nav = () => {
             </ProfileNavLinkWrapper>
           </Link>
         )}
+        {user && <NavLinkButton onClick={logoutUser}>Log out</NavLinkButton>}
       </NavSpanWrapper>
     </NavWrapper>
   );
