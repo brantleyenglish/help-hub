@@ -1,14 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { theme } from "../components/Theme";
 import * as Yup from "yup";
-import { useAuth } from "../context/AuthContext";
+import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 import { signup } from "../firebase/auth";
 import UWHeader from "../images/uw_header.png";
-
 
 const SignupWrapper = styled.div`
   padding: 40px 0px 40px 0px;
@@ -23,16 +21,16 @@ const SignupWrapper = styled.div`
     color: ${theme.colors.white};
     font-size: 45px;
     text-transform: uppercase;
-  };
-  & label{
+  }
+  & label {
     color: ${theme.colors.white};
-  };
-  p{
-    color:${theme.colors.white};
-    a{
+  }
+  p {
+    color: ${theme.colors.white};
+    a {
       color: ${theme.colors.lightBlue};
     }
-    a:hover{
+    a:hover {
       color: ${theme.colors.yellow};
     }
   }
@@ -57,7 +55,7 @@ const FieldWrapper = styled.div`
   }
 `;
 const SubmitBtn = styled.button`
-color: ${theme.colors.white};
+  color: ${theme.colors.white};
   background-color: ${theme.colors.lightBlue};
   border: none;
   padding: 10px;
@@ -68,23 +66,16 @@ color: ${theme.colors.white};
   &:hover {
     color: ${theme.colors.lightBlue};
     background-color: ${theme.colors.white};
-    `;
+  }
+`;
 const ErrorWrapper = styled.div`
-color: ${theme.colors.red};
-margin: 0 0 10px 0;
+  color: ${theme.colors.red};
+  margin: 0 0 10px 0;
 `;
 
 const SignUp = () => {
-  const history = useHistory();
   const [error, setError] = React.useState("");
   const { signupPassword } = usePublicData();
-  const { user } = useAuth();
-
-  React.useEffect(() => {
-    if (user?.uid && history) {
-      history.push(`/agencies/${user?.uid}`);
-    }
-  }, [user, history]);
 
   const signupValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("This email address is not valid"),
@@ -117,28 +108,37 @@ const SignUp = () => {
       >
         <Form>
           <FormFieldsWrapper>
-
             <h1>Sign Up</h1>
             <label htmlFor="passcode">United Way Passcode</label>
-            <FieldWrapper><Field name="passcode" id="passcode" /></FieldWrapper>
-            <ErrorWrapper><ErrorMessage name="passcode" /></ErrorWrapper>
+            <FieldWrapper>
+              <Field name="passcode" id="passcode" />
+            </FieldWrapper>
+            <ErrorWrapper>
+              <ErrorMessage name="passcode" />
+            </ErrorWrapper>
             <label htmlFor="email">Email Address</label>
-            <FieldWrapper><Field name="email" type="email" /></FieldWrapper>
-            <ErrorWrapper><ErrorMessage name="email" /></ErrorWrapper>
+            <FieldWrapper>
+              <Field name="email" type="email" />
+            </FieldWrapper>
+            <ErrorWrapper>
+              <ErrorMessage name="email" />
+            </ErrorWrapper>
             <label htmlFor="password">Password</label>
-            <FieldWrapper><Field name="password" type="text" /></FieldWrapper>
-            <ErrorWrapper><ErrorMessage name="password" /></ErrorWrapper>
+            <FieldWrapper>
+              <Field name="password" type="text" />
+            </FieldWrapper>
+            <ErrorWrapper>
+              <ErrorMessage name="password" />
+            </ErrorWrapper>
             <SubmitBtn type="submit">Submit</SubmitBtn>
             {error && <p>{error}</p>}
             <p>
               Already have an account? <Link to="/login">Login</Link>
             </p>
-
           </FormFieldsWrapper>
-
         </Form>
-      </Formik >
-    </SignupWrapper >
+      </Formik>
+    </SignupWrapper>
   );
 };
 
