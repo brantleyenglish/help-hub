@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useHistory } from "react-router-dom";
-import { login, logout } from "../firebase/auth";
+import { login, logout, sendResetPasswordEmail } from "../firebase/auth";
 import { auth } from "../firebase/config";
 
 type UserType = {
@@ -13,10 +13,16 @@ type UserLoginType = {
   password: string;
 };
 
+type resetPasswordType = {
+  email: string;
+  setError: Dispatch<SetStateAction<string>>;
+};
+
 export type AuthContextType = {
   user: UserType | null;
   logoutUser: () => Promise<void>;
   loginUser: ({ email, password }: UserLoginType) => Promise<void>;
+  resetPassword: ({ email, setError }: resetPasswordType) => Promise<void>;
 };
 
 export const AuthContext = React.createContext<Partial<AuthContextType>>({});
@@ -40,13 +46,22 @@ export const AuthProvider: React.FC<any> = (props) => {
     setUser({ uid: loginUserData?.user?.uid });
   };
 
+  const resetPassword = async ({ email, setError }: resetPasswordType) => {
+    const emailData = await sendResetPasswordEmail({ email });
+    if (emailData) {
+      setError("Email sent");
+    } else {
+      setError("Sending email failed. Please contact United Way.");
+    }
+  };
+
   const logoutUser = () => {
     logout();
     setUser(null);
     history.push("/");
   };
 
-  const value = { user, logoutUser, loginUser };
+  const value = { user, logoutUser, loginUser, resetPassword };
 
   return <AuthContext.Provider value={value} {...props} />;
 };

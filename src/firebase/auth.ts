@@ -75,10 +75,15 @@ export const updateUsername = async ({ displayName }: DisplayNameType) => {
   }
 };
 
-export const sendResetPasswordEmail = async () => {
-  const user = auth().currentUser;
-  if (user?.email) {
-    await auth().sendPasswordResetEmail(user?.email);
-
+export const sendResetPasswordEmail = async ({email}: {email: string}) => {
+  if (email) {
+    try {
+      await auth().sendPasswordResetEmail(email);
+      return true
+    }
+    catch (e) {
+      console.log({e})
+    } 
   }
+  return false;
 };

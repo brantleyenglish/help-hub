@@ -6,6 +6,19 @@ import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
 import UWHeader from "../images/uw_header.png";
 
+const StyledButton = styled.button`
+  color: ${theme.colors.gray};
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 20px 20px 0px;
+  &:hover {
+    color: ${theme.colors.lightBlue};
+    cursor: pointer;
+  }
+`;
+
 const LoginWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   text-align: center;
@@ -21,6 +34,9 @@ const LoginWrapper = styled.div`
     text-transform: uppercase;
   }
   & label {
+    color: ${theme.colors.white};
+  }
+  p {
     color: ${theme.colors.white};
   }
 `;
@@ -64,7 +80,15 @@ const ErrorWrapper = styled.div`
 
 const Login = () => {
   const [error, setError] = React.useState("");
-  const { loginUser } = useAuth();
+  const [resetPasswordMode, setResetPasswordMode] = React.useState<boolean>(
+    false
+  );
+
+  const { loginUser, resetPassword } = useAuth();
+
+  const resetPasswordValidation = Yup.object().shape({
+    email: Yup.string().email().required("Email address is not valid."),
+  });
 
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("Email address is not valid."),
@@ -73,6 +97,51 @@ const Login = () => {
       .min(6, "Password must be at least 6 characters.")
       .max(20, "Password must be 20 characters or less."),
   });
+
+  if (resetPasswordMode) {
+    return (
+      <LoginWrapper>
+        <Formik
+          initialValues={{
+            email: "",
+          }}
+          validationSchema={resetPasswordValidation}
+          onSubmit={async (values) => {
+            if (values?.email && resetPassword) {
+              try {
+                await resetPassword({
+                  email: values?.email,
+                  setError,
+                });
+              } catch (e) {
+                setError(e?.message);
+              }
+            }
+          }}
+        >
+          <Form>
+            <FormFieldsWrapper>
+              <h1>Login</h1>
+              <label htmlFor="email">
+                Email Address (we will send you a password reset link)
+              </label>
+              <FieldWrapper>
+                <Field name="email" type="email" />
+              </FieldWrapper>
+              <ErrorWrapper>
+                <ErrorMessage name="email" />
+              </ErrorWrapper>
+              <SubmitBtn type="submit">Send</SubmitBtn>
+              {error && <p>{error}</p>}
+            </FormFieldsWrapper>
+            <StyledButton onClick={() => setResetPasswordMode(false)}>
+              Go back
+            </StyledButton>
+          </Form>
+        </Formik>
+      </LoginWrapper>
+    );
+  }
 
   return (
     <LoginWrapper>
@@ -113,6 +182,9 @@ const Login = () => {
               <ErrorMessage name="password" />
             </ErrorWrapper>
             <SubmitBtn type="submit">Submit</SubmitBtn>
+            <StyledButton onClick={() => setResetPasswordMode(true)}>
+              Forgot Password
+            </StyledButton>
             {error && <p>{error}</p>}
           </FormFieldsWrapper>
         </Form>
