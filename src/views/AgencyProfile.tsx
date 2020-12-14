@@ -252,7 +252,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         <AgencyBackground>
           <AgencyCardWrapper>
             <TitleWrapper>
-              <img src={HHPlaceholder} />
+              <img
+                src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder}
+              />
               {agency?.name && <h1>{agencyProfile?.name}</h1>}
               {!agency?.name && (
                 <>

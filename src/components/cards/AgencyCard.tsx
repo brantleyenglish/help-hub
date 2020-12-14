@@ -84,7 +84,7 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
     <AgencyCardWrapper>
       <AgencyCardContentWrapper>
         <AgencyCardHeaderWrapper>
-          <img src={HHPlaceholder} alt="agencylogo" />
+          <img src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder} />
           <h1>{agency?.name}</h1>
         </AgencyCardHeaderWrapper>
 

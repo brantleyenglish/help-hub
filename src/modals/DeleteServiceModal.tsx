@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-import { usePublicData } from "../context/PublicContext";
 import { useModal } from "../context/ModalContext";
-import { deleteService } from "../firebase/services";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -27,28 +25,28 @@ const StyledHeader = styled.div`
 `;
 
 const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
-    // const { updateAssistanceByClient } = useAssistance();
-    const { setActiveModal } = useModal();
-    return (
-        <>
-            <StyledHeader>
-                <h2>Remove Service</h2>
-                <p>Are you sure you want to remove this service?</p>
-            </StyledHeader>
+  // const { updateAssistanceByClient } = useAssistance();
+  const { setActiveModal } = useModal();
+  return (
+    <>
+      <StyledHeader>
+        <h2>Remove Service</h2>
+        <p>Are you sure you want to remove this service?</p>
+      </StyledHeader>
 
-            <StyledButton
-            //   onClick={async () => {
+      <StyledButton>
+        {/* //   onClick={async () => {
             //     deleteAssitance({ assistanceId });
             //     if (updateAssistanceByClient) {
             //       await updateAssistanceByClient();
             //     }
             //     setActiveModal("");
             //   }}
-            >
-                Yes
+            > */}
+        Yes
       </StyledButton>
-        </>
-    );
+    </>
+  );
 };
 
 export default DeleteServiceModal;
