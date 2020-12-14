@@ -82,17 +82,17 @@ const CategoryDropdown: React.FC<CategoryDropdown> = ({ setCategories }) => {
       >
         <option value="categories">Catgeory Options</option>
         {categories &&
-          categories?.map((option: CategoryType) => (
-            <option value={option?.name} key={option?.name}>
+          categories?.map((option: CategoryType, index: number) => (
+            <option value={option?.name} key={`${option?.name}-${index}`}>
               {option?.label}
             </option>
           ))}
       </select>
       <CategoryWrapper>
-        {selected?.map((selectedCat: string) => (
+        {selected?.map((selectedCat: string, index: number) => (
           <StyledButton
             onClick={() => removeSelected(selectedCat)}
-            key={selectedCat}
+            key={`${selectedCat}-${index + 99}`}
           >
             {selectedCat} <FontAwesomeIcon icon={faTimes} />
           </StyledButton>

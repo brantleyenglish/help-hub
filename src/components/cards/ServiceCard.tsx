@@ -225,7 +225,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                 service?.categories?.includes(category?.name)
               )
               .map((categoryData: any) => (
-                <IconWrapper className="icon">
+                <IconWrapper className="icon" key={categoryData?.label}>
                   <StyledSVG
                     src={categoryData?.icon}
                     alt={categoryData?.label}

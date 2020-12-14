@@ -47,7 +47,9 @@ const StyledFormikField = ({
       {type === "select" ? (
         <Field name={name} id={name} as={type}>
           {options?.map((option: SelectOptionType) => (
-            <option value={option?.value}>{option?.label}</option>
+            <option value={option?.value} key={option?.value}>
+              {option?.label}
+            </option>
           ))}
         </Field>
       ) : (
