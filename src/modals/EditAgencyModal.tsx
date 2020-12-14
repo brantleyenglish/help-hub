@@ -6,6 +6,7 @@ import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
+import { storage } from "../firebase/config";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -20,9 +21,91 @@ const StyledButton = styled.button`
   }
 `;
 
+const StyledFormikFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px;
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+    text-align: left;
+  }
+  input,
+  textarea,
+  select {
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+    background: ${theme.colors.grayLight};
+  }
+`;
+
+type FormikAgencyType = {
+  name: string;
+  description: string;
+  website: string;
+  contactFirstName: string;
+  contactLastName: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zip: string;
+};
+
 const EditAgencyModal: React.FC<{
   agencyId: string;
 }> = ({ agencyId }) => {
+  const [profileUrl, setProfileUrl] = React.useState<string | undefined>(
+    undefined
+  );
+  const [file, setFile] = React.useState<File | undefined>(undefined);
+  const [formikValues, setFormikValues] = React.useState<
+    FormikAgencyType | undefined
+  >(undefined);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setFile(e.target.files ? e.target.files[0] : undefined);
+  };
+
+  const handleFileUpload = async () => {
+    if (file?.name) {
+      const uploadTask = storage
+        .ref(`/agencyImages/${agencyId}/${file.name}`)
+        .put(file);
+      uploadTask.on("state_changed", console.log, console.error, async () => {
+        await storage
+          .ref(`/agencyImages/${agencyId}`)
+          .child(file.name)
+          .getDownloadURL()
+          .then((url) => {
+            setFile(undefined);
+            setProfileUrl(url);
+          });
+      });
+    }
+  };
+
+  const uploadAgencyEdits = async () => {
+    if (updateAgencyInfo && agencyProfile?.id && formikValues && profileUrl) {
+      await updateAgencyInfo({
+        agencyId: agencyProfile?.id,
+        newData: { id: agencyProfile?.id, ...formikValues, profileUrl },
+      });
+      if (setAgencyProfileId) {
+        setAgencyProfileId({ agencyId });
+      }
+      setActiveModal("");
+    }
+  };
+
+  React.useEffect(() => {
+    uploadAgencyEdits();
+  }, [profileUrl, formikValues]);
+
   const { updateAgencyInfo, agencyProfile, setAgencyProfileId } = useAgency();
   const { setActiveModal } = useModal();
 
@@ -55,21 +138,35 @@ const EditAgencyModal: React.FC<{
       }}
       validationSchema={agencySchema}
       onSubmit={async (values) => {
-        if (updateAgencyInfo && agencyProfile) {
-          await updateAgencyInfo({
-            agencyId: agencyProfile?.id,
-            newData: { id: agencyProfile?.id, ...values },
-          });
-          if (setAgencyProfileId) {
-            setAgencyProfileId({ agencyId });
+        if (file) {
+          setFormikValues(values);
+          handleFileUpload();
+        } else {
+          if (updateAgencyInfo && agencyProfile) {
+            await updateAgencyInfo({
+              agencyId: agencyProfile?.id,
+              newData: { id: agencyProfile?.id, ...values, profileUrl },
+            });
+            if (setAgencyProfileId) {
+              setAgencyProfileId({ agencyId });
+            }
+            setActiveModal("");
           }
-          setActiveModal("");
         }
       }}
     >
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <StyledFormikField name="name" label="Agency Name" />
+          <StyledFormikFieldWrapper>
+            <label htmlFor="file">Upload Profile Image</label>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              onChange={handleFileChange}
+            />
+          </StyledFormikFieldWrapper>
           <StyledFormikField
             name="description"
             label="Description"

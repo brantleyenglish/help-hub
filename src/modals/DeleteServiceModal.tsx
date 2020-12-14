@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-import { usePublicData } from "../context/PublicContext";
 import { useModal } from "../context/ModalContext";
-// import { deleteService } from "../firebase/services";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -36,15 +34,27 @@ const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
         <p>Are you sure you want to remove this service?</p>
       </StyledHeader>
 
-      <StyledButton
-      //   onClick={async () => {
-      //     deleteAssitance({ assistanceId });
-      //     if (updateAssistanceByClient) {
-      //       await updateAssistanceByClient();
-      //     }
-      //     setActiveModal("");
-      //   }}
-      >
+<<<<<<< HEAD
+  <StyledButton
+  //   onClick={async () => {
+  //     deleteAssitance({ assistanceId });
+  //     if (updateAssistanceByClient) {
+  //       await updateAssistanceByClient();
+  //     }
+  //     setActiveModal("");
+  //   }}
+  >
+=======
+      <StyledButton>
+      {/* //   onClick={async () => {
+            //     deleteAssitance({ assistanceId });
+            //     if (updateAssistanceByClient) {
+            //       await updateAssistanceByClient();
+            //     }
+            //     setActiveModal("");
+            //   }}
+            > */}
+>>>>>>> 12ed44abceed38b89404982a6cf02e3bd33d6e63
         Yes
       </StyledButton>
     </>
