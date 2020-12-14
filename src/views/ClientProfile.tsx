@@ -42,10 +42,9 @@ const ClientCardWrapper = styled.div`
   color: ${theme.colors.white};
   flex-direction: row;
   flex-wrap: wrap;
-  border-radius: 2px;
   margin: auto;
   border-radius: 30px;
-  padding: 40px;
+  padding: 40px 30px 50px 30px;
 `;
 const EditButton = styled.button`
   background: ${theme?.colors?.lightBlue};
@@ -59,6 +58,7 @@ const EditButton = styled.button`
   justify-content: center;
   align-items: center;
   position: absolute;
+  border-radius: 2px;
   cursor: pointer;
   top: 10px;
   right: 10px;
@@ -75,24 +75,33 @@ const FormContentWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   & p {
-    margin-top: 0;
-    padding-top: 0;
+    color: ${theme.colors.white};
+    margin: 0;
+    padding: 0;
+  }
+  & a {
+    color: ${theme.colors.white};
+    margin: 0;
+    padding: 0;
+    :hover{
+      color: ${theme.colors.lightBlue};
+    }
   }
   & h3 {
-    color: ${theme.colors.lightBlue};
-    margin-bottom: 0;
-    padding-bottom: 5px;
+    color: ${theme.colors.yellow};
+    margin: 20px 0 0 0;
+    padding: 0 0 5px 0;
     font-size: 16px;
   }
 `;
 const FormLeftWrapper = styled.div`
-  width: 50%;
-  display: flex;
+max-width: 325px;
+display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 const FormRightWrapper = styled.div`
-  width: 50%;
+max-width: 325px;
   display: flex;
   flex-direction: column;
   justify-content: center;

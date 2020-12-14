@@ -6,6 +6,7 @@ import {
   faPhone,
   faPlus,
   faUser,
+  faTag,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -44,10 +45,9 @@ const AgencyCardWrapper = styled.div`
   color: ${theme.colors.white};
   flex-direction: row;
   flex-wrap: wrap;
-  border-radius: 2px;
   margin: auto;
   border-radius: 30px;
-  padding: 40px;
+  padding: 40px 30px 50px 30px;
 `;
 const EditButton = styled.button`
   background: ${theme?.colors?.lightBlue};
@@ -62,6 +62,7 @@ const EditButton = styled.button`
   justify-content: center;
   align-items: center;
   position: absolute;
+  border-radius: 2px;
   top: 10px;
   right: 10px;
   &:hover {
@@ -81,30 +82,34 @@ const FormContentWrapper = styled.div`
     margin-top: 0;
     padding-top: 0;
     :hover{
-      color: ${theme.colors.yellow};
+      color: ${theme.colors.lightBlue};
 
     }
+  }
+  & p {
+    color: ${theme.colors.white};
+    margin: 0;
+    padding: 0;
   }
   & h2 {
     margin-bottom: 0;
     color: ${theme.colors.lightBlue};
   }
   & h3 {
-    color: ${theme.colors.lightBlue};
-    margin-bottom: 0;
+    color: ${theme.colors.yellow};
+    margin: 20px 0 0 0;
     padding-bottom: 5px;
     font-size: 16px;
   }
 `;
 const FormLeftWrapper = styled.div`
-  width: 50%;
+  max-width: 325px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
 const FormRightWrapper = styled.div`
-  width: 50%;
-  display: flex;
+max-width: 325px;
+display: flex;
   flex-direction: column;
   justify-content: center;
 `;
@@ -288,8 +293,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               <FormLeftWrapper>
                 {agency?.description && (
                   <>
-                    <h2>DESCRIPTION:</h2>
-                    <p>{agencyProfile?.description}</p>
+                    <h3><FontAwesomeIcon icon={faTag} /> Description</h3>
+                    <p style={{ paddingRight: "10px" }}>{agencyProfile?.description}</p>
                   </>
                 )}
                 {agency?.website && (
@@ -302,7 +307,6 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 )}
               </FormLeftWrapper>
               <FormRightWrapper>
-                {agency?.name && <h2>CONTACT INFO:</h2>}
                 {agency?.contactFirstName && (
                   <>
                     <h3>
