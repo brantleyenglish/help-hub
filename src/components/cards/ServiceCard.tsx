@@ -163,7 +163,9 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                     <FontAwesomeIcon icon={faPencil} />
                   </EditButton>
                   <ModalWrapper modalId={`ServiceDelete-${service?.id}`}>
-                    <DeleteServiceModal service={service} />
+                    <DeleteServiceModal
+                    // serviceId={service?.id || ""}
+                    />
                   </ModalWrapper>
                   <DeleteButton
                     onClick={() =>

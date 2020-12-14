@@ -18,7 +18,11 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-  color: ${theme.colors.blue};
+color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0px 0px 20px 0;
+}
 `;
 
 const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
@@ -28,9 +32,9 @@ const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
     <>
       <StyledHeader>
         <h2>Delete Assisstance</h2>
+        <p>Are you sure you want to delete this assistance?</p>
       </StyledHeader>
 
-      <p>Are you sure you want to delete this bulletin?</p>
       <StyledButton
         onClick={async () => {
           deleteAssitance({ assistanceId });

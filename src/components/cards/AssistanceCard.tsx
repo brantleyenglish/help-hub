@@ -120,7 +120,9 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
                 <DeleteAssistanceModal assistanceId={assistance?.id || ""} />
               </ModalWrapper>
               <DeleteButton
-                onClick={() => setActiveModal(`AssistanceDelete-${agency?.id}`)}
+                onClick={() =>
+                  setActiveModal(`AssistanceDelete-${assistance?.id}`)
+                }
               >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
@@ -130,7 +132,7 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
         <p>{assistance?.notes}</p>
         <p>Date of Assistance: {assistance?.date}</p>
       </AssistanceCardContentWrapper>
-    </AssistanceCardWrapper>
+    </AssistanceCardWrapper >
   );
 };
 

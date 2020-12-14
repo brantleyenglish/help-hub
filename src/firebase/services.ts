@@ -1,8 +1,8 @@
 import { db } from "./config";
 
-import {ServiceListType, ServiceType} from '../../DataTypes';
+import { ServiceListType, ServiceType } from '../../DataTypes';
 
-type GetServiceType ={
+type GetServiceType = {
   serviceId: string;
 }
 
@@ -70,21 +70,21 @@ type CreateServiceType = {
 }
 
 
-export const createService = async ({ data }: {data: CreateServiceType}) => {
+export const createService = async ({ data }: { data: CreateServiceType }) => {
   try {
-      const docRef =  db.collection("services").doc();
-      await docRef.set({
-        id: docRef?.id,
-        ...data
-      })
-      const service = await docRef.get();
-      if (service.exists) {
-          return service.data();
-      } else {
-          return "DoesNotExisit";
-      }
+    const docRef = db.collection("services").doc();
+    await docRef.set({
+      id: docRef?.id,
+      ...data
+    })
+    const service = await docRef.get();
+    if (service.exists) {
+      return service.data();
+    } else {
+      return "DoesNotExisit";
+    }
   } catch (e) {
-      console.log("Error createClient:", e);
+    console.log("Error createClient:", e);
   }
 };
 

@@ -124,7 +124,7 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
               </EditButton>
               <ModalWrapper modalId={`NoteDelete-${note?.id}`}>
                 <DeleteNoteModal
-                // note={note}
+                  noteId={note?.id || ""}
                 />
               </ModalWrapper>
               <DeleteButton
