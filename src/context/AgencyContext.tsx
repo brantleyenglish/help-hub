@@ -15,6 +15,7 @@ import {
 } from "../firebase/agencies";
 import { getAgencyMessages } from "../firebase/messages";
 import { getServicesByAgencyId } from "../firebase/services";
+import { useAssistance } from "./AssistanceContext";
 import { useAuth } from "./AuthContext";
 
 type UpdateAgencyInfo = {
@@ -29,6 +30,7 @@ AgencyContext.displayName = "AgencyContext";
 
 export const AgencyProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
+  const { setAssistanceAgencyId } = useAssistance();
   const history = useHistory();
   const [agency, setAgency] = React.useState<AgencyType | null>(null);
 
@@ -118,7 +120,28 @@ export const AgencyProvider: React.FC<any> = (props) => {
     getAgencyMessagesCallback();
   }, [getAgencyMessagesCallback]);
 
-  const value = { agency, agencies, updateAgencyInfo, agencyMessages };
+  const [agencyProfile, setAgencyProfile] = React.useState<
+    AgencyType | undefined
+  >(undefined);
+
+  const setAgencyProfileId = async ({ agencyId }: { agencyId: string }) => {
+    if (setAssistanceAgencyId) {
+      setAssistanceAgencyId(agencyId);
+    }
+    const agencyData = await getAgency({ agencyId });
+    if (agencyData && agencyData !== "DoesNotExist" && agencyData !== "Error") {
+      setAgencyProfile(agencyData);
+    }
+  };
+
+  const value = {
+    agency,
+    agencies,
+    updateAgencyInfo,
+    agencyMessages,
+    agencyProfile,
+    setAgencyProfileId,
+  };
 
   return <AgencyContext.Provider value={value} {...props} />;
 };

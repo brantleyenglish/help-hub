@@ -13,12 +13,7 @@ import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
 import AddBulletinModal from "src/modals/AddBulletinModal";
 import styled from "styled-components";
-import {
-  AgencyType,
-  AssistanceDataType,
-  MessageType,
-  ServiceType,
-} from "../../DataTypes";
+import { AssistanceDataType, MessageType, ServiceType } from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
 import ServiceCard from "../components/cards/ServiceCard";
 import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
@@ -26,7 +21,6 @@ import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
-import { getAgency } from "../firebase/agencies";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
 import ReportSample from "../images/reportSample.png";
 import AddServiceModal from "../modals/AddServiceModal";
@@ -189,16 +183,13 @@ type AgencyProfileType = {
 type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
-  const { agencyId } = match.params;
+  const { agencyId }: { agencyId: string } = match.params;
+  const { setAgencyProfileId, agencyProfile } = useAgency();
   // TO DO: Just show Agency services
 
   const { allServices, allPublicMessages } = usePublicData();
-  const { agency, updateAgencyInfo, agencyMessages } = useAgency();
-  const { assistanceData, setAssistanceAgencyId } = useAssistance();
-
-  const [agencyProfile, setAgencyProfile] = React.useState<AgencyType | null>(
-    null
-  );
+  const { agency, agencyMessages } = useAgency();
+  const { assistanceData } = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -206,18 +197,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const { setActiveModal } = useModal();
 
-  const getAgencyProfile = async () => {
-    if (setAssistanceAgencyId) {
-      setAssistanceAgencyId(agencyId);
-    }
-    const agencyData = await getAgency({ agencyId });
-    if (agencyData && agencyData !== "DoesNotExist" && agencyData !== "Error") {
-      setAgencyProfile(agencyData);
-    }
-  };
-
   React.useEffect(() => {
-    getAgencyProfile();
+    if (setAgencyProfileId) {
+      setAgencyProfileId({ agencyId });
+    }
   }, []);
 
   const sortByDate = (
@@ -263,10 +246,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   return (
     <AgencyProfileWrapper>
       <ModalWrapper modalId="AgencyEdit">
-        <EditAgencyModal
-          agencyProfile={agencyProfile}
-          getAgencyProfile={getAgencyProfile}
-        />
+        <EditAgencyModal agencyId={agencyId} />
       </ModalWrapper>
       {agencyProfile && (
         <AgencyBackground>

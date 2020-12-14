@@ -18,31 +18,32 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
 const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
-    // const { updateService } = usePublicData();
+    // const { updateAssistanceByClient } = useAssistance();
     const { setActiveModal } = useModal();
     return (
         <>
             <StyledHeader>
-                <h2>Delete Service</h2>
-                <p>Are you sure you want to delete this service?</p>
+                <h2>Remove Service</h2>
+                <p>Are you sure you want to remove this service?</p>
             </StyledHeader>
 
             <StyledButton
-                onClick={async () => {
-                    // deleteService({ serviceId });
-                    // if (updateService) {
-                    //     await updateService();
-                    // }
-                    setActiveModal("");
-                }}
+            //   onClick={async () => {
+            //     deleteAssitance({ assistanceId });
+            //     if (updateAssistanceByClient) {
+            //       await updateAssistanceByClient();
+            //     }
+            //     setActiveModal("");
+            //   }}
             >
                 Yes
       </StyledButton>

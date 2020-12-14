@@ -30,6 +30,8 @@ export type AgencyContextType = {
   agency: AgencyType;
   updateAgencyInfo: ({ newData, agencyId }: { newData: AgencyType, agencyId: string }) => Promise<void>
   agencyMessages: MessageListType;
+  agencyProfile: AgencyType;
+  setAgencyProfileId: ({agencyId}: {agencyId: string}) => Promise<void>
 };
 
 export type ClientNotes = {
@@ -77,6 +79,8 @@ export type ClientContextType = {
   updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>;
   createClient: ({ data }: { data: ClientType }) => Promise<void>;
   getAllClientData: () => Promise<void>;
+  clientProfile: ClientType | undefined;
+  getClientProfile: ({clientId}: {clientId: string}) => Promise<void>; 
 };
 
 export type ServiceType = {

@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { ClientFiles, ClientType } from "../../DataTypes";
+import { ClientFiles } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
@@ -23,11 +23,12 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 `;
 const StyledFormikFieldWrapper = styled.div`
   display: flex;
@@ -49,12 +50,9 @@ const StyledFormikFieldWrapper = styled.div`
   }
 `;
 
-const AddFileModal: React.FC<{
-  clientProfile: ClientType | null;
-  getClientProfile: () => Promise<void>;
-}> = ({ clientProfile, getClientProfile }) => {
+const AddFileModal: React.FC<{}> = ({}) => {
   const { setActiveModal } = useModal();
-  const { updateClientInfo } = useClient();
+  const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const { user } = useAuth();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
   const [file, setFile] = React.useState<File | undefined>(undefined);
@@ -97,34 +95,36 @@ const AddFileModal: React.FC<{
       await updateClientInfo(
         clientProfile?.files
           ? {
-            clientId: clientProfile?.id,
-            newData: {
-              files: [
-                ...clientProfile?.files,
-                {
-                  ...fileData,
-                  downloadUrl,
-                  agencyId: user?.uid,
-                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                },
-              ],
-            },
-          }
+              clientId: clientProfile?.id,
+              newData: {
+                files: [
+                  ...clientProfile?.files,
+                  {
+                    ...fileData,
+                    downloadUrl,
+                    agencyId: user?.uid,
+                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                  },
+                ],
+              },
+            }
           : {
-            clientId: clientProfile?.id,
-            newData: {
-              files: [
-                {
-                  ...fileData,
-                  downloadUrl,
-                  agencyId: user?.uid,
-                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                },
-              ],
-            },
-          }
+              clientId: clientProfile?.id,
+              newData: {
+                files: [
+                  {
+                    ...fileData,
+                    downloadUrl,
+                    agencyId: user?.uid,
+                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                  },
+                ],
+              },
+            }
       );
-      getClientProfile();
+      if (clientProfile?.id && getClientProfile) {
+        getClientProfile({ clientId: clientProfile?.id });
+      }
       setActiveModal("");
     }
   };
@@ -144,8 +144,13 @@ const AddFileModal: React.FC<{
     <>
       <StyledHeader>
         <h2>Add a File</h2>
-        <p>Upload a file for {clientProfile?.clientFirstName} {clientProfile?.clientLastName}. </p>
-        <p>This will be visible to all agencies unless you mark it as private. </p>
+        <p>
+          Upload a file for {clientProfile?.clientFirstName}{" "}
+          {clientProfile?.clientLastName}.{" "}
+        </p>
+        <p>
+          This will be visible to all agencies unless you mark it as private.{" "}
+        </p>
       </StyledHeader>
       <Formik
         initialValues={{
@@ -179,7 +184,7 @@ const AddFileModal: React.FC<{
               <label htmlFor="isPrivate">
                 Make this file private (only those with access to your agency
                 can view this file).
-            </label>
+              </label>
               <input
                 type="checkbox"
                 checked={isPrivate}

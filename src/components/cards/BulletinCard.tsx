@@ -95,11 +95,11 @@ const DeleteButton = styled.button`
 `;
 
 type MessageType = {
-  subject: String;
-  message: String;
-  agencyId: String;
-  date: String;
-  isPrivate: String;
+  subject: string;
+  message: string;
+  agencyId: string;
+  date: string;
+  isPrivate: string;
   id?: string;
 };
 

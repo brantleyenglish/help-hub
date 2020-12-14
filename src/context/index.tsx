@@ -10,13 +10,13 @@ const ContextProviders: React.FC<any> = ({ children }) => {
   return (
     <PublicProvider>
       <AuthProvider>
-        <ClientProvider>
-          <AgencyProvider>
-            <AssistanceProvider>
+        <AssistanceProvider>
+          <ClientProvider>
+            <AgencyProvider>
               <ModalProvider>{children}</ModalProvider>
-            </AssistanceProvider>
-          </AgencyProvider>
-        </ClientProvider>
+            </AgencyProvider>
+          </ClientProvider>
+        </AssistanceProvider>
       </AuthProvider>
     </PublicProvider>
   );
