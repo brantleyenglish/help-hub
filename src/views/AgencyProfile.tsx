@@ -25,6 +25,8 @@ import HHPlaceholder from "../images/helphubPlaceholder.png";
 import ReportSample from "../images/reportSample.png";
 import AddServiceModal from "../modals/AddServiceModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
+import { Link } from "react-router-dom";
+
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -74,9 +76,14 @@ const FormContentWrapper = styled.div`
   flex-wrap: wrap;
   display: flex;
   justify-content: space-between;
-  & p {
+  & a {
+    color: ${theme.colors.white};
     margin-top: 0;
     padding-top: 0;
+    :hover{
+      color: ${theme.colors.yellow};
+
+    }
   }
   & h2 {
     margin-bottom: 0;
@@ -222,11 +229,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-            ...agencyMessages?.filter(
-              (message: MessageType) => message?.isPrivate
-            ),
-            ...allPublicMessages,
-          ]
+          ...agencyMessages?.filter(
+            (message: MessageType) => message?.isPrivate
+          ),
+          ...allPublicMessages,
+        ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -290,7 +297,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faBrowser} /> Website
                     </h3>
-                    <p> {agencyProfile?.website}</p>
+                    <a href={"http://" + agencyProfile?.website.replace('https://', "").replace('http://', "")}> {agencyProfile?.website}</a>
                   </>
                 )}
               </FormLeftWrapper>
@@ -312,7 +319,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faPhone} /> Phone
                     </h3>
-                    <p>{agencyProfile?.phone}</p>
+                    <a href={"tel:" + agencyProfile?.phone}>{agencyProfile?.phone}</a>
                   </>
                 )}
                 {agency?.email && (
@@ -320,7 +327,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faEnvelope} /> Email
                     </h3>
-                    <p>{agencyProfile?.email}</p>
+                    <a href={"mailto:" + agencyProfile?.email}>{agencyProfile?.email}</a>
                   </>
                 )}
                 {agency?.streetAddress && (
@@ -328,10 +335,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                    <p>
+                    <a href={"http://maps.google.com/?q=" + agencyProfile?.streetAddress + "," + agencyProfile?.city + "," + agencyProfile?.state + "," + agencyProfile?.zip}>
                       {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
                       {agencyProfile?.state} {agencyProfile?.zip}
-                    </p>
+                    </a>
                   </>
                 )}
                 <p>{agencyProfile?.counties?.join(", ")}</p>
@@ -339,7 +346,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             </FormContentWrapper>
           </AgencyCardWrapper>
         </AgencyBackground>
-      )}
+      )
+      }
 
       <ContentWrapper>
         {agency?.id === agencyId && (
@@ -424,7 +432,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           <img src={ReportSample} alt="" style={{ width: "100%" }} />
         )}
       </ContentWrapper>
-    </AgencyProfileWrapper>
+    </AgencyProfileWrapper >
   );
 };
 
