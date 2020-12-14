@@ -55,3 +55,30 @@ export const createMessage = async ({ data }: CreateMessageType) => {
       console.log("Error createClient:", e);
   }
 };
+
+export const updateMessage = async ({ data }: CreateMessageType) => {
+  try {
+    const docRef = db.collection("messages").doc(data?.id);
+    await docRef.set(data);
+    const messageData = await docRef.get();
+    if (messageData.exists) {
+      return messageData.data() as MessageType;
+    } else {
+      return "DoesNotExist";
+    }
+  } catch (e) {
+    console.log("Error updateAgency:", e);
+    return "Error";
+  }
+};
+
+
+export const deleteMessage = async ({ messageId }: { messageId: string }) => {
+  try {
+    await db.collection("messages").doc(messageId).delete();
+  } catch (e) {
+    console.log("Error updateAgency:", e);
+    return "Error";
+  }
+};
+

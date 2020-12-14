@@ -129,7 +129,7 @@ const BulletinCard = ({ message }: MessageCardType) => {
               )?.name
             }
           </h2>
-          {agency?.id === message?.agencyId && (
+          {message?.id && agency?.id === message?.agencyId && (
             <>
               <ModalWrapper modalId={`MessageEdit-${message?.id}`}>
                 <EditBulletinModal message={message} />
@@ -140,7 +140,7 @@ const BulletinCard = ({ message }: MessageCardType) => {
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
               <ModalWrapper modalId={`MessageDelete-${message?.id}`}>
-                <DeleteBulletinModal />
+                <DeleteBulletinModal messageId={message?.id} />
               </ModalWrapper>
               <DeleteButton
                 onClick={() => setActiveModal(`MessageDelete-${message?.id}`)}

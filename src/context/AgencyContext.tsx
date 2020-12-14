@@ -141,6 +141,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
     agencyMessages,
     agencyProfile,
     setAgencyProfileId,
+    getAgencyMessagesCallback,
   };
 
   return <AgencyContext.Provider value={value} {...props} />;
