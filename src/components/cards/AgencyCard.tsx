@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { AgencyType, CategoryType } from "../../../DataTypes";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
+import { Link } from "react-router-dom";
+
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -81,49 +83,50 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
   const { categories } = usePublicData();
   // const serives = getServicesByAgencyId(agencyId: agency?.id);
   return (
-    <AgencyCardWrapper>
-      <AgencyCardContentWrapper>
-        <AgencyCardHeaderWrapper>
-          <img src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder} />
-          <h1>{agency?.name}</h1>
-        </AgencyCardHeaderWrapper>
+    <>
+      <AgencyCardWrapper>
+        <AgencyCardContentWrapper>
+          <AgencyCardHeaderWrapper>
+            <img src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder} />
+            <h1>{agency?.name}</h1>
+          </AgencyCardHeaderWrapper>
 
-        <p>{agency?.description}</p>
+          <p>{agency?.description}</p>
 
-        {agency?.phone && (
-          <p>
-            <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-            {agency?.phone}
-          </p>
-        )}
+          {agency?.phone && (
+            <p><FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
+              {agency?.phone}</p>
 
-        {agency?.website && (
-          <p>
-            <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
-            {agency?.website}
-          </p>
-        )}
-      </AgencyCardContentWrapper>
-      <CategoryTagsWrapper>
-        {agency?.categories &&
-          agency?.categories.map((categoryId: string) => (
-            <IconWrapper className="icon">
-              <StyledSVG
-                src={
-                  categories?.find(
-                    (category: CategoryType) => category?.name === categoryId
-                  )?.icon
-                }
-                alt={
-                  categories?.find(
-                    (category: CategoryType) => category?.name === categoryId
-                  )?.icon
-                }
-              />
-            </IconWrapper>
-          ))}
-      </CategoryTagsWrapper>
-    </AgencyCardWrapper>
+          )}
+
+          {agency?.website && (
+            <p>
+              <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
+              {agency?.website}
+            </p>
+          )}
+        </AgencyCardContentWrapper>
+        <CategoryTagsWrapper>
+          {agency?.categories &&
+            agency?.categories.map((categoryId: string) => (
+              <IconWrapper className="icon">
+                <StyledSVG
+                  src={
+                    categories?.find(
+                      (category: CategoryType) => category?.name === categoryId
+                    )?.icon
+                  }
+                  alt={
+                    categories?.find(
+                      (category: CategoryType) => category?.name === categoryId
+                    )?.icon
+                  }
+                />
+              </IconWrapper>
+            ))}
+        </CategoryTagsWrapper>
+      </AgencyCardWrapper >
+    </>
   );
 };
 
