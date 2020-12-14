@@ -2,7 +2,6 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { ClientType } from "../../DataTypes";
 import { FormikDateInput } from "../components/DateInput";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
@@ -23,10 +22,9 @@ const StyledButton = styled.button`
 `;
 
 const EditClientModal: React.FC<{
-  clientProfile: ClientType | null;
-  getClientProfile: () => void;
-}> = ({ clientProfile, getClientProfile }) => {
-  const { updateClientInfo } = useClient();
+  clientId: string;
+}> = ({ clientId }) => {
+  const { updateClientInfo, getClientProfile, clientProfile } = useClient();
   const { setActiveModal } = useModal();
 
   const clientSchema = Yup.object().shape({
@@ -66,7 +64,9 @@ const EditClientModal: React.FC<{
             clientId: clientProfile?.id,
             newData: { id: clientProfile?.id, ...values },
           });
-          getClientProfile();
+          if (getClientProfile) {
+            getClientProfile({ clientId });
+          }
           setActiveModal("");
         }
       }}

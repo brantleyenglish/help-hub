@@ -6,6 +6,7 @@ import {
   getClient,
   updateClient,
 } from "../firebase/clients";
+import { useAssistance } from "./AssistanceContext";
 import { useAuth } from "./AuthContext";
 
 type UpdateClientInfoType = {
@@ -25,6 +26,7 @@ ClientContext.displayName = "ClientContext";
 // TO DO: Adapt this for Authorization to see Clients
 export const ClientProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
+  const { setAssistanceClientId } = useAssistance();
   const [clients, setClients] = React.useState<ClientListType | null>(null);
 
   const getAllClientData = React.useCallback(async () => {
@@ -55,11 +57,32 @@ export const ClientProvider: React.FC<any> = (props) => {
     createClientData({ data });
   };
 
+  const [clientProfile, setClientProfile] = React.useState<
+    ClientType | undefined
+  >(undefined);
+
+  const getClientProfile = async ({ clientId }: { clientId: string }) => {
+    if (setAssistanceClientId) {
+      setAssistanceClientId(clientId);
+    }
+    const clientData = await getClient({ clientId });
+    if (clientData && clientData !== "DoesNotExist") {
+      setClientProfile(clientData);
+    }
+  };
+
   React.useEffect(() => {
     getAllClientData();
   }, [getAllClientData]);
 
-  const value = { clients, updateClientInfo, createClient, getAllClientData };
+  const value = {
+    clients,
+    updateClientInfo,
+    createClient,
+    getAllClientData,
+    clientProfile,
+    getClientProfile,
+  };
 
   return <ClientContext.Provider value={value} {...props} />;
 };

@@ -2,7 +2,6 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { ClientType } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
@@ -41,20 +40,18 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 `;
 
-const AddBulletinModal: React.FC<{
-  clientProfile: ClientType | null;
-  getClientProfile: () => void;
-}> = ({ clientProfile, getClientProfile }) => {
+const AddBulletinModal: React.FC<{}> = () => {
   const { setActiveModal } = useModal();
   const { user } = useAuth();
-  const { updateClientInfo } = useClient();
+  const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
 
   const toggleIsPrivate = () => {
@@ -70,8 +67,13 @@ const AddBulletinModal: React.FC<{
     <>
       <StyledHeader>
         <h2>Add a Note</h2>
-        <p>Write a note about {clientProfile?.clientFirstName} {clientProfile?.clientLastName}. </p>
-        <p>This will be visible to all agencies unless you mark it as private. </p>
+        <p>
+          Write a note about {clientProfile?.clientFirstName}{" "}
+          {clientProfile?.clientLastName}.{" "}
+        </p>
+        <p>
+          This will be visible to all agencies unless you mark it as private.{" "}
+        </p>
       </StyledHeader>
       <Formik
         initialValues={{
@@ -87,35 +89,37 @@ const AddBulletinModal: React.FC<{
             await updateClientInfo(
               clientProfile?.notes
                 ? {
-                  clientId: clientProfile?.id,
-                  newData: {
-                    notes: [
-                      ...clientProfile?.notes,
-                      {
-                        ...values,
-                        isPrivate,
-                        agencyId: user?.uid,
-                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                      },
-                    ],
-                  },
-                }
+                    clientId: clientProfile?.id,
+                    newData: {
+                      notes: [
+                        ...clientProfile?.notes,
+                        {
+                          ...values,
+                          isPrivate,
+                          agencyId: user?.uid,
+                          date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                        },
+                      ],
+                    },
+                  }
                 : {
-                  clientId: clientProfile?.id,
-                  newData: {
-                    notes: [
-                      {
-                        ...values,
-                        isPrivate,
-                        agencyId: user?.uid,
-                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                      },
-                    ],
-                  },
-                }
+                    clientId: clientProfile?.id,
+                    newData: {
+                      notes: [
+                        {
+                          ...values,
+                          isPrivate,
+                          agencyId: user?.uid,
+                          date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                        },
+                      ],
+                    },
+                  }
             );
           }
-          getClientProfile();
+          if (clientProfile?.id && getClientProfile) {
+            getClientProfile({ clientId: clientProfile?.id });
+          }
           setActiveModal("");
         }}
       >
@@ -127,7 +131,7 @@ const AddBulletinModal: React.FC<{
               <label htmlFor="isPrivate">
                 Make this note private (only those with access to your client
                 can view this message).
-            </label>
+              </label>
               <input
                 type="checkbox"
                 checked={isPrivate}

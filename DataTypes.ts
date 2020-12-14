@@ -79,6 +79,8 @@ export type ClientContextType = {
   updateClientInfo: ({ clientId, newData }: { clientId: string, newData: object }) => Promise<void>;
   createClient: ({ data }: { data: ClientType }) => Promise<void>;
   getAllClientData: () => Promise<void>;
+  clientProfile: ClientType | undefined;
+  getClientProfile: ({clientId}: {clientId: string}) => Promise<void>; 
 };
 
 export type ServiceType = {

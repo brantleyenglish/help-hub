@@ -43,13 +43,14 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 `;
-const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
+const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
   client,
 }) => {
   const { setActiveModal } = useModal();
@@ -71,8 +72,13 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
     <>
       <StyledHeader>
         <h2>Add Assistance</h2>
-        <p>Select a service to provide to {client?.clientFirstName} {client?.clientLastName}. </p>
-        <p>This will be visible to all agencies unless you mark it as private.</p>
+        <p>
+          Select a service to provide to {client?.clientFirstName}{" "}
+          {client?.clientLastName}.{" "}
+        </p>
+        <p>
+          This will be visible to all agencies unless you mark it as private.
+        </p>
       </StyledHeader>
       <Formik
         initialValues={{
@@ -112,15 +118,16 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
               options={
                 allServices
                   ? allServices
-                    ?.filter(
-                      (service: ServiceType) => service?.agencyId === user?.uid
-                    )
-                    ?.map((service: ServiceType) => {
-                      return {
-                        value: service?.id,
-                        label: service?.name,
-                      };
-                    })
+                      ?.filter(
+                        (service: ServiceType) =>
+                          service?.agencyId === user?.uid
+                      )
+                      ?.map((service: ServiceType) => {
+                        return {
+                          value: service?.id,
+                          label: service?.name,
+                        };
+                      })
                   : []
               }
             />
@@ -131,9 +138,9 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
             />
             <StyledFormikFieldWrapper>
               <label htmlFor="isPrivate">
-                Make this assistance private (only those with access to your agency
-                can see that you provided this service to this client).
-            </label>
+                Make this assistance private (only those with access to your
+                agency can see that you provided this service to this client).
+              </label>
               <input
                 type="checkbox"
                 checked={isPrivate}

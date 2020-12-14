@@ -11,12 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import {
-  AssistanceDataType,
-  ClientFiles,
-  ClientNotes,
-  ClientType,
-} from "../../DataTypes";
+import { AssistanceDataType, ClientFiles, ClientNotes } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
 import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
@@ -26,7 +21,6 @@ import { useAssistance } from "../context/AssistanceContext";
 import { useAuth } from "../context/AuthContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
-import { getClient } from "../firebase/clients";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
@@ -180,12 +174,8 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { user } = useAuth();
-  const { client, updateClientInfo } = useClient();
-  const { setAssistanceClientId, assistanceData } = useAssistance();
-
-  const [clientProfile, setClientProfile] = React.useState<ClientType | null>(
-    null
-  );
+  const { clientProfile, getClientProfile } = useClient();
+  const { assistanceData } = useAssistance();
 
   const { setActiveModal } = useModal();
 
@@ -193,18 +183,10 @@ const ClientProfile = ({ match }: ClientProfileType) => {
     "assistances"
   );
 
-  const getClientProfile = async () => {
-    if (setAssistanceClientId) {
-      setAssistanceClientId(clientId);
-    }
-    const clientData = await getClient({ clientId });
-    if (clientData && clientData !== "DoesNotExist") {
-      setClientProfile(clientData);
-    }
-  };
-
   React.useEffect(() => {
-    getClientProfile();
+    if (getClientProfile) {
+      getClientProfile({ clientId });
+    }
   }, []);
 
   const sortByDate = (
@@ -225,10 +207,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   return (
     <ClientProfileWrapper>
       <ModalWrapper modalId="ClientEdit">
-        <EditClientModal
-          clientProfile={clientProfile}
-          getClientProfile={getClientProfile}
-        />
+        <EditClientModal clientId={clientId} />
       </ModalWrapper>
       {clientProfile && (
         <ClientBackground>
@@ -330,10 +309,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("notes")}
           >
             <ModalWrapper modalId="NoteCreate">
-              <AddNoteModal
-                clientProfile={clientProfile}
-                getClientProfile={getClientProfile}
-              />
+              <AddNoteModal />
             </ModalWrapper>
             <p>NOTES</p>
             <AddBtnWrapper onClick={() => setActiveModal("NoteCreate")}>
@@ -347,10 +323,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             onClick={() => setActiveTab("files")}
           >
             <ModalWrapper modalId="FileCreate">
-              <AddFileModal
-                clientProfile={clientProfile}
-                getClientProfile={getClientProfile}
-              />
+              <AddFileModal />
             </ModalWrapper>
             <p>FILES</p>
             <AddBtnWrapper onClick={() => setActiveModal("FileCreate")}>
