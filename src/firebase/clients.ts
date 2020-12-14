@@ -14,7 +14,7 @@ type CreateClientType = {
 export const getAllClients = async () => {
     try {
         const docs = await db.collection("clients").get();
-        const clients : any= [];
+        const clients: any = [];
         docs.forEach((client) => {
             clients.push(client.data());
         });
@@ -41,7 +41,7 @@ export const getClient = async ({ clientId }: ClientIdType) => {
 
 export const createClientData = async ({ data }: CreateClientType) => {
     try {
-        const docRef =  db.collection("clients").doc();
+        const docRef = db.collection("clients").doc();
         await docRef.set({
             id: docRef?.id,
             ...data

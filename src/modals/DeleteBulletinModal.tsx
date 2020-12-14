@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-import { Form, Formik } from "formik";
-import StyledFormikField from "../components/StyledFormikField";
-import * as Yup from "yup";
-
+import { useAssistance } from "../context/AssistanceContext";
+import { useModal } from "../context/ModalContext";
+// import { deleteAssitance } from "../firebase/assistance";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -20,41 +19,36 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0px 0px 20px 0;
+}
 `;
 
-const DeleteBulletinModal = () => {
-    const bulletinSchema = Yup.object().shape({
-        subject: Yup.string().required("You must include a subject."),
-        message: Yup.string().required("You must include a message."),
-        isPrivate: Yup.string(),
-        date: Yup.string(),
-        agencyId: Yup.string(),
-    });
-
+const DeleteBulletinModal = (
+    // { assistanceId }: { assistanceId: string }
+) => {
+    // const { updateAssistanceByClient } = useAssistance();
+    const { setActiveModal } = useModal();
     return (
-        <Formik
-            initialValues={{
-                subject: "",
-                message: "",
-                isPrivate: "false",
-                date: "",
-                agencyId: "",
-            }}
+        <>
+            <StyledHeader>
+                <h2>Delete Bulletin</h2>
+                <p>Are you sure you want to delete this bulletin message?</p>
+            </StyledHeader>
 
-            // TO DO: Update for Delete action
-
-            validationSchema={bulletinSchema}
-            onSubmit={async (values) => {
-                console.log({ values });
-            }}
-        >
-            {({ handleSubmit }) => (
-                <Form onSubmit={handleSubmit}>
-                    <p>Are you sure you want to delete this bulletin?</p>
-                    <StyledButton type="submit">Yes</StyledButton>
-                </Form>
-            )}
-        </Formik>
+            <StyledButton
+            // onClick={async () => {
+            //     deleteAssitance({ assistanceId });
+            //     if (updateAssistanceByClient) {
+            //         await updateAssistanceByClient();
+            //     }
+            //     setActiveModal("");
+            // }}
+            >
+                Yes
+      </StyledButton>
+        </>
     );
 };
 

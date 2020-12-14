@@ -166,7 +166,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                   </EditButton>
                   <ModalWrapper modalId={`ServiceDelete-${service?.id}`}>
                     <DeleteServiceModal
-                    // service={service}
+                    // serviceId={service?.id || ""} 
                     />
                   </ModalWrapper>
                   <DeleteButton
