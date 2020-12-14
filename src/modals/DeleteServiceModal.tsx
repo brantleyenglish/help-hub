@@ -34,19 +34,8 @@ const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
         <p>Are you sure you want to remove this service?</p>
       </StyledHeader>
 
-<<<<<<< HEAD
-  <StyledButton
-  //   onClick={async () => {
-  //     deleteAssitance({ assistanceId });
-  //     if (updateAssistanceByClient) {
-  //       await updateAssistanceByClient();
-  //     }
-  //     setActiveModal("");
-  //   }}
-  >
-=======
       <StyledButton>
-      {/* //   onClick={async () => {
+        {/* //   onClick={async () => {
             //     deleteAssitance({ assistanceId });
             //     if (updateAssistanceByClient) {
             //       await updateAssistanceByClient();
@@ -54,7 +43,6 @@ const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
             //     setActiveModal("");
             //   }}
             > */}
->>>>>>> 12ed44abceed38b89404982a6cf02e3bd33d6e63
         Yes
       </StyledButton>
     </>

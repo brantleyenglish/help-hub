@@ -54,8 +54,8 @@ const EditClientModal: React.FC<{
         city: clientProfile?.city || "",
         state: clientProfile?.state || "",
         zip: clientProfile?.zip || "",
-        gender: clientProfile?.gender || "m",
-        ethnicity: clientProfile?.ethnicity || "white",
+        gender: clientProfile?.gender || "Male",
+        ethnicity: clientProfile?.ethnicity || "White",
       }}
       validationSchema={clientSchema}
       onSubmit={async (values) => {
@@ -93,16 +93,20 @@ const EditClientModal: React.FC<{
             type="select"
             options={[
               {
-                value: "m",
+                value: "Male",
                 label: "Male",
               },
               {
-                value: "f",
+                value: "Female",
                 label: "Female",
               },
               {
-                value: "other",
-                label: "Other / N/A",
+                value: "Transgender",
+                label: "Transgender",
+              },
+              {
+                value: "Not Reported",
+                label: "Not Reported",
               },
             ]}
           />
@@ -112,32 +116,24 @@ const EditClientModal: React.FC<{
             type="select"
             options={[
               {
-                value: "white",
+                value: "White",
                 label: "White",
               },
               {
-                value: "black",
+                value: "Black/African American",
                 label: "Black / African American",
               },
               {
-                value: "hispanic",
-                label: "Hispanic / Latino",
+                value: "Hispanic/Latinx",
+                label: "Hispanic / Latinx",
               },
               {
-                value: "asian",
-                label: "Asian American",
+                value: "Other",
+                label: "Other",
               },
               {
-                value: "native",
-                label: "American Indian / Alaska Native",
-              },
-              {
-                value: "pacific",
-                label: "Native Hawaiian / Pacific Islander",
-              },
-              {
-                value: "other",
-                label: "Other / N/A",
+                value: "Not Reported",
+                label: "Not Reported",
               },
             ]}
           />
