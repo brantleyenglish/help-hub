@@ -58,3 +58,34 @@ export const getAssistanceByClient = async ({clientId}: GetAssistanceByClientTyp
     }
   };
   
+  type UpdateAssistanceType = {
+    data: SingleAssistanceType;
+  };
+
+  export const updateAssistance = async ({data}: UpdateAssistanceType) => {
+    console.log({data})
+    try {
+      const docRef = db.collection("assistance").doc(data?.id);
+      await docRef.set(data);
+      const agencyData = await docRef.get();
+      if (agencyData.exists) {
+        return agencyData.data() as AssistanceType;
+      } else {
+        return "DoesNotExist";
+      }
+    } catch (e) {
+      console.log("Error updateAgency:", e);
+      return "Error";
+    }
+  };
+
+  export const deleteAssitance = async ({assistanceId}: {assistanceId: string}) => {
+    try {
+      await db.collection("assistance").doc(assistanceId).delete();
+    } catch (e) {
+      console.log("Error updateAgency:", e);
+      return "Error";
+    }
+  };
+  
+

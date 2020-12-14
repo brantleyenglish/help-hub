@@ -90,7 +90,6 @@ const AddFileModal: React.FC<{
     const newDate = new Date();
     const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
     const date = ("0" + newDate?.getDate()).slice(-2);
-    console.log({ ...fileData, downloadUrl });
     if (clientProfile?.id && updateClientInfo) {
       await updateClientInfo(
         clientProfile?.files

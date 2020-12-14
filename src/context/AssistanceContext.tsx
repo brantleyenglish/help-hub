@@ -85,6 +85,7 @@ export const AssistanceProvider: React.FC<any> = (props) => {
           typeof serviceData !== "string"
         ) {
           assistanceDataObject?.push({
+            id: singleAssistance?.id,
             date: singleAssistance?.date,
             notes: singleAssistance?.notes,
             isPrivate: singleAssistance?.isPrivate,

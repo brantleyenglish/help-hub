@@ -308,7 +308,7 @@ const ClientList: React.FC<{}> = ({}) => {
               filteredClients.map((client) => <ClientRow client={client} />)}
           </ClientTableBody>
         </ClientTable>
-        {filteredClients && filteredClients?.length === 0 && (
+        {clients && filteredClients && filteredClients?.length === 0 && (
           <NewClientWrapper>
             <h2>Can't find who you are looking for?</h2>
             <EditButton onClick={() => setActiveModal("ClientCreate")}>

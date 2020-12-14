@@ -187,8 +187,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
     null
   );
 
-  console.log({ clientProfile });
-
   const { setActiveModal } = useModal();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(

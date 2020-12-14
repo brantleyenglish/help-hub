@@ -103,6 +103,7 @@ export type MessageType = {
   agencyId: string;
   date: string;
   isPrivate: boolean;
+  id?: string;
 }
 
 export type MessageListType = MessageType[];
@@ -116,6 +117,7 @@ export type SingleAssistanceType = {
   date: string;
   isPrivate: boolean;
   notes: string;
+  id?: string;
 }
 
 export type AssistanceDataType = {
@@ -125,6 +127,7 @@ export type AssistanceDataType = {
   date: string;
   isPrivate: boolean;
   notes: string;
+  id?: string;
 }
 
 export type AssistanceDataArrayType = AssistanceDataType[];
