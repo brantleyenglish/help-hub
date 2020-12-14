@@ -145,7 +145,7 @@ const EditAgencyModal: React.FC<{
           if (updateAgencyInfo && agencyProfile) {
             await updateAgencyInfo({
               agencyId: agencyProfile?.id,
-              newData: { id: agencyProfile?.id, ...values, profileUrl },
+              newData: { id: agencyProfile?.id, ...values },
             });
             if (setAgencyProfileId) {
               setAgencyProfileId({ agencyId });
