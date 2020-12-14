@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { ClientNotes } from "../../DataTypes";
 import { theme } from "../components/Theme";
-import { useAssistance } from "../context/AssistanceContext";
 import { useModal } from "../context/ModalContext";
 // import { deleteAssitance } from "../firebase/assistance";
 
@@ -18,38 +18,37 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
-const DeleteNoteModal = (
-    { noteId }: { noteId: string }
-) => {
-    // const { updateAssistanceByClient } = useAssistance();
-    const { setActiveModal } = useModal();
-    return (
-        <>
-            <StyledHeader>
-                <h2>Delete Note</h2>
-                <p>Are you sure you want to delete this note?</p>
-            </StyledHeader>
+const DeleteNoteModal = ({ note }: { note: ClientNotes }) => {
+  // const { updateAssistanceByClient } = useAssistance();
+  const { setActiveModal } = useModal();
+  return (
+    <>
+      <StyledHeader>
+        <h2>Delete Note</h2>
+        <p>Are you sure you want to delete this note?</p>
+      </StyledHeader>
 
-            <StyledButton
-            // onClick={async () => {
-            //     deleteAssitance({ assistanceId });
-            //     if (updateAssistanceByClient) {
-            //         await updateAssistanceByClient();
-            //     }
-            //     setActiveModal("");
-            // }}
-            >
-                Yes
+      <StyledButton
+        onClick={async () => {
+          // deleteAssitance({ assistanceId });
+          // if (updateAssistanceByClient) {
+          //   await updateAssistanceByClient();
+          // }
+          // setActiveModal("");
+        }}
+      >
+        Yes
       </StyledButton>
-        </>
-    );
+    </>
+  );
 };
 
 export default DeleteNoteModal;

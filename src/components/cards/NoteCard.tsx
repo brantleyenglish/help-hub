@@ -112,23 +112,19 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
           </h2>
           {agency?.id === note?.agencyId && (
             <>
-              <ModalWrapper modalId={`NoteEdit-${note?.id}`}>
-                <EditNoteModal
-                // note={note}
-                />
+              <ModalWrapper modalId={`NoteEdit-${note?.message}`}>
+                <EditNoteModal note={note} />
               </ModalWrapper>
               <EditButton
-                onClick={() => setActiveModal(`NoteEdit-${note?.id}`)}
+                onClick={() => setActiveModal(`NoteEdit-${note?.message}`)}
               >
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
-              <ModalWrapper modalId={`NoteDelete-${note?.id}`}>
-                <DeleteNoteModal
-                  noteId={note?.id || ""}
-                />
+              <ModalWrapper modalId={`NoteDelete-${note?.message}`}>
+                <DeleteNoteModal note={note} />
               </ModalWrapper>
               <DeleteButton
-                onClick={() => setActiveModal(`NoteDelete-${note?.id}`)}
+                onClick={() => setActiveModal(`NoteDelete-${note?.message}`)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>

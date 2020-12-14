@@ -126,22 +126,24 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
         <p>Date Created: {file?.date}</p>
         {agency?.id === file?.agencyId && (
           <>
-            <ModalWrapper modalId={`FileEdit-${file?.id}`}>
+            <ModalWrapper modalId={`FileEdit-${file?.fileTitle}`}>
               <EditFileModal
               // file={file}
               />
             </ModalWrapper>
-            <EditButton onClick={() => setActiveModal(`FileEdit-${file?.id}`)}>
+            <EditButton
+              onClick={() => setActiveModal(`FileEdit-${file?.fileTitle}`)}
+            >
               <FontAwesomeIcon icon={faPencil} />
             </EditButton>
 
-            <ModalWrapper modalId={`FileDelete-${file?.id}`}>
+            <ModalWrapper modalId={`FileDelete-${file?.fileTitle}`}>
               <DeleteFileModal
               // file={file}
               />
             </ModalWrapper>
             <DeleteButton
-              onClick={() => setActiveModal(`FileDelete-${file?.id}`)}
+              onClick={() => setActiveModal(`FileDelete-${file?.fileTitle}`)}
             >
               <FontAwesomeIcon icon={faTrash} />
             </DeleteButton>
