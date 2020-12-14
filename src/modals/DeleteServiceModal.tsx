@@ -26,31 +26,29 @@ const StyledHeader = styled.div`
   }
 `;
 
-const DeleteServiceModal = () =>
-  // { serviceId }: { serviceId: string }
-  {
-    // const { updateAssistanceByClient } = useAssistance();
-    const { setActiveModal } = useModal();
-    return (
-      <>
-        <StyledHeader>
-          <h2>Delete Service</h2>
-          <p>Are you sure you want to delete this service?</p>
-        </StyledHeader>
+const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
+  // const { updateAssistanceByClient } = useAssistance();
+  const { setActiveModal } = useModal();
+  return (
+    <>
+      <StyledHeader>
+        <h2>Remove Service</h2>
+        <p>Are you sure you want to remove this service?</p>
+      </StyledHeader>
 
-        <StyledButton
-        // onClick={async () => {
-        //     deleteAssitance({ assistanceId });
-        //     if (updateAssistanceByClient) {
-        //         await updateAssistanceByClient();
-        //     }
-        //     setActiveModal("");
-        // }}
-        >
-          Yes
-        </StyledButton>
-      </>
-    );
-  };
+      <StyledButton
+      //   onClick={async () => {
+      //     deleteAssitance({ assistanceId });
+      //     if (updateAssistanceByClient) {
+      //       await updateAssistanceByClient();
+      //     }
+      //     setActiveModal("");
+      //   }}
+      >
+        Yes
+      </StyledButton>
+    </>
+  );
+};
 
 export default DeleteServiceModal;

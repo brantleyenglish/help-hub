@@ -2,7 +2,6 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { AgencyType } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
@@ -22,10 +21,9 @@ const StyledButton = styled.button`
 `;
 
 const EditAgencyModal: React.FC<{
-  agencyProfile: AgencyType | null;
-  getAgencyProfile: () => void;
-}> = ({ agencyProfile, getAgencyProfile }) => {
-  const { updateAgencyInfo } = useAgency();
+  agencyId: string;
+}> = ({ agencyId }) => {
+  const { updateAgencyInfo, agencyProfile, setAgencyProfileId } = useAgency();
   const { setActiveModal } = useModal();
 
   const agencySchema = Yup.object().shape({
@@ -62,7 +60,9 @@ const EditAgencyModal: React.FC<{
             agencyId: agencyProfile?.id,
             newData: { id: agencyProfile?.id, ...values },
           });
-          getAgencyProfile();
+          if (setAgencyProfileId) {
+            setAgencyProfileId({ agencyId });
+          }
           setActiveModal("");
         }
       }}
