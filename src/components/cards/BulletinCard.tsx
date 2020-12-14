@@ -11,8 +11,8 @@ import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
 import DeleteBulletinModal from "../../modals/DeleteBulletinModal";
-import ModalWrapper from "../ModalWrapper";
 import EditBulletinModal from "../../modals/EditBulletinModal";
+import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
 
 const BulletinCardWrapper = styled.div`
@@ -100,6 +100,7 @@ type MessageType = {
   agencyId: String;
   date: String;
   isPrivate: String;
+  id?: string;
 };
 
 type MessageCardType = {
@@ -130,17 +131,20 @@ const BulletinCard = ({ message }: MessageCardType) => {
           </h2>
           {agency?.id === message?.agencyId && (
             <>
-              <ModalWrapper modalId="MessageEdit">
-                <EditBulletinModal
-                  message={message} />
+              <ModalWrapper modalId={`MessageEdit-${message?.id}`}>
+                <EditBulletinModal message={message} />
               </ModalWrapper>
-              <EditButton onClick={() => setActiveModal("MessageEdit")}>
+              <EditButton
+                onClick={() => setActiveModal(`MessageEdit-${message?.id}`)}
+              >
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
-              <ModalWrapper modalId="MessageDelete">
+              <ModalWrapper modalId={`MessageDelete-${message?.id}`}>
                 <DeleteBulletinModal />
               </ModalWrapper>
-              <DeleteButton onClick={() => setActiveModal("MessageDelete")}>
+              <DeleteButton
+                onClick={() => setActiveModal(`MessageDelete-${message?.id}`)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </>

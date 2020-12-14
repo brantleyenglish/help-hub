@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import { AgencyType, ClientNotes } from "../../../DataTypes";
+import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
 import DeleteNoteModal from "../../modals/DeleteNoteModal";
 import EditNoteModal from "../../modals/EditNoteModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
-import { useAgency } from "../../context/AgencyContext";
 
 const NoteCardWrapper = styled.div`
   display: flex;
@@ -94,7 +94,6 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
   const { setActiveModal } = useModal();
   const { agency } = useAgency();
 
-
   return (
     <NoteCardWrapper>
       <NoteCardIconWrapper>
@@ -113,27 +112,30 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
           </h2>
           {agency?.id === note?.agencyId && (
             <>
-              <ModalWrapper modalId="NoteEdit">
+              <ModalWrapper modalId={`NoteEdit-${note?.id}`}>
                 <EditNoteModal
                 // note={note}
                 />
               </ModalWrapper>
-              <EditButton onClick={() => setActiveModal("NoteEdit")}>
+              <EditButton
+                onClick={() => setActiveModal(`NoteEdit-${note?.id}`)}
+              >
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
-              <ModalWrapper modalId="NoteDelete">
+              <ModalWrapper modalId={`NoteDelete-${note?.id}`}>
                 <DeleteNoteModal
                 // note={note}
                 />
               </ModalWrapper>
-              <DeleteButton onClick={() => setActiveModal("NoteDelete")}>
+              <DeleteButton
+                onClick={() => setActiveModal(`NoteDelete-${note?.id}`)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </>
           )}
         </NoteHeaderWrapper>
-        {note?.message && (
-          <p>{note?.message}</p>)}
+        {note?.message && <p>{note?.message}</p>}
         <p>Date of Note: {note?.date}</p>
       </NoteCardContentWrapper>
     </NoteCardWrapper>

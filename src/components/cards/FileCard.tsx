@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
 import { AgencyType, ClientFiles } from "../../../DataTypes";
+import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
 import DeleteFileModal from "../../modals/DeleteFileModal";
 import EditFileModal from "../../modals/EditFileModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
-import { useAgency } from "../../context/AgencyContext";
 
 const FileCardWrapper = styled.div`
   display: flex;
@@ -105,7 +105,6 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
   const { allAgencies } = usePublicData();
   const { agency } = useAgency();
 
-
   return (
     <FileCardWrapper>
       <FileCardIconWrapper href={file?.downloadUrl} target="_blank">
@@ -123,27 +122,27 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
             }
           </h2>
         </FileHeaderWrapper>
-        {file?.description && (
-          <p>{file?.description}</p>
-        )}
+        {file?.description && <p>{file?.description}</p>}
         <p>Date Created: {file?.date}</p>
         {agency?.id === file?.agencyId && (
           <>
-            <ModalWrapper modalId="FileEdit">
+            <ModalWrapper modalId={`FileEdit-${file?.id}`}>
               <EditFileModal
               // file={file}
               />
             </ModalWrapper>
-            <EditButton onClick={() => setActiveModal("FileEdit")}>
+            <EditButton onClick={() => setActiveModal(`FileEdit-${file?.id}`)}>
               <FontAwesomeIcon icon={faPencil} />
             </EditButton>
 
-            <ModalWrapper modalId="FileDelete">
+            <ModalWrapper modalId={`FileDelete-${file?.id}`}>
               <DeleteFileModal
               // file={file}
               />
             </ModalWrapper>
-            <DeleteButton onClick={() => setActiveModal("FileDelete")}>
+            <DeleteButton
+              onClick={() => setActiveModal(`FileDelete-${file?.id}`)}
+            >
               <FontAwesomeIcon icon={faTrash} />
             </DeleteButton>
           </>

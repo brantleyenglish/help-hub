@@ -1,25 +1,22 @@
 import {
   faEnvelope,
-  faHeartbeat,
   faMapMarkerAlt,
-  faPhone,
-  faTshirt,
-  faUser,
-  faUtensils,
   faPencil,
+  faPhone,
   faTrash,
+  faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { usePublicData } from "../../context/PublicContext";
-import { theme } from "../Theme";
-import { useModal } from "../../context/ModalContext";
-import { useAgency } from "../../context/AgencyContext";
 import { AgencyType } from "../../../DataTypes";
-import ModalWrapper from "../ModalWrapper";
-import EditServiceModal from "../../modals/EditServiceModal";
+import { useAgency } from "../../context/AgencyContext";
+import { useModal } from "../../context/ModalContext";
+import { usePublicData } from "../../context/PublicContext";
 import DeleteServiceModal from "../../modals/DeleteServiceModal";
+import EditServiceModal from "../../modals/EditServiceModal";
+import ModalWrapper from "../ModalWrapper";
+import { theme } from "../Theme";
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -33,34 +30,32 @@ margin: 0px 25px 50px 25px;
 }
 `;
 const ServiceCardContentWrapper = styled.div`
-background: ${theme.colors.grayLight};
-margin: 0px 0px 10px 0px;
-padding: 30px;
-width: 300px;
-min-height: 275px;
-border-radius: 10px 10px 0px 0px;
-p{
-  color: ${theme.colors.gray};
-};
-& h3 {
-  color: ${theme.colors.lightBlue};
-  padding: 0px;
-  margin: 0px;
-}
-
+  background: ${theme.colors.grayLight};
+  margin: 0px 0px 10px 0px;
+  padding: 30px;
+  width: 300px;
+  min-height: 275px;
+  border-radius: 10px 10px 0px 0px;
+  p {
+    color: ${theme.colors.gray};
+  }
+  & h3 {
+    color: ${theme.colors.lightBlue};
+    padding: 0px;
+    margin: 0px;
+  }
 `;
 const ServiceCardHeaderWrapper = styled.div`
-display: flex;
-position: relative;
-flex-direction:column;
-& h1 {
-  text-align: left;
-  color: ${theme.colors.blue};
-  font-size: 25px;
-  padding-bottom: 0;
-  margin-bottom: 5px;
-}
- 
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  & h1 {
+    text-align: left;
+    color: ${theme.colors.blue};
+    font-size: 25px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+  }
 `;
 const CategoryTagsWrapper = styled.div`
 display: flex;
@@ -74,16 +69,16 @@ display: flex;
   border-radius: 0px 0px 10px 10px;
 `;
 const IconWrapper = styled.div`
-display: flex;
-color: ${theme.colors.white};
-background-color: ${theme.colors.blue};
-font-size: 20px;
-padding: 10px;
-width: 20px;
-height: 20px;
-border-radius: 10px;
-align-items: center;
-justify-content: center;
+  display: flex;
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.blue};
+  font-size: 20px;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 const EditButton = styled.button`
   background: ${theme?.colors?.lightBlue};
@@ -159,26 +154,33 @@ const ServiceCard = ({ service }: ServiceCardType) => {
             <>
               {agency?.id === service?.agencyId && (
                 <>
-                  <ModalWrapper modalId="ServiceEdit">
+                  <ModalWrapper modalId={`ServiceEdit-${service?.id}`}>
                     <EditServiceModal
-                    // service={service} 
+                    // service={service}
                     />
                   </ModalWrapper>
-                  <EditButton onClick={() => setActiveModal("ServiceEdit")}>
+                  <EditButton
+                    onClick={() => setActiveModal(`ServiceEdit-${service?.id}`)}
+                  >
                     <FontAwesomeIcon icon={faPencil} />
                   </EditButton>
-                  <ModalWrapper modalId="ServiceDelete">
+                  <ModalWrapper modalId={`ServiceDelete-${service?.id}`}>
                     <DeleteServiceModal
-                    // service={service} 
+                    // service={service}
                     />
                   </ModalWrapper>
-                  <DeleteButton onClick={() => setActiveModal("ServiceDelete")}>
+                  <DeleteButton
+                    onClick={() =>
+                      setActiveModal(`ServiceDelete-${service?.id}`)
+                    }
+                  >
                     <FontAwesomeIcon icon={faTrash} />
                   </DeleteButton>
                 </>
               )}
               <h1>{service?.name}</h1>
-              <h3>Provided by{" "}
+              <h3>
+                Provided by{" "}
                 {
                   allAgencies?.find(
                     (agency: AgencyType) => agency?.id === service?.agencyId
@@ -194,19 +196,19 @@ const ServiceCard = ({ service }: ServiceCardType) => {
           {service?.contactFirstName && (
             <p>
               <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
-          Contact: {service?.contactFirstName} {service?.contactLastName}
+              Contact: {service?.contactFirstName} {service?.contactLastName}
             </p>
           )}
           {service?.phone && (
             <p>
-              <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} /> Phone:{" "}
-              {service?.phone}
+              <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
+              Phone: {service?.phone}
             </p>
           )}
           {service?.email && (
             <p>
               <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
-          Email: {service?.email}
+              Email: {service?.email}
             </p>
           )}
           {service?.streetAddress && (
@@ -222,9 +224,18 @@ const ServiceCard = ({ service }: ServiceCardType) => {
         </ServiceCardContentWrapper>
         <CategoryTagsWrapper>
           {categories &&
-            categories.filter(category => service?.categories?.includes(category?.name)).map((categoryData: any) => (
-              <IconWrapper className="icon"><StyledSVG src={categoryData?.icon} alt={categoryData?.label} /></IconWrapper>
-            ))}
+            categories
+              .filter((category) =>
+                service?.categories?.includes(category?.name)
+              )
+              .map((categoryData: any) => (
+                <IconWrapper className="icon">
+                  <StyledSVG
+                    src={categoryData?.icon}
+                    alt={categoryData?.label}
+                  />
+                </IconWrapper>
+              ))}
         </CategoryTagsWrapper>
       </ServiceCardWrapper>
     </>
