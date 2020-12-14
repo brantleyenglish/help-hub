@@ -87,3 +87,21 @@ export const createService = async ({ data }: {data: CreateServiceType}) => {
       console.log("Error createClient:", e);
   }
 };
+
+export const updateService = async ({ data, serviceId }: {data: CreateServiceType; serviceId: string}) => {
+  try {
+      const docRef =  db.collection("services").doc(serviceId);
+      await docRef.set({
+        id: serviceId,
+        ...data
+      })
+      const service = await docRef.get();
+      if (service.exists) {
+          return service.data();
+      } else {
+          return "DoesNotExisit";
+      }
+  } catch (e) {
+      console.log("Error createClient:", e);
+  }
+};

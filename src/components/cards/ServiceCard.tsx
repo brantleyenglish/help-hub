@@ -58,11 +58,11 @@ const ServiceCardHeaderWrapper = styled.div`
   }
 `;
 const CategoryTagsWrapper = styled.div`
-display: flex;
+  display: flex;
   justify-content: space-between;
   width: 300px;
   flex-direction: row;
-  padding 30px;
+  padding: 30px;
   background: ${theme.colors.grayLight};
   color: ${theme.colors.gray};
   font-size: 20px;
@@ -120,19 +120,19 @@ const DeleteButton = styled.button`
 `;
 
 type ServiceType = {
-  id: String;
-  name: String;
-  description: String;
-  contactFirstName: String;
-  contactLastName: String;
-  phone: String;
-  email: String;
-  streetAddress: String;
-  city: String;
-  state: String;
-  zip: String;
+  id: string;
+  name: string;
+  description: string;
+  contactFirstName: string;
+  contactLastName: string;
+  phone: string;
+  email: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zip: string;
   categories: string[];
-  agencyId: String;
+  agencyId: string;
 };
 
 type ServiceCardType = {
@@ -152,12 +152,10 @@ const ServiceCard = ({ service }: ServiceCardType) => {
         <ServiceCardContentWrapper>
           <ServiceCardHeaderWrapper>
             <>
-              {agency?.id === service?.agencyId && (
+              {service && agency?.id === service?.agencyId && (
                 <>
                   <ModalWrapper modalId={`ServiceEdit-${service?.id}`}>
-                    <EditServiceModal
-                    // service={service}
-                    />
+                    <EditServiceModal service={service} />
                   </ModalWrapper>
                   <EditButton
                     onClick={() => setActiveModal(`ServiceEdit-${service?.id}`)}
@@ -165,9 +163,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                     <FontAwesomeIcon icon={faPencil} />
                   </EditButton>
                   <ModalWrapper modalId={`ServiceDelete-${service?.id}`}>
-                    <DeleteServiceModal
-                    // service={service}
-                    />
+                    <DeleteServiceModal service={service} />
                   </ModalWrapper>
                   <DeleteButton
                     onClick={() =>
