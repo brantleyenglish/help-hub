@@ -120,7 +120,7 @@ const DeleteButton = styled.button`
 `;
 
 type ServiceType = {
-  id: String;
+  id: string;
   name: String;
   description: String;
   contactFirstName: String;
@@ -166,7 +166,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                   </EditButton>
                   <ModalWrapper modalId={`ServiceDelete-${service?.id}`}>
                     <DeleteServiceModal
-                    // serviceId={service?.id || ""} 
+                      serviceId={service?.id || ""}
                     />
                   </ModalWrapper>
                   <DeleteButton

@@ -26,7 +26,7 @@ padding: 0px 0px 20px 0;
 `;
 
 const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
-    // const { updateAssistanceByClient } = useAssistance();
+    // const { updateService } = usePublicData();
     const { setActiveModal } = useModal();
     return (
         <>
@@ -37,10 +37,10 @@ const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
 
             <StyledButton
                 onClick={async () => {
-                    //     deleteService({ serviceId });
-                    //     if (updateAssistanceByClient) {
-                    //         await updateAssistanceByClient();
-                    //     }
+                    // deleteService({ serviceId });
+                    // if (updateService) {
+                    //     await updateService();
+                    // }
                     setActiveModal("");
                 }}
             >
