@@ -95,7 +95,6 @@ type AssistanceCard = {
 const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
   const { setActiveModal } = useModal();
   const { agency } = useAgency();
-
   return (
     <AssistanceCardWrapper>
       <AssistanceCardIconWrapper>
@@ -107,16 +106,22 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
           <h2>Provided by: {assistance?.agency?.name}</h2>
           {agency?.id === assistance?.agency?.id && (
             <>
-              <ModalWrapper modalId="AssistanceEdit">
+              <ModalWrapper modalId={`AssistanceEdit-${assistance?.id}`}>
                 <EditAssistanceModal assistance={assistance} />
               </ModalWrapper>
-              <EditButton onClick={() => setActiveModal("AssistanceEdit")}>
+              <EditButton
+                onClick={() =>
+                  setActiveModal(`AssistanceEdit-${assistance?.id}`)
+                }
+              >
                 <FontAwesomeIcon icon={faPencil} />
               </EditButton>
-              <ModalWrapper modalId="AssistanceDelete">
+              <ModalWrapper modalId={`AssistanceDelete-${assistance?.id}`}>
                 <DeleteAssistanceModal assistanceId={assistance?.id || ""} />
               </ModalWrapper>
-              <DeleteButton onClick={() => setActiveModal("AssistanceDelete")}>
+              <DeleteButton
+                onClick={() => setActiveModal(`AssistanceDelete-${agency?.id}`)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </>

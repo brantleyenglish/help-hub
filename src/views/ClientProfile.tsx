@@ -359,31 +359,27 @@ const ClientProfile = ({ match }: ClientProfileType) => {
           </NavigationButton>
         </NavigationWrapper>
 
-        {activeTab === "assistances" && (
-          <>
-            {assistanceData
-              ?.sort(sortByDate)
-              ?.map((assistance: AssistanceDataType, index: number) => (
-                <AssistanceCard
-                  assistance={assistance}
-                  key={`${assistance?.service?.id}-${index}`}
-                />
-              ))}
-          </>
-        )}
-        {activeTab === "notes" && (
-          <>
-            {clientProfile?.notes
-              ?.filter(
-                (note: ClientNotes) =>
-                  !note?.isPrivate || note?.agencyId === user?.uid
-              )
-              ?.sort(sortByDate)
-              ?.map((note: ClientNotes, index: number) => (
-                <NoteCard note={note} key={note?.id} />
-              ))}
-          </>
-        )}
+        {activeTab === "assistances" &&
+          assistanceData
+            ?.sort(sortByDate)
+            ?.map((assistance: AssistanceDataType, index: number) => (
+              <AssistanceCard
+                assistance={assistance}
+                key={`${assistance?.service?.id}-${index}`}
+              />
+            ))}
+
+        {activeTab === "notes" &&
+          clientProfile?.notes
+            ?.filter(
+              (note: ClientNotes) =>
+                !note?.isPrivate || note?.agencyId === user?.uid
+            )
+            ?.sort(sortByDate)
+            ?.map((note: ClientNotes, index: number) => (
+              <NoteCard note={note} key={note?.id} />
+            ))}
+
         {activeTab === "files" && (
           <FileCardWrapper>
             {clientProfile?.files

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-import { ActiveModalsType, useModal } from "../context/ModalContext";
+import { useModal } from "../context/ModalContext";
 
 const ModalUnderlay = styled.div`
   text-align: center;
@@ -59,7 +59,7 @@ const ModalCloseButton = styled.button`
 
 type ModalType = {
   children: any;
-  modalId: ActiveModalsType;
+  modalId: string;
 };
 
 const ModalWrapper: React.FC<ModalType> = ({ children, modalId }) => {

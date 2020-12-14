@@ -76,7 +76,6 @@ const EditAssistanceModal: React.FC<{
         }}
         validationSchema={assistanceSchema}
         onSubmit={async (values) => {
-          console.log({ values });
           if (updateAssistanceByClient && assistance) {
             await updateAssistance({
               data: {

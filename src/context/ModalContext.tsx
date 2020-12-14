@@ -2,7 +2,7 @@ import React from "react";
 
 type ModalContextType = {
   activeModal: string;
-  setActiveModal: React.Dispatch<React.SetStateAction<ActiveModalsType>>;
+  setActiveModal: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type ActiveModalsType =
@@ -29,13 +29,13 @@ export type ActiveModalsType =
   | "NoteDelete";
 
 export const ModalContext = React.createContext<ModalContextType>({
-  setActiveModal: () => { },
+  setActiveModal: () => {},
   activeModal: "",
 });
 ModalContext.displayName = "ModalContext";
 
 export const ModalProvider: React.FC<any> = (props) => {
-  const [activeModal, setActiveModal] = React.useState<ActiveModalsType>("");
+  const [activeModal, setActiveModal] = React.useState<string>("");
 
   const value = { activeModal, setActiveModal };
 
