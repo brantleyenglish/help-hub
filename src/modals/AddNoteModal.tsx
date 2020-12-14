@@ -42,6 +42,10 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0;
+}
 `;
 
 const AddBulletinModal: React.FC<{
@@ -64,7 +68,11 @@ const AddBulletinModal: React.FC<{
 
   return (
     <>
-      <StyledHeader><h2>Add a Note</h2></StyledHeader>
+      <StyledHeader>
+        <h2>Add a Note</h2>
+        <p>Write a note about {clientProfile?.clientFirstName} {clientProfile?.clientLastName}. </p>
+        <p>This will be visible to all agencies unless you mark it as private. </p>
+      </StyledHeader>
       <Formik
         initialValues={{
           subject: "",
@@ -117,7 +125,7 @@ const AddBulletinModal: React.FC<{
             <StyledFormikField name="message" label="Message" type="textarea" />
             <StyledFormikFieldWrapper>
               <label htmlFor="isPrivate">
-                Make this bulletin private (only those with access to your client
+                Make this note private (only those with access to your client
                 can view this message).
             </label>
               <input

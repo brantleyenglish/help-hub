@@ -41,6 +41,10 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2,p{
+  margin: 0;
+  padding: 0;
+}
 `;
 
 const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
@@ -59,7 +63,11 @@ const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
 
   return (
     <>
-      <StyledHeader><h2>Add Bulletin Board Message</h2></StyledHeader>
+      <StyledHeader>
+        <h2>Add Bulletin Board Message</h2>
+        <p>Write a message for all other agencies. </p>
+        <p>This will be visible to all agencies unless you mark it as private. </p>
+      </StyledHeader>
       <Formik
         initialValues={{
           subject: "",

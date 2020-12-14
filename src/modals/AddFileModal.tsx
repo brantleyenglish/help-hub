@@ -23,9 +23,12 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-  color: ${theme.colors.blue};
+color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0;
+}
 `;
-
 const StyledFormikFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -94,32 +97,32 @@ const AddFileModal: React.FC<{
       await updateClientInfo(
         clientProfile?.files
           ? {
-              clientId: clientProfile?.id,
-              newData: {
-                files: [
-                  ...clientProfile?.files,
-                  {
-                    ...fileData,
-                    downloadUrl,
-                    agencyId: user?.uid,
-                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                  },
-                ],
-              },
-            }
+            clientId: clientProfile?.id,
+            newData: {
+              files: [
+                ...clientProfile?.files,
+                {
+                  ...fileData,
+                  downloadUrl,
+                  agencyId: user?.uid,
+                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                },
+              ],
+            },
+          }
           : {
-              clientId: clientProfile?.id,
-              newData: {
-                files: [
-                  {
-                    ...fileData,
-                    downloadUrl,
-                    agencyId: user?.uid,
-                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                  },
-                ],
-              },
-            }
+            clientId: clientProfile?.id,
+            newData: {
+              files: [
+                {
+                  ...fileData,
+                  downloadUrl,
+                  agencyId: user?.uid,
+                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                },
+              ],
+            },
+          }
       );
       getClientProfile();
       setActiveModal("");
@@ -138,49 +141,56 @@ const AddFileModal: React.FC<{
   });
 
   return (
-    <Formik
-      initialValues={{
-        fileTitle: "",
-        description: "",
-      }}
-      validationSchema={fileSchema}
-      onSubmit={(values) => {
-        setFileData({ ...values, isPrivate, clientId: clientProfile?.id });
-        handleFileUpload();
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="fileTitle" label="Name of File" />
-          <StyledFormikField
-            name="description"
-            label="Description of File (optional)"
-            type="textarea"
-          />
-          <StyledFormikFieldWrapper>
-            <label htmlFor="file">Upload File</label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              onChange={handleFileChange}
+    <>
+      <StyledHeader>
+        <h2>Add a File</h2>
+        <p>Upload a file for {clientProfile?.clientFirstName} {clientProfile?.clientLastName}. </p>
+        <p>This will be visible to all agencies unless you mark it as private. </p>
+      </StyledHeader>
+      <Formik
+        initialValues={{
+          fileTitle: "",
+          description: "",
+        }}
+        validationSchema={fileSchema}
+        onSubmit={(values) => {
+          setFileData({ ...values, isPrivate, clientId: clientProfile?.id });
+          handleFileUpload();
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="fileTitle" label="Name of File" />
+            <StyledFormikField
+              name="description"
+              label="Description of File (optional)"
+              type="textarea"
             />
-          </StyledFormikFieldWrapper>
-          <StyledFormikFieldWrapper>
-            <label htmlFor="isPrivate">
-              Make this bulletin private (only those with access to your agency
-              can view this message).
+            <StyledFormikFieldWrapper>
+              <label htmlFor="file">Upload File</label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                onChange={handleFileChange}
+              />
+            </StyledFormikFieldWrapper>
+            <StyledFormikFieldWrapper>
+              <label htmlFor="isPrivate">
+                Make this file private (only those with access to your agency
+                can view this file).
             </label>
-            <input
-              type="checkbox"
-              checked={isPrivate}
-              onChange={() => toggleIsPrivate()}
-            />
-          </StyledFormikFieldWrapper>
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => toggleIsPrivate()}
+              />
+            </StyledFormikFieldWrapper>
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 export default AddFileModal;

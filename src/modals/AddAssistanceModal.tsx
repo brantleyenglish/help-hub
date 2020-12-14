@@ -44,6 +44,10 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0;
+}
 `;
 const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
   client,
@@ -65,7 +69,11 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
 
   return (
     <>
-      <StyledHeader><h2>Add Assistance</h2></StyledHeader>
+      <StyledHeader>
+        <h2>Add Assistance</h2>
+        <p>Select a service to provide to {client?.clientFirstName} {client?.clientLastName}. </p>
+        <p>This will be visible to all agencies unless you mark it as private.</p>
+      </StyledHeader>
       <Formik
         initialValues={{
           notes: "",
@@ -97,7 +105,6 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
       >
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            Add assistance for {client?.clientFirstName} {client?.clientLastName}
             <StyledFormikField
               name="serviceId"
               label="Service Offered"
@@ -124,8 +131,8 @@ const AddAssistanceModal: React.FC<{ client: ClientType | null }> = ({
             />
             <StyledFormikFieldWrapper>
               <label htmlFor="isPrivate">
-                Make this bulletin private (only those with access to your agency
-                can view this message).
+                Make this assistance private (only those with access to your agency
+                can see that you provided this service to this client).
             </label>
               <input
                 type="checkbox"

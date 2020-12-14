@@ -23,6 +23,10 @@ const StyledButton = styled.button`
 `;
 const StyledHeader = styled.div`
 color: ${theme.colors.blue};
+h2,p{
+margin: 0;
+padding: 0;
+}
 `;
 
 const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
@@ -46,7 +50,11 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
 
   return (
     <>
-      <StyledHeader><h2>Add a Service</h2></StyledHeader>
+      <StyledHeader>
+        <h2>Add a Service</h2>
+        <p>Create a service that your agency provides. </p>
+        <p>This will be visible to those who view you agency's page.</p>
+      </StyledHeader>
       <Formik
         initialValues={{
           name: "",
