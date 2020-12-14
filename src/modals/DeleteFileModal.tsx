@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { ClientFiles } from "../../DataTypes";
 import { theme } from "../components/Theme";
-import { useAssistance } from "../context/AssistanceContext";
+import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
-// import { deleteAssitance } from "../firebase/assistance";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -18,17 +18,16 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
-const DeleteFileModal = (
-  // { assistanceId }: { assistanceId: string }
-) => {
-  // const { updateAssistanceByClient } = useAssistance();
+const DeleteFileModal = ({ file }: { file: ClientFiles }) => {
+  const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const { setActiveModal } = useModal();
   return (
     <>
@@ -38,13 +37,21 @@ const DeleteFileModal = (
       </StyledHeader>
 
       <StyledButton
-      // onClick={async () => {
-      //     deleteAssitance({ assistanceId });
-      //     if (updateAssistanceByClient) {
-      //         await updateAssistanceByClient();
-      //     }
-      //     setActiveModal("");
-      // }}
+        onClick={async () => {
+          if (clientProfile?.id && getClientProfile && updateClientInfo) {
+            await updateClientInfo({
+              clientId: clientProfile?.id,
+              newData: {
+                files: clientProfile?.files?.filter(
+                  (currentFile: ClientFiles) =>
+                    currentFile?.fileTitle !== file?.fileTitle
+                ),
+              },
+            });
+            getClientProfile({ clientId: clientProfile?.id });
+          }
+          setActiveModal("");
+        }}
       >
         Yes
       </StyledButton>

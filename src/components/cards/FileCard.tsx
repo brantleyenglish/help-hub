@@ -127,9 +127,7 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
         {agency?.id === file?.agencyId && (
           <>
             <ModalWrapper modalId={`FileEdit-${file?.fileTitle}`}>
-              <EditFileModal
-              // file={file}
-              />
+              <EditFileModal file={file} />
             </ModalWrapper>
             <EditButton
               onClick={() => setActiveModal(`FileEdit-${file?.fileTitle}`)}
@@ -138,9 +136,7 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
             </EditButton>
 
             <ModalWrapper modalId={`FileDelete-${file?.fileTitle}`}>
-              <DeleteFileModal
-              // file={file}
-              />
+              <DeleteFileModal file={file} />
             </ModalWrapper>
             <DeleteButton
               onClick={() => setActiveModal(`FileDelete-${file?.fileTitle}`)}
