@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { ClientNotes } from "../../DataTypes";
 import { theme } from "../components/Theme";
+import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
-// import { deleteAssitance } from "../firebase/assistance";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -27,7 +27,7 @@ const StyledHeader = styled.div`
 `;
 
 const DeleteNoteModal = ({ note }: { note: ClientNotes }) => {
-  // const { updateAssistanceByClient } = useAssistance();
+  const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const { setActiveModal } = useModal();
   return (
     <>
@@ -38,11 +38,19 @@ const DeleteNoteModal = ({ note }: { note: ClientNotes }) => {
 
       <StyledButton
         onClick={async () => {
-          // deleteAssitance({ assistanceId });
-          // if (updateAssistanceByClient) {
-          //   await updateAssistanceByClient();
-          // }
-          // setActiveModal("");
+          if (clientProfile?.id && getClientProfile && updateClientInfo) {
+            await updateClientInfo({
+              clientId: clientProfile?.id,
+              newData: {
+                notes: clientProfile?.notes?.filter(
+                  (currentNote: ClientNotes) =>
+                    currentNote?.message !== note?.message
+                ),
+              },
+            });
+            getClientProfile({ clientId: clientProfile?.id });
+          }
+          setActiveModal("");
         }}
       >
         Yes
