@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-// import { useService } from "../context/PublicContext";
+import { usePublicData } from "../context/PublicContext";
 import { useModal } from "../context/ModalContext";
-// import { deleteAssitance } from "../firebase/assistance";
+import { deleteService } from "../firebase/services";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -25,9 +25,7 @@ padding: 0px 0px 20px 0;
 }
 `;
 
-const DeleteServiceModal = (
-    // { serviceId }: { serviceId: string }
-) => {
+const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
     // const { updateAssistanceByClient } = useAssistance();
     const { setActiveModal } = useModal();
     return (
@@ -38,13 +36,13 @@ const DeleteServiceModal = (
             </StyledHeader>
 
             <StyledButton
-            // onClick={async () => {
-            //     deleteAssitance({ assistanceId });
-            //     if (updateAssistanceByClient) {
-            //         await updateAssistanceByClient();
-            //     }
-            //     setActiveModal("");
-            // }}
+                onClick={async () => {
+                    //     deleteService({ serviceId });
+                    //     if (updateAssistanceByClient) {
+                    //         await updateAssistanceByClient();
+                    //     }
+                    setActiveModal("");
+                }}
             >
                 Yes
       </StyledButton>

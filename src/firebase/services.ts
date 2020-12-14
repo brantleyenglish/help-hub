@@ -87,3 +87,12 @@ export const createService = async ({ data }: { data: CreateServiceType }) => {
     console.log("Error createClient:", e);
   }
 };
+
+export const deleteService = async ({ serviceId }: { serviceId: string }) => {
+  try {
+    await db.collection("service").doc(serviceId).delete();
+  } catch (e) {
+    console.log("Error deleteService:", e);
+    return "Error";
+  }
+};
