@@ -18,7 +18,7 @@ const FileCardWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const FileCardIconWrapper = styled.a`
+const FileCardIconWrapper = styled.a<{ isTranslucent: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +31,8 @@ const FileCardIconWrapper = styled.a`
   padding: 15px 20px;
   margin: 10px 0px 0px 0px;
   border-radius: 10px 10px 0px 0px;
+  opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
+
   &:hover {
     background-color: ${theme.colors.yellow};
     cursor: pointer;
@@ -107,7 +109,7 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
 
   return (
     <FileCardWrapper>
-      <FileCardIconWrapper href={file?.downloadUrl} target="_blank">
+      <FileCardIconWrapper href={file?.downloadUrl} target="_blank" isTranslucent={!!file?.isPrivate}>
         <FontAwesomeIcon icon={faFileAlt} size="4x" />
       </FileCardIconWrapper>
       <FileCardContentWrapper>

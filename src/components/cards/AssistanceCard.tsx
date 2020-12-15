@@ -13,7 +13,7 @@ import { theme } from "../Theme";
 const AssistanceCardWrapper = styled.div`
   display: flex;
 `;
-const AssistanceCardIconWrapper = styled.div`
+const AssistanceCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,6 +25,8 @@ const AssistanceCardIconWrapper = styled.div`
   padding: 15px 20px;
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
+  opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
+
 `;
 const AssistanceCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
@@ -97,7 +99,7 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
   const { agency } = useAgency();
   return (
     <AssistanceCardWrapper>
-      <AssistanceCardIconWrapper>
+      <AssistanceCardIconWrapper isTranslucent={!!assistance?.isPrivate}>
         <FontAwesomeIcon icon={faHeart} size="4x" />
       </AssistanceCardIconWrapper>
       <AssistanceCardContentWrapper>

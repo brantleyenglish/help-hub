@@ -14,7 +14,7 @@ import { theme } from "../Theme";
 const NoteCardWrapper = styled.div`
   display: flex;
 `;
-const NoteCardIconWrapper = styled.div`
+const NoteCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +26,8 @@ const NoteCardIconWrapper = styled.div`
   padding: 15px 20px;
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
+  opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
+
 `;
 const NoteCardContentWrapper = styled.div`
   background: ${theme.colors.grayLight};
@@ -96,7 +98,7 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
 
   return (
     <NoteCardWrapper>
-      <NoteCardIconWrapper>
+      <NoteCardIconWrapper isTranslucent={!!note?.isPrivate}>
         <FontAwesomeIcon icon={faComment} size="4x" />
       </NoteCardIconWrapper>
       <NoteCardContentWrapper>

@@ -19,8 +19,11 @@ import {
 
 const TimelineAssistanceCardWrapper = styled.div`
 display: flex;
+& a{
+    color: ${theme.colors.lightBlue};
+}
 `;
-const TimelineAssistanceCardIconWrapper = styled.div`
+const TimelineAssistanceCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,6 +35,8 @@ const TimelineAssistanceCardIconWrapper = styled.div`
   padding: 15px 20px;
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
+  opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
+
   `;
 const TimelineAssistanceCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
@@ -103,12 +108,12 @@ type TimelineAssistanceCard = {
 const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({ assistance }) => {
     return (
         <TimelineAssistanceCardWrapper>
-            <TimelineAssistanceCardIconWrapper>
+            <TimelineAssistanceCardIconWrapper isTranslucent={!!assistance?.isPrivate}>
                 <FontAwesomeIcon icon={faHeart} size="4x" />
-            </TimelineAssistanceCardIconWrapper>
+            </TimelineAssistanceCardIconWrapper >
             <TimelineAssistanceCardContentWrapper>
                 <TimelineAssistanceHeaderWrapper>
-                    <h1>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName} received a service.</h1>
+                    <h1><a href={"/clients/" + assistance?.client?.id}>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName}</a> received a service.</h1>
                     <h2>Service Provided: {assistance?.service?.name}</h2>
                 </TimelineAssistanceHeaderWrapper>
                 {assistance?.notes && (

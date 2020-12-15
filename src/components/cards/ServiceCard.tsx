@@ -37,7 +37,13 @@ const ServiceCardContentWrapper = styled.div`
   min-height: 275px;
   border-radius: 10px 10px 0px 0px;
   p {
-    color: ${theme.colors.gray};
+    color: ${theme.colors.blue};
+  }
+  a {
+    color: ${theme.colors.lightBlue};
+    :hover{
+      color: ${theme.colors.yellow};
+    }
   }
   & h3 {
     color: ${theme.colors.lightBlue};
@@ -192,19 +198,20 @@ const ServiceCard = ({ service }: ServiceCardType) => {
           {service?.contactFirstName && (
             <p>
               <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
-              Contact: {service?.contactFirstName} {service?.contactLastName}
+              Contact:&nbsp; {service?.contactFirstName} {service?.contactLastName}
             </p>
           )}
           {service?.phone && (
             <p>
               <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-              Phone: {service?.phone}
+            Phone: &nbsp;<a href={"tel:" + service?.phone}>{service?.phone}</a>
             </p>
           )}
           {service?.email && (
             <p>
               <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
-              Email: {service?.email}
+              Email:&nbsp;
+              <a href={"mailto:" + service?.email}>{service?.email}</a>
             </p>
           )}
           {service?.streetAddress && (
@@ -213,8 +220,11 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                 icon={faMapMarkerAlt}
                 style={{ color: "#0e4680", paddingRight: 5 }}
               />
-              {service?.streetAddress}, {service?.city}, {service?.state}{" "}
-              {service?.zip}
+              Location:&nbsp;
+              <a href={"http://maps.google.com/?q=" + service?.streetAddress + "," + service?.city + "," + service?.state + "," + service?.zip}>
+                {service?.streetAddress}, {service?.city}, {service?.state}{" "}
+                {service?.zip}
+              </a>
             </p>
           )}
         </ServiceCardContentWrapper>

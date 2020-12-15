@@ -247,7 +247,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faPhone} /> Phone
                     </h3>
-                    <p>{clientProfile?.phone}</p>
+                    <a href={"tel:" + clientProfile?.phone}>{clientProfile?.phone}</a>
                   </>
                 )}
                 {clientProfile?.email && (
@@ -255,7 +255,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faEnvelope} /> Email
                     </h3>
-                    <p>{clientProfile?.email}</p>
+                    <a href={"mailto:" + clientProfile?.email}>{clientProfile?.email}</a>
                   </>
                 )}
                 {clientProfile?.streetAddress && (
@@ -263,10 +263,10 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                    <p>
+                    <a href={"http://maps.google.com/?q=" + clientProfile?.streetAddress + "," + clientProfile?.city + "," + clientProfile?.state + "," + clientProfile?.zip}>
                       {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
                       {clientProfile?.state} {clientProfile?.zip}
-                    </p>
+                    </a>
                   </>
                 )}
               </FormLeftWrapper>

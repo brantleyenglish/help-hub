@@ -30,7 +30,7 @@ const BulletinCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   padding: 15px 20px;
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
-  opacity: ${(p) => (p?.isTranslucent ? 0.7 : 1)};
+  opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
 `;
 const BulletinCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
@@ -153,7 +153,7 @@ const BulletinCard = ({ message }: MessageCardType) => {
         <p>{message?.message}</p>
         <p>{message?.date}</p>
       </BulletinCardContentWrapper>
-    </BulletinCardWrapper>
+    </BulletinCardWrapper >
   );
 };
 
