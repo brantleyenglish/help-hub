@@ -32,7 +32,8 @@ export type AgencyContextType = {
   updateAgencyInfo: ({ newData, agencyId }: { newData: AgencyType, agencyId: string }) => Promise<void>
   agencyMessages: MessageListType;
   agencyProfile: AgencyType;
-  setAgencyProfileId: ({agencyId}: {agencyId: string}) => Promise<void>
+  setAgencyProfileId: ({agencyId}: {agencyId: string}) => Promise<void>;
+  getAgencyMessagesCallback: () => Promise<void>;
 };
 
 export type ClientNotes = {

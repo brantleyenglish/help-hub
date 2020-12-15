@@ -305,7 +305,9 @@ const ClientList: React.FC<{}> = ({}) => {
           </ClientTableHeader>
           <ClientTableBody>
             {filteredClients &&
-              filteredClients.map((client) => <ClientRow client={client} />)}
+              filteredClients.map((client) => (
+                <ClientRow client={client} key={client?.id} />
+              ))}
           </ClientTableBody>
         </ClientTable>
         {clients && filteredClients && filteredClients?.length === 0 && (

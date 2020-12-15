@@ -189,7 +189,7 @@ const Home = () => {
       <BigCatWrapper>
         {categories &&
           categories.map((category: any) => (
-            <CatSpanWrapper>
+            <CatSpanWrapper key={category?.name}>
               <Link to={`/services?category=${category?.name}`}>
                 <StyledSVG src={category.icon} alt={category.label} />
               </Link>

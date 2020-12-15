@@ -4,6 +4,7 @@ import styled from "styled-components";
 import * as Yup from "yup";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import { usePublicData } from "../context/PublicContext";
 import { createMessage } from "../firebase/messages";
@@ -40,16 +41,18 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-  margin: 0;
-  padding: 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
   const { setActiveModal } = useModal();
   const { refreshMessages } = usePublicData();
+  const { getAgencyMessagesCallback } = useAgency();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
 
   const toggleIsPrivate = () => {
@@ -66,7 +69,9 @@ const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
       <StyledHeader>
         <h2>Add Bulletin Board Message</h2>
         <p>Write a message for all other agencies. </p>
-        <p>This will be visible to all agencies unless you mark it as private. </p>
+        <p>
+          This will be visible to all agencies unless you mark it as private.{" "}
+        </p>
       </StyledHeader>
       <Formik
         initialValues={{
@@ -86,6 +91,9 @@ const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
               date: `${month} / ${date} / ${newDate?.getFullYear()}`,
             },
           });
+          if (getAgencyMessagesCallback) {
+            await getAgencyMessagesCallback();
+          }
           if (refreshMessages) {
             await refreshMessages();
           }
@@ -98,9 +106,9 @@ const AddBulletinModal: React.FC<{ agencyId: string }> = ({ agencyId }) => {
             <StyledFormikField name="message" label="Message" type="textarea" />
             <StyledFormikFieldWrapper>
               <label htmlFor="isPrivate">
-                Make this bulletin private (only those with access to your agency
-                can view this message).
-            </label>
+                Make this bulletin private (only those with access to your
+                agency can view this message).
+              </label>
               <input
                 type="checkbox"
                 checked={isPrivate}

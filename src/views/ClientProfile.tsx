@@ -83,7 +83,7 @@ const FormContentWrapper = styled.div`
     color: ${theme.colors.white};
     margin: 0;
     padding: 0;
-    :hover{
+    :hover {
       color: ${theme.colors.lightBlue};
     }
   }
@@ -95,13 +95,13 @@ const FormContentWrapper = styled.div`
   }
 `;
 const FormLeftWrapper = styled.div`
-max-width: 325px;
-display: flex;
+  max-width: 325px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 `;
 const FormRightWrapper = styled.div`
-max-width: 325px;
+  max-width: 325px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -359,7 +359,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
             )
             ?.sort(sortByDate)
             ?.map((note: ClientNotes, index: number) => (
-              <NoteCard note={note} key={note?.id} />
+              <NoteCard note={note} key={note?.subject} />
             ))}
 
         {activeTab === "files" && (
@@ -371,7 +371,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               )
               ?.sort(sortByDate)
               ?.map((file: ClientFiles, index: number) => (
-                <FileCard file={file} key={file?.id} />
+                <FileCard file={file} key={file?.fileTitle} />
               ))}
           </FileCardWrapper>
         )}

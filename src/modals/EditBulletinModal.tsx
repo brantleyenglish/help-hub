@@ -7,6 +7,7 @@ import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
+import { updateMessage } from "../firebase/messages";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -21,6 +22,26 @@ const StyledButton = styled.button`
   }
 `;
 
+const StyledFormikFieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 20px 10px;
+  color: ${theme.colors.gray};
+  label {
+    color: ${theme.colors.lightBlue};
+    text-align: left;
+  }
+  input,
+  textarea,
+  select {
+    border-radius: 4px;
+    padding: 5px;
+    border: none;
+    margin-top: 5px;
+    background: ${theme.colors.grayLight};
+  }
+`;
+
 type MessageType = {
   subject: string;
   message: string;
@@ -32,16 +53,18 @@ type MessageType = {
 const EditBulletinModal: React.FC<{
   message: MessageType | undefined;
 }> = ({ message }) => {
-  const { updateAgencyInfo } = useAgency();
   const { setActiveModal } = useModal();
-  const { allPublicMessages } = usePublicData();
+  const { refreshMessages } = usePublicData();
+  const { getAgencyMessagesCallback } = useAgency();
+  const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
+
+  const toggleIsPrivate = () => {
+    setIsPrivate(!isPrivate);
+  };
 
   const bulletinSchema = Yup.object().shape({
     subject: Yup.string().required("You must include a subject."),
     message: Yup.string().required("You must include a message."),
-    isPrivate: Yup.string(),
-    date: Yup.string(),
-    agencyId: Yup.string(),
   });
 
   return (
@@ -49,32 +72,42 @@ const EditBulletinModal: React.FC<{
       initialValues={{
         subject: message?.subject || "",
         message: message?.message || "",
-        isPrivate: message?.isPrivate || "",
-        date: message?.date || "",
-        agencyId: message?.agencyId || "",
       }}
       validationSchema={bulletinSchema}
       onSubmit={async (values) => {
-        console.log({ values });
-        if (updateAgencyInfo && message) {
-          // await updateAgencyInfo({
-          //     agencyId: message?.agencyId,
-          //     newData: { id: message?.id, ...values },
-          // });
-          // getAgencyProfile();
-          setActiveModal("");
+        if (message) {
+          await updateMessage({
+            data: {
+              ...message,
+              ...values,
+              isPrivate,
+            },
+          });
+          if (getAgencyMessagesCallback) {
+            await getAgencyMessagesCallback();
+          }
+          if (refreshMessages) {
+            await refreshMessages();
+          }
         }
+        setActiveModal("");
       }}
     >
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
           <StyledFormikField name="subject" label="Subject Line" />
           <StyledFormikField name="message" label="Message" type="textarea" />
-          <input type="checkbox" />
-          <p>
-            Make this bulletin private (only those with access to your agency
-            can view this message).
-          </p>
+          <StyledFormikFieldWrapper>
+            <label htmlFor="isPrivate">
+              Make this bulletin private (only those with access to your agency
+              can view this message).
+            </label>
+            <input
+              type="checkbox"
+              checked={isPrivate}
+              onChange={() => toggleIsPrivate()}
+            />
+          </StyledFormikFieldWrapper>
           <StyledButton type="submit">Submit</StyledButton>
         </Form>
       )}

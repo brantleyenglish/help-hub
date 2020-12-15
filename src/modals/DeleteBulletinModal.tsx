@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { theme } from "../components/Theme";
-import { useAssistance } from "../context/AssistanceContext";
+import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
-// import { deleteAssitance } from "../firebase/assistance";
+import { usePublicData } from "../context/PublicContext";
+import { deleteMessage } from "../firebase/messages";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -18,38 +19,40 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
-const DeleteBulletinModal = (
-    // { assistanceId }: { assistanceId: string }
-) => {
-    // const { updateAssistanceByClient } = useAssistance();
-    const { setActiveModal } = useModal();
-    return (
-        <>
-            <StyledHeader>
-                <h2>Delete Bulletin</h2>
-                <p>Are you sure you want to delete this bulletin message?</p>
-            </StyledHeader>
-
-            <StyledButton
-            // onClick={async () => {
-            //     deleteAssitance({ assistanceId });
-            //     if (updateAssistanceByClient) {
-            //         await updateAssistanceByClient();
-            //     }
-            //     setActiveModal("");
-            // }}
-            >
-                Yes
+const DeleteBulletinModal = ({ messageId }: { messageId: string }) => {
+  const { setActiveModal } = useModal();
+  const { refreshMessages } = usePublicData();
+  const { getAgencyMessagesCallback } = useAgency();
+  return (
+    <>
+      <StyledHeader>
+        <h2>Remove Service</h2>
+        <p>Are you sure you want to remove this service?</p>
+      </StyledHeader>
+      <StyledButton
+        onClick={async () => {
+          await deleteMessage({ messageId });
+          if (getAgencyMessagesCallback) {
+            await getAgencyMessagesCallback();
+          }
+          if (refreshMessages) {
+            await refreshMessages();
+          }
+          setActiveModal("");
+        }}
+      >
+        Yes
       </StyledButton>
-        </>
-    );
+    </>
+  );
 };
 
 export default DeleteBulletinModal;
