@@ -40,6 +40,14 @@ const StyledFormikFieldWrapper = styled.div`
     background: ${theme.colors.grayLight};
   }
 `;
+const StyledHeader = styled.div`
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 type FormikAgencyType = {
   name: string;
@@ -122,72 +130,80 @@ const EditAgencyModal: React.FC<{
     state: Yup.string(),
   });
   return (
-    <Formik
-      initialValues={{
-        name: agencyProfile?.name || "",
-        description: agencyProfile?.description || "",
-        website: agencyProfile?.website || "",
-        contactFirstName: agencyProfile?.contactFirstName || "",
-        contactLastName: agencyProfile?.contactLastName || "",
-        phone: agencyProfile?.phone || "",
-        email: agencyProfile?.email || "",
-        streetAddress: agencyProfile?.streetAddress || "",
-        city: agencyProfile?.city || "",
-        state: agencyProfile?.state || "",
-        zip: agencyProfile?.zip || "",
-      }}
-      validationSchema={agencySchema}
-      onSubmit={async (values) => {
-        if (file) {
-          setFormikValues(values);
-          handleFileUpload();
-        } else {
-          if (updateAgencyInfo && agencyProfile) {
-            await updateAgencyInfo({
-              agencyId: agencyProfile?.id,
-              newData: { id: agencyProfile?.id, ...values },
-            });
-            if (setAgencyProfileId) {
-              setAgencyProfileId({ agencyId });
+    <>
+      <StyledHeader>
+        <>
+          <h2>Edit Agency</h2>
+          <p>Edit the information for {agencyProfile?.name}.</p>
+        </>
+      </StyledHeader>
+      <Formik
+        initialValues={{
+          name: agencyProfile?.name || "",
+          description: agencyProfile?.description || "",
+          website: agencyProfile?.website || "",
+          contactFirstName: agencyProfile?.contactFirstName || "",
+          contactLastName: agencyProfile?.contactLastName || "",
+          phone: agencyProfile?.phone || "",
+          email: agencyProfile?.email || "",
+          streetAddress: agencyProfile?.streetAddress || "",
+          city: agencyProfile?.city || "",
+          state: agencyProfile?.state || "",
+          zip: agencyProfile?.zip || "",
+        }}
+        validationSchema={agencySchema}
+        onSubmit={async (values) => {
+          if (file) {
+            setFormikValues(values);
+            handleFileUpload();
+          } else {
+            if (updateAgencyInfo && agencyProfile) {
+              await updateAgencyInfo({
+                agencyId: agencyProfile?.id,
+                newData: { id: agencyProfile?.id, ...values },
+              });
+              if (setAgencyProfileId) {
+                setAgencyProfileId({ agencyId });
+              }
+              setActiveModal("");
             }
-            setActiveModal("");
           }
-        }
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="name" label="Agency Name" />
-          <StyledFormikFieldWrapper>
-            <label htmlFor="file">Upload Profile Image</label>
-            <input
-              type="file"
-              name="file"
-              id="file"
-              onChange={handleFileChange}
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="name" label="Agency Name" />
+            <StyledFormikFieldWrapper>
+              <label htmlFor="file">Upload Profile Image</label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                onChange={handleFileChange}
+              />
+            </StyledFormikFieldWrapper>
+            <StyledFormikField
+              name="description"
+              label="Description"
+              type="textarea"
             />
-          </StyledFormikFieldWrapper>
-          <StyledFormikField
-            name="description"
-            label="Description"
-            type="textarea"
-          />
-          <StyledFormikField name="website" label="Website" />
-          <StyledFormikField
-            name="contactFirstName"
-            label="Contact First name"
-          />
-          <StyledFormikField name="contactLastName" label="Contact Last name" />
-          <StyledFormikField name="phone" label="Phone #" />
-          <StyledFormikField name="email" label="Email" />
-          <StyledFormikField name="streetAddress" label="Street Address" />
-          <StyledFormikField name="city" label="City" />
-          <StyledFormikField name="state" label="State" />
-          <StyledFormikField name="zip" label="Zip Code" />
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+            <StyledFormikField name="website" label="Website" />
+            <StyledFormikField
+              name="contactFirstName"
+              label="Contact First name"
+            />
+            <StyledFormikField name="contactLastName" label="Contact Last name" />
+            <StyledFormikField name="phone" label="Phone #" />
+            <StyledFormikField name="email" label="Email" />
+            <StyledFormikField name="streetAddress" label="Street Address" />
+            <StyledFormikField name="city" label="City" />
+            <StyledFormikField name="state" label="State" />
+            <StyledFormikField name="zip" label="Zip Code" />
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

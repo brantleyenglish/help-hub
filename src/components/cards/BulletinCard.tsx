@@ -122,7 +122,8 @@ const BulletinCard = ({ message }: MessageCardType) => {
         <BulletinHeaderWrapper>
           <h1>{message?.subject}</h1>
           <h2>
-            Created by:{" "}
+            {!!message?.isPrivate == true && ("Private Bulletin from ")}
+            {!!message?.isPrivate == false && ("Created by ")}{" "}
             {
               allAgencies?.find(
                 (agency: AgencyType) => agency?.id === message?.agencyId

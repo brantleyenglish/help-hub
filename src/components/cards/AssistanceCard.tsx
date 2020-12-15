@@ -105,7 +105,10 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
       <AssistanceCardContentWrapper>
         <AssistanceHeaderWrapper>
           <h1>{assistance?.service?.name}</h1>
-          <h2>Provided by: {assistance?.agency?.name}</h2>
+          <h2>
+            {assistance?.isPrivate == true && ("Private assistance provided by ")}
+            {assistance?.isPrivate == false && ("Provided by ")}
+            {assistance?.agency?.name}</h2>
           {agency?.id === assistance?.agency?.id && (
             <>
               <ModalWrapper modalId={`AssistanceEdit-${assistance?.id}`}>

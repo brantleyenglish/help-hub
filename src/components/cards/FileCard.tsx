@@ -116,7 +116,8 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
         <FileHeaderWrapper>
           <h1>{file?.fileTitle}</h1>
           <h2>
-            Added by:{" "}
+            {file?.isPrivate === true && ("Private File Added by ")}
+            {file?.isPrivate === false && ("Added by ")}{" "}
             {
               allAgencies?.find(
                 (agency: AgencyType) => agency?.id === file?.agencyId

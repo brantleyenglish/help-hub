@@ -34,8 +34,8 @@ const DeleteBulletinModal = ({ messageId }: { messageId: string }) => {
   return (
     <>
       <StyledHeader>
-        <h2>Remove Service</h2>
-        <p>Are you sure you want to remove this service?</p>
+        <h2>Remove Bulletin Message</h2>
+        <p>Are you sure you want to remove this message?</p>
       </StyledHeader>
       <StyledButton
         onClick={async () => {

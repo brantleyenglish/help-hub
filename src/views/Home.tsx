@@ -86,11 +86,14 @@ const BigCatWrapper = styled.div`
     background-color: ${theme.colors.blue};
   }
 `;
-const CatSpanWrapper = styled.span`
+const CatSpanWrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
   & p {
+    text-align: center;
+    max-width: 90px;
     text-transform: uppercase;
     margin: 0;
     color: ${theme.colors.blue};

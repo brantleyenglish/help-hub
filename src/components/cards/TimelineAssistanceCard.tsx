@@ -113,7 +113,7 @@ const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({ assistance }
             </TimelineAssistanceCardIconWrapper >
             <TimelineAssistanceCardContentWrapper>
                 <TimelineAssistanceHeaderWrapper>
-                    <h1><a href={"/clients/" + assistance?.client?.id}>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName}</a> received a service.</h1>
+                    <h1><a href={"/clients/" + assistance?.client?.id}>{assistance?.client?.clientFirstName} {assistance?.client?.clientLastName}</a> received a {assistance?.isPrivate === true && ("private ")}service.</h1>
                     <h2>Service Provided: {assistance?.service?.name}</h2>
                 </TimelineAssistanceHeaderWrapper>
                 {assistance?.notes && (

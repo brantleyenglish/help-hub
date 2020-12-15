@@ -70,30 +70,50 @@ const StyledSVG = styled.img`
     brightness(106%) contrast(100%);
   height: 22px;
 `;
+const CategoryButtonWrapper = styled.div`
+display: flex;
+flex-direction: row;
+max-width: 525px;
+justify-content: center;
+margin: 15px auto 0px auto;
+`;
 const CategoryButton = styled.button<{ active: boolean }>`
   background: ${(p) =>
     p?.active ? theme.colors.yellow : theme.colors.lightBlue};
+  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  text-align: center;
+
   outline: none;
   border: none;
   cursor: pointer;
   padding-top: 10px;
-  margin: 10px 10px 0px;
   border-radius: 10px;
-  /* border: 1px solid ${theme.colors.white}; */
   width: 40px;
   height: 40px;
+  p {
+    text-transform: uppercase;
+    color: ${theme.colors.white};
+    font-weight: 700;
+    font-size: 8px;
+    padding-top: 5px;
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
   &:hover {
     background: ${theme.colors.yellow};
     img {
       filter: invert(100%) sepia(100%) saturate(100%) hue-rotate(298deg)
         brightness(100%) contrast(100%);
     }
-  }
-  p {
-    text-transform: uppercase;
-    color: ${theme.colors.white};
-    font-weight: 700;
-    font-size: 8px;
   }
 `;
 
@@ -170,17 +190,19 @@ const ServiceList: React.FC<ServiceListType> = () => {
           />
           <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
         </SearchInputWrapper>
-        {categories &&
-          categories.map((categoryData: any) => (
-            <CategoryButton
-              onClick={() => updateCategory(categoryData?.name.toLowerCase())}
-              key={categoryData?.label}
-              active={categoryData?.name === category}
-            >
-              <StyledSVG src={categoryData?.icon} alt={categoryData?.label} />
-              <p>{categoryData?.name}</p>
-            </CategoryButton>
-          ))}
+        < CategoryButtonWrapper>
+          {categories &&
+            categories.map((categoryData: any) => (
+              <CategoryButton
+                onClick={() => updateCategory(categoryData?.name.toLowerCase())}
+                key={categoryData?.label}
+                active={categoryData?.name === category}
+              >
+                <StyledSVG src={categoryData?.icon} alt={categoryData?.label} />
+                <p>{categoryData?.name}</p>
+              </CategoryButton>
+            ))}
+        </CategoryButtonWrapper>
       </ServiceSearchWrapper>
 
       <ServiceListWrapper>

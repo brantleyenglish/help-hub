@@ -105,7 +105,8 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
         <NoteHeaderWrapper>
           <h1>{note?.subject}</h1>
           <h2>
-            Created by:{" "}
+            {note?.isPrivate == true && ("Private Note Created by ")}
+            {note?.isPrivate === false && ("Created by ")}{" "}
             {
               allAgencies?.find(
                 (agency: AgencyType) => agency?.id === note?.agencyId

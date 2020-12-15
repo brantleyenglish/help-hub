@@ -182,6 +182,10 @@ const ServiceCardWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+const ReportsWrapper = styled.div`
+color: ${theme.colors.blue};
+`;
+
 
 const MessageCard = styled.div``;
 
@@ -231,11 +235,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-            ...agencyMessages?.filter(
-              (message: MessageType) => message?.isPrivate
-            ),
-            ...allPublicMessages,
-          ]
+          ...agencyMessages?.filter(
+            (message: MessageType) => message?.isPrivate
+          ),
+          ...allPublicMessages,
+        ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -464,7 +468,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           </>
         )}
         {activeTab === "reports" && (
-          <img src={ReportSample} alt="" style={{ width: "100%" }} />
+          <ReportsWrapper>
+            <h2>Reports is under construction!</h2>
+            <p>That's where you guys, our beta testers, come in. Once there's enough data in the system, we'll be able to generate a report like the one below!</p>
+            <img src={ReportSample} alt="" style={{ width: "100%" }} />
+          </ReportsWrapper>
         )}
       </ContentWrapper>
     </AgencyProfileWrapper>

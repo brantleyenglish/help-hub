@@ -20,6 +20,14 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 const EditClientModal: React.FC<{
   clientId: string;
@@ -43,104 +51,112 @@ const EditClientModal: React.FC<{
     ethnicity: Yup.string(),
   });
   return (
-    <Formik
-      initialValues={{
-        clientFirstName: clientProfile?.clientFirstName || "",
-        clientLastName: clientProfile?.clientLastName || "",
-        dob: clientProfile?.dob || "",
-        phone: clientProfile?.phone || "",
-        email: clientProfile?.email || "",
-        streetAddress: clientProfile?.streetAddress || "",
-        city: clientProfile?.city || "",
-        state: clientProfile?.state || "",
-        zip: clientProfile?.zip || "",
-        gender: clientProfile?.gender || "Male",
-        ethnicity: clientProfile?.ethnicity || "White",
-      }}
-      validationSchema={clientSchema}
-      onSubmit={async (values) => {
-        if (updateClientInfo && clientProfile?.id) {
-          await updateClientInfo({
-            clientId: clientProfile?.id,
-            newData: { id: clientProfile?.id, ...values },
-          });
-          if (getClientProfile) {
-            getClientProfile({ clientId });
+    <>
+      <StyledHeader>
+        <>
+          <h2>Edit Assistance</h2>
+          <p>Edit the information for {clientProfile?.clientFirstName} {clientProfile?.clientLastName}.</p>
+        </>
+      </StyledHeader>
+      <Formik
+        initialValues={{
+          clientFirstName: clientProfile?.clientFirstName || "",
+          clientLastName: clientProfile?.clientLastName || "",
+          dob: clientProfile?.dob || "",
+          phone: clientProfile?.phone || "",
+          email: clientProfile?.email || "",
+          streetAddress: clientProfile?.streetAddress || "",
+          city: clientProfile?.city || "",
+          state: clientProfile?.state || "",
+          zip: clientProfile?.zip || "",
+          gender: clientProfile?.gender || "Male",
+          ethnicity: clientProfile?.ethnicity || "White",
+        }}
+        validationSchema={clientSchema}
+        onSubmit={async (values) => {
+          if (updateClientInfo && clientProfile?.id) {
+            await updateClientInfo({
+              clientId: clientProfile?.id,
+              newData: { id: clientProfile?.id, ...values },
+            });
+            if (getClientProfile) {
+              getClientProfile({ clientId });
+            }
+            setActiveModal("");
           }
-          setActiveModal("");
-        }
-      }}
-    >
-      {({ handleSubmit, setFieldValue, values }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="clientFirstName" label="Client First Name" />
-          <StyledFormikField name="clientLastName" label="Client Last Name" />
-          <FormikDateInput
-            fieldName="dob"
-            setFieldValue={setFieldValue}
-            intialValue={values?.dob}
-            label="Date of Birth"
-          />
-          <StyledFormikField name="phone" label="Phone #" />
-          <StyledFormikField name="email" label="Email" />
-          <StyledFormikField name="streetAddress" label="Street Address" />
-          <StyledFormikField name="state" label="State" />
-          <StyledFormikField name="city" label="City" />
-          <StyledFormikField name="zip" label="Zip Code" />
-          <StyledFormikField
-            name="gender"
-            label="Gender"
-            type="select"
-            options={[
-              {
-                value: "Male",
-                label: "Male",
-              },
-              {
-                value: "Female",
-                label: "Female",
-              },
-              {
-                value: "Transgender",
-                label: "Transgender",
-              },
-              {
-                value: "Not Reported",
-                label: "Not Reported",
-              },
-            ]}
-          />
-          <StyledFormikField
-            name="ethnicity"
-            label="Ethnicity"
-            type="select"
-            options={[
-              {
-                value: "White",
-                label: "White",
-              },
-              {
-                value: "Black/African American",
-                label: "Black / African American",
-              },
-              {
-                value: "Hispanic/Latinx",
-                label: "Hispanic / Latinx",
-              },
-              {
-                value: "Other",
-                label: "Other",
-              },
-              {
-                value: "Not Reported",
-                label: "Not Reported",
-              },
-            ]}
-          />
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+        }}
+      >
+        {({ handleSubmit, setFieldValue, values }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="clientFirstName" label="Client First Name" />
+            <StyledFormikField name="clientLastName" label="Client Last Name" />
+            <FormikDateInput
+              fieldName="dob"
+              setFieldValue={setFieldValue}
+              intialValue={values?.dob}
+              label="Date of Birth"
+            />
+            <StyledFormikField name="phone" label="Phone #" />
+            <StyledFormikField name="email" label="Email" />
+            <StyledFormikField name="streetAddress" label="Street Address" />
+            <StyledFormikField name="state" label="State" />
+            <StyledFormikField name="city" label="City" />
+            <StyledFormikField name="zip" label="Zip Code" />
+            <StyledFormikField
+              name="gender"
+              label="Gender"
+              type="select"
+              options={[
+                {
+                  value: "Male",
+                  label: "Male",
+                },
+                {
+                  value: "Female",
+                  label: "Female",
+                },
+                {
+                  value: "Transgender",
+                  label: "Transgender",
+                },
+                {
+                  value: "Not Reported",
+                  label: "Not Reported",
+                },
+              ]}
+            />
+            <StyledFormikField
+              name="ethnicity"
+              label="Ethnicity"
+              type="select"
+              options={[
+                {
+                  value: "White",
+                  label: "White",
+                },
+                {
+                  value: "Black/African American",
+                  label: "Black / African American",
+                },
+                {
+                  value: "Hispanic/Latinx",
+                  label: "Hispanic / Latinx",
+                },
+                {
+                  value: "Other",
+                  label: "Other",
+                },
+                {
+                  value: "Not Reported",
+                  label: "Not Reported",
+                },
+              ]}
+            />
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

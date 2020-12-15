@@ -41,6 +41,14 @@ const StyledFormikFieldWrapper = styled.div`
     background: ${theme.colors.grayLight};
   }
 `;
+const StyledHeader = styled.div`
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 type MessageType = {
   subject: string;
@@ -68,50 +76,60 @@ const EditBulletinModal: React.FC<{
   });
 
   return (
-    <Formik
-      initialValues={{
-        subject: message?.subject || "",
-        message: message?.message || "",
-      }}
-      validationSchema={bulletinSchema}
-      onSubmit={async (values) => {
-        if (message) {
-          await updateMessage({
-            data: {
-              ...message,
-              ...values,
-              isPrivate,
-            },
-          });
-          if (getAgencyMessagesCallback) {
-            await getAgencyMessagesCallback();
+    <>
+      <StyledHeader>
+        <>
+          <h2>Edit Bulletin Message</h2>
+          <p>
+            This will be visible to all agencies unless you mark it as private.{" "}
+          </p>
+        </>
+      </StyledHeader>
+      <Formik
+        initialValues={{
+          subject: message?.subject || "",
+          message: message?.message || "",
+        }}
+        validationSchema={bulletinSchema}
+        onSubmit={async (values) => {
+          if (message) {
+            await updateMessage({
+              data: {
+                ...message,
+                ...values,
+                isPrivate,
+              },
+            });
+            if (getAgencyMessagesCallback) {
+              await getAgencyMessagesCallback();
+            }
+            if (refreshMessages) {
+              await refreshMessages();
+            }
           }
-          if (refreshMessages) {
-            await refreshMessages();
-          }
-        }
-        setActiveModal("");
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <StyledFormikField name="subject" label="Subject Line" />
-          <StyledFormikField name="message" label="Message" type="textarea" />
-          <StyledFormikFieldWrapper>
-            <label htmlFor="isPrivate">
-              Make this bulletin private (only those with access to your agency
-              can view this message).
+          setActiveModal("");
+        }}
+      >
+        {({ handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <StyledFormikField name="subject" label="Subject Line" />
+            <StyledFormikField name="message" label="Message" type="textarea" />
+            <StyledFormikFieldWrapper>
+              <label htmlFor="isPrivate">
+                Make this bulletin private (only those with access to your agency
+                can view this message).
             </label>
-            <input
-              type="checkbox"
-              checked={isPrivate}
-              onChange={() => toggleIsPrivate()}
-            />
-          </StyledFormikFieldWrapper>
-          <StyledButton type="submit">Submit</StyledButton>
-        </Form>
-      )}
-    </Formik>
+              <input
+                type="checkbox"
+                checked={isPrivate}
+                onChange={() => toggleIsPrivate()}
+              />
+            </StyledFormikFieldWrapper>
+            <StyledButton type="submit">Submit</StyledButton>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

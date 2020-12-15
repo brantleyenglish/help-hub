@@ -43,6 +43,14 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
+const StyledHeader = styled.div`
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 const EditAssistanceModal: React.FC<{
   assistance: AssistanceDataType | null;
@@ -63,7 +71,15 @@ const EditAssistanceModal: React.FC<{
   };
   return (
     <>
-      <h1>Edit Assistance</h1>
+      <StyledHeader>
+        <>
+          <h2>Edit Assistance</h2>
+          <p>Edit the service that you provided to {assistance?.client?.clientFirstName} {assistance?.client?.clientLastName}.</p>
+          <p>
+            This will be visible to all agencies unless you mark it as private.{" "}
+          </p>
+        </>
+      </StyledHeader>
       <Formik
         initialValues={{
           notes: assistance?.notes || "",
@@ -105,16 +121,16 @@ const EditAssistanceModal: React.FC<{
               options={
                 allServices
                   ? allServices
-                      ?.filter(
-                        (service: ServiceType) =>
-                          service?.agencyId === user?.uid
-                      )
-                      ?.map((service: ServiceType) => {
-                        return {
-                          value: service?.id,
-                          label: service?.name,
-                        };
-                      })
+                    ?.filter(
+                      (service: ServiceType) =>
+                        service?.agencyId === user?.uid
+                    )
+                    ?.map((service: ServiceType) => {
+                      return {
+                        value: service?.id,
+                        label: service?.name,
+                      };
+                    })
                   : []
               }
             />
