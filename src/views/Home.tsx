@@ -103,11 +103,12 @@ const CatSpanWrapper = styled.div`
 const AboutWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
+  margin: 2vw auto 2vw auto;
+  padding: 0 30px 0 30px;
+  max-width: 650px;
   background-color: ${theme.colors.white};
-  padding: 10px 100px;
+  justify-content: center;
+  align-items: center;
   color: ${theme.colors.gray};
   & h1 {
     color: ${theme.colors.blue};
@@ -139,7 +140,12 @@ const SearchInputWrapper = styled.div`
     right: 20px;
     top: 5px;
   }
+  @media (max-width: 767px) {
+    margin: 30px;
+    justify-content: center;
+  }
 `;
+
 const SearchBar = styled.input`
   width: 100%;
   padding: 5px;
