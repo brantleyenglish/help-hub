@@ -1,6 +1,7 @@
 import {
   faCalendarAlt,
   faEnvelope,
+  faMap,
   faMapMarkerAlt,
   faPencil,
   faPhone,
@@ -247,7 +248,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faPhone} /> Phone
                     </h3>
-                    <a href={"tel:" + clientProfile?.phone}>{clientProfile?.phone}</a>
+                    <a href={"tel:" + clientProfile?.phone}>
+                      {clientProfile?.phone}
+                    </a>
                   </>
                 )}
                 {clientProfile?.email && (
@@ -255,7 +258,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faEnvelope} /> Email
                     </h3>
-                    <a href={"mailto:" + clientProfile?.email}>{clientProfile?.email}</a>
+                    <a href={"mailto:" + clientProfile?.email}>
+                      {clientProfile?.email}
+                    </a>
                   </>
                 )}
                 {clientProfile?.streetAddress && (
@@ -263,7 +268,18 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <h3>
                       <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                    <a href={"http://maps.google.com/?q=" + clientProfile?.streetAddress + "," + clientProfile?.city + "," + clientProfile?.state + "," + clientProfile?.zip}>
+                    <a
+                      href={
+                        "http://maps.google.com/?q=" +
+                        clientProfile?.streetAddress +
+                        "," +
+                        clientProfile?.city +
+                        "," +
+                        clientProfile?.state +
+                        "," +
+                        clientProfile?.zip
+                      }
+                    >
                       {clientProfile?.streetAddress}, {clientProfile?.city},{" "}
                       {clientProfile?.state} {clientProfile?.zip}
                     </a>
@@ -287,10 +303,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
                     <p>{clientProfile?.ethnicity}</p>
                   </>
                 )}
-                {/* {clientProfile?.county && ( */}
-                {/* <h3><FontAwesomeIcon icon={faMapMarkedAlt} /> County</h3> */}
-                {/* <p>{clientProfile?.county}</p> */}
-                {/* )} */}
+                {clientProfile?.county && (
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faMap} /> Current County
+                    </h3>
+                    <p>{clientProfile?.county}</p>
+                  </>
+                )}
               </FormRightWrapper>
             </FormContentWrapper>
           </ClientCardWrapper>

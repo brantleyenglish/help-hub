@@ -71,6 +71,7 @@ export type ClientType = {
   ethnicity: string;
   notes?: ClientNotes[];
   files?: ClientFiles[];
+  county?: string;
 }
 
 export type ClientListType = ClientType[];

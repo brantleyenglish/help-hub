@@ -7,6 +7,7 @@ import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
+import { usePublicData } from "../context/PublicContext";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -34,6 +35,7 @@ const EditClientModal: React.FC<{
 }> = ({ clientId }) => {
   const { updateClientInfo, getClientProfile, clientProfile } = useClient();
   const { setActiveModal } = useModal();
+  const { counties } = usePublicData();
 
   const clientSchema = Yup.object().shape({
     clientFirstName: Yup.string().required(
@@ -49,13 +51,17 @@ const EditClientModal: React.FC<{
     zip: Yup.string(),
     gender: Yup.string(),
     ethnicity: Yup.string(),
+    county: Yup.string().required("County is required"),
   });
   return (
     <>
       <StyledHeader>
         <>
           <h2>Edit Assistance</h2>
-          <p>Edit the information for {clientProfile?.clientFirstName} {clientProfile?.clientLastName}.</p>
+          <p>
+            Edit the information for {clientProfile?.clientFirstName}{" "}
+            {clientProfile?.clientLastName}.
+          </p>
         </>
       </StyledHeader>
       <Formik
@@ -71,6 +77,7 @@ const EditClientModal: React.FC<{
           zip: clientProfile?.zip || "",
           gender: clientProfile?.gender || "Male",
           ethnicity: clientProfile?.ethnicity || "White",
+          county: clientProfile?.county || "",
         }}
         validationSchema={clientSchema}
         onSubmit={async (values) => {
@@ -88,7 +95,10 @@ const EditClientModal: React.FC<{
       >
         {({ handleSubmit, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
-            <StyledFormikField name="clientFirstName" label="Client First Name" />
+            <StyledFormikField
+              name="clientFirstName"
+              label="Client First Name"
+            />
             <StyledFormikField name="clientLastName" label="Client Last Name" />
             <FormikDateInput
               fieldName="dob"
@@ -151,6 +161,32 @@ const EditClientModal: React.FC<{
                   label: "Not Reported",
                 },
               ]}
+            />
+            <StyledFormikField
+              name="county"
+              label="County"
+              type="select"
+              options={
+                counties
+                  ? [
+                      ...counties?.map((county: string) => {
+                        return {
+                          value: county,
+                          label: county,
+                        };
+                      }),
+                      {
+                        value: "N/A",
+                        label: "N/A",
+                      },
+                    ]
+                  : [
+                      {
+                        value: "N/A",
+                        label: "N/A",
+                      },
+                    ]
+              }
             />
             <StyledButton type="submit">Submit</StyledButton>
           </Form>

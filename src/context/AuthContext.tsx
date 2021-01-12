@@ -43,7 +43,8 @@ export const AuthProvider: React.FC<any> = (props) => {
 
   const loginUser = async ({ password, email }: UserLoginType) => {
     const loginUserData = await login({ email, password });
-    setUser({ uid: loginUserData?.user?.uid });
+    await setUser({ uid: loginUserData?.user?.uid });
+    history.push(`/agencies/${loginUserData?.user?.uid}`);
   };
 
   const resetPassword = async ({ email, setError }: resetPasswordType) => {
