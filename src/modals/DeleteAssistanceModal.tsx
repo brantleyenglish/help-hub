@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { theme } from "../components/Theme";
 import { useAssistance } from "../context/AssistanceContext";
 import { useModal } from "../context/ModalContext";
-import { deleteAssitance } from "../firebase/assistance";
+import { deleteAssistance } from "../firebase/assistance";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -41,7 +41,7 @@ const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
 
       <StyledButton
         onClick={async () => {
-          deleteAssitance({ assistanceId });
+          deleteAssistance({ assistanceId });
           if (updateAssistanceByClient && updateAssistanceByAgency) {
             await updateAssistanceByClient();
             await updateAssistanceByAgency();
