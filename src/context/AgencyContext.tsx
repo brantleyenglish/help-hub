@@ -48,9 +48,15 @@ export const AgencyProvider: React.FC<any> = (props) => {
         const newAgencyData = await createAgency({ agencyId: user?.uid });
         if (newAgencyData !== "DoesNotExist" && newAgencyData !== "Error") {
           setAgency(newAgencyData);
+          if (setAssistanceAgencyId) {
+            setAssistanceAgencyId(user?.uid);
+          }
         }
       } else if (agencyData !== "Error") {
         setAgency(agencyData);
+        if (setAssistanceAgencyId) {
+          setAssistanceAgencyId(user?.uid);
+        }
       }
     }
   }, [user]);
@@ -59,7 +65,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
     getAgencyData();
   }, [getAgencyData]);
 
-  const getAllAgencyData = async () => {
+  const getAllAgencyData = React.useCallback(async () => {
     const agenciesData = await getAllAgencies();
     if (agenciesData !== "Error") {
       const newAgenciesArray: AgencyListType = [];
@@ -86,7 +92,7 @@ export const AgencyProvider: React.FC<any> = (props) => {
       }
       setAgencies(newAgenciesArray);
     }
-  };
+  }, []);
 
   const updateAgencyInfo = async ({ agencyId, newData }: UpdateAgencyInfo) => {
     if (user && user?.uid && agencyId && user?.uid === agencyId) {
@@ -124,15 +130,19 @@ export const AgencyProvider: React.FC<any> = (props) => {
     AgencyType | undefined
   >(undefined);
 
-  const setAgencyProfileId = async ({ agencyId }: { agencyId: string }) => {
-    if (setAssistanceAgencyId) {
-      setAssistanceAgencyId(agencyId);
-    }
-    const agencyData = await getAgency({ agencyId });
-    if (agencyData && agencyData !== "DoesNotExist" && agencyData !== "Error") {
-      setAgencyProfile(agencyData);
-    }
-  };
+  const setAgencyProfileId = React.useCallback(
+    async ({ agencyId }: { agencyId: string }) => {
+      const agencyData = await getAgency({ agencyId });
+      if (
+        agencyData &&
+        agencyData !== "DoesNotExist" &&
+        agencyData !== "Error"
+      ) {
+        setAgencyProfile(agencyData);
+      }
+    },
+    []
+  );
 
   const value = {
     agency,

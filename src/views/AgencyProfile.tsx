@@ -1,6 +1,7 @@
 import {
   faBrowser,
   faEnvelope,
+  faMap,
   faMapMarkerAlt,
   faPencil,
   faPhone,
@@ -183,9 +184,8 @@ const ServiceCardWrapper = styled.div`
   justify-content: center;
 `;
 const ReportsWrapper = styled.div`
-color: ${theme.colors.blue};
+  color: ${theme.colors.blue};
 `;
-
 
 const MessageCard = styled.div``;
 
@@ -202,7 +202,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, agencyMessages } = useAgency();
-  const { assistanceData } = useAssistance();
+  const { agencyAssistanceData } = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -211,10 +211,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { setActiveModal } = useModal();
 
   React.useEffect(() => {
-    if (setAgencyProfileId) {
+    if (match?.path === "/agencies/:agencyId" && setAgencyProfileId) {
       setAgencyProfileId({ agencyId });
     }
-  }, []);
+  }, [match, setAgencyProfileId]);
 
   const sortByDate = (
     a: AssistanceDataType | MessageType,
@@ -235,11 +235,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-          ...agencyMessages?.filter(
-            (message: MessageType) => message?.isPrivate
-          ),
-          ...allPublicMessages,
-        ]
+            ...agencyMessages?.filter(
+              (message: MessageType) => message?.isPrivate
+            ),
+            ...allPublicMessages,
+          ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -359,7 +359,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </a>
                   </>
                 )}
-                {agency?.streetAddress && (
+                {(agency?.streetAddress ||
+                  agencyProfile?.city ||
+                  agencyProfile?.state ||
+                  agencyProfile?.zip) && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
@@ -381,7 +384,14 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </a>
                   </>
                 )}
-                <p>{agencyProfile?.counties?.join(", ")}</p>
+                {agencyProfile?.counties && (
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faMap} /> Active Counties
+                    </h3>
+                    <p>{agencyProfile?.counties?.join(", ")}</p>
+                  </>
+                )}
               </FormRightWrapper>
             </FormContentWrapper>
           </AgencyCardWrapper>
@@ -457,7 +467,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "timeline" && (
           <>
-            {assistanceData
+            {agencyAssistanceData
               ?.sort(sortByDate)
               ?.map((assistance: AssistanceDataType) => (
                 <TimelineAssistanceCard
@@ -470,7 +480,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         {activeTab === "reports" && (
           <ReportsWrapper>
             <h2>Reports is under construction!</h2>
-            <p>That's where you guys, our beta testers, come in. Once there's enough data in the system, we'll be able to generate a report like the one below!</p>
+            <p>
+              That's where you guys, our beta testers, come in. Once there's
+              enough data in the system, we'll be able to generate a report like
+              the one below!
+            </p>
             <img src={ReportSample} alt="" style={{ width: "100%" }} />
           </ReportsWrapper>
         )}

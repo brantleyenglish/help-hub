@@ -53,7 +53,6 @@ type EditNoteModalType = {
 };
 
 const EditNoteModal = ({ note }: EditNoteModalType) => {
-  console.log({ note });
   const { setActiveModal } = useModal();
   const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(
@@ -103,7 +102,6 @@ const EditNoteModal = ({ note }: EditNoteModalType) => {
               ,
               ...clientProfile?.notes?.slice(noteIndex + 1),
             ]?.filter((noteValue) => !!noteValue);
-            console.log({ newNote });
             await updateClientInfo({
               clientId: clientProfile?.id,
               newData: { notes: newNote },

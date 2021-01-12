@@ -18,34 +18,89 @@ AssistanceContext.displayName = "AssistanceContext";
 
 export const AssistanceProvider: React.FC<any> = (props) => {
   const { user } = useAuth();
+  const [clientId, setAssistanceClientId] = React.useState<string>("");
+  const [agencyId, setAssistanceAgencyId] = React.useState<string>("");
+
+  // Client assistance
   const [assistance, setAssistance] = React.useState<AssistanceType | null>(
     null
   );
 
-  const [clientId, setAssistanceClientId] = React.useState<string>("");
-
-  const [agencyId, setAssistanceAgencyId] = React.useState<string>("");
-
+  // Client assitance Data
   const [
     assistanceData,
     setAssistanceData,
   ] = React.useState<AssistanceDataArrayType | null>(null);
 
+  // Agency assitance
+  const [
+    agencyAssistance,
+    setAgencyAssistance,
+  ] = React.useState<AssistanceType | null>(null);
+
+  // Agency assistance Data
+  const [
+    agencyAssistanceData,
+    setAgencyAssistanceData,
+  ] = React.useState<AssistanceDataArrayType | null>(null);
+
   const updateAssistanceByAgency = async () => {
-    const assistanceData = await getAssistanceByAgency({ agencyId });
-    if (assistanceData !== "Error") {
-      setAssistance(
-        assistanceData?.filter(
-          (singleAssistance) =>
-            singleAssistance?.agencyId &&
-            singleAssistance?.serviceId &&
-            singleAssistance?.clientId &&
-            (singleAssistance?.agencyId === user?.uid ||
-              !singleAssistance?.isPrivate)
-        )
-      );
+    if (agencyId) {
+      const agencyassistanceApiData = await getAssistanceByAgency({ agencyId });
+      if (agencyassistanceApiData !== "Error") {
+        setAgencyAssistance(
+          agencyassistanceApiData?.filter(
+            (singleAssistance) =>
+              singleAssistance?.agencyId &&
+              singleAssistance?.serviceId &&
+              singleAssistance?.clientId &&
+              (singleAssistance?.agencyId === user?.uid ||
+                !singleAssistance?.isPrivate)
+          )
+        );
+      }
     }
   };
+
+  const getAgencyAssistanceData = async () => {
+    if (agencyAssistance) {
+      const assistanceDataObject: AssistanceDataArrayType = [];
+      for await (const singleAssistance of agencyAssistance) {
+        const agencyData = await getAgency({
+          agencyId: singleAssistance?.agencyId,
+        });
+        const clientData = await getClient({
+          clientId: singleAssistance?.clientId,
+        });
+        const serviceData = await getService({
+          serviceId: singleAssistance?.serviceId,
+        });
+        if (
+          agencyData &&
+          clientData &&
+          serviceData &&
+          typeof agencyData !== "string" &&
+          typeof clientData !== "string" &&
+          typeof serviceData !== "string"
+        ) {
+          assistanceDataObject?.push({
+            id: singleAssistance?.id,
+            date: singleAssistance?.date,
+            notes: singleAssistance?.notes,
+            isPrivate: singleAssistance?.isPrivate,
+            agency: agencyData,
+            client: clientData,
+            service: serviceData,
+          });
+        }
+      }
+      setAgencyAssistanceData(assistanceDataObject);
+    }
+  };
+
+  React.useEffect(() => {
+    getAgencyAssistanceData();
+  }, [agencyAssistance]);
 
   const updateAssistanceByClient = async () => {
     const assistanceData = await getAssistanceByClient({ clientId });
@@ -106,7 +161,7 @@ export const AssistanceProvider: React.FC<any> = (props) => {
   }, [clientId, user]);
 
   React.useEffect(() => {
-    if (user) {
+    if (user && agencyId) {
       updateAssistanceByAgency();
     }
   }, [agencyId, user]);
@@ -117,6 +172,7 @@ export const AssistanceProvider: React.FC<any> = (props) => {
 
   const value = {
     assistanceData,
+    agencyAssistanceData,
     setAssistanceClientId,
     setAssistanceAgencyId,
     updateAssistanceByClient,

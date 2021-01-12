@@ -2,6 +2,7 @@ import { Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+import CountyDropdown from "../components/CountyDropdown";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
@@ -117,6 +118,10 @@ const EditAgencyModal: React.FC<{
   const { updateAgencyInfo, agencyProfile, setAgencyProfileId } = useAgency();
   const { setActiveModal } = useModal();
 
+  const [counties, setCounties] = React.useState<string[]>(
+    agencyProfile?.counties ? agencyProfile?.counties : []
+  );
+
   const agencySchema = Yup.object().shape({
     name: Yup.string().required("Agency name can not be empty"),
     description: Yup.string().required("Agency description can not be empty"),
@@ -160,7 +165,7 @@ const EditAgencyModal: React.FC<{
             if (updateAgencyInfo && agencyProfile) {
               await updateAgencyInfo({
                 agencyId: agencyProfile?.id,
-                newData: { id: agencyProfile?.id, ...values },
+                newData: { id: agencyProfile?.id, counties, ...values },
               });
               if (setAgencyProfileId) {
                 setAgencyProfileId({ agencyId });
@@ -192,13 +197,20 @@ const EditAgencyModal: React.FC<{
               name="contactFirstName"
               label="Contact First name"
             />
-            <StyledFormikField name="contactLastName" label="Contact Last name" />
+            <StyledFormikField
+              name="contactLastName"
+              label="Contact Last name"
+            />
             <StyledFormikField name="phone" label="Phone #" />
             <StyledFormikField name="email" label="Email" />
             <StyledFormikField name="streetAddress" label="Street Address" />
             <StyledFormikField name="city" label="City" />
             <StyledFormikField name="state" label="State" />
             <StyledFormikField name="zip" label="Zip Code" />
+            <CountyDropdown
+              setCounties={setCounties}
+              defaultCounties={agencyProfile?.counties || []}
+            />
             <StyledButton type="submit">Submit</StyledButton>
           </Form>
         )}

@@ -22,11 +22,12 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 `;
 
 const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
@@ -99,7 +100,10 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
             <StyledFormikField name="city" label="City" />
             <StyledFormikField name="state" label="State" />
             <StyledFormikField name="zip" label="Zip Code" />
-            <CategoryDropdown setCategories={setCategories} />
+            <CategoryDropdown
+              setCategories={setCategories}
+              defaultCategories={[]}
+            />
             <StyledButton type="submit">Submit</StyledButton>
           </Form>
         )}

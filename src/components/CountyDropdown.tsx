@@ -2,7 +2,6 @@ import { faTimes } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { CategoryType } from "../../DataTypes";
 import { theme } from "../components/Theme";
 import { usePublicData } from "../context/PublicContext";
 
@@ -42,20 +41,20 @@ const CategoryWrapper = styled.div`
   flex-wrap: wrap;
   margin-bottom: 40px;
 `;
-type CategoryDropdown = {
-  setCategories: (categories: string[]) => void;
-  defaultCategories: string[];
+type CountyDropdown = {
+  setCounties: (counties: string[]) => void;
+  defaultCounties: string[];
 };
 
-const CategoryDropdown: React.FC<CategoryDropdown> = ({
-  setCategories,
-  defaultCategories,
+const CategoryDropdown: React.FC<CountyDropdown> = ({
+  setCounties,
+  defaultCounties,
 }) => {
-  const { categories } = usePublicData();
-  const [selected, setSelected] = React.useState<string[]>(defaultCategories);
+  const { counties } = usePublicData();
+  const [selected, setSelected] = React.useState<string[]>(defaultCounties);
 
   React.useEffect(() => {
-    setCategories(selected);
+    setCounties(selected);
   }, [selected]);
 
   const handleSelectChange = (value: string) => {
@@ -76,19 +75,19 @@ const CategoryDropdown: React.FC<CategoryDropdown> = ({
 
   return (
     <StyledFormikFieldWrapper>
-      <label htmlFor="catgeory">Categories</label>
+      <label htmlFor="counties">Counties</label>
       <select
-        value="categories"
+        value="counties"
         onChange={(e) => {
           e?.preventDefault();
           handleSelectChange(e?.target?.value);
         }}
       >
-        <option value="categories">Catgeory Options</option>
-        {categories &&
-          categories?.map((option: CategoryType, index: number) => (
-            <option value={option?.name} key={`${option?.name}-${index}`}>
-              {option?.label}
+        <option value="counties">Active Counties</option>
+        {counties &&
+          counties?.map((option: string, index: number) => (
+            <option value={option} key={`${option}-${index}`}>
+              {option}
             </option>
           ))}
       </select>

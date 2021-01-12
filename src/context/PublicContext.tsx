@@ -12,6 +12,7 @@ import { getAllServices } from "../firebase/services";
 
 export type PublicContextType = {
   categories: CategoryListType;
+  counties: string[];
   allAgencies: AgencyListType;
   allServices: ServiceListType;
   signupPassword: RegExp;
@@ -71,4 +72,3 @@ export const usePublicData = () => {
   }
   return context;
 };
-

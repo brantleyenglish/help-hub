@@ -106,7 +106,10 @@ const EditServiceModal: React.FC<{ service: ServiceType }> = ({ service }) => {
             <StyledFormikField name="city" label="City" />
             <StyledFormikField name="state" label="State" />
             <StyledFormikField name="zip" label="Zip Code" />
-            <CategoryDropdown setCategories={setCategories} />
+            <CategoryDropdown
+              setCategories={setCategories}
+              defaultCategories={service?.categories || []}
+            />
             <StyledButton type="submit">Submit</StyledButton>
           </Form>
         )}
