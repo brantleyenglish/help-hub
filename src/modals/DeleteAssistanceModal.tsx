@@ -18,15 +18,19 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
 const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
-  const { updateAssistanceByClient } = useAssistance();
+  const {
+    updateAssistanceByClient,
+    updateAssistanceByAgency,
+  } = useAssistance();
   const { setActiveModal } = useModal();
   return (
     <>
@@ -38,8 +42,9 @@ const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
       <StyledButton
         onClick={async () => {
           deleteAssitance({ assistanceId });
-          if (updateAssistanceByClient) {
+          if (updateAssistanceByClient && updateAssistanceByAgency) {
             await updateAssistanceByClient();
+            await updateAssistanceByAgency();
           }
           setActiveModal("");
         }}

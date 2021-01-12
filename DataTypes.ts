@@ -144,4 +144,5 @@ export type AssistanceContextType = {
   setAssistanceClientId: (id: string) => Promise<void>;
   setAssistanceAgencyId: (id: string) => Promise<void>;
   updateAssistanceByClient: () => Promise<void>;
+  updateAssistanceByAgency: () => Promise<void>;
 };
