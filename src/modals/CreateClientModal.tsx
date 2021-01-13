@@ -93,8 +93,7 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
       {({ values, setFieldValue }) => (
         <Form>
           <StyledHeader><h1>Create Client</h1>
-            <h2>Before entering information please ask the client the following: </h2>
-            <h3>"Do you give this organization permission to collect your personal and financial data?"</h3>
+            <h2>I have received verbal or written consent from this client to collect their information. </h2>
             <div>
               Yes<input type="checkbox" /></div>
           </StyledHeader>

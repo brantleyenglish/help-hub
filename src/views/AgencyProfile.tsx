@@ -272,8 +272,8 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     : HHPlaceholder
                 }
               />
-              {agency?.name && <h1>{agencyProfile?.name}</h1>}
-              {!agency?.name && (
+              {agencyProfile?.name && <h1>{agencyProfile?.name}</h1>}
+              {!agencyProfile?.name && (
                 <>
                   <h1>Welcome to Your Agency Profile</h1>
                 </>
@@ -289,7 +289,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
             </TitleWrapper>
 
             <FormContentWrapper>
-              {!agency?.name && (
+              {!agencyProfile?.name && (
                 <>
                   <p style={{ paddingTop: "10px" }}>
                     Click the edit button in the upper right corner to edit your
@@ -298,7 +298,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 </>
               )}
               <FormLeftWrapper>
-                {agency?.description && (
+                {agencyProfile?.description && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faTag} /> Description
@@ -308,7 +308,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </p>
                   </>
                 )}
-                {agency?.website && (
+                {agencyProfile?.website && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faBrowser} /> Website
@@ -328,7 +328,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 )}
               </FormLeftWrapper>
               <FormRightWrapper>
-                {agency?.contactFirstName && (
+                {agencyProfile?.contactFirstName && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faUser} /> Contact
@@ -339,7 +339,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </p>
                   </>
                 )}
-                {agency?.phone && (
+                {agencyProfile?.phone && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faPhone} /> Phone
@@ -349,7 +349,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </a>
                   </>
                 )}
-                {agency?.email && (
+                {agencyProfile?.email && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faEnvelope} /> Email
@@ -359,7 +359,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                     </a>
                   </>
                 )}
-                {agency?.streetAddress && (
+                {agencyProfile?.streetAddress && (
                   <>
                     <h3>
                       <FontAwesomeIcon icon={faMapMarkerAlt} /> Address

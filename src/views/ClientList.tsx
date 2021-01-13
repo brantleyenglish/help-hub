@@ -155,7 +155,7 @@ const NewClientWrapper = styled.div`
   }
 `;
 
-const ClientList: React.FC<{}> = ({}) => {
+const ClientList: React.FC<{}> = ({ }) => {
   const { clients } = useClient();
   const { setActiveModal } = useModal();
 
@@ -277,32 +277,34 @@ const ClientList: React.FC<{}> = ({}) => {
         {/* Table */}
         <ClientTable>
           {/* tr */}
-          <ClientTableHeader>
-            <th scope="col">
-              <div>
-                First Name
+          {filteredClients && (
+            <ClientTableHeader>
+              <th scope="col">
+                <div>
+                  First Name
                 {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
-            </th>
-            <th scope="col">
-              <div>
-                Last Name
+                </div>
+              </th>
+              <th scope="col">
+                <div>
+                  Last Name
                 {/* <FontAwesomeIcon icon={faArrowDown} /> */}
-              </div>
-            </th>
-            <th scope="col" style={{ minWidth: "150px" }}>
-              <div>Date of Birth</div>
-            </th>
-            <th scope="col">
-              <div>Email</div>
-            </th>
-            <th scope="col" style={{ minWidth: "120px" }}>
-              <div>Phone</div>
-            </th>
-            <th scope="col" style={{ minWidth: "150px" }}>
-              <div>Address</div>
-            </th>
-          </ClientTableHeader>
+                </div>
+              </th>
+              <th scope="col" style={{ minWidth: "150px" }}>
+                <div>Date of Birth</div>
+              </th>
+              <th scope="col">
+                <div>Email</div>
+              </th>
+              <th scope="col" style={{ minWidth: "120px" }}>
+                <div>Phone</div>
+              </th>
+              <th scope="col" style={{ minWidth: "150px" }}>
+                <div>Address</div>
+              </th>
+            </ClientTableHeader>
+          )}
           <ClientTableBody>
             {filteredClients &&
               filteredClients.map((client) => (
