@@ -32,8 +32,8 @@ const DeleteAgencyModal = ({ agencyId }: { agencyId: string }) => {
   return (
     <>
       <StyledHeader>
-        <h2>Delete Assisstance</h2>
-        <p>Are you sure you want to delete this assistance?</p>
+        <h2>Delete Agency</h2>
+        <p>Are you sure you want to delete this agency?</p>
         <p>
           WARNING: This will remove all assistance, messages, and servies tied
           to this agency!!
