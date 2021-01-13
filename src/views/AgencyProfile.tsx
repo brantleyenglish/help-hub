@@ -7,6 +7,7 @@ import {
   faPhone,
   faPlus,
   faTag,
+  faTrash,
   faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +27,7 @@ import { useModal } from "../context/ModalContext";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
 import ReportSample from "../images/reportSample.png";
 import AddServiceModal from "../modals/AddServiceModal";
+import DeleteAgencyModal from "../modals/DeleteAgencyModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
 
 const AgencyProfileWrapper = styled.div`
@@ -48,7 +50,7 @@ const AgencyCardWrapper = styled.div`
   border-radius: 30px;
   padding: 40px 30px 50px 30px;
 `;
-const EditButton = styled.button`
+const EditButton = styled.button<{ rightValue?: string }>`
   background: ${theme?.colors?.lightBlue};
   color: ${theme.colors.white};
   outline: none;
@@ -63,7 +65,7 @@ const EditButton = styled.button`
   position: absolute;
   border-radius: 2px;
   top: 10px;
-  right: 10px;
+  right: ${(p) => (p?.rightValue ? p?.rightValue : "10px")};
   &:hover {
     background: ${theme?.colors?.white};
     color: ${theme.colors.blue};
@@ -235,11 +237,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-          ...agencyMessages?.filter(
-            (message: MessageType) => message?.isPrivate
-          ),
-          ...allPublicMessages,
-        ]
+            ...agencyMessages?.filter(
+              (message: MessageType) => message?.isPrivate
+            ),
+            ...allPublicMessages,
+          ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -258,6 +260,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   return (
     <AgencyProfileWrapper>
+      <ModalWrapper modalId="AgencyDelete">
+        <DeleteAgencyModal agencyId={agencyId} />
+      </ModalWrapper>
       <ModalWrapper modalId="AgencyEdit">
         <EditAgencyModal agencyId={agencyId} />
       </ModalWrapper>
@@ -277,6 +282,15 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 <>
                   <h1>Welcome to Your Agency Profile</h1>
                 </>
+              )}
+              {agency?.admin && (
+                <EditButton
+                  rightValue="50px"
+                  type="button"
+                  onClick={() => setActiveModal("AgencyDelete")}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </EditButton>
               )}
               {agency?.id === agencyId && (
                 <EditButton
@@ -363,27 +377,27 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   agencyProfile?.city ||
                   agencyProfile?.state ||
                   agencyProfile?.zip) && (
-                    <>
-                      <h3>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                      <a
-                        href={
-                          "http://maps.google.com/?q=" +
-                          agencyProfile?.streetAddress +
-                          "," +
-                          agencyProfile?.city +
-                          "," +
-                          agencyProfile?.state +
-                          "," +
-                          agencyProfile?.zip
-                        }
-                      >
-                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                        {agencyProfile?.state} {agencyProfile?.zip}
-                      </a>
-                    </>
-                  )}
+                    <a
+                      href={
+                        "http://maps.google.com/?q=" +
+                        agencyProfile?.streetAddress +
+                        "," +
+                        agencyProfile?.city +
+                        "," +
+                        agencyProfile?.state +
+                        "," +
+                        agencyProfile?.zip
+                      }
+                    >
+                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                      {agencyProfile?.state} {agencyProfile?.zip}
+                    </a>
+                  </>
+                )}
                 {agencyProfile?.counties && (
                   <>
                     <h3>

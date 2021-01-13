@@ -19,6 +19,7 @@ export type PublicContextType = {
   allPublicMessages: MessageListType;
   refreshServices: () => Promise<void>;
   refreshMessages: () => Promise<void>;
+  refreshAgencies: () => Promise<void>;
 };
 
 export const PublicContext = React.createContext<Partial<PublicContextType>>(
@@ -58,8 +59,15 @@ export const PublicProvider: React.FC<any> = (props) => {
     });
   };
 
+  const refreshAgencies = async () => {
+    setPublicData({
+      ...publicData,
+      allAgencies: await getAllAgencies(),
+    });
+  };
+
   const value = publicData
-    ? { ...publicData, refreshServices, refreshMessages }
+    ? { ...publicData, refreshServices, refreshMessages, refreshAgencies }
     : {};
 
   return <PublicContext.Provider value={value} {...props} />;

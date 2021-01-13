@@ -22,6 +22,7 @@ export type AgencyType = {
   counties?: string[];
   categories?: string[];
   profileUrl?: string;
+  admin?: boolean;
 };
 
 export type AgencyListType = AgencyType[];
