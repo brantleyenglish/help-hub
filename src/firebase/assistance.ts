@@ -79,13 +79,14 @@ export const updateAssistance = async ({ data }: UpdateAssistanceType) => {
   }
 };
 
-export const deleteAssitance = async ({ assistanceId }: { assistanceId: string }) => {
+export const deleteAssistance = async ({ assistanceId }: { assistanceId: string }) => {
   try {
-    await db.collection("assistance").doc(assistanceId).delete();
+    const assistanceDoc = db.collection("assistance").doc(assistanceId);
+    assistanceDoc.delete();
   } catch (e) {
-    console.log("Error updateAgency:", e);
-    return "Error";
+    console.log("Error deleteAssistance:", e);
+    return 'Error';
   }
-};
+}
 
 

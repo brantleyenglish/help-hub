@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { theme } from "../components/Theme";
 import { useAssistance } from "../context/AssistanceContext";
 import { useModal } from "../context/ModalContext";
-import { deleteAssitance } from "../firebase/assistance";
+import { deleteAssistance } from "../firebase/assistance";
 
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
@@ -18,15 +18,19 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2,p{
-margin: 0;
-padding: 0px 0px 20px 0;
-}
+  color: ${theme.colors.blue};
+  h2,
+  p {
+    margin: 0;
+    padding: 0px 0px 20px 0;
+  }
 `;
 
 const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
-  const { updateAssistanceByClient } = useAssistance();
+  const {
+    updateAssistanceByClient,
+    updateAssistanceByAgency,
+  } = useAssistance();
   const { setActiveModal } = useModal();
   return (
     <>
@@ -37,9 +41,10 @@ const DeleteAssistanceModal = ({ assistanceId }: { assistanceId: string }) => {
 
       <StyledButton
         onClick={async () => {
-          deleteAssitance({ assistanceId });
-          if (updateAssistanceByClient) {
+          deleteAssistance({ assistanceId });
+          if (updateAssistanceByClient && updateAssistanceByAgency) {
             await updateAssistanceByClient();
+            await updateAssistanceByAgency();
           }
           setActiveModal("");
         }}

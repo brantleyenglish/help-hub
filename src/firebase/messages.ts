@@ -1,8 +1,8 @@
 import { db } from "./config";
 
-import {MessageListType, MessageType} from '../../DataTypes';
+import { MessageListType, MessageType } from '../../DataTypes';
 
-type GetAgencyMessagesType ={
+type GetAgencyMessagesType = {
   agencyId: string;
 }
 
@@ -11,7 +11,7 @@ export const getPublicMessages = async () => {
     const docs = await db.collection("messages").where("isPrivate", "==", false).get();
     const messages: any = [];
     docs.forEach((message) => {
-        messages.push(message.data());
+      messages.push(message.data());
     });
     return messages as MessageListType;
   } catch (e) {
@@ -25,7 +25,7 @@ export const getAgencyMessages = async ({ agencyId }: GetAgencyMessagesType) => 
     const docs = await db.collection("messages").where("agencyId", "==", agencyId).get();
     const messages: any = [];
     docs.forEach((message) => {
-        messages.push(message.data());
+      messages.push(message.data());
     });
     return messages as MessageListType;
   } catch (e) {
@@ -40,19 +40,19 @@ type CreateMessageType = {
 
 export const createMessage = async ({ data }: CreateMessageType) => {
   try {
-      const docRef =  db.collection("messages").doc();
-      await docRef.set({
-        id: docRef?.id,
-        ...data
-      })
-      const message = await docRef.get();
-      if (message.exists) {
-          return message.data();
-      } else {
-          return "DoesNotExisit";
-      }
+    const docRef = db.collection("messages").doc();
+    await docRef.set({
+      id: docRef?.id,
+      ...data
+    })
+    const message = await docRef.get();
+    if (message.exists) {
+      return message.data();
+    } else {
+      return "DoesNotExisit";
+    }
   } catch (e) {
-      console.log("Error createClient:", e);
+    console.log("Error createClient:", e);
   }
 };
 
@@ -72,13 +72,12 @@ export const updateMessage = async ({ data }: CreateMessageType) => {
   }
 };
 
-
 export const deleteMessage = async ({ messageId }: { messageId: string }) => {
   try {
-    await db.collection("messages").doc(messageId).delete();
+    const assistanceDoc = db.collection("messages").doc(messageId);
+    assistanceDoc.delete();
   } catch (e) {
-    console.log("Error updateAgency:", e);
-    return "Error";
+    console.log("Error deleteMessage:", e);
+    return 'Error';
   }
-};
-
+}

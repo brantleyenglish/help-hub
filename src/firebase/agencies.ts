@@ -78,3 +78,29 @@ export const updateAgency = async ({ agency, data }: UpdateAgencyType) => {
     return "Error";
   }
 };
+
+// Completly eleminates all agency data. Must be used with caution
+export const deleteAgency = async ({ agencyId }: { agencyId: string }) => {
+  try {
+    const agencyDoc = db.collection("agencies").doc(agencyId);
+    agencyDoc.delete();
+
+    const servicesDoc = await db.collection("services").where("agencyId", "==", agencyId).get();
+    servicesDoc.forEach((service) => {
+      service.ref.delete();
+    });
+
+    const messagesDoc = await db.collection("messages").where("agencyId", "==", agencyId).get();
+    messagesDoc.forEach((message) => {
+      message.ref.delete();
+    });
+
+    const assistanceDoc = await db.collection("assistance").where("agencyId", "==", agencyId).get();
+    assistanceDoc.forEach((assistance) => {
+      assistance.ref.delete();
+    });
+  } catch (e) {
+    console.log("Error deleteAgency:", e);
+    return 'Error';
+  }
+}

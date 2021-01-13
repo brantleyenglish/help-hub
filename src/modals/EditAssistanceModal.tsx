@@ -57,7 +57,10 @@ const EditAssistanceModal: React.FC<{
 }> = ({ assistance }) => {
   const { allServices } = usePublicData();
   const { user } = useAuth();
-  const { updateAssistanceByClient } = useAssistance();
+  const {
+    updateAssistanceByClient,
+    updateAssistanceByAgency,
+  } = useAssistance();
   const { setActiveModal } = useModal();
   const assistanceSchema = Yup.object().shape({
     notes: Yup.string(),
@@ -74,7 +77,11 @@ const EditAssistanceModal: React.FC<{
       <StyledHeader>
         <>
           <h2>Edit Assistance</h2>
-          <p>Edit the service that you provided to {assistance?.client?.clientFirstName} {assistance?.client?.clientLastName}.</p>
+          <p>
+            Edit the service that you provided to{" "}
+            {assistance?.client?.clientFirstName}{" "}
+            {assistance?.client?.clientLastName}.
+          </p>
           <p>
             This will be visible to all agencies unless you mark it as private.{" "}
           </p>
@@ -105,8 +112,9 @@ const EditAssistanceModal: React.FC<{
               },
             });
 
-            if (updateAssistanceByClient) {
+            if (updateAssistanceByClient && updateAssistanceByAgency) {
               await updateAssistanceByClient();
+              await updateAssistanceByAgency();
             }
             setActiveModal("");
           }
@@ -121,16 +129,16 @@ const EditAssistanceModal: React.FC<{
               options={
                 allServices
                   ? allServices
-                    ?.filter(
-                      (service: ServiceType) =>
-                        service?.agencyId === user?.uid
-                    )
-                    ?.map((service: ServiceType) => {
-                      return {
-                        value: service?.id,
-                        label: service?.name,
-                      };
-                    })
+                      ?.filter(
+                        (service: ServiceType) =>
+                          service?.agencyId === user?.uid
+                      )
+                      ?.map((service: ServiceType) => {
+                        return {
+                          value: service?.id,
+                          label: service?.name,
+                        };
+                      })
                   : []
               }
             />

@@ -106,11 +106,12 @@ export const updateService = async ({ data, serviceId }: { data: CreateServiceTy
   }
 };
 
-export const deleteService= async ({ serviceId }: { serviceId: string }) => {
+export const deleteService = async ({ serviceId }: { serviceId: string }) => {
   try {
-    await db.collection("services").doc(serviceId).delete();
+    const serviceDoc = db.collection("services").doc(serviceId);
+    serviceDoc.delete();
   } catch (e) {
-    console.log("Error updateAgency:", e);
-    return "Error";
+    console.log("Error deleteMessage:", e);
+    return 'Error';
   }
-};
+}

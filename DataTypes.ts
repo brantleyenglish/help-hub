@@ -21,7 +21,7 @@ export type AgencyType = {
   zip: string;
   counties?: string[];
   categories?: string[];
-  profileUrl?:string;
+  profileUrl?: string;
 };
 
 export type AgencyListType = AgencyType[];
@@ -32,7 +32,7 @@ export type AgencyContextType = {
   updateAgencyInfo: ({ newData, agencyId }: { newData: AgencyType, agencyId: string }) => Promise<void>
   agencyMessages: MessageListType;
   agencyProfile: AgencyType;
-  setAgencyProfileId: ({agencyId}: {agencyId: string}) => Promise<void>;
+  setAgencyProfileId: ({ agencyId }: { agencyId: string }) => Promise<void>;
   getAgencyMessagesCallback: () => Promise<void>;
 };
 
@@ -71,6 +71,7 @@ export type ClientType = {
   ethnicity: string;
   notes?: ClientNotes[];
   files?: ClientFiles[];
+  county?: string;
 }
 
 export type ClientListType = ClientType[];
@@ -82,7 +83,7 @@ export type ClientContextType = {
   createClient: ({ data }: { data: ClientType }) => Promise<void>;
   getAllClientData: () => Promise<void>;
   clientProfile: ClientType | undefined;
-  getClientProfile: ({clientId}: {clientId: string}) => Promise<void>; 
+  getClientProfile: ({ clientId }: { clientId: string }) => Promise<void>;
 };
 
 export type ServiceType = {
@@ -139,8 +140,10 @@ export type AssistanceDataType = {
 export type AssistanceDataArrayType = AssistanceDataType[];
 
 export type AssistanceContextType = {
+  agencyAssistanceData: AssistanceDataArrayType;
   assistanceData: AssistanceDataArrayType;
   setAssistanceClientId: (id: string) => Promise<void>;
   setAssistanceAgencyId: (id: string) => Promise<void>;
   updateAssistanceByClient: () => Promise<void>;
+  updateAssistanceByAgency: () => Promise<void>;
 };
