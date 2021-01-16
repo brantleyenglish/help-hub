@@ -17,6 +17,9 @@ import DeleteServiceModal from "../../modals/DeleteServiceModal";
 import EditServiceModal from "../../modals/EditServiceModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
+import { Link } from "react-router-dom";
+// import { ServiceType } from "../../DataTypes";
+
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
