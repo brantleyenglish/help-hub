@@ -73,6 +73,7 @@ export type ClientType = {
   notes?: ClientNotes[];
   files?: ClientFiles[];
   county?: string;
+  age?: number;
 }
 
 export type ClientListType = ClientType[];

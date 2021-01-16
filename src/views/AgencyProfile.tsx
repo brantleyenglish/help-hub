@@ -21,11 +21,11 @@ import BulletinCard from "../components/cards/BulletinCard";
 import ServiceCard from "../components/cards/ServiceCard";
 import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
 import ModalWrapper from "../components/ModalWrapper";
+import Reports from "../components/Reports";
 import { theme } from "../components/Theme";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import HHPlaceholder from "../images/helphubPlaceholder.png";
-import ReportSample from "../images/reportSample.png";
 import AddServiceModal from "../modals/AddServiceModal";
 import DeleteAgencyModal from "../modals/DeleteAgencyModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
@@ -184,9 +184,6 @@ const ServiceCardWrapper = styled.div`
   padding: 10px;
   display: flex;
   justify-content: center;
-`;
-const ReportsWrapper = styled.div`
-  color: ${theme.colors.blue};
 `;
 
 const MessageCard = styled.div``;
@@ -491,17 +488,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               ))}
           </>
         )}
-        {activeTab === "reports" && (
-          <ReportsWrapper>
-            <h2>Reports is under construction!</h2>
-            <p>
-              That's where you guys, our beta testers, come in. Once there's
-              enough data in the system, we'll be able to generate a report like
-              the one below!
-            </p>
-            <img src={ReportSample} alt="" style={{ width: "100%" }} />
-          </ReportsWrapper>
-        )}
+        {activeTab === "reports" && <Reports />}
       </ContentWrapper>
     </AgencyProfileWrapper>
   );
