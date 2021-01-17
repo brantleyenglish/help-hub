@@ -31,7 +31,7 @@ const Footer = () => {
       <p>᛫</p>
       <Link to="/clients">Clients</Link>
       <p>᛫</p>
-      <a href="https://uwwtn-helphub.on.spiceworks.com/portal/tickets">Submit a Help Desk Ticket</a>
+      <a href="https://uwwtn-helphub.on.spiceworks.com/portal/tickets">Request Tech Support</a>
     </FooterWrapper>
   );
 };
