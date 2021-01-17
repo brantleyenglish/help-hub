@@ -7,4 +7,4 @@
 `firebase init`
 `firebase deploy`
 
-`firebase hosting:channel:deploy helphub-af2fe.web.app`
+`yarn build && firebase hosting:channel:deploy helphub-af2fe.web.app`
