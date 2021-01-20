@@ -32,7 +32,7 @@ import EditAgencyModal from "../modals/EditAgencyModal";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
-  flex-direction: column;
+  // flex-direction: column;
   background: ${theme.colors.white};
 `;
 const AgencyBackground = styled.div`
@@ -126,7 +126,8 @@ const TitleWrapper = styled.div`
   }
 `;
 const NavigationWrapper = styled.div`
-  width: 100%;
+  max-width: 650px;
+  margin: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -163,9 +164,21 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   }
 `;
 const ContentWrapper = styled.div`
-  max-width: 650px;
   margin: auto;
   padding: 40px;
+`;
+
+const BulletinWrapper = styled.div`
+  margin: auto;
+  max-width: 650px;
+`;
+const TimelineWrapper = styled.div`
+  margin: auto;
+  max-width: 650px;
+`;
+const ReportsWrapper = styled.div`
+  margin: auto;
+  max-width: 650px;
 `;
 const AddBtnWrapper = styled.button`
   background-color: ${theme.colors.blue};
@@ -181,9 +194,15 @@ const AddBtnWrapper = styled.button`
   }
 `;
 const ServiceCardWrapper = styled.div`
-  padding: 10px;
+flex-direction: row;  
+padding: 20px;
   display: flex;
-  justify-content: center;
+`;
+const ServiceCardWrapperWrapper = styled.div`
+display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 `;
 
 const MessageCard = styled.div``;
@@ -234,11 +253,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-            ...agencyMessages?.filter(
-              (message: MessageType) => message?.isPrivate
-            ),
-            ...allPublicMessages,
-          ]
+          ...agencyMessages?.filter(
+            (message: MessageType) => message?.isPrivate
+          ),
+          ...allPublicMessages,
+        ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -374,27 +393,27 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   agencyProfile?.city ||
                   agencyProfile?.state ||
                   agencyProfile?.zip) && (
-                  <>
-                    <h3>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                    <>
+                      <h3>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                    <a
-                      href={
-                        "http://maps.google.com/?q=" +
-                        agencyProfile?.streetAddress +
-                        "," +
-                        agencyProfile?.city +
-                        "," +
-                        agencyProfile?.state +
-                        "," +
-                        agencyProfile?.zip
-                      }
-                    >
-                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                      {agencyProfile?.state} {agencyProfile?.zip}
-                    </a>
-                  </>
-                )}
+                      <a
+                        href={
+                          "http://maps.google.com/?q=" +
+                          agencyProfile?.streetAddress +
+                          "," +
+                          agencyProfile?.city +
+                          "," +
+                          agencyProfile?.state +
+                          "," +
+                          agencyProfile?.zip
+                        }
+                      >
+                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                        {agencyProfile?.state} {agencyProfile?.zip}
+                      </a>
+                    </>
+                  )}
                 {agencyProfile?.counties && (
                   <>
                     <h3>
@@ -458,7 +477,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
           </NavigationWrapper>
         )}
         {activeTab === "services" && (
-          <>
+          <ServiceCardWrapperWrapper>
             {allServices
               ?.filter((service: ServiceType) => service?.agencyId === agencyId)
               ?.sort(sortByName)
@@ -467,17 +486,18 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <ServiceCard service={service} key={service?.id} />
                 </ServiceCardWrapper>
               ))}
-          </>
+          </ServiceCardWrapperWrapper>
+
         )}
         {activeTab === "bulletinboard" && (
-          <>
+          <BulletinWrapper>
             {messageList?.map((message: any) => (
               <BulletinCard message={message} key={`${message?.id}`} />
             ))}
-          </>
+          </BulletinWrapper>
         )}
         {activeTab === "timeline" && (
-          <>
+          <TimelineWrapper>
             {agencyAssistanceData
               ?.sort(sortByDate)
               ?.map((assistance: AssistanceDataType) => (
@@ -486,7 +506,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
                 />
               ))}
-          </>
+          </TimelineWrapper >
         )}
         {activeTab === "reports" && <Reports />}
       </ContentWrapper>

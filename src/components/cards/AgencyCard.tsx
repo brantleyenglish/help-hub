@@ -79,6 +79,11 @@ type AgencyCardType = {
 
 const AgencyCard = ({ agency }: AgencyCardType) => {
   const { categories } = usePublicData();
+
+  // const showState = { showAll: false }
+  // const showMore = () => { setShowState({ showAll: true }); }
+  // const showLess = () => { setShowState({ showAll: false }); }
+
   // const serives = getServicesByAgencyId(agencyId: agency?.id);
   return (
     <>

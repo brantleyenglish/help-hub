@@ -29,7 +29,7 @@ const StyledSVG = styled.img`
 const ServiceCardWrapper = styled.div`
 display: flex;
 flex-flow: column;
-margin: 0px 25px 50px 25px;
+margin: 0px 25px;
 }
 `;
 const ServiceCardContentWrapper = styled.div`
