@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { AssistanceDataType, ClientFiles, ClientNotes } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
@@ -184,6 +185,14 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { user } = useAuth();
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (!user) {
+      history.push(`/`);
+    }
+  }, []);
+
   const { clientProfile, getClientProfile } = useClient();
   const { assistanceData } = useAssistance();
 
