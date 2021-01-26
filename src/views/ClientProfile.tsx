@@ -27,6 +27,7 @@ import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
 import EditClientModal from "../modals/EditClientModal";
+import sortByDate from "../utils/sortByDate";
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -207,21 +208,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       getClientProfile({ clientId });
     }
   }, []);
-
-  const sortByDate = (
-    a: ClientFiles | ClientNotes | AssistanceDataType,
-    b: ClientFiles | ClientNotes | AssistanceDataType
-  ) => {
-    if (a?.date && b?.date) {
-      if (a?.date > b?.date) {
-        return -1;
-      }
-      if (a?.date < b?.date) {
-        return 1;
-      }
-    }
-    return 0;
-  };
 
   return (
     <ClientProfileWrapper>

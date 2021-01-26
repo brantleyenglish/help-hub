@@ -5,7 +5,10 @@ import { useAssistance } from "../context/AssistanceContext";
 import getAge from "../utils/getAge";
 import { theme } from "./Theme";
 
-const ReportsWrapper = styled.div``;
+const ReportsWrapper = styled.div`
+  max-width: 650px;
+  margin: auto;
+`;
 
 const TotalNumber = styled.p`
   display: inline;

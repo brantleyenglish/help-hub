@@ -29,6 +29,7 @@ import HHPlaceholder from "../images/helphubPlaceholder.png";
 import AddServiceModal from "../modals/AddServiceModal";
 import DeleteAgencyModal from "../modals/DeleteAgencyModal";
 import EditAgencyModal from "../modals/EditAgencyModal";
+import sortByDate from "../utils/sortByDate";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
@@ -194,12 +195,12 @@ const AddBtnWrapper = styled.button`
   }
 `;
 const ServiceCardWrapper = styled.div`
-flex-direction: row;  
-padding: 20px;
+  flex-direction: row;
+  padding: 20px;
   display: flex;
 `;
 const ServiceCardWrapperWrapper = styled.div`
-display: flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -234,30 +235,15 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     }
   }, [match, setAgencyProfileId]);
 
-  const sortByDate = (
-    a: AssistanceDataType | MessageType,
-    b: AssistanceDataType | MessageType
-  ) => {
-    if (a?.date && b?.date) {
-      if (a?.date > b?.date) {
-        return -1;
-      }
-      if (a?.date < b?.date) {
-        return 1;
-      }
-    }
-    return 0;
-  };
-
   const messageList = React.useMemo(() => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-          ...agencyMessages?.filter(
-            (message: MessageType) => message?.isPrivate
-          ),
-          ...allPublicMessages,
-        ]
+            ...agencyMessages?.filter(
+              (message: MessageType) => message?.isPrivate
+            ),
+            ...allPublicMessages,
+          ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -393,27 +379,27 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   agencyProfile?.city ||
                   agencyProfile?.state ||
                   agencyProfile?.zip) && (
-                    <>
-                      <h3>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                      <a
-                        href={
-                          "http://maps.google.com/?q=" +
-                          agencyProfile?.streetAddress +
-                          "," +
-                          agencyProfile?.city +
-                          "," +
-                          agencyProfile?.state +
-                          "," +
-                          agencyProfile?.zip
-                        }
-                      >
-                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                        {agencyProfile?.state} {agencyProfile?.zip}
-                      </a>
-                    </>
-                  )}
+                    <a
+                      href={
+                        "http://maps.google.com/?q=" +
+                        agencyProfile?.streetAddress +
+                        "," +
+                        agencyProfile?.city +
+                        "," +
+                        agencyProfile?.state +
+                        "," +
+                        agencyProfile?.zip
+                      }
+                    >
+                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                      {agencyProfile?.state} {agencyProfile?.zip}
+                    </a>
+                  </>
+                )}
                 {agencyProfile?.counties && (
                   <>
                     <h3>
@@ -487,7 +473,6 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 </ServiceCardWrapper>
               ))}
           </ServiceCardWrapperWrapper>
-
         )}
         {activeTab === "bulletinboard" && (
           <BulletinWrapper>
@@ -506,7 +491,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
                 />
               ))}
-          </TimelineWrapper >
+          </TimelineWrapper>
         )}
         {activeTab === "reports" && <Reports />}
       </ContentWrapper>
