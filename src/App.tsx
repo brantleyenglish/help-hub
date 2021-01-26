@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import ThemeWrapper from "../src/components/Theme";
 import Footer from "./components/global/footer";
@@ -17,9 +17,18 @@ const AppWrapper = styled.div`
   width: 100%;
 `;
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const App: React.FC<any> = () => {
   return (
     <ThemeWrapper>
+      <ScrollToTop />
       <AppWrapper>
         <Nav />
         <Switch>
