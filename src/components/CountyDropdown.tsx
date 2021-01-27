@@ -10,6 +10,11 @@ const StyledFormikFieldWrapper = styled.div`
   flex-direction: column;
   margin: 20px 10px;
   color: ${theme.colors.gray};
+  p{
+    text-align: left;
+    padding:5px 0px;
+    margin: 0px;
+  }
   label {
     color: ${theme.colors.lightBlue};
     text-align: left;
@@ -76,6 +81,7 @@ const CategoryDropdown: React.FC<CountyDropdown> = ({
   return (
     <StyledFormikFieldWrapper>
       <label htmlFor="counties">Counties</label>
+      <p>Select counties one at a time from the drop-down to add them. To remove a county, click the 'x.'</p>
       <select
         value="counties"
         onChange={(e) => {

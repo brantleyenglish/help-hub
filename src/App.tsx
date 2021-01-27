@@ -12,6 +12,8 @@ import HomePage from "./views/Home";
 import Login from "./views/Login";
 import ServiceList from "./views/ServiceList";
 import Signup from "./views/Signup";
+import FAQ from "./views/FAQ";
+import icon from "./images/icon.png";
 
 const AppWrapper = styled.div`
   width: 100%;
@@ -19,30 +21,33 @@ const AppWrapper = styled.div`
 
 const App: React.FC<any> = () => {
   return (
-    <ThemeWrapper>
-      <AppWrapper>
-        <Nav />
-        <Switch>
-          <Route exact={true} path="/clients" component={ClientList} />
-          <Route
-            exact={true}
-            path="/clients/:clientId"
-            component={ClientProfile}
-          />
-          <Route exact={true} path="/services" component={ServiceList} />
-          <Route
-            exact={true}
-            path="/agencies/:agencyId"
-            component={AgencyProfile}
-          />
-          <Route exact={true} path="/agencies" component={AgencyList} />
-          <Route exact={true} path="/login" component={Login} />
-          <Route exact={true} path="/signup" component={Signup} />
-          <Route exact={true} path="/" component={HomePage} />
-        </Switch>
-        <Footer />
-      </AppWrapper>
-    </ThemeWrapper>
+    <>
+      <ThemeWrapper>
+        <AppWrapper>
+          <Nav />
+          <Switch>
+            <Route exact={true} path="/clients" component={ClientList} />
+            <Route
+              exact={true}
+              path="/clients/:clientId"
+              component={ClientProfile}
+            />
+            <Route exact={true} path="/services" component={ServiceList} />
+            <Route
+              exact={true}
+              path="/agencies/:agencyId"
+              component={AgencyProfile}
+            />
+            <Route exact={true} path="/agencies" component={AgencyList} />
+            <Route exact={true} path="/login" component={Login} />
+            <Route exact={true} path="/signup" component={Signup} />
+            <Route exact={true} path="/faq" component={FAQ} />
+            <Route exact={true} path="/" component={HomePage} />
+          </Switch>
+          <Footer />
+        </AppWrapper>
+      </ThemeWrapper>
+    </>
   );
 };
 

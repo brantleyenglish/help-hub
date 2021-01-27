@@ -508,7 +508,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               ))}
           </TimelineWrapper >
         )}
-        {activeTab === "reports" && <Reports />}
+        {activeTab === "reports" &&
+          <ReportsWrapper>
+            <Reports />
+          </ReportsWrapper>
+        }
       </ContentWrapper>
     </AgencyProfileWrapper>
   );

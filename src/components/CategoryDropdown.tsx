@@ -10,6 +10,11 @@ const StyledFormikFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 10px;
+  p{
+    text-align: left;
+    padding:5px 0px;
+    margin: 0px;
+  }
   color: ${theme.colors.gray};
   label {
     color: ${theme.colors.lightBlue};
@@ -77,6 +82,7 @@ const CategoryDropdown: React.FC<CategoryDropdown> = ({
   return (
     <StyledFormikFieldWrapper>
       <label htmlFor="catgeory">Categories</label>
+      <p>Select categories one at a time from the drop-down to add them to your service. To remove a category, click the 'x.'</p>
       <select
         value="categories"
         onChange={(e) => {

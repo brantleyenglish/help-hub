@@ -80,6 +80,10 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
       >
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
+            <CategoryDropdown
+              setCategories={setCategories}
+              defaultCategories={[]}
+            />
             <StyledFormikField name="name" label="Name of Service" />
             <StyledFormikField
               name="description"
@@ -100,10 +104,7 @@ const AddServiceModal: React.FC<{ agencyId: string }> = ({ agencyId = "" }) => {
             <StyledFormikField name="city" label="City" />
             <StyledFormikField name="state" label="State" />
             <StyledFormikField name="zip" label="Zip Code" />
-            <CategoryDropdown
-              setCategories={setCategories}
-              defaultCategories={[]}
-            />
+
             <StyledButton type="submit">Submit</StyledButton>
           </Form>
         )}

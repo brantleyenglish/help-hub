@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { theme } from "../../components/Theme";
+import { useAuth } from "../../context/AuthContext";
+
 
 const FooterWrapper = styled.div`
   display: flex;
@@ -21,6 +23,8 @@ const FooterWrapper = styled.div`
 `;
 
 const Footer = () => {
+  const { user } = useAuth();
+
   return (
     <FooterWrapper>
       <Link to="/">HelpHub</Link>
@@ -28,10 +32,20 @@ const Footer = () => {
       <Link to="/services">Services</Link>
       <p>᛫</p>
       <Link to="/agencies">Agencies</Link>
-      <p>᛫</p>
-      <Link to="/clients">Clients</Link>
+      {user && (
+        <>
+          <p>᛫</p>
+          <Link to="/clients">Clients</Link>
+        </>
+      )}
       <p>᛫</p>
       <a href="https://uwwtn-helphub.on.spiceworks.com/portal/tickets">Request Tech Support</a>
+      {user && (
+        <>
+          <p>᛫</p>
+          <a href="/faq">FAQ</a>
+        </>
+      )}
     </FooterWrapper>
   );
 };

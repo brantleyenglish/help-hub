@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useAgency } from "../../context/AgencyContext";
 import { useAuth } from "../../context/AuthContext";
 import UnitedWayLogo from "../../images/uw_logo.png";
+import Logo211 from "../../images/Logo211.png";
 import { theme } from "../Theme";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -116,9 +117,9 @@ const Nav = () => {
     <NavWrapper>
       <Link to="/">
         <img
-          src={UnitedWayLogo}
+          src={Logo211}
           alt="placeholder"
-          style={{ width: 300, padding: 15, paddingLeft: 30 }}
+          style={{ width: 200, padding: 10, paddingLeft: 30 }}
         />
       </Link>
       <NavSpanWrapper menu={navigationState}>

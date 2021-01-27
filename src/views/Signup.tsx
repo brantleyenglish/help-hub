@@ -125,7 +125,7 @@ const SignUp = () => {
             </ErrorWrapper>
             <label htmlFor="password">Password</label>
             <FieldWrapper>
-              <Field name="password" type="text" />
+              <Field name="password" type="password" />
             </FieldWrapper>
             <ErrorWrapper>
               <ErrorMessage name="password" />
