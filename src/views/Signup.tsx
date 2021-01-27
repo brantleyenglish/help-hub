@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { theme } from "../components/Theme";
+import { useAuth } from "../context/AuthContext";
 import { usePublicData } from "../context/PublicContext";
 import { signup } from "../firebase/auth";
 import UWHeader from "../images/uw_header.png";
@@ -76,6 +77,7 @@ const ErrorWrapper = styled.div`
 const SignUp = () => {
   const [error, setError] = React.useState("");
   const { signupPassword } = usePublicData();
+  const { loginUser } = useAuth();
 
   const signupValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("This email address is not valid"),
@@ -101,6 +103,12 @@ const SignUp = () => {
         onSubmit={async (values) => {
           try {
             await signup({ email: values.email, password: values.password });
+            if (loginUser) {
+              await loginUser({
+                password: values.password,
+                email: values.email,
+              });
+            }
           } catch (e) {
             setError(e?.message);
           }
