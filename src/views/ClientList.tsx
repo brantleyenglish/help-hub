@@ -1,10 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { ClientListType, ClientType } from "../../DataTypes";
 import ClientRow from "../components/clientRow";
 import DateInput from "../components/DateInput";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
+import { useAuth } from "../context/AuthContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import UWHeader from "../images/uw_header.png";
@@ -155,7 +157,16 @@ const NewClientWrapper = styled.div`
   }
 `;
 
-const ClientList: React.FC<{}> = ({ }) => {
+const ClientList: React.FC<{}> = ({}) => {
+  const { user } = useAuth();
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (!user) {
+      history.push(`/`);
+    }
+  }, []);
+
   const { clients } = useClient();
   const { setActiveModal } = useModal();
 
@@ -282,13 +293,13 @@ const ClientList: React.FC<{}> = ({ }) => {
               <th scope="col">
                 <div>
                   First Name
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
+                  {/* <FontAwesomeIcon icon={faArrowDown} /> */}
                 </div>
               </th>
               <th scope="col">
                 <div>
                   Last Name
-                {/* <FontAwesomeIcon icon={faArrowDown} /> */}
+                  {/* <FontAwesomeIcon icon={faArrowDown} /> */}
                 </div>
               </th>
               <th scope="col" style={{ minWidth: "150px" }}>

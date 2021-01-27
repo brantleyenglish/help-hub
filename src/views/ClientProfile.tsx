@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { AssistanceDataType, ClientFiles, ClientNotes } from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
@@ -26,6 +27,7 @@ import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
 import EditClientModal from "../modals/EditClientModal";
+import sortByDate from "../utils/sortByDate";
 
 const ClientProfileWrapper = styled.div`
   width: 100%;
@@ -184,6 +186,14 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { user } = useAuth();
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (!user) {
+      history.push(`/`);
+    }
+  }, []);
+
   const { clientProfile, getClientProfile } = useClient();
   const { assistanceData } = useAssistance();
 
@@ -198,21 +208,6 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       getClientProfile({ clientId });
     }
   }, []);
-
-  const sortByDate = (
-    a: ClientFiles | ClientNotes | AssistanceDataType,
-    b: ClientFiles | ClientNotes | AssistanceDataType
-  ) => {
-    if (a?.date && b?.date) {
-      if (a?.date > b?.date) {
-        return -1;
-      }
-      if (a?.date < b?.date) {
-        return 1;
-      }
-    }
-    return 0;
-  };
 
   return (
     <ClientProfileWrapper>

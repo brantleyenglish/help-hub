@@ -4,6 +4,7 @@ import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import * as Yup from "yup";
 import { ClientType, ServiceType } from "../../DataTypes";
+import { FormikDateInput } from "../components/DateInput";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAssistance } from "../context/AssistanceContext";
@@ -63,6 +64,7 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
   const assistanceSchema = Yup.object().shape({
     notes: Yup.string(),
     serviceId: Yup.string(),
+    date: Yup.string(),
   });
 
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
@@ -70,6 +72,13 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
   const toggleIsPrivate = () => {
     setIsPrivate(!isPrivate);
   };
+
+  const defaultDate = React.useMemo(() => {
+    const newDate = new Date();
+    const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
+    const date = ("0" + newDate?.getDate()).slice(-2);
+    return `${month} / ${date} / ${newDate?.getFullYear()}`;
+  }, []);
 
   return (
     <>
@@ -90,19 +99,16 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
             allServices?.find(
               (service: ServiceType) => service?.agencyId === user?.uid
             )?.id || "",
+          date: defaultDate,
         }}
         validationSchema={assistanceSchema}
         onSubmit={async (values) => {
-          const newDate = new Date();
-          const month = ("0" + (newDate?.getMonth() + 1)).slice(-2);
-          const date = ("0" + newDate?.getDate()).slice(-2);
           await createAssistance({
             data: {
               ...values,
               isPrivate,
               agencyId: user?.uid || "",
               clientId: client?.id || "",
-              date: `${month} / ${date} / ${newDate?.getFullYear()}`,
             },
           });
 
@@ -113,8 +119,14 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
           setActiveModal("");
         }}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, setFieldValue, values }) => (
           <Form onSubmit={handleSubmit}>
+            <FormikDateInput
+              fieldName="date"
+              setFieldValue={setFieldValue}
+              intialValue={values?.date}
+              label="Date of Assistance"
+            />
             <StyledFormikField
               name="serviceId"
               label="Service Offered"
