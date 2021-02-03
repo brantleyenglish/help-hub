@@ -8,6 +8,7 @@ import {
   faPlus,
   faUsers,
   faVenusMars,
+  faTrash
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -23,6 +24,7 @@ import { useAssistance } from "../context/AssistanceContext";
 import { useAuth } from "../context/AuthContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
+import { useAgency } from "../context/AgencyContext";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
@@ -55,6 +57,28 @@ const EditButton = styled.button`
   outline: none;
   border: none;
   padding: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 2px;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  &:hover {
+    background: ${theme?.colors?.white};
+    color: ${theme.colors.blue};
+  }
+`;
+const DeleteButton = styled.button`
+  background: ${theme?.colors?.lightBlue};
+  color: ${theme.colors.white};
+  outline: none;
+  border: none;
+  padding: 5px;
+  margin-right: 40px;
   width: 25px;
   height: 25px;
   display: flex;
@@ -186,6 +210,8 @@ type ActiveTabType = "assistances" | "notes" | "files";
 const ClientProfile = ({ match }: ClientProfileType) => {
   const { clientId } = match.params;
   const { user } = useAuth();
+  const { agency } = useAgency();
+
   const history = useHistory();
 
   React.useEffect(() => {
@@ -221,6 +247,14 @@ const ClientProfile = ({ match }: ClientProfileType) => {
               <h1>
                 {clientProfile?.clientFirstName} {clientProfile?.clientLastName}
               </h1>
+              {agency?.admin && (
+                <DeleteButton
+                  type="button"
+                  onClick={() => setActiveModal("ClientDelete")}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </DeleteButton>
+              )}
               <EditButton
                 type="button"
                 onClick={() => setActiveModal("ClientEdit")}

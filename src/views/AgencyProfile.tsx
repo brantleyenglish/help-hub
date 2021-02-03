@@ -239,11 +239,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-            ...agencyMessages?.filter(
-              (message: MessageType) => message?.isPrivate
-            ),
-            ...allPublicMessages,
-          ]
+          ...agencyMessages?.filter(
+            (message: MessageType) => message?.isPrivate
+          ),
+          ...allPublicMessages,
+        ]
         : [];
     return mergedMessages?.sort(sortByDate);
   }, [agencyMessages, allPublicMessages]);
@@ -294,7 +294,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   <FontAwesomeIcon icon={faTrash} />
                 </EditButton>
               )}
-              {agency?.id === agencyId && (
+              {(agency?.admin || agency?.id === agencyId) && (
                 <EditButton
                   type="button"
                   onClick={() => setActiveModal("AgencyEdit")}
@@ -379,27 +379,27 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   agencyProfile?.city ||
                   agencyProfile?.state ||
                   agencyProfile?.zip) && (
-                  <>
-                    <h3>
-                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                    <>
+                      <h3>
+                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                    <a
-                      href={
-                        "http://maps.google.com/?q=" +
-                        agencyProfile?.streetAddress +
-                        "," +
-                        agencyProfile?.city +
-                        "," +
-                        agencyProfile?.state +
-                        "," +
-                        agencyProfile?.zip
-                      }
-                    >
-                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                      {agencyProfile?.state} {agencyProfile?.zip}
-                    </a>
-                  </>
-                )}
+                      <a
+                        href={
+                          "http://maps.google.com/?q=" +
+                          agencyProfile?.streetAddress +
+                          "," +
+                          agencyProfile?.city +
+                          "," +
+                          agencyProfile?.state +
+                          "," +
+                          agencyProfile?.zip
+                        }
+                      >
+                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                        {agencyProfile?.state} {agencyProfile?.zip}
+                      </a>
+                    </>
+                  )}
                 {agencyProfile?.counties && (
                   <>
                     <h3>

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import CountyDropdown from "../components/CountyDropdown";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { usePublicData } from "../context/PublicContext";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
 import { storage } from "../firebase/config";
@@ -134,8 +135,12 @@ const EditAgencyModal: React.FC<{
     zip: Yup.string(),
     state: Yup.string(),
   });
+
+  const { refreshAgencies } = usePublicData();
+
   return (
     <>
+      {console.log(agencyId)}
       <StyledHeader>
         <>
           <h2>Edit Agency</h2>
@@ -170,8 +175,12 @@ const EditAgencyModal: React.FC<{
               if (setAgencyProfileId) {
                 setAgencyProfileId({ agencyId });
               }
+              if (refreshAgencies) {
+                await refreshAgencies();
+              }
               setActiveModal("");
             }
+
           }
         }}
       >

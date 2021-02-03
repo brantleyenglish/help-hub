@@ -213,23 +213,8 @@ const Home = () => {
       </CallWrapper>
 
       <AboutWrapper>
-        <h1>ABOUT US</h1>
-        <p>
-          As the central hub within the nonprofit sector in West Tennessee, we
-          unite people in ways that improve each person’s access to health,
-          education, and financial stability.{" "}
-        </p>
-        <p>
-          With a 75-year history of service to West Tennessee, we are leading
-          our communities toward sustainable change. We connect people in need
-          to the resources that can help them, and we unite people who want to
-          help with the opportunity to do so.
-        </p>
-        <p>
-          We focus on empowering our communities by partnering with local
-          agencies who are actively meeting the needs of our communities. United
-          Way brings together the best people in each community to determine the
-          most critical needs that require collective - not individual - action.
+        <h1>Welcome to the 211 Hub</h1>
+        <p>There are so many agencies in West Tennessee that provide access to important and needed resources. The problem is, it can be hard to find them. That's why we created The 211 Hub. The 211 Hub takes agencies from 14 counties in West Tennessee, and the services they provide, and collects them all in one place, so you can easily find what you need. Just use the search bar or click on one of the categories below to get started!{" "}
         </p>
       </AboutWrapper>
     </>
