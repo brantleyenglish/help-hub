@@ -95,10 +95,6 @@ export const deleteAgency = async ({ agencyId }: { agencyId: string }) => {
       message.ref.delete();
     });
 
-    const assistanceDoc = await db.collection("assistance").where("agencyId", "==", agencyId).get();
-    assistanceDoc.forEach((assistance) => {
-      assistance.ref.delete();
-    });
   } catch (e) {
     console.log("Error deleteAgency:", e);
     return 'Error';

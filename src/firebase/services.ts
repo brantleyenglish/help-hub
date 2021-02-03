@@ -111,10 +111,6 @@ export const deleteService = async ({ serviceId }: { serviceId: string }) => {
     const serviceDoc = db.collection("services").doc(serviceId);
     serviceDoc.delete();
 
-    const assistanceDoc = await db.collection("assistance").where("serviceId", "==", serviceId).get();
-    assistanceDoc.forEach((assistance) => {
-      assistance.ref.delete();
-    });
   } catch (e) {
     console.log("Error deleteMessage:", e);
     return 'Error';
