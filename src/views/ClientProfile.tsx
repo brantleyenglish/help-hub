@@ -13,7 +13,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { AssistanceDataType, ClientFiles, ClientNotes } from "../../DataTypes";
+import {
+  ClientFiles,
+  ClientNotes,
+  SingleAssistanceType,
+} from "../../DataTypes";
 import AssistanceCard from "../components/cards/AssistanceCard";
 import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
@@ -195,7 +199,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
   }, []);
 
   const { clientProfile, getClientProfile } = useClient();
-  const { assistanceData } = useAssistance();
+  const { assistance } = useAssistance();
 
   const { setActiveModal } = useModal();
 
@@ -357,12 +361,12 @@ const ClientProfile = ({ match }: ClientProfileType) => {
         </NavigationWrapper>
 
         {activeTab === "assistances" &&
-          assistanceData
+          assistance
             ?.sort(sortByDate)
-            ?.map((assistance: AssistanceDataType, index: number) => (
+            ?.map((assistance: SingleAssistanceType, index: number) => (
               <AssistanceCard
                 assistance={assistance}
-                key={`${assistance?.service?.id}-${index}`}
+                key={`${assistance?.serviceId}-${index}`}
               />
             ))}
 

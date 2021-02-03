@@ -7,8 +7,8 @@ import { ClientType, ServiceType } from "../../DataTypes";
 import { FormikDateInput } from "../components/DateInput";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
+import { useAgency } from "../context/AgencyContext";
 import { useAssistance } from "../context/AssistanceContext";
-import { useAuth } from "../context/AuthContext";
 import { useModal } from "../context/ModalContext";
 import { createAssistance } from "../firebase/assistance";
 
@@ -56,7 +56,7 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
 }) => {
   const { setActiveModal } = useModal();
   const { allServices } = usePublicData();
-  const { user } = useAuth();
+  const { agency } = useAgency();
   const {
     updateAssistanceByClient,
     updateAssistanceByAgency,
@@ -97,7 +97,7 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
           notes: "",
           serviceId:
             allServices?.find(
-              (service: ServiceType) => service?.agencyId === user?.uid
+              (service: ServiceType) => service?.agencyId === agency?.id
             )?.id || "",
           date: defaultDate,
         }}
@@ -107,8 +107,14 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
             data: {
               ...values,
               isPrivate,
-              agencyId: user?.uid || "",
+              agencyId: agency?.id || "",
+              agencyName: agency?.name || "",
+              serviceName:
+                allServices?.find(
+                  (service: ServiceType) => service?.id === values?.serviceId
+                )?.name || "",
               clientId: client?.id || "",
+              client: { ...client, files: [], notes: [] },
             },
           });
 
@@ -136,7 +142,7 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
                   ? allServices
                       ?.filter(
                         (service: ServiceType) =>
-                          service?.agencyId === user?.uid
+                          service?.agencyId === agency?.id
                       )
                       ?.map((service: ServiceType) => {
                         return {

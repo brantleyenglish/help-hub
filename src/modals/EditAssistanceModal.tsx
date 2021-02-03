@@ -3,7 +3,7 @@ import React from "react";
 import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import * as Yup from "yup";
-import { AssistanceDataType, ServiceType } from "../../DataTypes";
+import { ServiceType, SingleAssistanceType } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
 import { useAssistance } from "../context/AssistanceContext";
@@ -53,7 +53,7 @@ const StyledHeader = styled.div`
 `;
 
 const EditAssistanceModal: React.FC<{
-  assistance: AssistanceDataType | null;
+  assistance: SingleAssistanceType | null;
 }> = ({ assistance }) => {
   const { allServices } = usePublicData();
   const { user } = useAuth();
@@ -91,7 +91,7 @@ const EditAssistanceModal: React.FC<{
         initialValues={{
           notes: assistance?.notes || "",
           serviceId:
-            assistance?.service?.id ||
+            assistance?.serviceId ||
             allServices?.find(
               (service: ServiceType) => service?.agencyId === user?.uid
             )?.id ||
@@ -102,13 +102,10 @@ const EditAssistanceModal: React.FC<{
           if (updateAssistanceByClient && assistance) {
             await updateAssistance({
               data: {
+                ...assistance,
                 isPrivate,
                 serviceId: values?.serviceId,
                 notes: values?.notes,
-                id: assistance?.id,
-                clientId: assistance?.client?.id || "",
-                agencyId: assistance?.agency?.id || "",
-                date: assistance?.date,
               },
             });
 
