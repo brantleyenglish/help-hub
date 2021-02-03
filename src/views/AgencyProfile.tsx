@@ -16,7 +16,11 @@ import { useAssistance } from "src/context/AssistanceContext";
 import { usePublicData } from "src/context/PublicContext";
 import AddBulletinModal from "src/modals/AddBulletinModal";
 import styled from "styled-components";
-import { AssistanceDataType, MessageType, ServiceType } from "../../DataTypes";
+import {
+  MessageType,
+  ServiceType,
+  SingleAssistanceType,
+} from "../../DataTypes";
 import BulletinCard from "../components/cards/BulletinCard";
 import ServiceCard from "../components/cards/ServiceCard";
 import TimelineAssistanceCard from "../components/cards/TimelineAssistanceCard";
@@ -221,7 +225,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
 
   const { allServices, allPublicMessages } = usePublicData();
   const { agency, agencyMessages } = useAgency();
-  const { agencyAssistanceData } = useAssistance();
+  const { agencyAssistance } = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -483,21 +487,21 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
         )}
         {activeTab === "timeline" && (
           <TimelineWrapper>
-            {agencyAssistanceData
+            {agencyAssistance
               ?.sort(sortByDate)
-              ?.map((assistance: AssistanceDataType) => (
+              ?.map((assistance: SingleAssistanceType) => (
                 <TimelineAssistanceCard
                   assistance={assistance}
-                  key={`${assistance?.client?.id}-${assistance?.service?.id}-${assistance?.agency?.id}`}
+                  key={`${assistance?.client?.id}-${assistance?.serviceId}-${assistance?.agencyId}`}
                 />
               ))}
           </TimelineWrapper>
         )}
-        {activeTab === "reports" &&
+        {activeTab === "reports" && (
           <ReportsWrapper>
             <Reports />
           </ReportsWrapper>
-        }
+        )}
       </ContentWrapper>
     </AgencyProfileWrapper>
   );

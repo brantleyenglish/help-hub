@@ -59,14 +59,12 @@ type CategoryDataType = {
 type ReportDataType = CategoryDataType[];
 
 const Reports = () => {
-  const { agencyAssistanceData } = useAssistance();
+  const { agencyAssistance } = useAssistance();
 
   const uniqueClients = React.useMemo(() => {
-    const clients = agencyAssistanceData?.map(
-      (assistance) => assistance?.client
-    );
+    const clients = agencyAssistance?.map((assistance) => assistance?.client);
     if (!clients) return [];
-    let uniquesClientData: ClientType[] = [];
+    let uniquesClientData: Partial<ClientType>[] = [];
     for (const client of clients) {
       if (
         client?.id &&
@@ -78,7 +76,7 @@ const Reports = () => {
       }
     }
     return uniquesClientData;
-  }, [agencyAssistanceData]);
+  }, [agencyAssistance]);
 
   const countClients = React.useCallback(
     (options: string[], field: "county" | "gender" | "ethnicity") => {
@@ -92,7 +90,7 @@ const Reports = () => {
   const countClientByAge = React.useCallback(
     (startAge: number, endAge: number) => {
       return uniqueClients?.filter((client) => {
-        const age = getAge(client?.dob);
+        const age = getAge(client?.dob || "12 / 12 / 2001");
         if (age >= startAge && age <= endAge) {
           return true;
         }

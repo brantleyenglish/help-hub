@@ -81,10 +81,6 @@ export const deleteClient = async ({ clientId }: { clientId: string }) => {
         const clientDoc = db.collection("agencies").doc(clientId);
         clientDoc.delete();
 
-        const assistanceDoc = await db.collection("assistance").where("clientId", "==", clientId).get();
-        assistanceDoc.forEach((assistance) => {
-            assistance.ref.delete();
-        });
     } catch (e) {
         console.log("Error deleteAgency:", e);
         return 'Error';

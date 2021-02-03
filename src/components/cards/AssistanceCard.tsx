@@ -2,7 +2,7 @@ import { faHeart, faPencil, faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AssistanceDataType } from "../../../DataTypes";
+import { SingleAssistanceType } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import DeleteAssistanceModal from "../../modals/DeleteAssistanceModal";
@@ -26,7 +26,6 @@ const AssistanceCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
   opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
-
 `;
 const AssistanceCardContentWrapper = styled.div`
 background: ${theme.colors.grayLight};
@@ -91,7 +90,7 @@ const DeleteButton = styled.button`
 `;
 
 type AssistanceCard = {
-  assistance: AssistanceDataType;
+  assistance: SingleAssistanceType;
 };
 
 const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
@@ -104,12 +103,13 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
       </AssistanceCardIconWrapper>
       <AssistanceCardContentWrapper>
         <AssistanceHeaderWrapper>
-          <h1>{assistance?.service?.name}</h1>
+          <h1>{assistance?.serviceName}</h1>
           <h2>
-            {assistance?.isPrivate == true && ("Private assistance provided by ")}
-            {assistance?.isPrivate == false && ("Provided by ")}
-            {assistance?.agency?.name}</h2>
-          {agency?.id === assistance?.agency?.id && (
+            {assistance?.isPrivate == true && "Private assistance provided by "}
+            {assistance?.isPrivate == false && "Provided by "}
+            {assistance?.agencyName}
+          </h2>
+          {agency?.id === assistance?.agencyId && (
             <>
               <ModalWrapper modalId={`AssistanceEdit-${assistance?.id}`}>
                 <EditAssistanceModal assistance={assistance} />
@@ -137,7 +137,7 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
         <p>{assistance?.notes}</p>
         <p>Date of Assistance: {assistance?.date}</p>
       </AssistanceCardContentWrapper>
-    </AssistanceCardWrapper >
+    </AssistanceCardWrapper>
   );
 };
 

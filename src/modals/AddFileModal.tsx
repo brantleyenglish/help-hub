@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { ClientFiles } from "../../DataTypes";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
-import { useAuth } from "../context/AuthContext";
+import { useAgency } from "../context/AgencyContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 import { storage } from "../firebase/config";
@@ -53,7 +53,7 @@ const StyledFormikFieldWrapper = styled.div`
 const AddFileModal: React.FC<{}> = ({}) => {
   const { setActiveModal } = useModal();
   const { updateClientInfo, clientProfile, getClientProfile } = useClient();
-  const { user } = useAuth();
+  const { agency } = useAgency();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
   const [file, setFile] = React.useState<File | undefined>(undefined);
   const [downloadUrl, setDownloadUrl] = React.useState<string>("");
@@ -102,7 +102,8 @@ const AddFileModal: React.FC<{}> = ({}) => {
                   {
                     ...fileData,
                     downloadUrl,
-                    agencyId: user?.uid,
+                    agencyId: agency?.id,
+                    agencyName: agency?.name,
                     date: `${month} / ${date} / ${newDate?.getFullYear()}`,
                   },
                 ],
@@ -115,7 +116,8 @@ const AddFileModal: React.FC<{}> = ({}) => {
                   {
                     ...fileData,
                     downloadUrl,
-                    agencyId: user?.uid,
+                    agencyId: agency?.id,
+                    agencyName: agency?.name,
                     date: `${month} / ${date} / ${newDate?.getFullYear()}`,
                   },
                 ],

@@ -44,6 +44,7 @@ export type ClientNotes = {
   isPrivate?: boolean;
   message: string;
   subject: string;
+  agencyName: string;
 }
 
 export type ClientFiles = {
@@ -55,6 +56,7 @@ export type ClientFiles = {
   clientId?: string;
   agencyId?: string;
   date?: string;
+  agencyName: string;
 }
 
 export type ClientType = {
@@ -127,23 +129,14 @@ export type SingleAssistanceType = {
   isPrivate: boolean;
   notes: string;
   id?: string;
+  agencyName: string;
+  serviceName: string;
+  client: Partial<ClientType>;
 }
-
-export type AssistanceDataType = {
-  agency: AgencyType;
-  client: ClientType;
-  service: ServiceType;
-  date: string;
-  isPrivate: boolean;
-  notes: string;
-  id?: string;
-}
-
-export type AssistanceDataArrayType = AssistanceDataType[];
 
 export type AssistanceContextType = {
-  agencyAssistanceData: AssistanceDataArrayType;
-  assistanceData: AssistanceDataArrayType;
+  agencyAssistance: AssistanceType;
+  assistance: AssistanceType;
   setAssistanceClientId: (id: string) => Promise<void>;
   setAssistanceAgencyId: (id: string) => Promise<void>;
   updateAssistanceByClient: () => Promise<void>;
