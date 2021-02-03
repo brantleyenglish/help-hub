@@ -1,8 +1,8 @@
-import { AssistanceDataType, MessageType, ClientFiles, ClientNotes } from '../../DataTypes';
+import { SingleAssistanceType, MessageType, ClientFiles, ClientNotes } from '../../DataTypes';
 
 const sortByDate = (
-    a: AssistanceDataType | MessageType | ClientFiles | ClientNotes,
-    b: AssistanceDataType | MessageType | ClientFiles | ClientNotes
+    a: SingleAssistanceType | MessageType | ClientFiles | ClientNotes,
+    b: SingleAssistanceType | MessageType | ClientFiles | ClientNotes
 ) => {
     const aDate = Number(a?.date?.slice(0, 2));
     const aMonth = Number(a?.date?.slice(5, 7));
