@@ -2,7 +2,7 @@ import { faComment, faPencil, faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AgencyType, ClientNotes } from "../../../DataTypes";
+import { ClientNotes } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
@@ -27,7 +27,6 @@ const NoteCardIconWrapper = styled.div<{ isTranslucent: boolean }>`
   margin: 10px 0px;
   border-radius: 10px 0px 0px 10px;
   opacity: ${(p) => (p?.isTranslucent ? 0.4 : 1)};
-
 `;
 const NoteCardContentWrapper = styled.div`
   background: ${theme.colors.grayLight};
@@ -105,13 +104,8 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
         <NoteHeaderWrapper>
           <h1>{note?.subject}</h1>
           <h2>
-            {note?.isPrivate == true && ("Private Note Created by ")}
-            {note?.isPrivate === false && ("Created by ")}{" "}
-            {
-              allAgencies?.find(
-                (agency: AgencyType) => agency?.id === note?.agencyId
-              )?.name
-            }
+            {note?.isPrivate == true && "Private Note Created by "}
+            {note?.isPrivate === false && "Created by "} {note?.agencyName}
           </h2>
           {agency?.id === note?.agencyId && (
             <>

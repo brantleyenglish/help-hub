@@ -4,7 +4,7 @@ import styled from "styled-components";
 import * as Yup from "yup";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
-import { useAuth } from "../context/AuthContext";
+import { useAgency } from "../context/AgencyContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
 
@@ -50,7 +50,7 @@ const StyledHeader = styled.div`
 
 const AddBulletinModal: React.FC<{}> = () => {
   const { setActiveModal } = useModal();
-  const { user } = useAuth();
+  const { agency } = useAgency();
   const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const [isPrivate, setIsPrivate] = React.useState<boolean>(false);
 
@@ -96,7 +96,8 @@ const AddBulletinModal: React.FC<{}> = () => {
                         {
                           ...values,
                           isPrivate,
-                          agencyId: user?.uid,
+                          agencyId: agency?.id,
+                          agencyName: agency?.name,
                           date: `${month} / ${date} / ${newDate?.getFullYear()}`,
                         },
                       ],
@@ -109,7 +110,8 @@ const AddBulletinModal: React.FC<{}> = () => {
                         {
                           ...values,
                           isPrivate,
-                          agencyId: user?.uid,
+                          agencyId: agency?.id,
+                          agencyName: agency?.name,
                           date: `${month} / ${date} / ${newDate?.getFullYear()}`,
                         },
                       ],

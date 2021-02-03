@@ -2,7 +2,7 @@ import { faFileAlt, faPencil, faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
-import { AgencyType, ClientFiles } from "../../../DataTypes";
+import { ClientFiles } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
 import { useModal } from "../../context/ModalContext";
 import { usePublicData } from "../../context/PublicContext";
@@ -109,20 +109,19 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
 
   return (
     <FileCardWrapper>
-      <FileCardIconWrapper href={file?.downloadUrl} target="_blank" isTranslucent={!!file?.isPrivate}>
+      <FileCardIconWrapper
+        href={file?.downloadUrl}
+        target="_blank"
+        isTranslucent={!!file?.isPrivate}
+      >
         <FontAwesomeIcon icon={faFileAlt} size="4x" />
       </FileCardIconWrapper>
       <FileCardContentWrapper>
         <FileHeaderWrapper>
           <h1>{file?.fileTitle}</h1>
           <h2>
-            {file?.isPrivate === true && ("Private File Added by ")}
-            {file?.isPrivate === false && ("Added by ")}{" "}
-            {
-              allAgencies?.find(
-                (agency: AgencyType) => agency?.id === file?.agencyId
-              )?.name
-            }
+            {file?.isPrivate === true && "Private File Added by "}
+            {file?.isPrivate === false && "Added by "} {file?.agencyName}
           </h2>
         </FileHeaderWrapper>
         {file?.description && <p>{file?.description}</p>}

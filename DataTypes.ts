@@ -44,6 +44,7 @@ export type ClientNotes = {
   isPrivate?: boolean;
   message: string;
   subject: string;
+  agencyName: string;
 }
 
 export type ClientFiles = {
@@ -55,6 +56,7 @@ export type ClientFiles = {
   clientId?: string;
   agencyId?: string;
   date?: string;
+  agencyName: string;
 }
 
 export type ClientType = {
