@@ -49,6 +49,7 @@ export const AuthProvider: React.FC<any> = (props) => {
     if (!loginUserData?.user?.emailVerified) {
       loginUserData?.user?.sendEmailVerification();
       setActiveModal("EmailNoticeModal");
+      history.push("/login");
     } else {
       await setUser({
         uid: loginUserData?.user?.uid,
