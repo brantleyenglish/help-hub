@@ -3,11 +3,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import * as Yup from "yup";
+import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
 import { usePublicData } from "../context/PublicContext";
 import { signup } from "../firebase/auth";
 import UWHeader from "../images/uw_header.png";
+import EmailNoticeModal from "../modals/EmailNoticeModal";
 
 const SignupWrapper = styled.div`
   padding: 40px 0px 40px 0px;
@@ -93,6 +95,9 @@ const SignUp = () => {
 
   return (
     <SignupWrapper>
+      <ModalWrapper modalId={"EmailNoticeModal"}>
+        <EmailNoticeModal />
+      </ModalWrapper>
       <Formik
         initialValues={{
           email: "",

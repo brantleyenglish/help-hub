@@ -9,15 +9,15 @@ import { PublicProvider } from "./PublicContext";
 const ContextProviders: React.FC<any> = ({ children }) => {
   return (
     <PublicProvider>
-      <AuthProvider>
-        <AssistanceProvider>
-          <ClientProvider>
-            <AgencyProvider>
-              <ModalProvider>{children}</ModalProvider>
-            </AgencyProvider>
-          </ClientProvider>
-        </AssistanceProvider>
-      </AuthProvider>
+      <ModalProvider>
+        <AuthProvider>
+          <AssistanceProvider>
+            <ClientProvider>
+              <AgencyProvider>{children}</AgencyProvider>
+            </ClientProvider>
+          </AssistanceProvider>
+        </AuthProvider>
+      </ModalProvider>
     </PublicProvider>
   );
 };
