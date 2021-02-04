@@ -65,6 +65,9 @@ const ServiceCardHeaderWrapper = styled.div`
     padding-bottom: 0;
     margin-bottom: 5px;
   }
+  & h1:hover{
+    color: ${theme.colors.yellow};
+  }
 `;
 const CategoryTagsWrapper = styled.div`
   display: flex;
@@ -183,7 +186,9 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                   </DeleteButton>
                 </>
               )}
-              <h1>{service?.name}</h1>
+              <Link to={`/agencies/${service?.agencyId}`} key={service?.id}>
+                <h1>{service?.name}</h1>
+              </Link>
               <h3>
                 Provided by{" "}
                 {

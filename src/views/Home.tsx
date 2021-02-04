@@ -31,30 +31,6 @@ const SearchWrapper = styled.div`
     margin-top: 10px;
   }
 `;
-const CallWrapper = styled.div`
-  display: flex;
-  background-color: ${theme.colors.grayLight};
-  padding: 10px;
-  padding-top: 3vw;
-  padding-bottom: 3vw;
-  color: ${theme.colors.gray};
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  & a {
-    padding: 0.5vw 2vw 0.5vw 2vw;
-    margin: 1vw;
-    margin-left: 2vw;
-    border-radius: 1vw;
-    background-color: ${theme.colors.lightBlue};
-    border: none;
-    color: ${theme.colors.white};
-    cursor: pointer;
-  }
-  & a:hover {
-    background-color: ${theme.colors.blue};
-  }
-`;
 const BigCatWrapper = styled.div`
   max-width: 800px;
   min-width: 500px;
@@ -103,20 +79,47 @@ const CatSpanWrapper = styled.div`
 const AboutWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin: 2vw auto 2vw auto;
   padding: 0 30px 0 30px;
-  max-width: 650px;
-  background-color: ${theme.colors.white};
+  background-color: ${theme.colors.blue};
   justify-content: center;
   align-items: center;
-  color: ${theme.colors.gray};
+  color: ${theme.colors.white};
+  & div{
+    max-width: 650px;
+    padding: 70px 0 90px 0;
+  }
   & h1 {
-    color: ${theme.colors.blue};
+    color: ${theme.colors.white};
     font-weight: 1000;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
   }
   & p {
+    color: ${theme.colors.grayLight};
     font-family: "Roboto";
     font-weight: 500;
+    line-height: 30px;
+  }
+  & h2{
+    color: ${theme.colors.white};
+    text-align: center;
+    text-transform: uppercase;
+    margin: 70px 0 0 0;
+  }
+  & a {
+    padding: 0.5vw 2vw 0.5vw 2vw;
+    margin: 1vw;
+    margin-left: 2vw;
+    border-radius: 1vw;
+    font-size: 17px;
+    background-color: ${theme.colors.lightBlue};
+    border: none;
+    color: ${theme.colors.white};
+    cursor: pointer;
+  }
+  & a:hover {
+    background-color: ${theme.colors.yellow};
   }
 `;
 const StyledCatTitle = styled.h2`
@@ -207,16 +210,17 @@ const Home = () => {
           ))}
       </BigCatWrapper>
 
-      <CallWrapper>
-        <h1> Can't find what you need?</h1>
-        <a href="tel:211">CALL 211</a>
-      </CallWrapper>
-
       <AboutWrapper>
-        <h1>Welcome to the 211 Hub</h1>
-        <p>There are so many agencies in West Tennessee that provide access to important and needed resources. The problem is, it can be hard to find them. That's why we created The 211 Hub. The 211 Hub takes agencies from 14 counties in West Tennessee, and the services they provide, and collects them all in one place, so you can easily find what you need. Just use the search bar or click on one of the categories below to get started!{" "}
-        </p>
+        <div>
+          <h1>Welcome to the 211 Hub</h1>
+          <p>United Way of West Tennessee advocates for equity through Uniting agencies in ways that improve each person’s access to health, education, and financial stability. Our extensive footprint allows us to collaborate with over 60 area nonprofits spanning 14 counties across the West Tennessee region. By helping them acquire resources, we empower them to assist those in need within their local area.</p>
+          <h2> Can't find what you need?  <a href="tel:211">CALL 211</a></h2>
+
+        </div>
+
       </AboutWrapper>
+
+
     </>
   );
 };

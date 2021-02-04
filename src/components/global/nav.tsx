@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useAgency } from "../../context/AgencyContext";
 import { useAuth } from "../../context/AuthContext";
 import UnitedWayLogo from "../../images/uw_logo.png";
-import Logo211 from "../../images/Logo211.png";
+import Logo211 from "../../images/Logo211UW.png";
 import { theme } from "../Theme";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -68,7 +68,8 @@ const ProfileNavLinkWrapper = styled.div`
   color: #999999;
   text-transform: uppercase;
   border-bottom: 2px ${theme.colors.lightBlue} solid;
-  align-items: center;
+display: flex;  
+align-items: center;
   &:hover {
     color: #333333;
   }
@@ -85,8 +86,9 @@ const NavSpanWrapper = styled.span<{ menu: 'topnav' | 'hamburgerClose' | `hambur
 
   ${(p) => p?.menu === 'topnav' && 'display: flex; flex-direction: row; position: absolute; right: 0; .hamburgerSvg{display:none;}.closeSvg{display:none;}'};
   ${(p) => p?.menu === 'hamburgerClose' && '.closeSvg{display:none;}.hamburgerSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px;} .link{display:none;}'};
-  ${(p) => p?.menu === 'hamburgerOpen' && '.link{display: flex; text-align: right; padding-top: 10px; flex-direction: column;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px;}'};
+  ${(p) => p?.menu === 'hamburgerOpen' && '.lastLink{padding-bottom:20px;} .linkDiv{border:none;} .link{display: flex; text-align: right; padding: 10px 0 0 0; flex-direction: column; border:none;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px;}'};
 
+  align-items: center;
 `;
 
 const Nav = () => {
@@ -128,7 +130,7 @@ const Nav = () => {
         </a>
         {user && (
           <Link className="link" to={`/agencies/${user?.uid}`} key={user?.uid}>
-            <ProfileNavLinkWrapper>
+            <ProfileNavLinkWrapper className="linkDiv">
               <img
                 src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder}
               />
@@ -137,23 +139,23 @@ const Nav = () => {
           </Link>
         )}
         <Link className="link" to="/services">
-          <NavLinkWrapper>Services</NavLinkWrapper>
+          <NavLinkWrapper className="linkDiv">Services</NavLinkWrapper>
         </Link>
         <Link className="link" to="/agencies">
-          <NavLinkWrapper>Agencies</NavLinkWrapper>
+          <NavLinkWrapper className="linkDiv">Agencies</NavLinkWrapper>
         </Link>
         {user && (
           <Link className="link" to="/clients">
-            <NavLinkWrapper>Clients</NavLinkWrapper>
+            <NavLinkWrapper className="linkDiv">Clients</NavLinkWrapper>
           </Link>
         )}
         {!user && (
           <Link className="link" to="/login">
-            <NavLinkWrapper>Log In</NavLinkWrapper>
+            <NavLinkWrapper className="linkDiv lastLink">Log In</NavLinkWrapper>
           </Link>
         )}
 
-        {user && <NavLinkButton className="link" onClick={logoutUser}>Log out</NavLinkButton>}
+        {user && <NavLinkButton className="link linkDiv lastLink" onClick={logoutUser}>Log out</NavLinkButton>}
         <a className="hamburgerSvg" onClick={toggleHamburger}>
           <FontAwesomeIcon icon={faBars} style={{ color: "#0e4680" }} />
         </a>

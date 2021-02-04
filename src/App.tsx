@@ -50,6 +50,7 @@ const App: React.FC<any> = () => {
           <Route exact={true} path="/login" component={Login} />
           <Route exact={true} path="/signup" component={Signup} />
           <Route exact={true} path="/" component={HomePage} />
+          <Route exact={true} path="/faq" component={FAQ} />
         </Switch>
         <Footer />
       </AppWrapper>

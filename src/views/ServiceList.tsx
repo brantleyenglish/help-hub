@@ -208,9 +208,8 @@ const ServiceList: React.FC<ServiceListType> = () => {
       <ServiceListWrapper>
         {filteredServices &&
           filteredServices.map((service: ServiceType) => (
-            <Link to={`/agencies/${service?.agencyId}`} key={service.id}>
-              <ServiceCard service={service} />
-            </Link>
+            <ServiceCard service={service} />
+
           ))}
       </ServiceListWrapper>
     </>
