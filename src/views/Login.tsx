@@ -2,9 +2,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import styled from "styled-components";
 import * as Yup from "yup";
+import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
 import { useAuth } from "../context/AuthContext";
 import UWHeader from "../images/uw_header.png";
+import EmailNoticeModal from "../modals/EmailNoticeModal";
 
 const StyledButton = styled.button`
   color: ${theme.colors.gray};
@@ -145,6 +147,9 @@ const Login = () => {
 
   return (
     <LoginWrapper>
+      <ModalWrapper modalId={"EmailNoticeModal"}>
+        <EmailNoticeModal />
+      </ModalWrapper>
       <Formik
         initialValues={{
           email: "",

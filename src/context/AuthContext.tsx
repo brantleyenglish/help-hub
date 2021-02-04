@@ -2,10 +2,12 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useHistory } from "react-router-dom";
 import { login, logout, sendResetPasswordEmail } from "../firebase/auth";
 import { auth } from "../firebase/config";
+import { useModal } from "./ModalContext";
 
 type UserType = {
   uid: string;
   agencyId: string;
+  emailVerified?: boolean;
 };
 
 type UserLoginType = {
@@ -31,11 +33,12 @@ AuthContext.displayName = "AuthContext";
 export const AuthProvider: React.FC<any> = (props) => {
   const [user, setUser] = React.useState<any>(null);
   const history = useHistory();
+  const { setActiveModal } = useModal();
 
   React.useEffect(() => {
     const onAuthStateChange = auth().onAuthStateChanged((user) => {
       if (user) {
-        setUser({ uid: user.uid });
+        setUser({ uid: user.uid, emailVerified: user?.emailVerified });
       }
     });
     return onAuthStateChange;
@@ -43,8 +46,16 @@ export const AuthProvider: React.FC<any> = (props) => {
 
   const loginUser = async ({ password, email }: UserLoginType) => {
     const loginUserData = await login({ email, password });
-    await setUser({ uid: loginUserData?.user?.uid });
-    history.push(`/agencies/${loginUserData?.user?.uid}`);
+    if (!loginUserData?.user?.emailVerified) {
+      loginUserData?.user?.sendEmailVerification();
+      setActiveModal("EmailNoticeModal");
+    } else {
+      await setUser({
+        uid: loginUserData?.user?.uid,
+        emailVerified: loginUserData?.user?.emailVerified,
+      });
+      history.push(`/agencies/${loginUserData?.user?.uid}`);
+    }
   };
 
   const resetPassword = async ({ email, setError }: resetPasswordType) => {
