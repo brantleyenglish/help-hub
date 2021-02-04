@@ -27,7 +27,7 @@ const Footer = () => {
 
   return (
     <FooterWrapper>
-      <Link to="/">HelpHub</Link>
+      <Link to="/">Home</Link>
       <p>᛫</p>
       <Link to="/services">Services</Link>
       <p>᛫</p>
