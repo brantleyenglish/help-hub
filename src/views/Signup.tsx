@@ -11,6 +11,26 @@ import { signup } from "../firebase/auth";
 import UWHeader from "../images/uw_header.png";
 import EmailNoticeModal from "../modals/EmailNoticeModal";
 
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquare, faCheckSquare } from "@fortawesome/pro-regular-svg-icons";
+
+const StyledCheckbox = styled.button`
+background: none;
+border: none;
+outline: none;
+padding: 30px 0;
+svg {
+  padding-right: 10px;
+  height: 20px !important;
+  width: 20px !important;
+}
+label a {
+  color: ${theme.colors.white} !important;
+  text-decoration: underline;
+}
+`;
+
 const SignupWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   text-align: center;
@@ -72,14 +92,19 @@ const SubmitBtn = styled.button`
   }
 `;
 const ErrorWrapper = styled.div`
-  color: ${theme.colors.red};
+  color: ${theme.colors.red} !important;
   margin: 0 0 10px 0;
+  p {
+    color: ${theme.colors.red} !important;
+  }
 `;
 
 const SignUp = () => {
   const [error, setError] = React.useState("");
   const { signupPassword } = usePublicData();
   const { loginUser } = useAuth();
+
+  const [agreeToTerms, setAgreeToTerms] = React.useState<boolean>(false);
 
   const signupValidationSchema = Yup.object().shape({
     email: Yup.string().email().required("This email address is not valid"),
@@ -106,23 +131,28 @@ const SignUp = () => {
         }}
         validationSchema={signupValidationSchema}
         onSubmit={async (values) => {
-          try {
-            await signup({ email: values.email, password: values.password });
-            if (loginUser) {
-              await loginUser({
-                password: values.password,
-                email: values.email,
-              });
+          if (agreeToTerms) {
+            try {
+              await signup({ email: values.email, password: values.password });
+              if (loginUser) {
+                await loginUser({
+                  password: values.password,
+                  email: values.email,
+                });
+              }
+            } catch (e) {
+              setError(e?.message);
             }
-          } catch (e) {
-            setError(e?.message);
+          } else {
+            setError('Accepting Terms of Service is required to create an account')
           }
         }}
       >
         <Form>
           <FormFieldsWrapper>
             <h1>Sign Up</h1>
-            <label htmlFor="passcode">United Way Passcode</label>
+       
+         
             <FieldWrapper>
               <Field name="passcode" id="passcode" />
             </FieldWrapper>
@@ -143,8 +173,14 @@ const SignUp = () => {
             <ErrorWrapper>
               <ErrorMessage name="password" />
             </ErrorWrapper>
-            <SubmitBtn type="submit">Submit</SubmitBtn>
+            <StyledCheckbox onClick={() => setAgreeToTerms(!agreeToTerms)}>
+              {agreeToTerms ? (<FontAwesomeIcon icon={faCheckSquare} color={theme.colors.white} />) : (<FontAwesomeIcon icon={faSquare}color={theme.colors.white} />)}
+              <label>By creating an account, you agree to the <a href="/terms-of-service.pdf">Hub Terms of Service and Privacy Policy</a>.</label>
+            </StyledCheckbox>
+            <ErrorWrapper>
             {error && <p>{error}</p>}
+            </ErrorWrapper>
+              <SubmitBtn type="submit">Submit</SubmitBtn>
             <p>
               Already have an account? <Link to="/login">Login</Link>
             </p>
