@@ -99,12 +99,15 @@ const Reports = () => {
     },
     [uniqueClients]
   );
-
   const reportData = React.useMemo<ReportDataType>(() => {
     return [
       {
         label: "Counties",
         values: [
+          {
+            label: "Benton",
+            count: countClients(["Benton"], "county"),
+          },
           {
             label: "Carroll & Henry",
             count: countClients(["Carroll", "Henry"], "county"),
@@ -114,8 +117,16 @@ const Reports = () => {
             count: countClients(["Dyer", "Lake"], "county"),
           },
           {
+            label: "Fayette",
+            count: countClients(["Fayette"], "county"),
+          },
+          {
             label: "Gibson",
             count: countClients(["Gibson"], "county"),
+          },
+          {
+            label: "Hardin",
+            count: countClients(["Hardin"], "county"),
           },
           {
             label: "Haywood",
@@ -126,8 +137,16 @@ const Reports = () => {
             count: countClients(["Henderson", "Decatur"], "county"),
           },
           {
+            label: "Lauderdale",
+            count: countClients(["Lauderdale"], "county"),
+          },
+          {
             label: "Madison",
             count: countClients(["Madison"], "county"),
+          },
+          {
+            label: "Obion",
+            count: countClients(["Obion"], "county"),
           },
           {
             label: "Crockett",
@@ -144,6 +163,14 @@ const Reports = () => {
           {
             label: "McNairy",
             count: countClients(["McNairy"], "county"),
+          },
+          {
+            label: "Shelby",
+            count: countClients(["Shelby"], "county"),
+          },
+          {
+            label: "Tipton",
+            count: countClients(["Tipton"], "county"),
           },
           {
             label: "Weakley",

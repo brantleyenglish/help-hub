@@ -1,16 +1,16 @@
 import React from "react";
 import {
-  AgencyContextType,
-  AgencyListType,
-  AgencyType,
-  MessageListType,
-  ServiceType,
+AgencyContextType,
+AgencyListType,
+AgencyType,
+MessageListType,
+ServiceType
 } from "../../DataTypes";
 import {
-  createAgency,
-  getAgency,
-  getAllAgencies,
-  updateAgency,
+createAgency,
+getAgency,
+getAllAgencies,
+updateAgency
 } from "../firebase/agencies";
 import { getAgencyMessages } from "../firebase/messages";
 import { getServicesByAgencyId } from "../firebase/services";
@@ -93,8 +93,13 @@ export const AgencyProvider: React.FC<any> = (props) => {
   }, []);
 
   const updateAgencyInfo = async ({ agencyId, newData }: UpdateAgencyInfo) => {
-    if (user && user?.uid && agencyId && user?.uid === agencyId) {
-      const agencyData = await getAgency({ agencyId: user?.uid });
+    if (
+      user &&
+      user?.uid &&
+      agencyId &&
+      (user?.uid === agencyId || agency?.admin)
+    ) {
+      const agencyData = await getAgency({ agencyId });
       if (agencyData !== "DoesNotExist" && agencyData !== "Error") {
         await updateAgency({
           agency: agencyData,
