@@ -69,11 +69,11 @@ const StyledSVG = styled.img`
   height: 22px;
 `;
 const CategoryButtonWrapper = styled.div`
-display: flex;
-flex-direction: row;
-max-width: 525px;
-justify-content: center;
-margin: 15px auto 0px auto;
+  display: flex;
+  flex-direction: row;
+  max-width: 525px;
+  justify-content: center;
+  margin: 15px auto 0px auto;
 `;
 const CategoryButton = styled.button<{ active: boolean }>`
   background: ${(p) =>
@@ -188,16 +188,17 @@ const AgencyList = () => {
               </CategoryButton>
             ))}
         </CategoryButtonWrapper>
-
       </AgencySearchWrapper>
 
       <AgencyListWrapper>
         {filteredAgencies &&
-          filteredAgencies.map((agency: AgencyType) => (
-            <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
-              <AgencyCard agency={agency} />
-            </Link>
-          ))}
+          filteredAgencies
+            .filter((agency) => agency?.name)
+            .map((agency: AgencyType) => (
+              <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
+                <AgencyCard agency={agency} />
+              </Link>
+            ))}
       </AgencyListWrapper>
     </>
   );
