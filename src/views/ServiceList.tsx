@@ -14,18 +14,9 @@ const ServiceListWrapper = styled.div`
   background-color: ${theme.colors.white};
   padding: 50px;
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
+  flex-direction: row;
   justify-content: space-around;
-  a:hover {
-    div > div {
-      background: ${theme.colors.grayHighlight};
-      cursor: pointer;
-      .icon {
-        background: ${theme.colors.yellow};
-      }
-    }
-  }
 `;
 const ServiceSearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;

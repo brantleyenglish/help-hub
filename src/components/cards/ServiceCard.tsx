@@ -64,9 +64,11 @@ const ServiceCardHeaderWrapper = styled.div`
     font-size: 25px;
     padding-bottom: 0;
     margin-bottom: 5px;
+    text-decoration: underline;
   }
   & h1:hover{
     color: ${theme.colors.yellow};
+    cursor: pointer;
   }
 `;
 const CategoryTagsWrapper = styled.div`
@@ -75,6 +77,7 @@ const CategoryTagsWrapper = styled.div`
   width: 300px;
   flex-direction: row;
   padding: 30px;
+  margin: 0 0 30px 0;
   background: ${theme.colors.grayLight};
   color: ${theme.colors.gray};
   font-size: 20px;

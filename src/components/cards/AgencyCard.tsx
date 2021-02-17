@@ -6,6 +6,8 @@ import styled from "styled-components";
 import { AgencyType, CategoryType } from "../../../DataTypes";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
+import { Link } from "react-router-dom";
+
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -15,17 +17,23 @@ const StyledSVG = styled.img`
 const AgencyCardWrapper = styled.div`
   display: flex;
   flex-flow: column;
-  margin: 0px 25px 50px 25px;
-`;
+  margin: 0px 25px;
+  `;
 const AgencyCardContentWrapper = styled.div`
   background: ${theme.colors.grayLight};
   margin: 0px 0px 10px 0px;
   padding: 30px;
-  width: 250px;
+  width: 300px;
   min-height: 275px;
   border-radius: 10px 10px 0px 0px;
   p {
     color: ${theme.colors.gray};
+  }
+  a {
+    color: ${theme.colors.lightBlue};
+    :hover{
+      color: ${theme.colors.yellow};
+    }
   }
 `;
 const AgencyCardHeaderWrapper = styled.div`
@@ -34,7 +42,7 @@ const AgencyCardHeaderWrapper = styled.div`
   justify-items: center;
   & img {
     object-fit: cover;
-    border-radius: 999px;
+    border-radius: 10px;
     width: 70px;
     height: 70px;
     margin: 0px 20px 0px 0px;
@@ -44,17 +52,22 @@ const AgencyCardHeaderWrapper = styled.div`
     text-align: left;
     color: ${theme.colors.blue};
     font-size: 25px;
+    padding-bottom: 0;
+    margin-bottom: 5px;
+    text-decoration: underline;
   }
   & h1:hover {
-    color: ${theme.colors.lightBlue};
+    color: ${theme.colors.yellow};
     cursor: pointer;
   }
 `;
 const CategoryTagsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 300px;
   flex-direction: row;
   padding: 30px;
+  margin: 0 0 30px 0;
   background: ${theme.colors.grayLight};
   color: ${theme.colors.gray};
   font-size: 20px;
@@ -93,7 +106,9 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
             <img
               src={agency?.profileUrl ? agency?.profileUrl : HHPlaceholder}
             />
-            <h1>{agency?.name}</h1>
+            <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
+              <h1>{agency?.name}</h1>
+            </Link>
           </AgencyCardHeaderWrapper>
 
           <p>{agency?.description}</p>
@@ -101,14 +116,21 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
           {agency?.phone && (
             <p>
               <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-              {agency?.phone}
+              <a href={"tel:" + agency?.phone}>{agency?.phone}</a>
             </p>
           )}
 
           {agency?.website && (
             <p>
               <FontAwesomeIcon icon={faGlobe} style={{ color: "#0e4680" }} />{" "}
-              {agency?.website}
+              <a
+                href={
+                  "http://" +
+                  agency?.website
+                    .replace("https://", "")
+                    .replace("http://", "")
+                }
+              >{agency?.website}</a>
             </p>
           )}
         </AgencyCardContentWrapper>

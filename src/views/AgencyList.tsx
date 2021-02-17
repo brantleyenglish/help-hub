@@ -12,19 +12,11 @@ import UWHeader from "../images/uw_header.png";
 
 const AgencyListWrapper = styled.div`
   background-color: ${theme.colors.white};
+  padding: 50px;
   display: flex;
   flex-wrap: wrap;
-  padding: 50px;
+  flex-direction: row;
   justify-content: space-around;
-  a:hover {
-    div > div {
-      background: ${theme.colors.grayHighlight};
-      cursor: pointer;
-      .icon {
-        background: ${theme.colors.yellow};
-      }
-    }
-  }
 `;
 const AgencySearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;
@@ -39,6 +31,7 @@ const AgencySearchWrapper = styled.div`
     font-size: 45px;
     text-transform: uppercase;
     margin-bottom: 0;
+    text-weight: 300;
   }
   & h3 {
     color: ${theme.colors.white};
@@ -195,9 +188,7 @@ const AgencyList = () => {
           filteredAgencies
             .filter((agency) => agency?.name)
             .map((agency: AgencyType) => (
-              <Link to={`/agencies/${agency?.id}`} key={agency?.id}>
-                <AgencyCard agency={agency} />
-              </Link>
+              <AgencyCard agency={agency} />
             ))}
       </AgencyListWrapper>
     </>
