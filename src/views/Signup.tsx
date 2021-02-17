@@ -30,7 +30,6 @@ label a {
   text-decoration: underline;
 }
 `;
-
 const SignupWrapper = styled.div`
   padding: 40px 0px 40px 0px;
   text-align: center;
@@ -151,8 +150,8 @@ const SignUp = () => {
         <Form>
           <FormFieldsWrapper>
             <h1>Sign Up</h1>
-       
-         
+
+
             <FieldWrapper>
               <Field name="passcode" id="passcode" />
             </FieldWrapper>
@@ -174,13 +173,13 @@ const SignUp = () => {
               <ErrorMessage name="password" />
             </ErrorWrapper>
             <StyledCheckbox onClick={() => setAgreeToTerms(!agreeToTerms)}>
-              {agreeToTerms ? (<FontAwesomeIcon icon={faCheckSquare} color={theme.colors.white} />) : (<FontAwesomeIcon icon={faSquare}color={theme.colors.white} />)}
+              {agreeToTerms ? (<FontAwesomeIcon icon={faCheckSquare} color={theme.colors.white} />) : (<FontAwesomeIcon icon={faSquare} color={theme.colors.white} />)}
               <label>By creating an account, you agree to the <a href="/terms-of-service.pdf">Hub Terms of Service and Privacy Policy</a>.</label>
             </StyledCheckbox>
             <ErrorWrapper>
-            {error && <p>{error}</p>}
+              {error && <p>{error}</p>}
             </ErrorWrapper>
-              <SubmitBtn type="submit">Submit</SubmitBtn>
+            <SubmitBtn type="submit">Submit</SubmitBtn>
             <p>
               Already have an account? <Link to="/login">Login</Link>
             </p>
