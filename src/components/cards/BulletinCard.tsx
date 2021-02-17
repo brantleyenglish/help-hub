@@ -130,7 +130,7 @@ const BulletinCard = ({ message }: MessageCardType) => {
               )?.name
             }
           </h2>
-          {message?.id && agency?.id === message?.agencyId && (
+          {message?.id && (agency?.admin || agency?.id === message?.agencyId) && (
             <>
               <ModalWrapper modalId={`MessageEdit-${message?.id}`}>
                 <EditBulletinModal message={message} />

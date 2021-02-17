@@ -172,7 +172,6 @@ const ContentWrapper = styled.div`
   margin: auto;
   padding: 40px;
 `;
-
 const BulletinWrapper = styled.div`
   margin: auto;
   max-width: 650px;

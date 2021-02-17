@@ -126,7 +126,7 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
         </FileHeaderWrapper>
         {file?.description && <p>{file?.description}</p>}
         <p>Date Created: {file?.date}</p>
-        {agency?.id === file?.agencyId && (
+        {(agency?.admin || agency?.id === file?.agencyId) && (
           <>
             <ModalWrapper modalId={`FileEdit-${file?.fileTitle}`}>
               <EditFileModal file={file} />

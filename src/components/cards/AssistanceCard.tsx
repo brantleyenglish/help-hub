@@ -109,7 +109,7 @@ const AssistanceCard: React.FC<AssistanceCard> = ({ assistance }) => {
             {assistance?.isPrivate == false && "Provided by "}
             {assistance?.agencyName}
           </h2>
-          {agency?.id === assistance?.agencyId && (
+          {(agency?.admin || agency?.id === assistance?.agencyId) && (
             <>
               <ModalWrapper modalId={`AssistanceEdit-${assistance?.id}`}>
                 <EditAssistanceModal assistance={assistance} />

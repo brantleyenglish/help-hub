@@ -33,6 +33,8 @@ import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
 import EditClientModal from "../modals/EditClientModal";
+import DeleteClientModal from "../modals/DeleteClientModal";
+
 import sortByDate from "../utils/sortByDate";
 
 const ClientProfileWrapper = styled.div`
@@ -243,6 +245,9 @@ const ClientProfile = ({ match }: ClientProfileType) => {
     <ClientProfileWrapper>
       <ModalWrapper modalId="ClientEdit">
         <EditClientModal clientId={clientId} />
+      </ModalWrapper>
+      <ModalWrapper modalId="ClientEdit">
+        <DeleteClientModal clientId={clientId} />
       </ModalWrapper>
       {clientProfile && (
         <ClientBackground>

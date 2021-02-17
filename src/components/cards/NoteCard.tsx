@@ -107,7 +107,7 @@ const NoteCard: React.FC<{ note: ClientNotes }> = ({ note }) => {
             {note?.isPrivate == true && "Private Note Created by "}
             {note?.isPrivate === false && "Created by "} {note?.agencyName}
           </h2>
-          {agency?.id === note?.agencyId && (
+          {(agency?.admin || agency?.id === note?.agencyId) && (
             <>
               <ModalWrapper modalId={`NoteEdit-${note?.message}`}>
                 <EditNoteModal note={note} />

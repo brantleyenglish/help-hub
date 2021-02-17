@@ -164,7 +164,7 @@ const ServiceCard = ({ service }: ServiceCardType) => {
         <ServiceCardContentWrapper>
           <ServiceCardHeaderWrapper>
             <>
-              {service && agency?.id === service?.agencyId && (
+              {service && (agency?.admin || agency?.id === service?.agencyId) && (
                 <>
                   <ModalWrapper modalId={`ServiceEdit-${service?.id}`}>
                     <EditServiceModal service={service} />
