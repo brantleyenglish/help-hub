@@ -1,7 +1,6 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AgencyType } from "../../DataTypes";
 import AgencyCard from "../components/cards/AgencyCard";
@@ -110,10 +109,11 @@ const CategoryButton = styled.button<{ active: boolean }>`
 
 const AgencyList = () => {
   const { agencies } = useAgency();
-  const { categories } = usePublicData();
+  const { categories, counties } = usePublicData();
 
   const [search, setSearch] = React.useState<string>("");
   const [category, setCategory] = React.useState<string>("");
+  const [county, setCounty] = React.useState<string>("");
 
   const updateCategory = (value: string) => {
     if (value === category) {
@@ -142,6 +142,10 @@ const AgencyList = () => {
   const filteredAgencies = React.useMemo(() => {
     if (agencies) {
       return agencies
+        ?.filter(
+          (agency: AgencyType) =>
+            county?.length === 0 || agency?.counties?.includes(county)
+        )
         ?.filter((agency: AgencyType) => {
           if (search?.length > 0) {
             return agency?.name?.toLowerCase()?.includes(search);
@@ -157,7 +161,7 @@ const AgencyList = () => {
         ?.sort(sortAgencies);
     }
     return [];
-  }, [category, search, agencies]);
+  }, [category, search, agencies, county]);
 
   return (
     <>
@@ -166,7 +170,24 @@ const AgencyList = () => {
         <h3>Search keywords or sort by service category.</h3>
         <SearchInputWrapper>
           <SearchBar onChange={handleSearchUpdate} type="search" />
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
+          <select
+            onChange={(e) => {
+              e?.preventDefault();
+              setCounty(e?.target?.value);
+            }}
+          >
+            <option value="">All Counties</option>
+            {counties &&
+              counties?.map((option: string, index: number) => (
+                <option value={option} key={`${option}-${index}`}>
+                  {option}
+                </option>
+              ))}
+          </select>
+          <FontAwesomeIcon
+            icon={faSearch}
+            style={{ color: "#0e4680", right: 100 }}
+          />
         </SearchInputWrapper>
         <CategoryButtonWrapper>
           {categories &&
@@ -187,9 +208,7 @@ const AgencyList = () => {
         {filteredAgencies &&
           filteredAgencies
             .filter((agency) => agency?.name)
-            .map((agency: AgencyType) => (
-              <AgencyCard agency={agency} />
-            ))}
+            .map((agency: AgencyType) => <AgencyCard agency={agency} />)}
       </AgencyListWrapper>
     </>
   );
