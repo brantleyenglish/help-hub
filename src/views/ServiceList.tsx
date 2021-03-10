@@ -1,11 +1,11 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ServiceType } from "../../DataTypes";
 import ServiceCard from "../components/cards/ServiceCard";
 import { theme } from "../components/Theme";
+import { useAgency } from "../context/AgencyContext";
 import { usePublicData } from "../context/PublicContext";
 import UWHeader from "../images/uw_header.png";
 import useQuery from "../utils/useQuery";
@@ -62,16 +62,16 @@ const StyledSVG = styled.img`
   height: 22px;
 `;
 const CategoryButtonWrapper = styled.div`
-display: flex;
-flex-direction: row;
-max-width: 525px;
-justify-content: center;
-margin: 15px auto 0px auto;
+  display: flex;
+  flex-direction: row;
+  max-width: 525px;
+  justify-content: center;
+  margin: 15px auto 0px auto;
 `;
 const CategoryButton = styled.button<{ active: boolean }>`
   background: ${(p) =>
     p?.active ? theme.colors.yellow : theme.colors.lightBlue};
-  
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -112,13 +112,26 @@ type ServiceListType = {};
 
 const ServiceList: React.FC<ServiceListType> = () => {
   const query = useQuery();
+  const { agencies } = useAgency();
   const urlCategory = query.get("category")?.toLowerCase() || "";
   const urlSearch = query.get("search")?.toLowerCase() || "";
 
-  const { allServices, categories } = usePublicData();
+  const { allServices, categories, counties } = usePublicData();
 
   const [search, setSearch] = React.useState<string>(urlSearch);
   const [category, setCategory] = React.useState<string>(urlCategory);
+
+  const [county, setCounty] = React.useState<string>("");
+
+  const serviceData = React.useMemo(() => {
+    return allServices?.map((service) => {
+      return {
+        ...service,
+        counties: agencies?.find((agency) => agency?.id === service?.agencyId)
+          ?.counties,
+      };
+    });
+  }, [agencies, allServices]);
 
   const updateCategory = (value: string) => {
     if (value === category) {
@@ -145,9 +158,12 @@ const ServiceList: React.FC<ServiceListType> = () => {
   };
 
   const filteredServices = React.useMemo(() => {
-    if (allServices) {
-      return allServices
-        ?.filter((service: ServiceType) => {
+    if (serviceData) {
+      return serviceData
+        ?.filter(
+          (agency) => county?.length === 0 || agency?.counties?.includes(county)
+        )
+        ?.filter((service) => {
           if (search?.length > 0) {
             return (
               service?.name?.toLowerCase()?.includes(search) ||
@@ -157,7 +173,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
           }
           return true;
         })
-        ?.filter((service: ServiceType) => {
+        ?.filter((service) => {
           if (category?.length > 0) {
             return service?.categories?.includes(category);
           }
@@ -166,7 +182,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
         ?.sort(sortServices);
     }
     return [];
-  }, [category, search, allServices]);
+  }, [category, search, serviceData, county]);
 
   return (
     <>
@@ -179,9 +195,26 @@ const ServiceList: React.FC<ServiceListType> = () => {
             type="search"
             defaultValue={search}
           />
-          <FontAwesomeIcon icon={faSearch} style={{ color: "#0e4680" }} />
+          <select
+            onChange={(e) => {
+              e?.preventDefault();
+              setCounty(e?.target?.value);
+            }}
+          >
+            <option value="">All Counties</option>
+            {counties &&
+              counties?.map((option: string, index: number) => (
+                <option value={option} key={`${option}-${index}`}>
+                  {option}
+                </option>
+              ))}
+          </select>
+          <FontAwesomeIcon
+            icon={faSearch}
+            style={{ color: "#0e4680", right: 100 }}
+          />
         </SearchInputWrapper>
-        < CategoryButtonWrapper>
+        <CategoryButtonWrapper>
           {categories &&
             categories.map((categoryData: any) => (
               <CategoryButton
@@ -200,7 +233,6 @@ const ServiceList: React.FC<ServiceListType> = () => {
         {filteredServices &&
           filteredServices.map((service: ServiceType) => (
             <ServiceCard service={service} />
-
           ))}
       </ServiceListWrapper>
     </>
