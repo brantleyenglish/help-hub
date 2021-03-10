@@ -36,7 +36,6 @@ const BigCatWrapper = styled.div`
   min-width: 500px;
   background-color: ${theme.colors.white};
   padding-top: 1vw;
-  padding-bottom: 5vw;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -155,6 +154,21 @@ const SearchBar = styled.input`
   font-size: 12px;
 `;
 
+const MapWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 30px 0 30px;
+  padding-bottom: 5vw;
+  margin: auto;
+  text-align: center;
+  max-width: 800px;
+p{
+  color: ${theme.colors.blue};
+}
+`;
+
 const Home = () => {
   const { categories } = usePublicData();
   const history = useHistory();
@@ -210,12 +224,16 @@ const Home = () => {
           ))}
       </BigCatWrapper>
 
+      <MapWrapper>
+        <StyledCatTitle>Search by Location</StyledCatTitle>
+        <p>Browse United Way's network of agencies. Open the side bar to filter by category.</p>
+        <iframe src="https://www.google.com/maps/d/embed?mid=19QNsTbvbLyuTXGFUiVcNuy6YARKuRLDB" width="100%" height="480"></iframe>      </MapWrapper>
+
       <AboutWrapper>
         <div>
           <h1>Welcome to the 211 Hub</h1>
           <p>United Way of West Tennessee advocates for equity through Uniting agencies in ways that improve each person’s access to health, education, and financial stability. Our extensive footprint allows us to collaborate with over 60 area nonprofits spanning 14 counties across the West Tennessee region. By helping them acquire resources, we empower them to assist those in need within their local area.</p>
           <h2> Can't find what you need?  <a href="tel:211">CALL 211</a></h2>
-
         </div>
 
       </AboutWrapper>
