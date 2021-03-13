@@ -33,7 +33,6 @@ const SearchWrapper = styled.div`
 `;
 const BigCatWrapper = styled.div`
   max-width: 800px;
-  min-width: 500px;
   background-color: ${theme.colors.white};
   padding-top: 1vw;
   display: flex;
@@ -133,18 +132,19 @@ const StyledCatTitle = styled.h2`
 `;
 const SearchInputWrapper = styled.div`
   position: relative;
-  width: 100%;
-  margin: auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  margin: auto;
   max-width: 500px;
   > svg {
     position: absolute;
-    right: 20px;
+    right: 25px;
     top: 5px;
   }
   @media (max-width: 767px) {
     margin: 30px;
-    justify-content: center;
   }
 `;
 
