@@ -86,7 +86,7 @@ const NavSpanWrapper = styled.span<{ menu: 'topnav' | 'hamburgerClose' | `hambur
 
   ${(p) => p?.menu === 'topnav' && 'display: flex; flex-direction: row; position: absolute; right: 0; .hamburgerSvg{display:none;}.closeSvg{display:none;}'};
   ${(p) => p?.menu === 'hamburgerClose' && '.closeSvg{display:none;}.hamburgerSvg{display:flex; align-items:center; cursor: pointer; padding: 50px 50px 20px 20px; font-size: 25px; position: absolute; right: 0; top: 0;} .link{display:none;}'};
-  ${(p) => p?.menu === 'hamburgerOpen' && '.lastLink{margin-bottom:20px;} .linkDiv{border:none;} .link{display: flex; text-align: right; padding: 10px 0 0 0; flex-direction: column; border:none;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px; position: absolute; right: 0; top: 0;}'};
+  ${(p) => p?.menu === 'hamburgerOpen' && '.lastLink{margin-bottom:20px;} .linkDiv{border:none;} .link{display: flex; text-align: right; padding: 10px 50px 0 0; flex-direction: column; border:none;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px; position: absolute; right: 0; top: 0;}'};
 
   align-items: center;
 `;
@@ -124,7 +124,7 @@ const Nav = () => {
           style={{ width: 200, padding: 10, paddingLeft: 30 }}
         />
       </Link>
-      <NavSpanWrapper menu={navigationState}>
+      <NavSpanWrapper className="navSpanWrapper" menu={navigationState}>
         <a className="closeSvg" onClick={toggleHamburger}>
           <FontAwesomeIcon icon={faTimes} style={{ color: "#0e4680" }} />
         </a>
