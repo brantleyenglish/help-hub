@@ -116,6 +116,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
   const urlCategory = query.get("category")?.toLowerCase() || "";
   const urlSearch = query.get("search")?.toLowerCase() || "";
 
+
   const { allServices, categories, counties } = usePublicData();
 
   const [search, setSearch] = React.useState<string>(urlSearch);

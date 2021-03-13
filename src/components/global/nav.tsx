@@ -16,7 +16,7 @@ import { usePublicData } from "src/context/PublicContext";
 const NavWrapper = styled.div`
   background-color: #f2f2f2;
   display: flex;
-  justify-content: left;
+  // justify-content: left;
   align-items: center;
 `;
 
@@ -85,8 +85,8 @@ margin-right: 10px;
 const NavSpanWrapper = styled.span<{ menu: 'topnav' | 'hamburgerClose' | `hamburgerOpen`; }>`
 
   ${(p) => p?.menu === 'topnav' && 'display: flex; flex-direction: row; position: absolute; right: 0; .hamburgerSvg{display:none;}.closeSvg{display:none;}'};
-  ${(p) => p?.menu === 'hamburgerClose' && '.closeSvg{display:none;}.hamburgerSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px;} .link{display:none;}'};
-  ${(p) => p?.menu === 'hamburgerOpen' && '.lastLink{padding-bottom:20px;} .linkDiv{border:none;} .link{display: flex; text-align: right; padding: 10px 0 0 0; flex-direction: column; border:none;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px;}'};
+  ${(p) => p?.menu === 'hamburgerClose' && '.closeSvg{display:none;}.hamburgerSvg{display:flex; align-items:center; cursor: pointer; padding: 50px 50px 20px 20px; font-size: 25px; position: absolute; right: 0; top: 0;} .link{display:none;}'};
+  ${(p) => p?.menu === 'hamburgerOpen' && '.lastLink{margin-bottom:20px;} .linkDiv{border:none;} .link{display: flex; text-align: right; padding: 10px 0 0 0; flex-direction: column; border:none;} .hamburgerSvg{display:none;}.closeSvg{display:flex; align-items:center;cursor: pointer;padding: 20px; font-size: 25px; position: absolute; right: 0; top: 0;}'};
 
   align-items: center;
 `;
