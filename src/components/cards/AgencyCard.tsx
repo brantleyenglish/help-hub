@@ -1,13 +1,12 @@
 import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 import { usePublicData } from "src/context/PublicContext";
 import styled from "styled-components";
 import { AgencyType, CategoryType } from "../../../DataTypes";
 import HHPlaceholder from "../../images/helphubPlaceholder.png";
 import { theme } from "../Theme";
-import { Link } from "react-router-dom";
-
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -18,7 +17,7 @@ const AgencyCardWrapper = styled.div`
   display: flex;
   flex-flow: column;
   margin: 0px 25px;
-  `;
+`;
 const AgencyCardContentWrapper = styled.div`
   background: ${theme.colors.grayLight};
   margin: 0px 0px 10px 0px;
@@ -31,7 +30,8 @@ const AgencyCardContentWrapper = styled.div`
   }
   a {
     color: ${theme.colors.lightBlue};
-    :hover{
+    line-break: anywhere;
+    :hover {
       color: ${theme.colors.yellow};
     }
   }
@@ -126,11 +126,11 @@ const AgencyCard = ({ agency }: AgencyCardType) => {
               <a
                 href={
                   "http://" +
-                  agency?.website
-                    .replace("https://", "")
-                    .replace("http://", "")
+                  agency?.website.replace("https://", "").replace("http://", "")
                 }
-              >{agency?.website}</a>
+              >
+                {agency?.website}
+              </a>
             </p>
           )}
         </AgencyCardContentWrapper>
