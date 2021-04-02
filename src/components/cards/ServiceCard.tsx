@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AgencyType } from "../../../DataTypes";
 import { useAgency } from "../../context/AgencyContext";
@@ -17,9 +18,7 @@ import DeleteServiceModal from "../../modals/DeleteServiceModal";
 import EditServiceModal from "../../modals/EditServiceModal";
 import ModalWrapper from "../ModalWrapper";
 import { theme } from "../Theme";
-import { Link } from "react-router-dom";
 // import { ServiceType } from "../../DataTypes";
-
 
 const StyledSVG = styled.img`
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(298deg)
@@ -44,7 +43,7 @@ const ServiceCardContentWrapper = styled.div`
   }
   a {
     color: ${theme.colors.lightBlue};
-    :hover{
+    :hover {
       color: ${theme.colors.yellow};
     }
   }
@@ -66,7 +65,7 @@ const ServiceCardHeaderWrapper = styled.div`
     margin-bottom: 5px;
     text-decoration: underline;
   }
-  & h1:hover{
+  & h1:hover {
     color: ${theme.colors.yellow};
     cursor: pointer;
   }
@@ -209,19 +208,21 @@ const ServiceCard = ({ service }: ServiceCardType) => {
           {service?.contactFirstName && (
             <p>
               <FontAwesomeIcon icon={faUser} style={{ color: "#0e4680" }} />{" "}
-              Contact:&nbsp; {service?.contactFirstName} {service?.contactLastName}
+              Contact:&nbsp; {service?.contactFirstName}{" "}
+              {service?.contactLastName}
             </p>
           )}
           {service?.phone && (
             <p>
               <FontAwesomeIcon icon={faPhone} style={{ color: "#0e4680" }} />{" "}
-            Phone: &nbsp;<a href={"tel:" + service?.phone}>{service?.phone}</a>
+              Phone: &nbsp;
+              <a href={"tel:" + service?.phone}>{service?.phone}</a>
             </p>
           )}
           {service?.email && (
             <p>
               <FontAwesomeIcon icon={faEnvelope} style={{ color: "#0e4680" }} />{" "}
-              Email:&nbsp;
+              Email:{"\n"}
               <a href={"mailto:" + service?.email}>{service?.email}</a>
             </p>
           )}
@@ -232,7 +233,18 @@ const ServiceCard = ({ service }: ServiceCardType) => {
                 style={{ color: "#0e4680", paddingRight: 5 }}
               />
               Location:&nbsp;
-              <a href={"http://maps.google.com/?q=" + service?.streetAddress + "," + service?.city + "," + service?.state + "," + service?.zip}>
+              <a
+                href={
+                  "http://maps.google.com/?q=" +
+                  service?.streetAddress +
+                  "," +
+                  service?.city +
+                  "," +
+                  service?.state +
+                  "," +
+                  service?.zip
+                }
+              >
                 {service?.streetAddress}, {service?.city}, {service?.state}{" "}
                 {service?.zip}
               </a>
