@@ -37,7 +37,6 @@ import sortByDate from "../utils/sortByDate";
 
 const AgencyProfileWrapper = styled.div`
   width: 100%;
-  // flex-direction: column;
   background: ${theme.colors.white};
 `;
 const AgencyBackground = styled.div`
@@ -130,11 +129,14 @@ const TitleWrapper = styled.div`
     margin-right: 25px;
   }
 `;
+const ContentWrapper = styled.div`
+margin: auto;
+  padding: 40px;
+`;
 const NavigationWrapper = styled.div`
   max-width: 650px;
   margin: auto;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
 `;
 const NavigationButton = styled.button<{ isActive: boolean }>`
@@ -152,7 +154,7 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   border: none;
   color: ${theme.colors.white};
   font-weight: bold;
-  font-size: 15px;
+  font-size: 14px;
   margin: 0 2px;
   &:hover {
     background: ${theme.colors.blue};
@@ -167,11 +169,12 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   &:last-child {
     border-radius: 0 100px 100px 0;
   }
+  @media (max-width: 767px) {
+   padding: 3px 15px;
+   font-size: 11px;
+  }
 `;
-const ContentWrapper = styled.div`
-  margin: auto;
-  padding: 40px;
-`;
+
 const BulletinWrapper = styled.div`
   margin: auto;
   max-width: 650px;
