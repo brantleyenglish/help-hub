@@ -40,7 +40,7 @@ const SearchBar = () => {
     <>
       <SearchBarWrapper>
         <FontAwesomeIcon icon={faSearch} className="search-icon" />
-        <input placeholder="Search for Services or Agencies" />
+        <input type="search" placeholder="Search for Services or Agencies" />
       </SearchBarWrapper>
       <SearchBarBtnWrapper>GO</SearchBarBtnWrapper>
     </>

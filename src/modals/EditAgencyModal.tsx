@@ -50,6 +50,10 @@ const StyledHeader = styled.div`
     padding: 0;
   }
 `;
+const StyledSubLabel = styled.label`
+color: ${theme.colors.gray};
+
+`;
 
 type FormikAgencyType = {
   name: string;
@@ -189,6 +193,7 @@ const EditAgencyModal: React.FC<{
             <StyledFormikField name="name" label="Agency Name" />
             <StyledFormikFieldWrapper>
               <label htmlFor="file">Upload Profile Image</label>
+              <StyledSubLabel>Image files options include .png and .jpg.</StyledSubLabel>
               <input
                 type="file"
                 name="file"
