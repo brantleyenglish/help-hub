@@ -196,18 +196,20 @@ const Home = () => {
       <SearchWrapper>
         <h1> Find Help, Get Help.</h1>
         <h2>Search dozens of agencies and their services.</h2>
-        <SearchInputWrapper>
-          <SearchBar
-            onChange={handleSearchUpdate}
-            type="search"
-            onKeyDown={handleKeyDown}
-          />
-          <FontAwesomeIcon
-            icon={faSearch}
-            style={{ color: "#0e4680" }}
-            onClick={handleSubmit}
-          />
-        </SearchInputWrapper>
+        <form action="">
+          <SearchInputWrapper>
+            <SearchBar
+              onChange={handleSearchUpdate}
+              type="search"
+              onKeyDown={handleKeyDown}
+            />
+            <FontAwesomeIcon
+              icon={faSearch}
+              style={{ color: "#0e4680" }}
+              onClick={handleSubmit}
+            />
+          </SearchInputWrapper>
+        </form>
       </SearchWrapper>
 
       <StyledCatTitle>Search Services by Category</StyledCatTitle>
