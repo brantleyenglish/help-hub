@@ -190,31 +190,34 @@ const ServiceList: React.FC<ServiceListType> = () => {
       <ServiceSearchWrapper>
         <h1>Services</h1>
         <h3>Search keywords or sort by category.</h3>
-        <SearchInputWrapper>
-          <SearchBar
-            onChange={handleSearchUpdate}
-            type="search"
-            defaultValue={search}
-          />
-          <select
-            onChange={(e) => {
-              e?.preventDefault();
-              setCounty(e?.target?.value);
-            }}
-          >
-            <option value="">All Counties</option>
-            {counties &&
-              counties?.map((option: string, index: number) => (
-                <option value={option} key={`${option}-${index}`}>
-                  {option}
-                </option>
-              ))}
-          </select>
-          <FontAwesomeIcon
-            icon={faSearch}
-            style={{ color: "#0e4680", right: 100 }}
-          />
-        </SearchInputWrapper>
+        <form action="">
+          <SearchInputWrapper>
+
+            <SearchBar
+              onChange={handleSearchUpdate}
+              type="search"
+              defaultValue={search}
+            />
+            <select
+              onChange={(e) => {
+                e?.preventDefault();
+                setCounty(e?.target?.value);
+              }}
+            >
+              <option value="">All Counties</option>
+              {counties &&
+                counties?.map((option: string, index: number) => (
+                  <option value={option} key={`${option}-${index}`}>
+                    {option}
+                  </option>
+                ))}
+            </select>
+            <FontAwesomeIcon
+              icon={faSearch}
+              style={{ color: "#0e4680", right: 100 }}
+            />
+          </SearchInputWrapper>
+        </form>
         <CategoryButtonWrapper>
           {categories &&
             categories.map((categoryData: any) => (
