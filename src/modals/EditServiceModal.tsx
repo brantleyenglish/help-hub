@@ -39,9 +39,9 @@ const EditServiceModal: React.FC<{ service: ServiceType }> = ({ service }) => {
   );
   const serviceSchema = Yup.object().shape({
     name: Yup.string().required("You must give your service a name."),
-    description: Yup.string().required(
-      "You must give your service a description."
-    ),
+    description: Yup.string()
+      .required("You must give your service a description.")
+      .max(500, "Keep the description under 500 characters"),
     contactFirstName: Yup.string(),
     contactLastName: Yup.string(),
     phone: Yup.string(),

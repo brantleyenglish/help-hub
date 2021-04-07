@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import CountyDropdown from "../components/CountyDropdown";
 import StyledFormikField from "../components/StyledFormikField";
 import { theme } from "../components/Theme";
-import { usePublicData } from "../context/PublicContext";
 import { useAgency } from "../context/AgencyContext";
 import { useModal } from "../context/ModalContext";
+import { usePublicData } from "../context/PublicContext";
 import { storage } from "../firebase/config";
 
 const StyledButton = styled.button`
@@ -51,8 +51,7 @@ const StyledHeader = styled.div`
   }
 `;
 const StyledSubLabel = styled.label`
-color: ${theme.colors.gray};
-
+  color: ${theme.colors.gray};
 `;
 
 type FormikAgencyType = {
@@ -129,7 +128,9 @@ const EditAgencyModal: React.FC<{
 
   const agencySchema = Yup.object().shape({
     name: Yup.string().required("Agency name can not be empty"),
-    description: Yup.string().required("Agency description can not be empty"),
+    description: Yup.string()
+      .required("Agency description can not be empty")
+      .max(500, "Keep the description under 500 characters"),
     website: Yup.string(),
     contactFirstName: Yup.string(),
     contactLastName: Yup.string(),
@@ -184,7 +185,6 @@ const EditAgencyModal: React.FC<{
               }
               setActiveModal("");
             }
-
           }
         }}
       >
@@ -193,7 +193,9 @@ const EditAgencyModal: React.FC<{
             <StyledFormikField name="name" label="Agency Name" />
             <StyledFormikFieldWrapper>
               <label htmlFor="file">Upload Profile Image</label>
-              <StyledSubLabel>Image files options include .png and .jpg.</StyledSubLabel>
+              <StyledSubLabel>
+                Image files options include .png and .jpg.
+              </StyledSubLabel>
               <input
                 type="file"
                 name="file"
