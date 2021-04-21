@@ -116,7 +116,6 @@ const ServiceList: React.FC<ServiceListType> = () => {
   const urlCategory = query.get("category")?.toLowerCase() || "";
   const urlSearch = query.get("search")?.toLowerCase() || "";
 
-
   const { allServices, categories, counties } = usePublicData();
 
   const [search, setSearch] = React.useState<string>(urlSearch);
@@ -143,6 +142,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
   };
 
   const handleSearchUpdate = (e: React.BaseSyntheticEvent) => {
+    e?.preventDefault();
     setSearch(e.target.value?.toLowerCase());
   };
 
@@ -190,9 +190,8 @@ const ServiceList: React.FC<ServiceListType> = () => {
       <ServiceSearchWrapper>
         <h1>Services</h1>
         <h3>Search keywords or sort by category.</h3>
-        <form action="">
+        <form action="" onSubmit={(e) => e.preventDefault()}>
           <SearchInputWrapper>
-
             <SearchBar
               onChange={handleSearchUpdate}
               type="search"

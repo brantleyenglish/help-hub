@@ -168,7 +168,7 @@ const AgencyList = () => {
       <AgencySearchWrapper>
         <h1>Agencies</h1>
         <h3>Search keywords or sort by service category.</h3>
-        <form action="">
+        <form action="" onSubmit={(e) => e.preventDefault()}>
           <SearchInputWrapper>
             <SearchBar onChange={handleSearchUpdate} type="search" />
             <select
