@@ -189,7 +189,7 @@ const ServiceList: React.FC<ServiceListType> = () => {
     <>
       <ServiceSearchWrapper>
         <h1>Services</h1>
-        <h3>Search keywords or sort by category.</h3>
+        <h3>Search services provided by West Tennessee agencies by keyword or sort by category.</h3>
         <form action="">
           <SearchInputWrapper>
 
