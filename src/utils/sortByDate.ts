@@ -4,12 +4,12 @@ const sortByDate = (
     a: SingleAssistanceType | MessageType | ClientFiles | ClientNotes,
     b: SingleAssistanceType | MessageType | ClientFiles | ClientNotes
 ) => {
-    const aDate = Number(a?.date?.slice(0, 2));
-    const aMonth = Number(a?.date?.slice(5, 7));
+    const aMonth = Number(a?.date?.slice(0, 2));
+    const aDate = Number(a?.date?.slice(5, 7));
     const aYear = Number(a?.date?.slice(10, 14));
 
-    const bDate = Number(b?.date?.slice(0, 2));
-    const bMonth = Number(b?.date?.slice(5, 7));
+    const bMonth = Number(b?.date?.slice(0, 2));
+    const bDate = Number(b?.date?.slice(5, 7));
     const bYear = Number(b?.date?.slice(10, 14));
 
     if (aYear && bYear) {
