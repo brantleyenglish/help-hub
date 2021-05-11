@@ -29,6 +29,8 @@ const StyledHeader = styled.div`
 const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
   const { setActiveModal } = useModal();
   const { refreshServices } = usePublicData();
+
+  console.log({refreshServices})
   return (
     <>
       <StyledHeader>

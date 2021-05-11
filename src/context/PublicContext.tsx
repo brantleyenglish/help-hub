@@ -46,24 +46,33 @@ export const PublicProvider: React.FC<any> = (props) => {
   }, []);
 
   const refreshServices = async () => {
-    setPublicData({
-      ...publicData,
-      allServices: await getAllServices(),
-    });
+    setTimeout(
+      async () => setPublicData({
+        ...publicData,
+        allServices: await getAllServices(),
+      }), 
+      1000
+    );
   };
 
   const refreshMessages = async () => {
-    setPublicData({
-      ...publicData,
-      allPublicMessages: await getPublicMessages(),
-    });
+    setTimeout(
+      async () => setPublicData({
+        ...publicData,
+        allPublicMessages: await getPublicMessages(),
+      }), 
+      1000
+    );
   };
 
   const refreshAgencies = async () => {
-    setPublicData({
-      ...publicData,
-      allAgencies: await getAllAgencies(),
-    });
+    setTimeout(
+      async () => setPublicData({
+        ...publicData,
+        allAgencies: await getAllAgencies(),
+      }), 
+      1000
+    );
   };
 
   const value = publicData

@@ -1,6 +1,7 @@
 import { faHeart } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { SingleAssistanceType } from "../../../DataTypes";
 import { theme } from "../Theme";
@@ -50,6 +51,18 @@ const TimelineAssistanceHeaderWrapper = styled.div`
     margin: 0;
     padding: 0;
   }
+  button {
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    color: ${theme.colors.lightBlue};
+    cursor: pointer;
+    padding: 0;
+    &:hover {
+      color: ${theme.colors.blue};
+    }
+  }
 `;
 const EditButton = styled.button`
   background: ${theme?.colors?.lightBlue};
@@ -97,6 +110,7 @@ type TimelineAssistanceCard = {
 const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({
   assistance,
 }) => {
+  const history = useHistory();
   return (
     <TimelineAssistanceCardWrapper>
       <TimelineAssistanceCardIconWrapper
@@ -107,10 +121,14 @@ const TimelineAssistanceCard: React.FC<TimelineAssistanceCard> = ({
       <TimelineAssistanceCardContentWrapper>
         <TimelineAssistanceHeaderWrapper>
           <h1>
-            <a href={"/clients/" + assistance?.client?.id}>
+            <button
+              onClick={() =>
+                history?.push(`/clients/${assistance?.client?.id}`)
+              }
+            >
               {assistance?.client?.clientFirstName}{" "}
               {assistance?.client?.clientLastName}
-            </a>{" "}
+            </button>{" "}
             received a {assistance?.isPrivate === true && "private "}service.
           </h1>
           <h2>Service Provided: {assistance?.serviceName}</h2>

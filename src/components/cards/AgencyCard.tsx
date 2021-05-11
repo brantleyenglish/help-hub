@@ -55,6 +55,7 @@ const AgencyCardHeaderWrapper = styled.div`
     padding-bottom: 0;
     margin-bottom: 5px;
     text-decoration: underline;
+    line-break: auto;
   }
   & h1:hover {
     color: ${theme.colors.yellow};
