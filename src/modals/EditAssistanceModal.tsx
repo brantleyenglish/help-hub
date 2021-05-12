@@ -126,16 +126,16 @@ const EditAssistanceModal: React.FC<{
               options={
                 allServices
                   ? allServices
-                      ?.filter(
-                        (service: ServiceType) =>
-                          service?.agencyId === user?.uid
-                      )
-                      ?.map((service: ServiceType) => {
-                        return {
-                          value: service?.id,
-                          label: service?.name,
-                        };
-                      })
+                    ?.filter(
+                      (service: ServiceType) =>
+                        service?.agencyId === user?.uid
+                    )
+                    ?.map((service: ServiceType) => {
+                      return {
+                        value: service?.id,
+                        label: service?.name,
+                      };
+                    })
                   : []
               }
             />

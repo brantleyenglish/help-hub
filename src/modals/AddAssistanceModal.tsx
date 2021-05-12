@@ -140,16 +140,16 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
               options={
                 allServices
                   ? allServices
-                      ?.filter(
-                        (service: ServiceType) =>
-                          service?.agencyId === agency?.id
-                      )
-                      ?.map((service: ServiceType) => {
-                        return {
-                          value: service?.id,
-                          label: service?.name,
-                        };
-                      })
+                    ?.filter(
+                      (service: ServiceType) =>
+                        service?.agencyId === agency?.id
+                    )
+                    ?.map((service: ServiceType) => {
+                      return {
+                        value: service?.id,
+                        label: service?.name,
+                      };
+                    })
                   : []
               }
             />

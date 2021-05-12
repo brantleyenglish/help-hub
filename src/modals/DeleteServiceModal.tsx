@@ -30,7 +30,7 @@ const DeleteServiceModal = ({ serviceId }: { serviceId: string }) => {
   const { setActiveModal } = useModal();
   const { refreshServices } = usePublicData();
 
-  console.log({refreshServices})
+  console.log({ refreshServices })
   return (
     <>
       <StyledHeader>

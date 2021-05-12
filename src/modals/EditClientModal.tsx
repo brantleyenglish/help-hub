@@ -169,23 +169,23 @@ const EditClientModal: React.FC<{
               options={
                 counties
                   ? [
-                      ...counties?.map((county: string) => {
-                        return {
-                          value: county,
-                          label: county,
-                        };
-                      }),
-                      {
-                        value: "N/A",
-                        label: "N/A",
-                      },
-                    ]
+                    ...counties?.map((county: string) => {
+                      return {
+                        value: county,
+                        label: county,
+                      };
+                    }),
+                    {
+                      value: "N/A",
+                      label: "N/A",
+                    },
+                  ]
                   : [
-                      {
-                        value: "N/A",
-                        label: "N/A",
-                      },
-                    ]
+                    {
+                      value: "N/A",
+                      label: "N/A",
+                    },
+                  ]
               }
             />
             <StyledButton type="submit">Submit</StyledButton>
