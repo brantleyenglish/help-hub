@@ -138,8 +138,11 @@ const AddFileModal: React.FC<{}> = ({ }) => {
   }, [downloadUrl]);
 
   const fileSchema = Yup.object().shape({
-    fileTitle: Yup.string().required("You must include a subject."),
-    description: Yup.string(),
+    fileTitle: Yup.string()
+      .required("You must include a subject.")
+      .max(500, "Keep the title under 500 characters."),
+    description: Yup.string()
+      .max(2000, "Keep the description under 2000 characters."),
   });
 
   return (

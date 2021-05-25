@@ -140,14 +140,13 @@ const EditAgencyModal: React.FC<{
     phone: Yup.string().required("Phone number can not be empty.")
       .max(11, "Please enter a valid phone number under 11 characters."),
     streetAddress: Yup.string()
-      .max(500, "Keep the address under 250 characters."),
+      .max(250, "Keep the address under 250 characters."),
     city: Yup.string()
-      .max(500, "Keep the city name under 250 characters."),
+      .max(250, "Keep the city name under 250 characters."),
     zip: Yup.string()
       .max(50, "Keep the zip code under 50 characters."),
     state: Yup.string()
-      .max(2, "Please enter a state abbreviation")
-    ,
+      .max(2, "Please enter a state abbreviation"),
   });
 
   const { refreshAgencies } = usePublicData();

@@ -62,7 +62,8 @@ const AddAssistanceModal: React.FC<{ client: ClientType | undefined }> = ({
     updateAssistanceByAgency,
   } = useAssistance();
   const assistanceSchema = Yup.object().shape({
-    notes: Yup.string(),
+    notes: Yup.string()
+      .max(2000, "Keep the notes under 2000 characters."),
     serviceId: Yup.string(),
     date: Yup.string(),
   });

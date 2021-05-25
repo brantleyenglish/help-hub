@@ -30,7 +30,6 @@ const StyledHeader = styled.div`
     padding: 0;
   }
 `;
-
 const EditServiceModal: React.FC<{ service: ServiceType }> = ({ service }) => {
   const { setActiveModal } = useModal();
   const { refreshServices } = usePublicData();
@@ -42,14 +41,22 @@ const EditServiceModal: React.FC<{ service: ServiceType }> = ({ service }) => {
     description: Yup.string()
       .required("You must give your service a description.")
       .max(500, "Keep the description under 500 characters"),
-    contactFirstName: Yup.string(),
-    contactLastName: Yup.string(),
-    phone: Yup.string(),
-    email: Yup.string(),
-    streetAddress: Yup.string(),
-    city: Yup.string(),
-    state: Yup.string(),
-    zip: Yup.string(),
+    contactFirstName: Yup.string()
+      .max(50, "Keep the name under 50 characters."),
+    contactLastName: Yup.string()
+      .max(50, "Keep the name under 50 characters."),
+    phone: Yup.string()
+      .max(11, "Please enter a valid phone number under 11 characters."),
+    email: Yup.string()
+      .max(250, "Keep the email under 250 characters."),
+    streetAddress: Yup.string()
+      .max(250, "Keep the address under 250 characters."),
+    city: Yup.string()
+      .max(250, "Keep the city name under 250 characters."),
+    state: Yup.string()
+      .max(2, "Please enter a state abbreviation"),
+    zip: Yup.string()
+      .max(50, "Keep the zip code under 50 characters."),
   });
 
   return (

@@ -64,8 +64,12 @@ const EditFileModal = ({ file }: EditFileModalType) => {
   };
 
   const bulletinSchema = Yup.object().shape({
-    fileTitle: Yup.string().required("You must include a subject."),
-    description: Yup.string().required("You must include a message."),
+    fileTitle: Yup.string()
+      .required("You must include a subject.")
+      .max(500, "Keep the title under 500 characters."),
+    description: Yup.string()
+      .required("You must include a message.")
+      .max(2000, "Keep the description under 2000 characters."),
   });
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

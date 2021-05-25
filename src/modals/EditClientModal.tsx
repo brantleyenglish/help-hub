@@ -38,17 +38,25 @@ const EditClientModal: React.FC<{
   const { counties } = usePublicData();
 
   const clientSchema = Yup.object().shape({
-    clientFirstName: Yup.string().required(
-      "Client first name can not be empty."
-    ),
-    clientLastName: Yup.string().required("Client last name can not be empty."),
+    clientFirstName: Yup.string()
+      .required("Client first name can not be empty.")
+      .max(50, "Keep the name under 50 characters."),
+    clientLastName: Yup.string()
+      .required("Client last name can not be empty.")
+      .max(50, "Keep the name under 50 characters."),
     dob: Yup.string().required("Please include client's date of birth"),
-    phone: Yup.string(),
-    email: Yup.string(),
-    streetAddress: Yup.string(),
-    city: Yup.string(),
-    state: Yup.string(),
-    zip: Yup.string(),
+    phone: Yup.string()
+      .max(11, "Please enter a valid phone number under 11 characters."),
+    email: Yup.string()
+      .max(50, "Keep the email under 50 characters."),
+    streetAddress: Yup.string()
+      .max(250, "Keep the address under 250 characters."),
+    city: Yup.string()
+      .max(250, "Keep the city name under 250 characters."),
+    state: Yup.string()
+      .max(2, "Please enter a state abbreviation"),
+    zip: Yup.string()
+      .max(50, "Keep the zip code under 50 characters."),
     gender: Yup.string(),
     ethnicity: Yup.string(),
     county: Yup.string().required("County is required"),

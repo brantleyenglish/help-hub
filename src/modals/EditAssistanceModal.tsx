@@ -30,7 +30,6 @@ const StyledFormikFieldWrapper = styled.div`
     background: ${theme.colors.grayLight};
   }
 `;
-
 const StyledButton = styled.button`
   background: ${theme.colors.blue};
   color: ${theme.colors.white};
@@ -63,7 +62,8 @@ const EditAssistanceModal: React.FC<{
   } = useAssistance();
   const { setActiveModal } = useModal();
   const assistanceSchema = Yup.object().shape({
-    notes: Yup.string(),
+    notes: Yup.string()
+      .max(2000, "Keep the notes under 2000 characters."),
     serviceId: Yup.string(),
   });
   const [isPrivate, setIsPrivate] = React.useState<boolean>(

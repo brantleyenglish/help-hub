@@ -49,14 +49,21 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
   const { setActiveModal } = useModal();
 
   const loginValidationSchema = Yup.object().shape({
-    clientFirstName: Yup?.string()?.required(),
-    clientLastName: Yup?.string()?.required(),
+    clientFirstName: Yup?.string()?.required()
+      .max(50, "Keep the name under 50 characters."),
+    clientLastName: Yup?.string()?.required()
+      .max(50, "Keep the name under 50 characters."),
     dob: Yup?.string()?.required(),
-    email: Yup?.string(),
-    streetAddress: Yup?.string(),
-    city: Yup?.string(),
-    state: Yup?.string(),
-    zip: Yup?.string(),
+    email: Yup?.string()
+      .max(50, "Keep the email under 50 characters."),
+    streetAddress: Yup?.string()
+      .max(250, "Keep the address under 250 characters."),
+    city: Yup?.string()
+      .max(250, "Keep the city name under 250 characters."),
+    state: Yup?.string()
+      .max(2, "Please enter a state abbreviation"),
+    zip: Yup?.string()
+      .max(50, "Keep the zip code under 50 characters."),
     gender: Yup?.string(),
     ethnicity: Yup?.string(),
   });

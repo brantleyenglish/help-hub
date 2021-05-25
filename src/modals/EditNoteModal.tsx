@@ -63,8 +63,11 @@ const EditNoteModal = ({ note }: EditNoteModalType) => {
   };
 
   const bulletinSchema = Yup.object().shape({
-    subject: Yup.string().required("You must include a subject."),
-    message: Yup.string().required("You must include a message."),
+    subject: Yup.string()
+      .required("You must include a subject.")
+      .max(500, "Keep the subject under 500 characters."),
+    message: Yup.string().required("You must include a message.")
+      .max(2000, "Keep the message under 2000 characters."),
   });
 
   return (
