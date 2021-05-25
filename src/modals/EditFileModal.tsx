@@ -58,6 +58,7 @@ const EditFileModal = ({ file }: EditFileModalType) => {
   const [isPrivate, setIsPrivate] = React.useState<boolean>(
     file?.isPrivate || false
   );
+  const [newfile, setNewFile] = React.useState<File | undefined>(undefined);
   const toggleIsPrivate = () => {
     setIsPrivate(!isPrivate);
   };
@@ -66,6 +67,10 @@ const EditFileModal = ({ file }: EditFileModalType) => {
     fileTitle: Yup.string().required("You must include a subject."),
     description: Yup.string().required("You must include a message."),
   });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setNewFile(e.target.files ? e.target.files[0] : undefined);
+  };
 
   return (
     <>
@@ -120,6 +125,15 @@ const EditFileModal = ({ file }: EditFileModalType) => {
               label="Description"
               type="textarea"
             />
+            <StyledFormikFieldWrapper>
+              <label htmlFor="file">Upload File</label>
+              <input
+                type="file"
+                name="file"
+                id="file"
+                onChange={handleFileChange}
+              />
+            </StyledFormikFieldWrapper>
             <StyledFormikFieldWrapper>
               <label htmlFor="isPrivate">
                 Make this note private (only those with access to your client

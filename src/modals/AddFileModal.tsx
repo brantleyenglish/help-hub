@@ -50,7 +50,7 @@ const StyledFormikFieldWrapper = styled.div`
   }
 `;
 
-const AddFileModal: React.FC<{}> = ({}) => {
+const AddFileModal: React.FC<{}> = ({ }) => {
   const { setActiveModal } = useModal();
   const { updateClientInfo, clientProfile, getClientProfile } = useClient();
   const { agency } = useAgency();
@@ -95,34 +95,34 @@ const AddFileModal: React.FC<{}> = ({}) => {
       await updateClientInfo(
         clientProfile?.files
           ? {
-              clientId: clientProfile?.id,
-              newData: {
-                files: [
-                  ...clientProfile?.files,
-                  {
-                    ...fileData,
-                    downloadUrl,
-                    agencyId: agency?.id,
-                    agencyName: agency?.name,
-                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                  },
-                ],
-              },
-            }
+            clientId: clientProfile?.id,
+            newData: {
+              files: [
+                ...clientProfile?.files,
+                {
+                  ...fileData,
+                  downloadUrl,
+                  agencyId: agency?.id,
+                  agencyName: agency?.name,
+                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                },
+              ],
+            },
+          }
           : {
-              clientId: clientProfile?.id,
-              newData: {
-                files: [
-                  {
-                    ...fileData,
-                    downloadUrl,
-                    agencyId: agency?.id,
-                    agencyName: agency?.name,
-                    date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                  },
-                ],
-              },
-            }
+            clientId: clientProfile?.id,
+            newData: {
+              files: [
+                {
+                  ...fileData,
+                  downloadUrl,
+                  agencyId: agency?.id,
+                  agencyName: agency?.name,
+                  date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                },
+              ],
+            },
+          }
       );
       if (clientProfile?.id && getClientProfile) {
         getClientProfile({ clientId: clientProfile?.id });

@@ -42,11 +42,17 @@ const FAQ = () => {
 
     return (
         <FAQWrapper>
+
             <Header>
                 <h1>Frequently Asked Questions</h1>
+                <button type="button" className="collapsible">Open Collapsible</button>
+                <div className="content">
+                    <p>Lorem ipsum...</p>
+                </div>
             </Header>
             <VideoWrapper>
                 <h3>How do I sign up?</h3>
+
                 <YouTube videoId="vi6zlqFwMPI" opts={opts} />
             </VideoWrapper>
 

@@ -127,18 +127,27 @@ const EditAgencyModal: React.FC<{
   );
 
   const agencySchema = Yup.object().shape({
-    name: Yup.string().required("Agency name can not be empty"),
+    name: Yup.string().required("Agency name can not be empty.")
+      .max(100, "Keep the agency name under 100 characters."),
     description: Yup.string()
-      .required("Agency description can not be empty")
-      .max(500, "Keep the description under 500 characters"),
+      .required("Agency description can not be empty.")
+      .max(500, "Keep the description under 500 characters."),
     website: Yup.string(),
-    contactFirstName: Yup.string(),
-    contactLastName: Yup.string(),
-    phone: Yup.string().required("Phone number can not be empty."),
-    streetAddress: Yup.string(),
-    city: Yup.string(),
-    zip: Yup.string(),
-    state: Yup.string(),
+    contactFirstName: Yup.string()
+      .max(50, "Keep the name under 50 characters."),
+    contactLastName: Yup.string()
+      .max(50, "Keep the name under 50 characters."),
+    phone: Yup.string().required("Phone number can not be empty.")
+      .max(11, "Please enter a valid phone number under 11 characters."),
+    streetAddress: Yup.string()
+      .max(500, "Keep the address under 250 characters."),
+    city: Yup.string()
+      .max(500, "Keep the city name under 250 characters."),
+    zip: Yup.string()
+      .max(50, "Keep the zip code under 50 characters."),
+    state: Yup.string()
+      .max(2, "Please enter a state abbreviation")
+    ,
   });
 
   const { refreshAgencies } = usePublicData();

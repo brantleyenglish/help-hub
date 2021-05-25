@@ -89,34 +89,34 @@ const AddBulletinModal: React.FC<{}> = () => {
             await updateClientInfo(
               clientProfile?.notes
                 ? {
-                    clientId: clientProfile?.id,
-                    newData: {
-                      notes: [
-                        ...clientProfile?.notes,
-                        {
-                          ...values,
-                          isPrivate,
-                          agencyId: agency?.id,
-                          agencyName: agency?.name,
-                          date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                        },
-                      ],
-                    },
-                  }
+                  clientId: clientProfile?.id,
+                  newData: {
+                    notes: [
+                      ...clientProfile?.notes,
+                      {
+                        ...values,
+                        isPrivate,
+                        agencyId: agency?.id,
+                        agencyName: agency?.name,
+                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                      },
+                    ],
+                  },
+                }
                 : {
-                    clientId: clientProfile?.id,
-                    newData: {
-                      notes: [
-                        {
-                          ...values,
-                          isPrivate,
-                          agencyId: agency?.id,
-                          agencyName: agency?.name,
-                          date: `${month} / ${date} / ${newDate?.getFullYear()}`,
-                        },
-                      ],
-                    },
-                  }
+                  clientId: clientProfile?.id,
+                  newData: {
+                    notes: [
+                      {
+                        ...values,
+                        isPrivate,
+                        agencyId: agency?.id,
+                        agencyName: agency?.name,
+                        date: `${month} / ${date} / ${newDate?.getFullYear()}`,
+                      },
+                    ],
+                  },
+                }
             );
           }
           if (clientProfile?.id && getClientProfile) {
