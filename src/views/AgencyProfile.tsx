@@ -222,12 +222,11 @@ type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId }: { agencyId: string } = match.params;
-  const { setAgencyProfileId, agencyProfile } = useAgency();
+  const { setAgencyProfileId, agencyProfile,  agency, agencyMessages } = useAgency();
   // TO DO: Just show Agency services
 
   const { allServices, allPublicMessages } = usePublicData();
-  const { agency, agencyMessages } = useAgency();
-  const { agencyAssistance } = useAssistance();
+  const { agencyAssistance, setAssistanceAgencyId} = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -238,6 +237,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
   React.useEffect(() => {
     if (match?.path === "/agencies/:agencyId" && setAgencyProfileId) {
       setAgencyProfileId({ agencyId });
+      if (agencyId && setAssistanceAgencyId) {
+        setAssistanceAgencyId(agencyId);
+      }
     }
   }, [match, setAgencyProfileId]);
 
@@ -421,7 +423,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
       )}
 
       <ContentWrapper>
-        {agency?.id === agencyId && (
+        {agency?.id && (
           <NavigationWrapper>
             {/* BULLETIN BOARD */}
             <NavigationButton
@@ -432,9 +434,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 <AddBulletinModal agencyId={agencyId} />
               </ModalWrapper>
               <p>BULLETIN BOARD</p>
+              {(agency?.id === agencyId) && (
               <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
                 <FontAwesomeIcon icon={faPlus} />
               </AddBtnWrapper>
+              )}
             </NavigationButton>
 
             {/* SERVICES */}
@@ -446,9 +450,11 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 <AddServiceModal agencyId={agencyId} />
               </ModalWrapper>
               <p>SERVICES</p>
+              {(agency?.id === agencyId) && (
               <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
                 <FontAwesomeIcon icon={faPlus} />
               </AddBtnWrapper>
+              )}
             </NavigationButton>
 
             {/* TIMELINE */}
