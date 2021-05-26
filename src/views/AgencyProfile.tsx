@@ -423,7 +423,7 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
       )}
 
       <ContentWrapper>
-        {agency?.id && (
+        {(agency?.id === agencyId || agency?.admin) && (
           <NavigationWrapper>
             {/* BULLETIN BOARD */}
             <NavigationButton
