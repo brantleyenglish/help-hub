@@ -172,6 +172,13 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   @media (max-width: 767px) {
    padding: 3px 15px;
    font-size: 11px;
+   flex-direction: column;
+   &:first-child {
+    border-radius: 20px 0 0 20px;
+  }
+  &:last-child {
+    border-radius: 0 20px 20px 0;
+  }
   }
 `;
 
