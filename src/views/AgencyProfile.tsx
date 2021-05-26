@@ -137,10 +137,10 @@ const NavigationWrapper = styled.div`
   max-width: 650px;
   margin: auto;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 `;
 const NavigationButton = styled.button<{ isActive: boolean }>`
-  padding: 3px 20px;
+  padding: .5vw 1vw;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -222,11 +222,11 @@ type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId }: { agencyId: string } = match.params;
-  const { setAgencyProfileId, agencyProfile,  agency, agencyMessages } = useAgency();
+  const { setAgencyProfileId, agencyProfile, agency, agencyMessages } = useAgency();
   // TO DO: Just show Agency services
 
   const { allServices, allPublicMessages } = usePublicData();
-  const { agencyAssistance, setAssistanceAgencyId} = useAssistance();
+  const { agencyAssistance, setAssistanceAgencyId } = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -435,9 +435,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               </ModalWrapper>
               <p>BULLETIN BOARD</p>
               {(agency?.id === agencyId) && (
-              <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
-                <FontAwesomeIcon icon={faPlus} />
-              </AddBtnWrapper>
+                <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </AddBtnWrapper>
               )}
             </NavigationButton>
 
@@ -451,9 +451,9 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
               </ModalWrapper>
               <p>SERVICES</p>
               {(agency?.id === agencyId) && (
-              <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
-                <FontAwesomeIcon icon={faPlus} />
-              </AddBtnWrapper>
+                <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </AddBtnWrapper>
               )}
             </NavigationButton>
 

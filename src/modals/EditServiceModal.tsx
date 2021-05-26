@@ -96,7 +96,7 @@ const EditServiceModal: React.FC<{ service: ServiceType }> = ({ service }) => {
             <StyledFormikField name="name" label="Name of Service" />
             <StyledFormikField
               name="description"
-              label="Description of Servivce"
+              label="Description of Service"
               type="textarea"
             />
             <StyledFormikField
