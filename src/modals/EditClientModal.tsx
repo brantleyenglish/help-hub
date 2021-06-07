@@ -45,18 +45,18 @@ const EditClientModal: React.FC<{
       .required("Client last name can not be empty.")
       .max(50, "Keep the name under 50 characters."),
     dob: Yup.string().required("Please include client's date of birth"),
-    phone: Yup.string()
-      .max(11, "Please enter a valid phone number under 11 characters."),
-    email: Yup.string()
-      .max(50, "Keep the email under 50 characters."),
-    streetAddress: Yup.string()
-      .max(250, "Keep the address under 250 characters."),
-    city: Yup.string()
-      .max(250, "Keep the city name under 250 characters."),
-    state: Yup.string()
-      .max(2, "Please enter a state abbreviation"),
-    zip: Yup.string()
-      .max(50, "Keep the zip code under 50 characters."),
+    phone: Yup.string().max(
+      11,
+      "Please enter a valid phone number under 11 characters."
+    ),
+    email: Yup.string().max(50, "Keep the email under 50 characters."),
+    streetAddress: Yup.string().max(
+      250,
+      "Keep the address under 250 characters."
+    ),
+    city: Yup.string().max(250, "Keep the city name under 250 characters."),
+    state: Yup.string().max(2, "Please enter a state abbreviation"),
+    zip: Yup.string().max(50, "Keep the zip code under 50 characters."),
     gender: Yup.string(),
     ethnicity: Yup.string(),
     county: Yup.string().required("County is required"),
@@ -125,6 +125,7 @@ const EditClientModal: React.FC<{
               label="Gender"
               type="select"
               options={[
+                { value: "Not Reported", label: "Select Gender" },
                 {
                   value: "Male",
                   label: "Male",
@@ -148,6 +149,7 @@ const EditClientModal: React.FC<{
               label="Ethnicity"
               type="select"
               options={[
+                { value: "Not Reported", label: "Select Ethnicity" },
                 {
                   value: "White",
                   label: "White",
@@ -177,23 +179,25 @@ const EditClientModal: React.FC<{
               options={
                 counties
                   ? [
-                    ...counties?.map((county: string) => {
-                      return {
-                        value: county,
-                        label: county,
-                      };
-                    }),
-                    {
-                      value: "N/A",
-                      label: "N/A",
-                    },
-                  ]
+                      { value: "N/A", label: "Select County" },
+                      ...counties?.map((county: string) => {
+                        return {
+                          value: county,
+                          label: county,
+                        };
+                      }),
+                      {
+                        value: "N/A",
+                        label: "N/A",
+                      },
+                    ]
                   : [
-                    {
-                      value: "N/A",
-                      label: "N/A",
-                    },
-                  ]
+                      { value: "N/A", label: "Select County" },
+                      {
+                        value: "N/A",
+                        label: "N/A",
+                      },
+                    ]
               }
             />
             <StyledButton type="submit">Submit</StyledButton>

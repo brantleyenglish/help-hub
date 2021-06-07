@@ -21,24 +21,24 @@ const StyledButton = styled.button`
   }
 `;
 const StyledHeader = styled.div`
-color: ${theme.colors.blue};
-h2{
-  color: ${theme.colors.red};
-  font-size: 15px;
-  padding: 0;  
-  margin: 2px;
-};
-h3 {
-  color: ${theme.colors.red};
-  font-size: 15px;
-  padding: 0;  
-  margin: 5px;
-}
-div{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  color: ${theme.colors.blue};
+  h2 {
+    color: ${theme.colors.red};
+    font-size: 15px;
+    padding: 0;
+    margin: 2px;
+  }
+  h3 {
+    color: ${theme.colors.red};
+    font-size: 15px;
+    padding: 0;
+    margin: 5px;
+  }
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
@@ -49,21 +49,21 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
   const { setActiveModal } = useModal();
 
   const loginValidationSchema = Yup.object().shape({
-    clientFirstName: Yup?.string()?.required()
+    clientFirstName: Yup?.string()
+      ?.required()
       .max(50, "Keep the name under 50 characters."),
-    clientLastName: Yup?.string()?.required()
+    clientLastName: Yup?.string()
+      ?.required()
       .max(50, "Keep the name under 50 characters."),
     dob: Yup?.string()?.required(),
-    email: Yup?.string()
-      .max(50, "Keep the email under 50 characters."),
-    streetAddress: Yup?.string()
-      .max(250, "Keep the address under 250 characters."),
-    city: Yup?.string()
-      .max(250, "Keep the city name under 250 characters."),
-    state: Yup?.string()
-      .max(2, "Please enter a state abbreviation"),
-    zip: Yup?.string()
-      .max(50, "Keep the zip code under 50 characters."),
+    email: Yup?.string().max(50, "Keep the email under 50 characters."),
+    streetAddress: Yup?.string().max(
+      250,
+      "Keep the address under 250 characters."
+    ),
+    city: Yup?.string().max(250, "Keep the city name under 250 characters."),
+    state: Yup?.string().max(2, "Please enter a state abbreviation"),
+    zip: Yup?.string().max(50, "Keep the zip code under 50 characters."),
     gender: Yup?.string(),
     ethnicity: Yup?.string(),
   });
@@ -81,7 +81,7 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
         state: "",
         zip: "",
         gender: "Male",
-        ethnicity: "White/Caucasian",
+        ethnicity: "White",
       }}
       validationSchema={loginValidationSchema}
       onSubmit={async (values) => {
@@ -99,10 +99,16 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
     >
       {({ values, setFieldValue }) => (
         <Form>
-          <StyledHeader><h1>Create Client</h1>
-            <h2>I have received verbal or written consent from this client to collect their information. </h2>
+          <StyledHeader>
+            <h1>Create Client</h1>
+            <h2>
+              I have received verbal or written consent from this client to
+              collect their information.{" "}
+            </h2>
             <div>
-              Yes<input type="checkbox" /></div>
+              Yes
+              <input type="checkbox" />
+            </div>
           </StyledHeader>
 
           <StyledFormikField name="clientFirstName" label="Client First Name" />
@@ -124,6 +130,7 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
             label="Gender"
             type="select"
             options={[
+              { value: "Not Reported", label: "Select Gender" },
               {
                 value: "Male",
                 label: "Male",
@@ -147,8 +154,9 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
             label="Ethnicity"
             type="select"
             options={[
+              { value: "Not Reported", label: "Select Ethnicity" },
               {
-                value: "White/Caucasian",
+                value: "White",
                 label: "White / Caucasian",
               },
               {
@@ -156,8 +164,8 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
                 label: "Black / African American",
               },
               {
-                value: "Hipanic/Latinx",
-                label: "Hipanic / Latinx",
+                value: "Hispanic/Latinx",
+                label: "Hispanic / Latinx",
               },
               {
                 value: "Asian American",

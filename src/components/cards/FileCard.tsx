@@ -1,4 +1,4 @@
-import { faFileAlt, faPencil, faTrash } from "@fortawesome/pro-solid-svg-icons";
+import { faFileAlt, faTrash } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import styled from "styled-components";
@@ -131,11 +131,11 @@ const FileCard: React.FC<{ file: ClientFiles }> = ({ file }) => {
             <ModalWrapper modalId={`FileEdit-${file?.fileTitle}`}>
               <EditFileModal file={file} />
             </ModalWrapper>
-            <EditButton
+            {/* <EditButton
               onClick={() => setActiveModal(`FileEdit-${file?.fileTitle}`)}
             >
               <FontAwesomeIcon icon={faPencil} />
-            </EditButton>
+            </EditButton> */}
 
             <ModalWrapper modalId={`FileDelete-${file?.fileTitle}`}>
               <DeleteFileModal file={file} />
