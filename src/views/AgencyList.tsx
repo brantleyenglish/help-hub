@@ -200,7 +200,7 @@ const AgencyList = () => {
                 active={categoryData?.name === category}
               >
                 <StyledSVG src={categoryData?.icon} alt={categoryData?.label} />
-                <p>{categoryData?.name}</p>
+                <p>{categoryData?.label}</p>
               </CategoryButton>
             ))}
         </CategoryButtonWrapper>

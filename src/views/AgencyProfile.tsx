@@ -137,10 +137,10 @@ const NavigationWrapper = styled.div`
   max-width: 650px;
   margin: auto;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
 `;
 const NavigationButton = styled.button<{ isActive: boolean }>`
-  padding: 3px 20px;
+  padding: 0.5vw 1vw;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -172,6 +172,13 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
   @media (max-width: 767px) {
     padding: 3px 15px;
     font-size: 11px;
+    flex-direction: column;
+    &:first-child {
+      border-radius: 20px 0 0 20px;
+    }
+    &:last-child {
+      border-radius: 0 20px 20px 0;
+    }
   }
 `;
 
