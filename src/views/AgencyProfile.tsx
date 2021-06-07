@@ -130,7 +130,7 @@ const TitleWrapper = styled.div`
   }
 `;
 const ContentWrapper = styled.div`
-margin: auto;
+  margin: auto;
   padding: 40px;
 `;
 const NavigationWrapper = styled.div`
@@ -170,8 +170,8 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
     border-radius: 0 100px 100px 0;
   }
   @media (max-width: 767px) {
-   padding: 3px 15px;
-   font-size: 11px;
+    padding: 3px 15px;
+    font-size: 11px;
   }
 `;
 
@@ -222,11 +222,16 @@ type ActiveTabType = "bulletinboard" | "services" | "timeline" | "reports";
 
 const AgencyProfile = ({ match }: AgencyProfileType) => {
   const { agencyId }: { agencyId: string } = match.params;
-  const { setAgencyProfileId, agencyProfile,  agency, agencyMessages } = useAgency();
+  const {
+    setAgencyProfileId,
+    agencyProfile,
+    agency,
+    agencyMessages,
+  } = useAgency();
   // TO DO: Just show Agency services
 
   const { allServices, allPublicMessages } = usePublicData();
-  const { agencyAssistance, setAssistanceAgencyId} = useAssistance();
+  const { agencyAssistance, setAssistanceAgencyId } = useAssistance();
 
   const [activeTab, setActiveTab] = React.useState<ActiveTabType>(
     agency?.id === agencyId ? "bulletinboard" : "services"
@@ -247,14 +252,14 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
     const mergedMessages =
       agencyMessages && allPublicMessages
         ? [
-          ...agencyMessages?.filter(
-            (message: MessageType) => message?.isPrivate
-          ),
-          ...allPublicMessages,
-        ]
+            ...agencyMessages?.filter(
+              (message: MessageType) => message?.isPrivate
+            ),
+            ...allPublicMessages,
+          ]
         : [];
     return mergedMessages?.sort(sortByDate);
-  }, [agencyMessages, allPublicMessages]);
+  }, [agencyMessages, allPublicMessages, match]);
 
   const sortByName = (a: ServiceType, b: ServiceType) => {
     if (a?.name && b?.name) {
@@ -387,27 +392,27 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                   agencyProfile?.city ||
                   agencyProfile?.state ||
                   agencyProfile?.zip) && (
-                    <>
-                      <h3>
-                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
+                  <>
+                    <h3>
+                      <FontAwesomeIcon icon={faMapMarkerAlt} /> Address
                     </h3>
-                      <a
-                        href={
-                          "http://maps.google.com/?q=" +
-                          agencyProfile?.streetAddress +
-                          "," +
-                          agencyProfile?.city +
-                          "," +
-                          agencyProfile?.state +
-                          "," +
-                          agencyProfile?.zip
-                        }
-                      >
-                        {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
-                        {agencyProfile?.state} {agencyProfile?.zip}
-                      </a>
-                    </>
-                  )}
+                    <a
+                      href={
+                        "http://maps.google.com/?q=" +
+                        agencyProfile?.streetAddress +
+                        "," +
+                        agencyProfile?.city +
+                        "," +
+                        agencyProfile?.state +
+                        "," +
+                        agencyProfile?.zip
+                      }
+                    >
+                      {agencyProfile?.streetAddress}, {agencyProfile?.city},{" "}
+                      {agencyProfile?.state} {agencyProfile?.zip}
+                    </a>
+                  </>
+                )}
                 {agencyProfile?.counties && (
                   <>
                     <h3>
@@ -434,10 +439,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 <AddBulletinModal agencyId={agencyId} />
               </ModalWrapper>
               <p>BULLETIN BOARD</p>
-              {(agency?.id === agencyId) && (
-              <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
-                <FontAwesomeIcon icon={faPlus} />
-              </AddBtnWrapper>
+              {agency?.id === agencyId && (
+                <AddBtnWrapper onClick={() => setActiveModal("MessageCreate")}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </AddBtnWrapper>
               )}
             </NavigationButton>
 
@@ -450,10 +455,10 @@ const AgencyProfile = ({ match }: AgencyProfileType) => {
                 <AddServiceModal agencyId={agencyId} />
               </ModalWrapper>
               <p>SERVICES</p>
-              {(agency?.id === agencyId) && (
-              <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
-                <FontAwesomeIcon icon={faPlus} />
-              </AddBtnWrapper>
+              {agency?.id === agencyId && (
+                <AddBtnWrapper onClick={() => setActiveModal("ServiceCreate")}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </AddBtnWrapper>
               )}
             </NavigationButton>
 
