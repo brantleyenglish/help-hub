@@ -9,14 +9,16 @@ import UWHeader from "../images/uw_header.png";
 import EmailNoticeModal from "../modals/EmailNoticeModal";
 
 const StyledButton = styled.button`
-  color: ${theme.colors.gray};
+  color: ${theme.colors.white};
+  background-color: ${theme.colors.red};
   border: none;
   outline: none;
   padding: 5px 10px;
   border-radius: 5px;
   margin: 20px 20px 0px;
   &:hover {
-    color: ${theme.colors.lightBlue};
+    color: ${theme.colors.white};
+    background-color: ${theme.colors.yellow};
     cursor: pointer;
   }
 `;

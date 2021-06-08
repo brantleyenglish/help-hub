@@ -246,7 +246,7 @@ const ClientProfile = ({ match }: ClientProfileType) => {
       <ModalWrapper modalId="ClientEdit">
         <EditClientModal clientId={clientId} />
       </ModalWrapper>
-      <ModalWrapper modalId="ClientEdit">
+      <ModalWrapper modalId="ClientDelete">
         <DeleteClientModal clientId={clientId} />
       </ModalWrapper>
       {clientProfile && (

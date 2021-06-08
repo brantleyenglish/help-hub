@@ -28,9 +28,11 @@ padding: 4em 0px 6em 0px;
   }
 `;
 const VideoWrapper = styled.div`
-text-align:center;
+max-width:650px;
+margin: auto;
 padding: 30px;
 & h3{
+    text-align:center;
     color: ${theme.colors.blue};
     text-transform: uppercase;
     font-size: 30px;
@@ -45,14 +47,10 @@ const FAQ = () => {
 
             <Header>
                 <h1>Frequently Asked Questions</h1>
-                <button type="button" className="collapsible">Open Collapsible</button>
-                <div className="content">
-                    <p>Lorem ipsum...</p>
-                </div>
             </Header>
             <VideoWrapper>
                 <h3>How do I sign up?</h3>
-
+                <p></p>
                 <YouTube videoId="vi6zlqFwMPI" opts={opts} />
             </VideoWrapper>
 
@@ -74,12 +72,39 @@ const FAQ = () => {
             <VideoWrapper>
                 <h3>How do i Create and Edit a Client?</h3>
                 <YouTube videoId="nqw-w6tq_KQ" opts={opts} />
+                <ol>
+                    <li>Click on the "Client" tab and search for your client in the search bar.</li>
+                    <li>Once you've identified your client, click on them. If they aren't in the system, then use the "Create a Client" button below to add them.</li>
+                </ol>
             </VideoWrapper>
 
             <VideoWrapper>
                 <h3>How do I Add Assistance, Notes, and Files to a Client?</h3>
                 <YouTube videoId="2MSVUOWkeZA" opts={opts} />
+                <h4>Adding an Assistance</h4>
+                <ol>
+                    <li>Click the "+" button on the "assistance" tab.</li>
+                    <li>You'll see a drop down menu with all of the services that your agency provides. Open it up and select the service that you're providing the current client.</li>
+                    <li>Add any specific notes that would help clarify the service provided, or important details that might help other agencies serving this client.</li>
+                    <li>When you've added all you need to, click the "submit" button.</li>
+                </ol>
+                <p>Note: You'll also see a check box that says "Make this assistance private". The goal of The 211 Hub is to increase collaboration and share helpful information with each other. But sometimes you need to keep certain pieces of information private to your agency, for the safety and protection of the client. So when you check that box, only your agency will be able to see the assistance provided and the notes attached to it.</p>
+                <h4>Adding a Note</h4>
+                <ol>
+                    <li>Press the "+" button on the "notes" tab</li>
+                    <li>Add a subject for your note and whatever particular information you would like.</li>
+                    <li>Make the note private if you so choose</li>
+                    <li>When you're finished click "submit"</li>
+                </ol>
+                <h4>Adding a File</h4>
+                <ol>
+                    <li>Press the "+" button on the "files" tab.</li>
+                    <li>Add a title, description, and make the file private if you so choose.</li>
+                    <li>To upload your file, click on the "choose file" button and select the appropriate file.</li>
+                    <li>To finish the upload, press the "submit" button.</li>
+                </ol>
             </VideoWrapper>
+
         </FAQWrapper>
     );
 

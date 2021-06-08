@@ -50,11 +50,20 @@ const SearchInputWrapper = styled.div`
   position: relative;
   width: 100%;
   display: flex;
+  align-content: center;
   justify-content: space-between;
   > svg {
     position: absolute;
     right: 10px;
   }
+  @media (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    >input{
+      justify-conetn: center;
+      margin:10px;
+    }
+   }
 `;
 const ClientSearchWrapper = styled.div`
   padding: 40px 0px 40px 0px;
@@ -157,7 +166,7 @@ const NewClientWrapper = styled.div`
   }
 `;
 
-const ClientList: React.FC<{}> = ({}) => {
+const ClientList: React.FC<{}> = ({ }) => {
   const { user } = useAuth();
   const history = useHistory();
 

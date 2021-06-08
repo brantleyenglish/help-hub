@@ -53,7 +53,8 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
       .max(50, "Keep the name under 50 characters."),
     clientLastName: Yup?.string()?.required()
       .max(50, "Keep the name under 50 characters."),
-    dob: Yup?.string()?.required(),
+    dob: Yup?.string()?.required("Please enter client's date of birth")
+      .min(1, "Please enter client's date of birth."),
     email: Yup?.string()
       .max(50, "Keep the email under 50 characters."),
     streetAddress: Yup?.string()
@@ -80,8 +81,8 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
         city: "",
         state: "",
         zip: "",
-        gender: "Male",
-        ethnicity: "White/Caucasian",
+        gender: "Other/Not Reported",
+        ethnicity: "Other",
       }}
       validationSchema={loginValidationSchema}
       onSubmit={async (values) => {
@@ -105,13 +106,13 @@ const CreateClientModal: React.FC<{ resetFilters: () => void }> = ({
               Yes<input type="checkbox" /></div>
           </StyledHeader>
 
-          <StyledFormikField name="clientFirstName" label="Client First Name" />
-          <StyledFormikField name="clientLastName" label="Client Last Name" />
+          <StyledFormikField name="clientFirstName" label="Client First Name (required)" />
+          <StyledFormikField name="clientLastName" label="Client Last Name (required)" />
           <FormikDateInput
             fieldName="dob"
             setFieldValue={setFieldValue}
             intialValue={values?.dob}
-            label="Date of Birth"
+            label="Date of Birth (required)"
           />
           <StyledFormikField name="phone" label="Phone #" />
           <StyledFormikField name="email" label="Email" />
