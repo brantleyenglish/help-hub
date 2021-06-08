@@ -267,7 +267,7 @@ const Reports = () => {
                 "American Indian/Alaskan Native",
                 "Native Hawaiian/Pacific Islander",
                 "Other",
-                "Reported",
+                "Not Reported",
               ],
               "ethnicity"
             ),

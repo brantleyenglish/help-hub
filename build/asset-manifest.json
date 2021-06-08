@@ -1,25 +1,25 @@
 {
-  "files": {
-    "main.css": "/static/css/main.01538168.chunk.css",
-    "main.js": "/static/js/main.39b5e540.chunk.js",
-    "main.js.map": "/static/js/main.39b5e540.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
-    "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
-    "static/js/2.210250df.chunk.js": "/static/js/2.210250df.chunk.js",
-    "static/js/2.210250df.chunk.js.map": "/static/js/2.210250df.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.9110b7c7bc6bb5c4d991137150a2e5a7.js": "/precache-manifest.9110b7c7bc6bb5c4d991137150a2e5a7.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.01538168.chunk.css.map": "/static/css/main.01538168.chunk.css.map",
-    "static/js/2.210250df.chunk.js.LICENSE.txt": "/static/js/2.210250df.chunk.js.LICENSE.txt",
-    "static/media/Logo211UW.png": "/static/media/Logo211UW.6067b6b1.png",
-    "static/media/helphubPlaceholder.png": "/static/media/helphubPlaceholder.ccd7642e.png",
-    "static/media/uw_header.png": "/static/media/uw_header.a8e22445.png"
-  },
-  "entrypoints": [
-    "static/js/runtime-main.c8a21426.js",
-    "static/js/2.210250df.chunk.js",
-    "static/css/main.01538168.chunk.css",
-    "static/js/main.39b5e540.chunk.js"
-  ]
+    "files": {
+        "main.css": "/static/css/main.01538168.chunk.css",
+        "main.js": "/static/js/main.e6e03a99.chunk.js",
+        "main.js.map": "/static/js/main.e6e03a99.chunk.js.map",
+        "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
+        "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
+        "static/js/2.210250df.chunk.js": "/static/js/2.210250df.chunk.js",
+        "static/js/2.210250df.chunk.js.map": "/static/js/2.210250df.chunk.js.map",
+        "index.html": "/index.html",
+        "precache-manifest.8851012e44b8f28ad6fa755bfabea053.js": "/precache-manifest.8851012e44b8f28ad6fa755bfabea053.js",
+        "service-worker.js": "/service-worker.js",
+        "static/css/main.01538168.chunk.css.map": "/static/css/main.01538168.chunk.css.map",
+        "static/js/2.210250df.chunk.js.LICENSE.txt": "/static/js/2.210250df.chunk.js.LICENSE.txt",
+        "static/media/Logo211UW.png": "/static/media/Logo211UW.6067b6b1.png",
+        "static/media/helphubPlaceholder.png": "/static/media/helphubPlaceholder.ccd7642e.png",
+        "static/media/uw_header.png": "/static/media/uw_header.a8e22445.png"
+    },
+    "entrypoints": [
+        "static/js/runtime-main.c8a21426.js",
+        "static/js/2.210250df.chunk.js",
+        "static/css/main.01538168.chunk.css",
+        "static/js/main.e6e03a99.chunk.js"
+    ]
 }

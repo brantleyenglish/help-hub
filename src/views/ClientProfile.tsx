@@ -6,9 +6,9 @@ import {
   faPencil,
   faPhone,
   faPlus,
+  faTrash,
   faUsers,
   faVenusMars,
-  faTrash
 } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -24,17 +24,16 @@ import FileCard from "../components/cards/FileCard";
 import NoteCard from "../components/cards/NoteCard";
 import ModalWrapper from "../components/ModalWrapper";
 import { theme } from "../components/Theme";
+import { useAgency } from "../context/AgencyContext";
 import { useAssistance } from "../context/AssistanceContext";
 import { useAuth } from "../context/AuthContext";
 import { useClient } from "../context/ClientContext";
 import { useModal } from "../context/ModalContext";
-import { useAgency } from "../context/AgencyContext";
 import AddAssistanceModal from "../modals/AddAssistanceModal";
 import AddFileModal from "../modals/AddFileModal";
 import AddNoteModal from "../modals/AddNoteModal";
-import EditClientModal from "../modals/EditClientModal";
 import DeleteClientModal from "../modals/DeleteClientModal";
-
+import EditClientModal from "../modals/EditClientModal";
 import sortByDate from "../utils/sortByDate";
 
 const ClientProfileWrapper = styled.div`
